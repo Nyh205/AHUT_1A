@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1200,
+  "en": "-d = difficulty (easy/normal/hard/extra-hard)"
+ },
+ {
+  "id": 1201,
+  "en": "-w = water"
+ },
+ {
+  "id": 1202,
+  "en": "-food = how much food you start with (default is 2)"
+ },
+ {
+  "id": 1203,
+  "en": "Extra Challenges (Optional)"
+ },
+ {
+  "id": 1204,
+  "en": "Note:\nThese problems are optional and are not worth any points."
+ },
+ {
+  "id": 1205,
+  "en": "Implement two final thrower ants that do zero damage, but instead apply a temporary effect\non the action method of a Bee instance that they throw_at.\nThis \"status\" lasts for a certain number of turns, after which it ceases to take effect."
+ },
+ {
+  "id": 1206,
+  "en": "Problem EC 1 (0 pt)"
+ },
+ {
+  "id": 1207,
+  "en": "We will be implementing a new ant, SlowThrower, which inherits from ThrowerAnt."
+ },
+ {
+  "id": 1208,
+  "en": "SlowThrower throws sticky syrup at a bee, slowing it for 5 turns. When a bee is slowed, it does its regular Bee action when gamestate.time is even, and takes no action (does not move or sting) otherwise. If a bee is hit by syrup while it is already slowed, it is slowed for 5 turns starting from the most recent time it is hit by syrup. That is, if a bee is hit by syrup, takes 2 turns, and is hit by syrup again, it will now be slowed for 5 turns after the second time it is hit by syrup. So it will have been slowed for 7 turns total (not 10!)."
+ },
+ {
+  "id": 1209,
+  "en": "SlowThrower"
+ },
+ {
+  "id": 1210,
+  "en": "In order to complete the implementations of this SlowThrower, you will\nneed to set its class attributes appropriately and implement the throw_at method in\nSlowThrower."
+ },
+ {
+  "id": 1211,
+  "en": "Important Restriction: You may not modify any code outside the SlowThrower class for this problem. That means you may not modify the Bee.action method directly. Our tests will check for this."
+ },
+ {
+  "id": 1212,
+  "en": "Hint: Take a look at SlowThrower's parent class, ThrowerAnt. ThrowerAnt's action method calls throw_at, which is what\nyou should be overriding in SlowThrower. What is passed into the target parameter in SlowThrower's throw_at function and why?\nWhat is target.action referring to?"
+ },
+ {
+  "id": 1213,
+  "en": "Implementation Hint: Assign target.action to a new function that conditionally calls Bee.action. You can create and use an\ninstance attribute to track how many more turns the bee will be slowed. Once the slowing effect is over, Bee.action should be called\nevery turn again."
+ },
+ {
+  "id": 1214,
+  "en": "You can run some provided tests, but they are not exhaustive:"
+ },
+ {
+  "id": 1215,
+  "en": "Problem EC 2 (0 pt)"
+ },
+ {
+  "id": 1216,
+  "en": "You must implement Problem EC 1 (SlowThrower) correctly in order to pass the tests for this problem.\nWe will be implementing a new ant, ScaryThrower, which inherits from ThrowerAnt."
+ },
+ {
+  "id": 1217,
+  "en": "ScaryThrower intimidates a nearby bee, causing it to back away instead of advancing.\nHere are some rules to keep in mind:"
+ },
+ {
+  "id": 1218,
+  "en": "If the bee is already right next to the Hive and cannot go back further, it should not move. To check if a bee is next to the Hive, you might find the is_hive instance attribute of Place useful."
+ },
+ {
+  "id": 1219,
+  "en": "Bees remain scared until they have tried to back away twice. So, the back away effect lasts two turns."
+ },
+ {
+  "id": 1220,
+  "en": "Bees cannot try to back away if they are slowed and gamestate.time is odd. This would be a turn they're frozen by SlowThrower!"
+ },
+ {
+  "id": 1221,
+  "en": "Once a bee has been scared once, it can't be scared ever again."
+ },
+ {
+  "id": 1222,
+  "en": "ScaryThrower"
+ },
+ {
+  "id": 1223,
+  "en": "In order to complete the implementation of this ScaryThrower, you will\nneed to set its class attributes appropriately and implement the scare method in\nBee, which applies the scared status on a particular bee. You may also have to edit some\nother methods of Bee such as action."
+ },
+ {
+  "id": 1224,
+  "en": "Problem EC 3 (0 pt)"
+ },
+ {
+  "id": 1225,
+  "en": "Implement the NinjaAnt, which damages all Bees that pass by, but can never\nbe stung."
+ },
+ {
+  "id": 1226,
+  "en": "NinjaAnt"
+ },
+ {
+  "id": 1227,
+  "en": "A NinjaAnt does not block the path of a Bee that flies by. To implement\nthis behavior, first modify the Ant class to include a new class attribute\nblocks_path that is set to True, then override the value of blocks_path to\nFalse in the NinjaAnt class."
+ },
+ {
+  "id": 1228,
+  "en": "Second, modify the Bee's method blocked to return False if either\nthere is no Ant in the Bee's place or if there is an Ant, but\nits blocks_path attribute is False. Now Bees will just fly past\nNinjaAnts."
+ },
+ {
+  "id": 1229,
+  "en": "Finally, we want to make the NinjaAnt damage all Bees that fly past.\nImplement the action method in NinjaAnt to reduce the health of all Bees\nin the same place as the NinjaAnt by its damage attribute. Similar to\nthe FireAnt, you must iterate over a potentially changing list of bees."
+ },
+ {
+  "id": 1230,
+  "en": "Hint: Having trouble visualizing the test cases? Try drawing them out on paper! See the example in {0} for help."
+ },
+ {
+  "id": 1231,
+  "en": "For a challenge, try to win a game using only HarvesterAnt\nand NinjaAnt."
+ },
+ {
+  "id": 1232,
+  "en": "Problem EC 4 (0 pt)"
+ },
+ {
+  "id": 1233,
+  "en": "We've been developing this ant for a long time in secret. It's so dangerous\nthat we had to lock it in the super hidden underground vault, but we\nfinally think it is ready to test out on the field. In this problem, you'll be\nimplementing the final ant -- LaserAnt, a ThrowerAnt with a twist."
+ },
+ {
+  "id": 1234,
+  "en": "LaserAnt"
+ },
+ {
+  "id": 1235,
+  "en": "The LaserAnt shoots out a powerful laser, damaging all that dare\nto stand in its path. Both Bees and Ants, of all types, are at\nrisk of being damaged by LaserAnt. When a LaserAnt takes its action,\nit will damage all Insects in its place (excluding itself, but including its\ncontainer if it has one) and the Places in front of it, excluding the Hive."
+ },
+ {
+  "id": 1236,
+  "en": "If that were it, LaserAnt would be too powerful for us to contain.\nThe LaserAnt has a base damage of 2. But, LaserAnt's laser comes with\nsome quirks. The laser is weakened by 0.25 each place it travels away from\nLaserAnt's place. Additionally, LaserAnt has limited battery.\nEach time LaserAnt actually damages an Insect, its\nlaser's total damage goes down by 0.0625 (1/16). This reduction is immediate so if there are\ntwo Bees in front of LaserAnt and on the same tile, it will do less damage to the second Bee.\nIf LaserAnt's damage becomes negative due to these restrictions,\nit simply does 0 damage instead."
+ },
+ {
+  "id": 1237,
+  "en": "The exact order in which things are damaged within a turn does not matter."
+ },
+ {
+  "id": 1238,
+  "en": "In order to complete the implementation of this ultimate ant, read\nthrough the LaserAnt class, set the class attributes appropriately,\nand implement the following two functions:"
+ },
+ {
+  "id": 1239,
+  "en": "insects_in_front is an instance method, called by the action method,\n  that returns a dictionary where each key is an Insect and each\n  corresponding value is the distance (in places) that that Insect is away\n  from LaserAnt. The dictionary should include all Insects on the same\n  place or in front of the LaserAnt, excluding LaserAnt itself."
+ },
+ {
+  "id": 1240,
+  "en": "calculate_damage is an instance method that takes in distance, the\n  distance that an insect is away from the LaserAnt instance. It\n  returns the damage that the LaserAnt instance should afflict based on:"
+ },
+ {
+  "id": 1241,
+  "en": "The distance away from the LaserAnt instance that an Insect is."
+ },
+ {
+  "id": 1242,
+  "en": "The number of Insects that this LaserAnt has already damaged, stored in\n    the insects_shot instance attribute."
+ },
+ {
+  "id": 1243,
+  "en": "In addition to implementing the methods above, you may need to modify, add,\nor use class or instance attributes in the LaserAnt class as needed."
+ },
+ {
+  "id": 1244,
+  "en": "Important: If an insect's health is unaffected, its health should remain as a whole number (integer), as it was when the insect was initially created."
+ },
+ {
+  "id": 1245,
+  "en": "Note: There are no unlocking tests for this question."
+ },
+ {
+  "id": 1246,
+  "en": "Acknowledgments: Tom Magrino and Eric Tzeng developed this project with John\nDeNero. Many others have contributed to the project as well!"
+ },
+ {
+  "id": 1247,
+  "en": "The artwork was drawn by Alana Tran, Andrew Huang, Emilee Chen, Jessie Salas,\nJingyi Li, Katherine Xu, Meena Vempaty, Michelle Chang, and Ryan Davis."
+ },
+ {
+  "id": 1248,
+  "en": "Computer Aided Typing Software"
+ },
+ {
+  "id": 1249,
+  "en": "Programmers dream of"
+ },
+ {
+  "id": 1250,
+  "en": "Abstraction, recursion, and"
+ },
+ {
+  "id": 1251,
+  "en": "Typing really fast."
+ },
+ {
+  "id": 1252,
+  "en": "Submit with Phases 1 and 2 complete by Tuesday 07/14, worth 1 pt."
+ },
+ {
+  "id": 1253,
+  "en": "Submit with all phases complete by Friday 07/17."
+ },
+ {
+  "id": 1254,
+  "en": "Try to attempt the problems and run the ok tests in order, as some later problems will depend on the correct implementation of earlier problems."
+ },
+ {
+  "id": 1255,
+  "en": "The entire project can be completed with a partner. Here is guidance on\n{0} and\nusing {1}\nto collaborate remotely."
+ },
+ {
+  "id": 1256,
+  "en": "You can get 1 bonus point by submitting the entire project by\nThursday 07/16."
+ },
+ {
+  "id": 1257,
+  "en": "In this project, you will write a program that measures typing speed.\nAdditionally, you will implement typing autocorrect, which is a feature that\nattempts to correct the spelling of a word after a user types it. This project\nis inspired by {0}."
+ },
+ {
+  "id": 1258,
+  "en": "Final Product"
+ },
+ {
+  "id": 1259,
+  "en": "Our staff solution to the project can be interacted with at\n{0}.\nFeel free to try it out now.\nWhen you finish the project, you'll have implemented a significant part of\nthis yourself, including the multiplayer mode!"
+ },
+ {
+  "id": 1260,
+  "en": "Download Starter Files"
+ },
+ {
+  "id": 1261,
+  "en": "You can download all of the project code as a {0}.\nThis project includes several files, but your changes will be made only to\ncats.py. Here are the files included in the archive:"
+ },
+ {
+  "id": 1262,
+  "en": "cats.py: The typing test logic."
+ },
+ {
+  "id": 1263,
+  "en": "utils.py: Utility functions for interacting with files and strings."
+ },
+ {
+  "id": 1264,
+  "en": "ucb.py: Utility functions for CS 61A projects."
+ },
+ {
+  "id": 1265,
+  "en": "data/sample_paragraphs.txt: Text samples to be typed.\n  These are\n  {0}\n  Wikipedia articles about various subjects."
+ },
+ {
+  "id": 1266,
+  "en": "data/common_words.txt: Common\n  {0}."
+ },
+ {
+  "id": 1267,
+  "en": "data/words.txt: Many more\n  {0}."
+ },
+ {
+  "id": 1268,
+  "en": "data/final_diff_words.txt: Even more English words!"
+ },
+ {
+  "id": 1269,
+  "en": "data/testcases.out: Test cases for the optional Final Diff extension."
+ },
+ {
+  "id": 1270,
+  "en": "cats_gui.py: A web server for the web-based graphical user interface (GUI)."
+ },
+ {
+  "id": 1271,
+  "en": "gui_files: A directory of files needed for the graphical user interface\n  (GUI)."
+ },
+ {
+  "id": 1272,
+  "en": "multiplayer: A directory of files needed to support multiplayer mode."
+ },
+ {
+  "id": 1273,
+  "en": "favicons: A directory of icons."
+ },
+ {
+  "id": 1274,
+  "en": "images: A directory of images."
+ },
+ {
+  "id": 1275,
+  "en": "ok, cats.ok, tests: Testing files."
+ },
+ {
+  "id": 1276,
+  "en": "score.py: Part of the optional Final Diff extension."
+ },
+ {
+  "id": 1277,
+  "en": "Provenance .zip file"
+ },
+ {
+  "id": 1278,
+  "en": "Recording your work with the Provenance Recorder"
+ },
+ {
+  "id": 1279,
+  "en": "For this assignment, you'll record your work with the Provenance Recorder, a VS Code extension that keeps a tamper-evident log of how your code comes together as you work. When you're done, the extension bundles your assignment files together with that log into a single sealed .zip — that one file is your submission, so your work can be reviewed as a process and not just a final file."
+ },
+ {
+  "id": 1280,
+  "en": "The extension only runs inside assignment folders the course has authorized. In every other folder it does nothing — no recording, no network requests, and no change to how VS Code behaves. Setup takes about two minutes, and you only do it once."
+ },
+ {
+  "id": 1281,
+  "en": "What gets recorded? Inside the assignment folder only: your edits, pastes, saves, terminal commands, and editor focus. Everything stays on your computer until you upload the sealed .zip. The complete, itemized list is on the {0}."
+ },
+ {
+  "id": 1282,
+  "en": "Before you start"
+ },
+ {
+  "id": 1283,
+  "en": "You'll need:"
+ },
+ {
+  "id": 1284,
+  "en": "Visual Studio Code 1.94 or newer. Check via Code → About Visual Studio Code (macOS) or Help → About (Windows/Linux). Update from"
+ },
+ {
+  "id": 1285,
+  "en": "if you're behind."
+ },
+ {
+  "id": 1286,
+  "en": "The assignment folder distributed for the assignment. It contains a hidden provenance&#x2d;manifest file — that's what authorizes recording. If it's missing, recording can't start; re-download the starter files."
+ },
+ {
+  "id": 1287,
+  "en": "1. Install the extension"
+ },
+ {
+  "id": 1288,
+  "en": "The extension is on the Visual Studio Code Marketplace:"
+ },
+ {
+  "id": 1289,
+  "en": "Install it from inside VS Code:"
+ },
+ {
+  "id": 1290,
+  "en": "Open VS Code."
+ },
+ {
+  "id": 1291,
+  "en": "Click the Extensions icon in the left sidebar (four squares), or press Command (⌘) + Shift (⇧)  + X (macOS) / Ctrl + Shift + X (Windows/Linux)."
+ },
+ {
+  "id": 1292,
+  "en": "Search for Provenance Recorder."
+ },
+ {
+  "id": 1293,
+  "en": "On the result published by Aaryan Mehta (itsgeagle), click Install. You need version 1.1.1 at minimum but higher is also fine."
+ },
+ {
+  "id": 1294,
+  "en": "One-line install: Press Command (⌘) + P / Ctrl + P, paste ext install itsgeagle.provenance&#x2d;recorder, and press Enter."
+ },
+ {
+  "id": 1295,
+  "en": "You don't need to sign in or create an account. The extension is free and makes no network requests during a session."
+ },
+ {
+  "id": 1296,
+  "en": "2. Open the assignment folder"
+ },
+ {
+  "id": 1297,
+  "en": "Open the exact assignment folder you were given — not a parent folder, and not a subfolder."
+ },
+ {
+  "id": 1298,
+  "en": "File → Open Folder…, then select the assignment folder."
+ },
+ {
+  "id": 1299,
+  "en": "The folder must contain the provenance&#x2d;manifest file. When VS Code detects it, the recorder activates automatically."
+ },
+ {
+  "id": 1300,
+  "en": "3. Confirm it's recording"
+ },
+ {
+  "id": 1301,
+  "en": "Look at the status bar along the bottom of the VS Code window:"
+ },
+ {
+  "id": 1302,
+  "en": "If you see Provenance: recording, you're set. That indicator is the only visible change — no popups, no toolbars, no slowdown. Write, save, run, and debug exactly as you normally would; IntelliSense, the integrated terminal, your keybindings, and your theme are all untouched."
+ },
+ {
+  "id": 1303,
+  "en": "If you don't see it, your work isn't being logged yet — see {0} below."
+ },
+ {
+  "id": 1304,
+  "en": "A hidden .provenance/ folder appears inside the assignment workspace — that's where the log lives. Don't delete, edit, or commit it. The submission step bundles it for you."
+ },
+ {
+  "id": 1305,
+  "en": "4. Work normally"
+ },
+ {
+  "id": 1306,
+  "en": "Just do the assignment. The log is appended continuously, so you can:"
+ },
+ {
+  "id": 1307,
+  "en": "Close VS Code and come back later — reopening the folder starts a new session that links to the previous one. Nothing is lost."
+ },
+ {
+  "id": 1308,
+  "en": "Use the integrated terminal, run and debug code, install other extensions — all fine."
+ },
+ {
+  "id": 1309,
+  "en": "There's nothing to start or stop. As long as the status bar says Provenance: recording, you're covered."
+ },
+ {
+  "id": 1310,
+  "en": "More on Provenance"
+ },
+ {
+  "id": 1311,
+  "en": "Troubleshooting"
+ },
+ {
+  "id": 1312,
+  "en": "The status bar doesn't say Provenance: recording.\nThe recorder only activates for an authorized assignment folder. Check that:"
+ },
+ {
+  "id": 1313,
+  "en": "You opened the assignment folder itself, not a parent or subfolder."
+ },
+ {
+  "id": 1314,
+  "en": "The .provenance&#x2d;manifest file is still present in that folder."
+ },
+ {
+  "id": 1315,
+  "en": "You installed the build the course expects. If the manifest's signature doesn't match your installed build, recording won't start — reinstall the version posted for this assignment."
+ },
+ {
+  "id": 1316,
+  "en": "The \"Prepare Submission Bundle\" command isn't in the palette.\nThe command only appears while the extension is active. Confirm the Provenance: recording indicator first (above)."
+ },
+ {
+  "id": 1317,
+  "en": "I closed VS Code in the middle of the assignment — did I lose my log?\nNo. The log is written continuously, not held until submission. Reopen the folder and keep working; the new session links to the previous one."
+ },
+ {
+  "id": 1318,
+  "en": "Sealing the submission bundle failed.\nYou'll see an error message. The usual cause is a partially-written log file, which the extension repairs automatically on the next launch. Reopen the folder and run Prepare Submission Bundle again."
+ },
+ {
+  "id": 1319,
+  "en": "Can I see exactly what was recorded?\nYes. The files in the hidden .provenance/ folder (session&#x2d;*.slog) are plain newline-delimited JSON. Open them in any text editor and read every event as it was logged. Recording is fully transparent — there are no hidden signals."
+ },
+ {
+  "id": 1320,
+  "en": "Privacy at a glance"
+ },
+ {
+  "id": 1321,
+  "en": "The log lives only on your computer until you upload the sealed .zip yourself."
+ },
+ {
+  "id": 1322,
+  "en": "The extension makes no network requests and sends nothing anywhere automatically."
+ },
+ {
+  "id": 1323,
+  "en": "It records nothing outside the assignment folder — other projects, your browser, your clipboard in general, and other apps are invisible to it."
+ },
+ {
+  "id": 1324,
+  "en": "It does not record your name, email address, or IP address."
+ },
+ {
+  "id": 1325,
+  "en": "For the complete, itemized list of what is and isn't captured, see the {0}."
+ },
+ {
+  "id": 1326,
+  "en": "Phase 1: Typing"
+ },
+ {
+  "id": 1327,
+  "en": "Reminder: Throughout the project, we will only be making changes to functions in cats.py."
+ },
+ {
+  "id": 1328,
+  "en": "Type Checking\nMake sure you have type checking enabled before starting the project! See {0}."
+ },
+ {
+  "id": 1329,
+  "en": "Implement pick. This function selects which paragraph the user will type for the typing test.\nIt takes three parameters:"
+ },
+ {
+  "id": 1330,
+  "en": "paragraphs: a list of potential paragraphs (strings)"
+ },
+ {
+  "id": 1331,
+  "en": "select: a function that evaluates a paragraph and returns True if it meets certain criteria, and False otherwise"
+ },
+ {
+  "id": 1332,
+  "en": "k: a non-negative integer representing the index of the desired paragraph among those that meet the criteria"
+ },
+ {
+  "id": 1333,
+  "en": "The pick function returns the kth paragraph from paragraphs for which the select function returns True.\nIf no such paragraph exists (because k is greater than or equal to the number of qualifying paragraphs), then pick\nreturns an empty string."
+ },
+ {
+  "id": 1334,
+  "en": "Hint:\nDon't worry about the specific implementation of the select function. Just assume it takes a paragraph as input and\nreturns True orFalse.\nReminder: Indexing starts at 0. If k is 0, we want to pick the first qualifying paragraph."
+ },
+ {
+  "id": 1335,
+  "en": "Implement the about function, which takes a list of words called keywords. It returns a\nfunction that, when given a paragraph, checks whether the paragraph contains any of\nthe words in keywords. The returned function will return True if any of the\nwords in the keywords list are found in the paragraph and False otherwise."
+ },
+ {
+  "id": 1336,
+  "en": "Once about is implemented, we can use the function it returns as the select argument in pick.\nThis is useful because it allows us to filter paragraphs based on whether they contain any words from the keywords list provided to the about function.\nThis functionality will be useful as we continue to develop our typing test."
+ },
+ {
+  "id": 1337,
+  "en": "To ensure accurate comparisons, you will need to:"
+ },
+ {
+  "id": 1338,
+  "en": "Ignore case (treat uppercase and lowercase letters as equivalent)."
+ },
+ {
+  "id": 1339,
+  "en": "Ignore punctuation in the paragraph."
+ },
+ {
+  "id": 1340,
+  "en": "Only check for exact matches of the words in the keywords list, not substrings.\n  For example, instances of \"dogs\" in paragraph should not match \"dog\" in keywords."
+ },
+ {
+  "id": 1341,
+  "en": "Hint:\nUse the split, lower, and remove_punctuation functions in utils.py."
+ },
+ {
+  "id": 1342,
+  "en": "Implement accuracy, which takes both a entered paragraph and a source\nparagraph. It returns the percentage of words in entered that exactly match\nthe corresponding words in source. Case and punctuation must match as\nwell. \"Corresponding\" means that each word in entered must appear in the same position as the matching word in source. In other words, the first word in entered must match the first word in source, the second word in entered must match the second word in source, and so on."
+ },
+ {
+  "id": 1343,
+  "en": "A word in this context is any sequence of characters separated from other\nwords by whitespace. Therefore, treat sequences like \"dog;\" as a single word."
+ },
+ {
+  "id": 1344,
+  "en": "In the actual typing test, entered represents what the player has typed, and source is the paragraph they are attempting to replicate."
+ },
+ {
+  "id": 1345,
+  "en": "If entered is longer than source, then the extra words in entered that have no corresponding word in source are all incorrect."
+ },
+ {
+  "id": 1346,
+  "en": "If entered is shorter than source and all the words in entered correspond to source so far, then the accuracy is 100.0."
+ },
+ {
+  "id": 1347,
+  "en": "If entered is empty and source is empty, then the accuracy is 100.0."
+ },
+ {
+  "id": 1348,
+  "en": "If entered is empty but source is not empty, then the accuracy is 0.0."
+ },
+ {
+  "id": 1349,
+  "en": "If entered is not empty but source is empty, then the accuracy is 0.0."
+ }
+]

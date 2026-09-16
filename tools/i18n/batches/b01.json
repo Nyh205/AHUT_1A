@@ -1,0 +1,602 @@
+[
+ {
+  "id": 150,
+  "en": "Adding lists creates a longer list containing the elements of the added lists."
+ },
+ {
+  "id": 151,
+  "en": "For Loops"
+ },
+ {
+  "id": 152,
+  "en": "for Statements"
+ },
+ {
+  "id": 153,
+  "en": "A range is a data structure that holds integer sequences. A range can be created by:"
+ },
+ {
+  "id": 154,
+  "en": "range(stop) contains 0, 1, ..., stop - 1"
+ },
+ {
+  "id": 155,
+  "en": "range(start, stop) contains start, start + 1, ..., stop - 1"
+ },
+ {
+  "id": 156,
+  "en": "Notice how the range function doesn't include the stop value; it generates numbers up to, but not including, the stop value."
+ },
+ {
+  "id": 157,
+  "en": "For example:"
+ },
+ {
+  "id": 158,
+  "en": "While ranges and lists are both {0}, a range object is different from a list. A range can be converted to a list by calling list():"
+ },
+ {
+  "id": 159,
+  "en": "Type Checking"
+ },
+ {
+  "id": 160,
+  "en": "Disclaimer: Even though type checking is useful, prioritize using it more as\nan exercise to determine inputs and outputs. For some situations in this class,\nthe syntax for type checking will be out of scope. However, please read the information\nabout type checking and apply it when possible."
+ },
+ {
+  "id": 161,
+  "en": "Type hints can appear in assignment and def statements (and a few other\nplaces) to indicate the types of value that a variable should have or that\nfunctions should return."
+ },
+ {
+  "id": 162,
+  "en": "An example without type hints:"
+ },
+ {
+  "id": 163,
+  "en": "The same example with type hints that x, y, and z are integers and the\npair function returns a list of integers:"
+ },
+ {
+  "id": 164,
+  "en": "Code behaves identically with or without type hints.  You can read more in the\n{0} article."
+ },
+ {
+  "id": 165,
+  "en": "Automatic Type Checking: VS Code can be configured to annotate locations\nwhere a variable has been assigned a value that does not have the expected type.\nTo enable type checking, open the VS Code settings, which you can do by pressing\nthe Command and , keys on a Mac, or the Control and , keys simultaneously on\na Windows machine. Type type checking in the search bar, which should pull up\nthe Type Checking options shown in the screenshot below.  Use the dropdown menu\nto change type checking from the default of off to basic."
+ },
+ {
+  "id": 166,
+  "en": "If these type checking options did not appear, you may need to install the Pylance\nextension.  Open the Extensions view by holding Shift, Command, and X on a Mac\nor Shift, Control, and X on Windows.  Type Pylance in the search bar, and\npress the install button."
+ },
+ {
+  "id": 167,
+  "en": "To check to ensure that type checking has been enabled, type the following into\na Python file:"
+ },
+ {
+  "id": 168,
+  "en": "You should see a red underline under &#x27;not an int&#x27;.  If you hover over &#x27;not an int&#x27;,\nVS Code displays an error message, explaining that &#x27;not an int&#x27; does not match\nthe expected type int.  Keep an eye out for these errors while you're writing code!\nThey're usually a hint about where your code has a bug."
+ },
+ {
+  "id": 169,
+  "en": "Q1: WWPD: Lists &amp; Ranges"
+ },
+ {
+  "id": 170,
+  "en": "Q2: Flatten"
+ },
+ {
+  "id": 171,
+  "en": "Write a function flatten that takes in a list s and returns\na new list that is the \"flattened\" version of s.\nYou should not modify the original list."
+ },
+ {
+  "id": 172,
+  "en": "Note: The input list may be deeply nested, meaning that there\ncould be multiple layers of lists within lists.\nMake sure your solution supports this."
+ },
+ {
+  "id": 173,
+  "en": "Hint: you can check if something is a list by using the built-in\ntype function. For example:"
+ },
+ {
+  "id": 174,
+  "en": "Q3: WWPD: List Comprehensions"
+ },
+ {
+  "id": 175,
+  "en": "Q4: Close List"
+ },
+ {
+  "id": 176,
+  "en": "Implement close_list, which takes a list of integers s and a non-negative integer k. It returns a list of the elements of s that are within k of their index. That is, the absolute value of the difference between the element and its index is less than or equal to k."
+ },
+ {
+  "id": 177,
+  "en": "Q5: Sorting a List"
+ },
+ {
+  "id": 178,
+  "en": "Sorting is a very important topic in computer science. Let's try sorting a list\nin this question using recursion."
+ },
+ {
+  "id": 179,
+  "en": "First, let's write a function remove_first that takes in a list lst, and\nremoves the first appearance of the number elem."
+ },
+ {
+  "id": 180,
+  "en": "Next, write a function sort that takes in a list lst and return the sorted\nversion of that list. Use recursion!"
+ },
+ {
+  "id": 181,
+  "en": "Hint:  Use the remove_first function you just defined, and the built-in\nmin function."
+ },
+ {
+  "id": 182,
+  "en": "Q6: Making Onions"
+ },
+ {
+  "id": 183,
+  "en": "Write a function make_onion that takes in two one-argument functions, f and\ng. It returns a function that takes in three arguments: x, y, and\nlimit. The returned function returns True if it is possible to reach y\nfrom x using up to limit calls to f and g, and False otherwise."
+ },
+ {
+  "id": 184,
+  "en": "For example, if f adds 1 and g doubles, then it is possible to reach 25 from\n5 in four calls: f(g(g(f(5))))."
+ },
+ {
+  "id": 185,
+  "en": "Q7: Function Repeater"
+ },
+ {
+  "id": 186,
+  "en": "Define a function make_fn_repeater which takes in a one-argument function f and an integer x.\nIt should return another function which takes in one argument, another integer.\nThis function returns the result of applying f to x this number of times."
+ },
+ {
+  "id": 187,
+  "en": "Make sure to use recursion in your solution."
+ },
+ {
+  "id": 188,
+  "en": "This is very similar to a homework problem, but recursive.\nWe recommend covering this if you have time, it ties recursion and higher order functions together in an interesting way.\nMake sure to contrast with self-reference and show why this isn’t that,\nboth in behavior (here a single function call results in a bunch of computation not many function calls)\nand in implementation (here a call to repeat calls repeat rather than returning a new repeat function)."
+ },
+ {
+  "id": 189,
+  "en": "Q8: Ten-Pairs"
+ },
+ {
+  "id": 190,
+  "en": "Write a function that takes a positive integer n and returns the\nnumber of ten-pairs it contains.  A ten-pair is a pair of digits\nwithin n that sums to 10."
+ },
+ {
+  "id": 191,
+  "en": "The number 7,823,952 has 3 ten-pairs. The first and fourth digits sum\nto 7+3=10, the second and third digits sum to 8+2=10, and the second\nand last digit sum to 8+2=10."
+ },
+ {
+  "id": 192,
+  "en": "Important notes:"
+ },
+ {
+  "id": 193,
+  "en": "A digit can be part of more than one ten-pair."
+ },
+ {
+  "id": 194,
+  "en": "One 5 does not make a ten-pair with itself."
+ },
+ {
+  "id": 195,
+  "en": "Recommended: Complete and use the helper function count_digit to calculate\nhow many times a digit appears in n."
+ },
+ {
+  "id": 196,
+  "en": "Important: Use recursion; the tests will fail if you use any loops (for, while)."
+ },
+ {
+  "id": 197,
+  "en": "Sequences are ordered collections of values that support\nelement-selection and have length.\nWe've worked with lists, but other Python types are also sequences,\nincluding strings."
+ },
+ {
+  "id": 198,
+  "en": "Let us go through an example of some actions we can do with strings."
+ },
+ {
+  "id": 199,
+  "en": "Since strings are sequences, we can do with strings many of the same things that we can do to lists. We can even loop through a string just like we can with a list:"
+ },
+ {
+  "id": 200,
+  "en": "A dictionary contains key-value pairs and allows the values to be looked up by\ntheir key using square brackets. Each key must be unique."
+ },
+ {
+  "id": 201,
+  "en": "The sequence of keys or values or key-value pairs can be accessed using\n.keys() or .values() or .items()."
+ },
+ {
+  "id": 202,
+  "en": "By default, iterating through a dictionary iterates through its keys."
+ },
+ {
+  "id": 203,
+  "en": "You can check whether a dictionary contains a key using in:"
+ },
+ {
+  "id": 204,
+  "en": "Attempting to access a key that does not exist in a dictionary will cause an error.\nYou can use .get(&lt;key&gt;, &lt;default&gt;), which returns the value corresponding to &lt;key&gt; in\na dictionary or, if it doesn't exist, returns &lt;default&gt;."
+ },
+ {
+  "id": 205,
+  "en": "The contents of a dictionary can be modified using =:"
+ },
+ {
+  "id": 206,
+  "en": "A dictionary comprehension is an expression that evaluates to a new dictionary."
+ },
+ {
+  "id": 207,
+  "en": "A tree recursive function is a recursive function that makes more than one call to itself, resulting in a tree-like series of calls."
+ },
+ {
+  "id": 208,
+  "en": "For example, this is the {0} sequence:\n0, 1, 1, 2, 3, 5, 8, 13, ...."
+ },
+ {
+  "id": 209,
+  "en": "Each term is the sum of the previous two terms. This tree-recursive function calculates the nth Virahanka-Fibonacci number."
+ },
+ {
+  "id": 210,
+  "en": "Calling virfib(6) results in a call structure that resembles\nan upside-down tree (where f is virfib):"
+ },
+ {
+  "id": 211,
+  "en": "Each recursive call f(i) makes a call to f(i&#x2d;1) and a call to f(i&#x2d;2).\nWhenever we reach an f(0) or f(1) call, we can directly return 0 or 1\nwithout making more recursive calls. These calls are our base cases."
+ },
+ {
+  "id": 212,
+  "en": "A base case returns an answer without depending on the results of other calls.\nOnce we reach a base case, we can go back and answer the\nrecursive calls that led to the base case."
+ },
+ {
+  "id": 213,
+  "en": "As we will see, tree recursion is often effective for problems with branching choices.\nIn these problems, you make a recursive call for each branching choice."
+ },
+ {
+  "id": 214,
+  "en": "A data abstraction is a set of functions that compose and decompose compound\nvalues. One function called the constructor puts together two or more parts\ninto a whole (such as a rational number; also known as a fraction), and other\nfunctions called selectors return parts of that whole (such as the numerator\nor denominator)."
+ },
+ {
+  "id": 215,
+  "en": "Crucially, one can use a data abstraction without knowing how these functions are\nimplemented. For example, we (humans) can verify that mul_rationals is\nimplemented correctly just by knowing what rational, numer, and denom do\nwithout knowing how they are implemented."
+ },
+ {
+  "id": 216,
+  "en": "However, for Python to run the program, the data abstraction requires an\nimplementation. Using knowledge of the implementation crosses the abstraction barrier, which separates the part of a program that depends on the\nimplementation of the data abstraction from the part that does not. A\nwell-written program typically will minimize the amount of code that depends on\nthe implementation so that the implementation can be changed later on without\nrequiring much code to be rewritten."
+ },
+ {
+  "id": 217,
+  "en": "When using a data abstraction that has been provided, write your program so that\nit will still be correct even if the implementation of the data abstraction\nchanges."
+ },
+ {
+  "id": 218,
+  "en": "Tree"
+ },
+ {
+  "id": 219,
+  "en": "Our tree abstract data type consists of a root and a list of its\nbranches. To create a tree and access its root value and branches, use the\nfollowing interface of constructor and selectors:"
+ },
+ {
+  "id": 220,
+  "en": "Constructor"
+ },
+ {
+  "id": 221,
+  "en": "tree(label, branches=[]): creates a tree object with the given label\n    value at its root node and list of branches. Notice that the second argument\n    to this constructor, branches, is optional — if you want to make a tree with\n    no branches, leave this argument empty."
+ },
+ {
+  "id": 222,
+  "en": "Selectors"
+ },
+ {
+  "id": 223,
+  "en": "label(tree): returns the value in the root node of tree."
+ },
+ {
+  "id": 224,
+  "en": "branches(tree): returns the list of branches of the given tree (each of which is also a tree)"
+ },
+ {
+  "id": 225,
+  "en": "Convenience function"
+ },
+ {
+  "id": 226,
+  "en": "is_leaf(tree): returns True if tree's list of branches is empty, and\n    False otherwise."
+ },
+ {
+  "id": 227,
+  "en": "For example, the tree generated by"
+ },
+ {
+  "id": 228,
+  "en": "would look like this:"
+ },
+ {
+  "id": 229,
+  "en": "To extract the number 3 from this tree, which is the label of the root of its second branch, we would do this:"
+ },
+ {
+  "id": 230,
+  "en": "The print_tree function prints out a tree in a\nhuman-readable form. The exact form follows the pattern illustrated\nabove, where the root is unindented, and each of its branches is\nindented one level further."
+ },
+ {
+  "id": 231,
+  "en": "Many languages provide map, filter, reduce functions for sequences.\nPython also provides these functions\n(and we'll formally introduce them later on in the course),\nbut to help you better understand how they work,\nyou'll be implementing these functions in the following problems."
+ },
+ {
+  "id": 232,
+  "en": "In Python, the map and filter built-ins have slightly different\nbehavior than the my_map and my_filter functions we are defining here."
+ },
+ {
+  "id": 233,
+  "en": "Q1: Map"
+ },
+ {
+  "id": 234,
+  "en": "my_map takes in a one argument function fn and a sequence seq and returns a\nlist containing fn applied to each element in seq."
+ },
+ {
+  "id": 235,
+  "en": "Q2: Filter"
+ },
+ {
+  "id": 236,
+  "en": "my_filter takes in a predicate function pred and a sequence seq and returns a\nlist containing all elements in seq for which pred returns True. (A predicate function\nis a function that takes in an argument and returns either True or False.)"
+ },
+ {
+  "id": 237,
+  "en": "Q3: Reduce"
+ },
+ {
+  "id": 238,
+  "en": "my_reduce takes in a two argument function combiner and a non-empty sequence\nseq and combines the elements in seq into one value using combiner."
+ },
+ {
+  "id": 239,
+  "en": "Cities"
+ },
+ {
+  "id": 240,
+  "en": "Say we have a data abstraction for cities. A city has a name, a latitude\ncoordinate, and a longitude coordinate."
+ },
+ {
+  "id": 241,
+  "en": "Our data abstraction has one constructor:"
+ },
+ {
+  "id": 242,
+  "en": "make_city(name, lat, lon): Creates a city object with the given name,\n  latitude, and longitude."
+ },
+ {
+  "id": 243,
+  "en": "We also have the following selectors in order to get the information for\neach city:"
+ },
+ {
+  "id": 244,
+  "en": "get_name(city): Returns the city's name"
+ },
+ {
+  "id": 245,
+  "en": "get_lat(city): Returns the city's latitude"
+ },
+ {
+  "id": 246,
+  "en": "get_lon(city): Returns the city's longitude"
+ },
+ {
+  "id": 247,
+  "en": "Here is how we would use the constructor and selectors to create cities and\nextract their information:"
+ },
+ {
+  "id": 248,
+  "en": "All of the selector and constructor functions can be found in the lab file if\nyou are curious to see how they are implemented. However, the point of data\nabstraction is that, when writing a program about cities, we do not need to know\nthe implementation."
+ },
+ {
+  "id": 249,
+  "en": "Q4: Distance"
+ },
+ {
+  "id": 250,
+  "en": "We will now implement the function distance, which computes the\ndistance between two city objects. Recall that the distance between two\ncoordinate pairs (x1, y1) and (x2, y2) can be found by calculating\nthe sqrt of (x1 &#x2d; x2)**2 + (y1 &#x2d; y2)**2. We have already imported\nsqrt for your convenience. Use the latitude and longitude of a city as\nits coordinates; you'll need to use the selectors to access this info!"
+ },
+ {
+  "id": 251,
+  "en": "Q5: Closer City"
+ },
+ {
+  "id": 252,
+  "en": "Next, implement closer_city, a function that takes a latitude,\nlongitude, and two cities, and returns the name of the city that is\ncloser to the provided latitude and longitude."
+ },
+ {
+  "id": 253,
+  "en": "You may only use the selectors get_name get_lat get_lon, constructors make_city, and the\ndistance function you just defined for this question."
+ },
+ {
+  "id": 254,
+  "en": "Hint: How can you use your distance function to find the distance between\nthe given location and each of the given cities?"
+ },
+ {
+  "id": 255,
+  "en": "Q6: Don't violate the abstraction barrier!"
+ },
+ {
+  "id": 256,
+  "en": "Note:\nthis question has no code-writing component\n(if you implemented the previous two questions correctly)."
+ },
+ {
+  "id": 257,
+  "en": "When writing functions that use a data abstraction, we should use the\nconstructor(s) and selector(s) whenever possible instead of assuming the\ndata abstraction's implementation.\nRelying on a data abstraction's underlying implementation is known as\nviolating the abstraction barrier."
+ },
+ {
+  "id": 258,
+  "en": "It's possible that you passed the doctests for the previous questions\neven if you violated the abstraction barrier. To check whether or not you\ndid so, run the following command:"
+ },
+ {
+  "id": 259,
+  "en": "The check_city_abstraction function exists only for the doctest, which swaps\nout the implementations of the original abstraction with something else, runs\nthe tests from the previous two parts, then restores the original abstraction."
+ },
+ {
+  "id": 260,
+  "en": "The nature of the abstraction barrier guarantees that changing the\nimplementation of a data abstraction should not affect the functionality of\nany programs that use that data abstraction, as long as the constructors and\nselectors were used properly."
+ },
+ {
+  "id": 261,
+  "en": "If you passed the Ok tests for the previous questions but not this one,\nthe fix is simple! Just replace any code that violates the abstraction\nbarrier with the appropriate constructor or selector."
+ },
+ {
+  "id": 262,
+  "en": "Make sure that your functions pass the tests with both the first and the\nsecond implementations of the data abstraction and that you understand why\nthey should work for both before moving on."
+ },
+ {
+  "id": 263,
+  "en": "Q7: WWPD: Trees"
+ },
+ {
+  "id": 264,
+  "en": "Type Error if the code errors and Nothing if nothing is displayed. Draw\nout the tree on the board or a piece of paper if you get stuck!"
+ },
+ {
+  "id": 265,
+  "en": "Q8: Perfectly Balanced"
+ },
+ {
+  "id": 266,
+  "en": "Implement sum_tree, which returns the sum of all the labels in tree t."
+ },
+ {
+  "id": 267,
+  "en": "Then, implement balanced, which returns whether every branch of t has the\nsame total sum and that the branches themselves are also balanced."
+ },
+ {
+  "id": 268,
+  "en": "For example, the tree above is balanced because each branch has the same total sum, and each branch is also itself balanced."
+ },
+ {
+  "id": 269,
+  "en": "Challenge:\nSolve both of these parts with just 1 line of code each."
+ },
+ {
+  "id": 270,
+  "en": "Q9: Number of Trees"
+ },
+ {
+  "id": 271,
+  "en": "A full binary tree is a tree where each node has either 2 branches or 0 branches, but never 1 branch."
+ },
+ {
+  "id": 272,
+  "en": "Write a function which returns the number of unique full binary tree structures that have exactly n leaves.\nSee the doctests for visualizations of the possible full binary tree sturctures that have 1, 2, and 3 leaves."
+ },
+ {
+  "id": 273,
+  "en": "Hint: A full binary tree can be constructed by connecting two smaller full binary trees to a root node. \nIf the two smaller full binary trees have a and b leaves, the new full binary tree will have a + b leaves.\nFor example, as shown in the first diagram below, a full binary tree with 4 leaves can be constructed by connecting \na full binary tree that has three leaves (yellow) with a full binary tree that has one leaf (orange).\nA full binary tree with 4 leaves can also be constructed by connecting two full binary trees with 2 leaves each (second diagram)"
+ },
+ {
+  "id": 274,
+  "en": "For those interested in combinatorics, this problem does have a {0}):"
+ },
+ {
+  "id": 275,
+  "en": "Q10: Only Paths"
+ },
+ {
+  "id": 276,
+  "en": "Implement only_paths, which takes a Tree of numbers t and a number n. It\nreturns a new tree with only the nodes of t that are on a path from the root\nto a leaf with labels that sum to n, or None if no path sums to n."
+ },
+ {
+  "id": 277,
+  "en": "Here is an illustration of the doctest examples involving t."
+ },
+ {
+  "id": 278,
+  "en": "Q1: WWPD: List-Mutation"
+ },
+ {
+  "id": 279,
+  "en": "Q2: Insert Items"
+ },
+ {
+  "id": 280,
+  "en": "Write a function that takes in a list s, a value before, and a value\nafter. It modifies s in place by inserting after just after each\nvalue equal to before in s. It returns s."
+ },
+ {
+  "id": 281,
+  "en": "Important: No new lists should be created."
+ },
+ {
+  "id": 282,
+  "en": "Note:\nIf the values passed into before and after are equal, make\nsure you're not creating an infinitely long list while iterating through it.\nIf you find that your code is taking more than a few seconds to run, the\nfunction may be in an infinite loop of inserting new values."
+ },
+ {
+  "id": 283,
+  "en": "Q3: Group By"
+ },
+ {
+  "id": 284,
+  "en": "Write a function that takes in a list s and a function fn, and returns a dictionary that groups the elements of s based on the result of applying fn."
+ },
+ {
+  "id": 285,
+  "en": "The dictionary should have one key for each unique result of applying fn to elements of s."
+ },
+ {
+  "id": 286,
+  "en": "The value for each key should be a list of all elements in s that, when passed to fn, produce that key (what it evaluates to)."
+ },
+ {
+  "id": 287,
+  "en": "In other words, for each element e in s, determine fn(e) and add e to the list corresponding to fn(e) in the dictionary."
+ },
+ {
+  "id": 288,
+  "en": "Q4: WWPD: Iterators"
+ },
+ {
+  "id": 289,
+  "en": "Important:\nEnter StopIteration if a StopIteration exception occurs,\nError if you believe a different error occurs,\nand Iterator if the output is an iterator object."
+ },
+ {
+  "id": 290,
+  "en": "Important: Python's built-in function map, filter, and zip return iterators, not lists."
+ },
+ {
+  "id": 291,
+  "en": "Q5: Count Occurrences"
+ },
+ {
+  "id": 292,
+  "en": "Implement count_occurrences, which takes an iterator t, an integer n, and\na value x. It returns the number of elements in the\nfirst n elements of t that are equal to x."
+ },
+ {
+  "id": 293,
+  "en": "You can assume that t has at least n elements."
+ },
+ {
+  "id": 294,
+  "en": "Important: You should call next on t exactly n times. If you\nneed to iterate through more than n elements, think about how you can\noptimize your solution."
+ },
+ {
+  "id": 295,
+  "en": "Q6: Generate Permutations"
+ },
+ {
+  "id": 296,
+  "en": "Given a sequence of unique elements, a permutation of the sequence is a list\ncontaining the elements of the sequence in some arbitrary order. For example, \n[1, 2, 3], [2, 1, 3], [1, 3, 2], and [3, 2, 1] are some of the \npermutations of the sequence [1, 2, 3]."
+ },
+ {
+  "id": 297,
+  "en": "Implement perms, a generator function that takes in a sequence seq\nand returns a generator that yields all permutations of seq. For this question,\nassume that seq will not be empty."
+ },
+ {
+  "id": 298,
+  "en": "Permutations may be yielded in any order."
+ },
+ {
+  "id": 299,
+  "en": "Hint:\nRemember, it's possible to loop over generator objects because generators are iterators!"
+ }
+]

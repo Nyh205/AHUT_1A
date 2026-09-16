@@ -1,0 +1,210 @@
+{
+ "(enable JavaScript)": "（请启用 JavaScript）",
+ "60 beats per minute": "每分钟 60 拍",
+ "A Tree instance has two instance attributes:": "<code>Tree</code> 实例有两个实例属性：",
+ "Answer": "答案",
+ "Before writing any code, unlock the tests to verify your understanding of the question:": "写代码之前，先解锁测试，检验你对题目的理解：",
+ "Calendar": "教学日历",
+ "Call Expressions": "调用表达式",
+ "Chapter 2.5": "第 2.5 章",
+ "Check out their etymology.": "看看它们的词源",
+ "Checking if a tree is a leaf": "判断树是否为叶子",
+ "Constant": "常数",
+ "Constructing a tree": "构造树",
+ "Data Abstraction": "数据抽象",
+ "Debugging Guide": "调试指南",
+ "Discussion 0": {
+  "mode": "exact",
+  "zh": "讨论课 0"
+ },
+ "Discussion 1": {
+  "mode": "exact",
+  "zh": "讨论课 1"
+ },
+ "Discussion 10": {
+  "mode": "exact",
+  "zh": "讨论课 10"
+ },
+ "Discussion 11": {
+  "mode": "exact",
+  "zh": "讨论课 11"
+ },
+ "Discussion 12": {
+  "mode": "exact",
+  "zh": "讨论课 12"
+ },
+ "Discussion 2": {
+  "mode": "exact",
+  "zh": "讨论课 2"
+ },
+ "Discussion 3": {
+  "mode": "exact",
+  "zh": "讨论课 3"
+ },
+ "Discussion 4": {
+  "mode": "exact",
+  "zh": "讨论课 4"
+ },
+ "Discussion 5": {
+  "mode": "exact",
+  "zh": "讨论课 5"
+ },
+ "Discussion 6": {
+  "mode": "exact",
+  "zh": "讨论课 6"
+ },
+ "Discussion 7": {
+  "mode": "exact",
+  "zh": "讨论课 7"
+ },
+ "Discussion 8": {
+  "mode": "exact",
+  "zh": "讨论课 8"
+ },
+ "Discussion 9": {
+  "mode": "exact",
+  "zh": "讨论课 9"
+ },
+ "Download": "下载",
+ "Ed Page": "Ed 页面",
+ "Efficiency": "效率",
+ "English words in order of frequency": "按词频排序的英语单词",
+ "Exam Practice": "历年考题",
+ "Exam-Level Questions": "考题级题目",
+ "Example Table": "示例表",
+ "Examples": "示例",
+ "Exponential": "指数",
+ "For a tree t:": "对于树 <code>t</code>：",
+ "Generators": "生成器",
+ "Getting Started": "开始之前",
+ "Getting Started Videos": "入门视频",
+ "Guide for Mac &amp; Linux": "Mac 与 Linux 指南",
+ "Guide for Windows": "Windows 指南",
+ "Here are some examples:": "下面是一些例子：",
+ "Here is an example:": "下面是一个例子：",
+ "Higher-Order Functions": "高阶函数",
+ "Hint": "提示",
+ "Hint: Base Case": "提示：基本情况",
+ "Hint: Template": "提示：模板",
+ "Homework 1": "作业 1",
+ "Homework 2": {
+  "mode": "exact",
+  "zh": "作业 2"
+ },
+ "Homework 3": {
+  "mode": "exact",
+  "zh": "作业 3"
+ },
+ "Homework 4": {
+  "mode": "exact",
+  "zh": "作业 4"
+ },
+ "Homework 5": {
+  "mode": "exact",
+  "zh": "作业 5"
+ },
+ "Homework 6": {
+  "mode": "exact",
+  "zh": "作业 6"
+ },
+ "Homework 7": {
+  "mode": "exact",
+  "zh": "作业 7"
+ },
+ "Inheritance": "继承",
+ "Instructions": "说明",
+ "Interpreters": "解释器",
+ "Introduction": "引言",
+ "Iterators": "迭代器",
+ "Label and branches": "根标签与分支",
+ "Lambda Expressions": "Lambda 表达式",
+ "Linear": "线性",
+ "Linked Lists": "链表",
+ "List Comprehensions": "列表推导式",
+ "Lists": "列表",
+ "Logarithmic": "对数",
+ "Mutability": "可变性",
+ "Mutable Trees": "可变的树",
+ "None of these": "以上都不是",
+ "Object-Oriented Programming": "面向对象编程",
+ "Once you are done unlocking, begin implementing your solution. You can check your correctness with:": "解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：",
+ "Optional Questions": "选做题",
+ "Overview": "概览",
+ "Pair programming?": "结对编程？",
+ "Plants Vs. Zombies": "植物大战僵尸",
+ "Predict what Python will display when you type the following into the interactive interpreter. Then try it to check your answers.": "先预测在交互式解释器中输入下面内容会输出什么，然后实际运行一次来核对答案。",
+ "Quadratic": "平方",
+ "Recommended VS Code Extensions": "推荐的 VS Code 扩展",
+ "Required Questions": "必做题",
+ "Review": "复习",
+ "Run ok on all problems to make sure all tests are unlocked and pass:": "对所有题目运行 ok，确认测试都已解锁并通过：",
+ "SQL": "SQL",
+ "SQL Aggregation": "SQL 聚合",
+ "SQL Basics": "SQL 基础",
+ "SQL operators": "SQL 运算符",
+ "Scheme": "Scheme",
+ "Scheme Built-Ins": "Scheme 内置过程",
+ "Scheme Built-in Procedure Reference": "Scheme 内置过程参考",
+ "Scheme project": "Scheme 项目",
+ "Selecting From Tables": "从表中查询",
+ "Sequences": "序列",
+ "Slides": "幻灯片",
+ "Slides (pdf)": "幻灯片（pdf）",
+ "Solution": "参考答案",
+ "Solution Files": "参考答案",
+ "Solutions": "参考答案",
+ "Starter Files": "起始文件",
+ "String Representations": "字符串表示",
+ "Summary": "小结",
+ "Tail Calls": "尾调用",
+ "The Game of Hog": "Hog 游戏",
+ "These questions are optional. If you don't complete them, you will still receive credit for this assignment. They are great practice, so do them anyway!": "这些是选做题。即使不做，本次作业仍然可以拿到全部学分。不过它们是不错的练习，建议还是做一下！",
+ "Toggle Solution": "显示答案",
+ "Topics": "主题",
+ "Tree Recursion": "树形递归",
+ "Tree class": "Tree 类",
+ "Tree constructor and selector functions": "树的构造函数与选择函数",
+ "Trees": "树",
+ "Use Ok to run the local syntax checker (which checks that you used only a single line for the body of the function):": "用 ok 运行本地语法检查（它会检查函数体是否只用了一行）：",
+ "Use Ok to test your code:": "用 ok 测试你的代码：",
+ "Use Ok to test your knowledge with the following \"What Would Python Display?\" questions:": "用 ok 回答下面的「Python 会输出什么？」（WWPD）题目：",
+ "Use Ok to test your knowledge with the following \"What Would Scheme Display?\" questions:": "用 ok 回答下面的「Scheme 会输出什么？」题目：",
+ "Use Ok to test your understanding:": "用 ok 检验你的理解：",
+ "Use Ok to unlock and test your code:": "用 ok 解锁并测试你的代码：",
+ "Using OK page": "使用 ok 页面",
+ "Video": "视频",
+ "Video walkthrough": "视频讲解",
+ "Videos": "视频",
+ "Visualizing SQL": "可视化 SQL",
+ "Visualizing Trees": "可视化树",
+ "What would Python display?": "Python 会输出什么？",
+ "What would Scheme display?": "Scheme 会输出什么？",
+ "YouTube link": "YouTube 链接",
+ "Your Answer": "你的答案",
+ "Your Answer:": "你的答案：",
+ "aggregate function": "聚合函数",
+ "built-in procedure reference": "内置过程参考",
+ "cartesian product": "笛卡尔积",
+ "chicken or the egg": "先有鸡还是先有蛋",
+ "closed form solution": "闭式解",
+ "debugging article": "调试指南",
+ "error tracing": "错误追踪",
+ "extension's Marketplace page": "扩展的 Marketplace 页面",
+ "false value": "假值",
+ "functional programming": "函数式编程",
+ "installation instructions": "安装说明",
+ "language specification": "语言规范",
+ "let* and letrec": "let* 与 letrec",
+ "may not visit all the elements": "可能无法访问到所有元素",
+ "online Scheme interpreter": "在线 Scheme 解释器",
+ "our online Scheme interpreter": "在线 Scheme 解释器",
+ "pair programming": "结对编程",
+ "play Schememon online": "在线玩 Schememon",
+ "these directions": "这些说明",
+ "this guide.": "本指南",
+ "tower defense": "塔防",
+ "type hints": "类型标注",
+ "unquote splicing": "unquote 拼接",
+ "vending machine": "自动售货机",
+ "zip archive": "zip 压缩包"
+}

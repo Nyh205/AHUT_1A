@@ -1,0 +1,82 @@
+[
+ {
+  "id": 560,
+  "en": "A <em>dictionary list</em> is a Scheme list of pairs <code>((key value) (key value) ... (key value))</code> where each <code>key</code> is a unique symbol.",
+  "zh": "字典列表（dictionary list）是一种 Scheme 列表，由若干对 ((key value) (key value) ... (key value)) 组成，其中每个 key 都是唯一的符号。"
+ },
+ {
+  "id": 561,
+  "en": "Implement <code>(get dict key)</code>, a scheme procedure that takes a dictionary list <code>dict</code> and a value <code>key</code> that appears as the <strong>first</strong> element in some pair within <code>dict</code>. The <code>get</code> procedure returns the value paired with <code>key</code>. If <code>key</code> is not the first value in a pair within <code>dict</code>, return <code>#f</code>.",
+  "zh": "实现 (get dict key)，这是一个 scheme 过程，接收一个字典列表 dict 和一个值 key，该 key 出现在 dict 中某个 pair 的第一个元素位置。get 过程返回与 key 配对的值。如果 key 不是 dict 中某个 pair 的第一个值，则返回 #f。"
+ },
+ {
+  "id": 562,
+  "en": "Implement <code>solution&#x2d;code</code>, a scheme procedure that takes in a Scheme list <code>problem</code> that contains a Scheme expression with a blank, as well as a Scheme expression <code>solution</code>. It returns the result of replacing the <strong>five-underscore blank</strong> <code>_____</code> with the <code>solution</code>. If there are multiple blanks, they should each be replaced by the same <code>solution</code> expression.",
+  "zh": "实现 solution&#x2d;code，这是一个 scheme 过程，接收一个 Scheme 列表 problem（其中包含一个带空白的 Scheme 表达式）以及一个 Scheme 表达式 solution。它返回将五条下划线的空白 _____ 替换为 solution 后的结果。如果有多个空白，它们都应被替换为同一个 solution 表达式。"
+ },
+ {
+  "id": 563,
+  "en": "<strong>Congratulations, you have reached the end of your last CS 61A project!</strong>\nYou have just implemented an interpreter for an entire language!\nIf you enjoyed this project and want to extend it further, you may be\ninterested in looking at more advanced features, like {0},\n{1}, {2}, and {3}.",
+  "zh": "恭喜你，你已经完成了最后一个 CS 61A 项目！\n你刚刚实现了一门完整语言的解释器！\n如果你喜欢这个项目并想进一步扩展它，你可能会对更高级的特性感兴趣，比如{0}、{1}、{2}和{3}。"
+ },
+ {
+  "id": 564,
+  "en": "<strong>Hint:</strong> When building new linked lists iteratively, it may be easier to build it from right to left (or end to start).",
+  "zh": "提示：在迭代地构建新的链表时，从右到左（即从末尾到开头）构建可能会更容易。"
+ },
+ {
+  "id": 565,
+  "en": "We will implement tail-call optimization in Scheme by using a technique called \"trampolining\"\nto tail-call optimize our <code>scheme_eval</code> function <em>in Python</em>.",
+  "zh": "我们将通过一种称为“蹦床”（trampolining）的技术，在 Python 中对 scheme_eval 函数进行尾调用优化，从而在 Scheme 中实现尾调用优化。"
+ },
+ {
+  "id": 566,
+  "en": "In the <code>foo</code> function in Scheme, the very last action in the call to <code>(foo 4)</code> is a recursive call to <code>(foo 3)</code>. Similarly, in Python, the very last action in the <code>scheme_eval</code> call for <code>(foo 4)</code> is a recursive call to <code>scheme_eval</code> for <code>(foo 3)</code>.\n  <em>In other words, these <code>scheme_eval</code> calls are tail calls!</em>",
+  "zh": "在 Scheme 的 foo 函数中，(foo 4) 这次调用的最后一步动作是对 (foo 3) 的递归调用。同样地，在 Python 中，为 (foo 4) 进行的 scheme_eval 调用的最后一步动作，是对 (foo 3) 的 scheme_eval 递归调用。\n换句话说，这些 scheme_eval 调用都是尾调用！"
+ },
+ {
+  "id": 567,
+  "en": "In Python, a large number of <code>scheme_eval</code> frames are opened and kept. Each of these <code>scheme_eval</code> frames holds a\n<em>reference</em> to a <code>foo</code> frame from the previous call (represented by an instance of the <code>Frame</code> class) through the <code>env</code> parameter. Because our current interpreter implementation keeps the <code>scheme_eval</code> frames open to return to once everything is evaluated, it also keeps all these unnecessary <code>foo</code> frames open.",
+  "zh": "在 Python 中，会打开并保留大量的 scheme_eval 帧。每个 scheme_eval 帧都通过 env 参数持有对上一次调用产生的 foo 帧（用 Frame 类的实例表示）的引用。由于我们当前的解释器实现会保持 scheme_eval 帧处于打开状态，以便在一切求值完成后再返回，因此它也把所有那些不必要的 foo 帧都保持着打开。"
+ },
+ {
+  "id": 568,
+  "en": "While all of these recursive calls are happening, each call <em>waits</em> on the result of the next recursive\ncall, and its frame remains open during that time. This is manageable for small inputs, but for <code>(foo 1000000)</code>,\nover 1 million frames will be simultaneously open at some point! That could crash your computer.",
+  "zh": "在这些递归调用进行期间，每个调用都在等待下一个递归调用的结果，其帧在这段时间内始终保持打开。对于较小的输入这还能应付，但对于 (foo 1000000)，在某个时刻会同时有超过 100 万个帧处于打开状态！这可能会让你的电脑崩溃。"
+ },
+ {
+  "id": 569,
+  "en": "In most circumstances, this practice of keeping these frames active during subsequent procedure calls is important.\nFor example, in the below code, the procedure <code>f</code> calls <code>g</code>. The frame of <code>f</code> <em>needs</em> to remain active while the call\nto <code>g</code> is ongoing, so that we can eventually return to <code>f</code> and complete its execution using the result from <code>g</code>.",
+  "zh": "在大多数情况下，在后续的过程调用期间保持这些帧处于活动状态是很重要的。例如，在下面的代码中，过程 f 调用 g。在调用 g 期间，f 的帧需要保持活动状态，这样我们最终才能返回到 f，并用 g 的结果完成它的执行。"
+ },
+ {
+  "id": 570,
+  "en": "However, some procedures, such as <code>foo</code>, make their procedure calls only at the <em>very very end</em>.\nBecause the very last thing <code>(foo 4)</code> does is make a call to <code>(foo 3)</code>, there will be nothing left to do\nin the <code>(foo 4)</code> call after <code>(foo 3)</code> returns.",
+  "zh": "然而，有些过程（例如 foo）只在最最后一步才进行过程调用。由于 (foo 4) 做的最后一件事就是调用 (foo 3)，所以在 (foo 3) 返回之后，(foo 4) 调用中就没有其他事情要做了。"
+ },
+ {
+  "id": 571,
+  "en": "In the situation where a call is the last thing a procedure evaluates before it returns, that call is said to\nbe in a <strong>tail context</strong>. Full implementations of Scheme all implement <strong>tail-call optimization</strong>, which involves\ndiscarding unnecessary frames so that <strong>tail calls</strong> run more efficiently.\n",
+  "zh": "当某个调用是过程返回之前最后求值的内容时，该调用就处于尾上下文（tail context）中。完整的 Scheme 实现都会实现尾调用优化，即丢弃不必要的帧，使尾调用运行得更高效。"
+ },
+ {
+  "id": 572,
+  "en": "Thunking keeps only one <code>thunk_factorial</code> frame open by having each call evaluate exactly one step of the factorial. Instead of making and returning another nested call (like in <code>tail_factorial</code> with <code>return tail_factorial(n &#x2d; 1, so_far * n)</code>), <code>thunk_factorial</code> returns an <em>unevaluated</em> thunk. Think about how the mutual recursion in <code>thunk_factorial</code> achieves this!",
+  "zh": "Thunk 化通过让每次调用只计算阶乘的一步，从而使同时只有一个 thunk_factorial 帧处于打开状态。thunk_factorial 不是进行并返回另一个嵌套调用（像 tail_factorial 中 return tail_factorial(n &#x2d; 1, so_far * n) 那样），而是返回一个未求值的 thunk。想想 thunk_factorial 中的相互递归是如何做到这一点的！"
+ },
+ {
+  "id": 573,
+  "en": "<strong>Preface</strong>: This question is challenging and requires you to modify multiple areas in the interpreter without specifying where.\n<strong>We recommend taking the time to thoroughly understand all the concepts and develop a clear strategy before beginning to code.</strong>",
+  "zh": "前言：本题具有挑战性，需要你在不指明具体位置的情况下修改解释器中的多个部分。我们建议你先花时间彻底理解所有概念，并制定清晰的策略，然后再开始写代码。"
+ },
+ {
+  "id": 574,
+  "en": "<strong>Important</strong>: While working, continuously ensure that the code you write for this question does not cause other parts of the project to fail.\nIf you find yourself losing track of your edits, it might be a good idea to save a copy of your original code for reference.",
+  "zh": "重要：在做题过程中，请持续确认你为本题编写的代码不会导致项目其他部分失败。如果你发现自己理不清改过哪些地方，保存一份原始代码的副本以供参考可能是个好主意。"
+ },
+ {
+  "id": 575,
+  "en": "<strong>Note</strong>: A successful implementation will require changes to <em>several other functions</em>, including some functions that we provided for you.",
+  "zh": "注意：一份成功的实现需要修改其他若干函数，其中包括一些我们已为你提供的函数。"
+ }
+]

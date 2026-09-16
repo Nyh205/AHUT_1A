@@ -1,0 +1,36 @@
+# Chrome 无头探针缓存
+_probe_profile*/
+
+# 探针调试产物
+*.probe.html
+probe_*.txt
+dom_home.html
+rendered_dom.html
+tmp_orig.html
+
+# 截图
+shot_*.png
+shot_*.jpg
+
+# 早期抓取的散文件（内容已并入 cs61a_offline/，根目录已无这些文件，
+# 留着是防止以后解压旧压缩包时又把它们带进来）
+/index.html
+/assets/
+/exam/
+
+# 中文化流水线的中间产物：都由 tools/ 下的脚本重新生成，不必入库
+_todo.jsonl
+_runs.jsonl
+_segments.txt
+_style_whole.json
+_rejected.jsonl
+_v_orig/
+
+# 原始抓取工具（镜像怎么来的，与中文翻译无关）
+scripts/
+
+# Python 字节码缓存
+__pycache__/
+
+# 本机编辑器配置
+.claude/

@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1650,
+  "en": "To start an interactive Scheme interpreter session, type:"
+ },
+ {
+  "id": 1651,
+  "en": "To exit the Scheme interpreter, press Ctrl&#x2d;d on Mac/Linux (or Ctrl&#x2d;z Enter on Windows) or evaluate the built-in exit procedure\n(after completing problem 3 where calling built-in Scheme procedures is implemented):"
+ },
+ {
+  "id": 1652,
+  "en": "You can use your Scheme interpreter to evaluate the expressions in an input file\nby passing the file name as a command-line argument to scheme.py:"
+ },
+ {
+  "id": 1653,
+  "en": "The tests.scm file contains a long list of sample Scheme expressions and\ntheir expected values. Many of these examples are from Chapters 1 and 2 of\n{0}, the textbook from\nwhich Composing Programs is adapted."
+ },
+ {
+  "id": 1654,
+  "en": "Schememon"
+ },
+ {
+  "id": 1655,
+  "en": "A practical application of interpreters is to allow a program written in one programming language to include code written in another. For example, a game written in Python could also include Scheme code if it includes a Scheme interpreter written in Python (which evaluates Scheme expressions and represents their values as Python objects)."
+ },
+ {
+  "id": 1656,
+  "en": "This project includes such a game, called Schémémon, created by former students Tristan Roath and Tyler Roath. In this card battle game, damage is doubled when a player correctly fills in a Scheme procedure definition. The Scheme interpreter you build in this project is used to check if players' answers are correct."
+ },
+ {
+  "id": 1657,
+  "en": "You can {0} any time. For added motivation, every time you finish a question in this Scheme project, claim some gummy bears in the candies menu to unlock new battles. Read the {1} for details."
+ },
+ {
+  "id": 1658,
+  "en": "Phase 1: The Evaluator"
+ },
+ {
+  "id": 1659,
+  "en": "In the starter implementation given to you, the interpreter can only evaluate\nself-evaluating expressions: numbers, booleans, and nil."
+ },
+ {
+  "id": 1660,
+  "en": "In Phase 1, you will develop the following features of the interpreter:"
+ },
+ {
+  "id": 1661,
+  "en": "Symbol definition and lookup"
+ },
+ {
+  "id": 1662,
+  "en": "Expression evaluation"
+ },
+ {
+  "id": 1663,
+  "en": "Calling built-in procedures (such as +, exit, equal?, etc.; see the {0} for the full list)"
+ },
+ {
+  "id": 1664,
+  "en": "Here's a tour of the starter code."
+ },
+ {
+  "id": 1665,
+  "en": "In scheme_eval_apply.py:"
+ },
+ {
+  "id": 1666,
+  "en": "scheme_eval evaluates a Scheme expression expr in an environment env. This\n  function is nearly complete but is missing the logic for call expressions."
+ },
+ {
+  "id": 1667,
+  "en": "Consider this if-statement block in scheme_eval:"
+ },
+ {
+  "id": 1668,
+  "en": "Notice that when evaluating a special form, scheme_eval redirects evaluation to an\n  appropriate do_?_form function found in scheme_forms.py. Some examples of special forms\n  are and, or, cond, if (note that these are not Built-In Procedures). We will work on\n  implementing do_?_form functions in a future part."
+ },
+ {
+  "id": 1669,
+  "en": "scheme_apply applies a procedure to some arguments."
+ },
+ {
+  "id": 1670,
+  "en": "In scheme_classes.py:"
+ },
+ {
+  "id": 1671,
+  "en": "The Frame class represents frames, and each frame also represents an environment starting with that frame."
+ },
+ {
+  "id": 1672,
+  "en": "The LambdaProcedure class represents user-defined procedures."
+ },
+ {
+  "id": 1673,
+  "en": "IMPORTANT NOTE: Since all non-atomic Scheme expressions (i.e., call expressions, special forms, definitions) are Scheme lists (and therefore linked lists), we use the Link class to represent them. For example, the expression (+ 1 2) will be represented in our interpreter as Link(&#x27;+&#x27;, Link(1, Link(2, nil))). More complicated expressions can be represented with nested Links. For example, the expression(+ 1 (* 2 3)) will be represented as Link(&#x27;+&#x27;, Link(1, Link(Link(&#x27;*&#x27;, Link(2, Link(3, nil))), nil)))."
+ },
+ {
+  "id": 1674,
+  "en": "Implement the define and lookup methods of the Frame class in scheme_classes.py."
+ },
+ {
+  "id": 1675,
+  "en": "Each Frame object has the following instance attributes:"
+ },
+ {
+  "id": 1676,
+  "en": "bindings is a dictionary representing the bindings in the frame instance. Each item\n  associates a Scheme symbol (represented as a Python string) to a Scheme value."
+ },
+ {
+  "id": 1677,
+  "en": "parent is the parent Frame instance (parent environment frame). The parent of the Global Frame is\n  None."
+ },
+ {
+  "id": 1678,
+  "en": "To complete these methods:"
+ },
+ {
+  "id": 1679,
+  "en": "define takes a symbol (represented by a Python string) and a value. It\n  binds the symbol to the value in the Frame instance using bindings."
+ },
+ {
+  "id": 1680,
+  "en": "lookup takes a symbol and returns the value bound to that symbol in the\n  first frame of the environment where it is found. The\n  environment for a Frame instance consists of that frame, its parent\n  frame, and all its ancestor frames, including the Global Frame. When looking\n  up a symbol:"
+ },
+ {
+  "id": 1681,
+  "en": "If the symbol is bound in the current frame, return its value."
+ },
+ {
+  "id": 1682,
+  "en": "If the symbol is not bound in the current frame and the frame has a parent frame, continue looking up the symbol in the parent frame."
+ },
+ {
+  "id": 1683,
+  "en": "Keep checking all parent frames until either the symbol is found or there are no more parent frames."
+ },
+ {
+  "id": 1684,
+  "en": "If the symbol is never found in any frame, raise a SchemeError."
+ },
+ {
+  "id": 1685,
+  "en": "After you complete this problem, start your Scheme interpreter (with python3\nscheme.py) and you should now be able to look up built-in procedure names:"
+ },
+ {
+  "id": 1686,
+  "en": "However, your Scheme interpreter will still not be able to call these\nprocedures until you complete the next problem."
+ },
+ {
+  "id": 1687,
+  "en": "Remember, at this point, you can only exit the interpreter by pressing Ctrl&#x2d;d on Max/Linux (or Ctrl&#x2d;z Enter on Windows)."
+ },
+ {
+  "id": 1688,
+  "en": "To be able to call built-in procedures, such as +, you need to complete the\nBuiltinProcedure case within the scheme_apply function in\nscheme_eval_apply.py. Built-in procedures are applied by calling a\ncorresponding Python function that implements the procedure."
+ },
+ {
+  "id": 1689,
+  "en": "To see a list of all Scheme built-in procedures used in the project, look in\nthe scheme_builtins.py file. Any function decorated with @builtin\nwill be added to the globally-defined BUILTINS list."
+ },
+ {
+  "id": 1690,
+  "en": "A BuiltinProcedure has two instance attributes:"
+ },
+ {
+  "id": 1691,
+  "en": "py_func: the Python function that implements the built-in Scheme procedure."
+ },
+ {
+  "id": 1692,
+  "en": "need_env: a Boolean that indicates whether or not this built-in\n  procedure will need the current environment to be passed in as the last\n  argument. The environment is required, for instance, to implement the built-in\n  eval procedure."
+ },
+ {
+  "id": 1693,
+  "en": "scheme_apply takes the procedure object, a linked list of argument values\nargs, and the current environment env. The args argument is a Scheme list,\nrepresented as a Link object or nil, containing the values passed to the\nprocedure. For example, if the Scheme built-in procedure we are trying to use\nis + and we pass in args as Link(1, Link(2, nil)) to scheme_apply, we\nwould be making the call (+ 1 2)."
+ },
+ {
+  "id": 1694,
+  "en": "Your implementation should do the following:"
+ },
+ {
+  "id": 1695,
+  "en": "Convert the Scheme list to a Python list of arguments. Hint: args is a\n  Link, which has .first and .rest attributes."
+ },
+ {
+  "id": 1696,
+  "en": "If procedure.need_env is True, then add the current environment env\n  to the end of this list."
+ },
+ {
+  "id": 1697,
+  "en": "Return the result of calling procedure.py_func on all of those arguments. Since you don't know the exact number of arguments, use *args notation: f(1, 2, 3) is equivalent to f(*[1, 2, 3]). Do this part within the try statement provided, after the line that says try:."
+ },
+ {
+  "id": 1698,
+  "en": "We have already implemented the following behavior for you:"
+ },
+ {
+  "id": 1699,
+  "en": "If calling the function results in a TypeError exception being raised, then\n  the wrong number of arguments were passed. The try statement\n  handles this exception and raises a SchemeError with the message\n  &#x27;incorrect number of arguments&#x27;."
+ },
+ {
+  "id": 1700,
+  "en": "The scheme_eval function (in scheme_eval_apply.py) evaluates a Scheme\nexpression in an environment. The provided code\nalready looks up symbols in the current environment, returns self-evaluating\nexpressions (such as numbers), and evaluates special forms."
+ },
+ {
+  "id": 1701,
+  "en": "Implement the missing part of scheme_eval, which evaluates a call expression.\nTo evaluate a call expression:"
+ },
+ {
+  "id": 1702,
+  "en": "Evaluate the operator (which should evaluate to a Procedure instance – see scheme_classes.py for Procedure definitions)."
+ },
+ {
+  "id": 1703,
+  "en": "Evaluate all of the operands and collect the results (the argument values) in a Scheme list."
+ },
+ {
+  "id": 1704,
+  "en": "Return the result of calling scheme_apply on this Procedure, these argument values, and the current environment."
+ },
+ {
+  "id": 1705,
+  "en": "You'll have to recursively call scheme_eval in the first two steps. Here are\nsome other functions/methods you should use:"
+ },
+ {
+  "id": 1706,
+  "en": "The map_link function returns a new Scheme list constructed by applying a\n  one-argument Python function to every item in a Scheme list."
+ },
+ {
+  "id": 1707,
+  "en": "The scheme_apply function applies a Scheme procedure to arguments\n  represented as a Scheme list (a Link instance or nil)."
+ },
+ {
+  "id": 1708,
+  "en": "Important: do not mutate the passed-in expr. That would change a program as\nit's being evaluated, creating strange and incorrect effects."
+ },
+ {
+  "id": 1709,
+  "en": "Some of the unlocking tests call a primitive (built-in) procedure called\nprint&#x2d;then&#x2d;return. This procedure doesn't exist in Scheme, but was added to\nthis project just to test this question. print&#x2d;then&#x2d;return takes two\narguments. It prints out its first argument and returns the second. If you're\ninterested, you can find this function at the bottom of scheme_builtins.py"
+ },
+ {
+  "id": 1710,
+  "en": "Your interpreter should now be able to evaluate built-in procedure calls, giving\nyou the functionality of the Calculator language and more. Run python3\nscheme.py, and you can now add and multiply!"
+ },
+ {
+  "id": 1711,
+  "en": "The define special form ({0}) in Scheme can be used either to assign the value of a given expression\nto a symbol or to create a procedure and bind it to a symbol:"
+ },
+ {
+  "id": 1712,
+  "en": "Notice that the type of the first operand can tell us what is being defined:"
+ },
+ {
+  "id": 1713,
+  "en": "If it is a symbol, e.g. a, then the expression is defining a symbol."
+ },
+ {
+  "id": 1714,
+  "en": "If it is a Scheme list, e.g. (foo x), then the expression is creating a procedure."
+ },
+ {
+  "id": 1715,
+  "en": "The do_define_form function in scheme_forms.py evaluates (define ...)\nexpressions. There are two missing parts in this function; one for when the first\noperand is a symbol, and the other for when it is a Scheme list (i.e. Link).\nFor this problem, implement just the first part, which evaluates the second\noperand to obtain a value and binds the first operand, a symbol, to that value. Then,\ndo_define_form returns the symbol that was bound."
+ },
+ {
+  "id": 1716,
+  "en": "You should now be able to assign values to symbols and evaluate those symbols."
+ },
+ {
+  "id": 1717,
+  "en": "The following ok test determines whether the operator of a call expression is\nevaluated multiple times. The operator should be evaluated only a single time\nbefore raising an error (because x is not bound to a procedure)."
+ },
+ {
+  "id": 1718,
+  "en": "If the operator is evaluated twice, then x will be bound to 2 instead of 1 at\nthe end, causing the test to fail. Therefore, if your code fails this test,\nyou'll want to make sure you only evaluate the operator of a call expression\nonce in scheme_eval."
+ },
+ {
+  "id": 1719,
+  "en": "In Scheme, you can quote expressions in two ways: with the quote special form\n({0}) or with the symbol &#x27;.  The reader converts &#x27;... into\n(quote ...), so that your interpreter only needs to evaluate the (quote ...)\nsyntax. The quote special form returns its operand expression without\nevaluating it:"
+ },
+ {
+  "id": 1720,
+  "en": "Implement the do_quote_form function in scheme_forms.py so that it simply\nreturns the unevaluated operand of the (quote ...) expression."
+ },
+ {
+  "id": 1721,
+  "en": "After completing this function, you should be able to evaluate quoted\nexpressions. Try out some of the following in your interpreter!"
+ },
+ {
+  "id": 1722,
+  "en": "Check Problems for Phase 1"
+ },
+ {
+  "id": 1723,
+  "en": "When you run ok commands, you'll still see that some tests are locked\nbecause you haven't completed the whole project yet."
+ },
+ {
+  "id": 1724,
+  "en": "Phase 2: Procedures"
+ },
+ {
+  "id": 1725,
+  "en": "In Phase 2, you will add the ability to create and call user-defined procedures.\nYou will add the following features to the interpreter:"
+ },
+ {
+  "id": 1726,
+  "en": "Lambda procedures, using the (lambda ...) special form"
+ },
+ {
+  "id": 1727,
+  "en": "Named procedures, using the (define (...) ...) special form"
+ },
+ {
+  "id": 1728,
+  "en": "Dynamically scoped mu procedures, using the (mu ...) special form."
+ },
+ {
+  "id": 1729,
+  "en": "Change the eval_all function in scheme_eval_apply.py (which is called from\ndo_begin_form in scheme_forms.py) to complete the implementation of the\nbegin special form ({0})."
+ },
+ {
+  "id": 1730,
+  "en": "A begin expression is evaluated by evaluating all sub-expressions in order.\nThe value of the begin expression is the value of the final sub-expression."
+ },
+ {
+  "id": 1731,
+  "en": "To complete the implementation of begin, eval_all will take in expressions\n(a Scheme list of expressions) and env (a Frame representing the current\nenvironment), evaluate all the expressions in expressions, and return the\nvalue of the last expression in expressions."
+ },
+ {
+  "id": 1732,
+  "en": "If eval_all is passed an empty list of expressions (nil), then it should\nreturn the Python value None, which represents the Scheme value undefined."
+ },
+ {
+  "id": 1733,
+  "en": "User-Defined Procedures"
+ },
+ {
+  "id": 1734,
+  "en": "User-defined lambda procedures are represented as instances of the LambdaProcedure\nclass. A LambdaProcedure instance has three instance attributes:"
+ },
+ {
+  "id": 1735,
+  "en": "formals: a Scheme list containing the formal parameter names for the arguments of the lambda procedure."
+ },
+ {
+  "id": 1736,
+  "en": "body: a nested Scheme list of expressions representing the body of the procedure."
+ },
+ {
+  "id": 1737,
+  "en": "env: the environment in which the procedure was defined."
+ },
+ {
+  "id": 1738,
+  "en": "For example, in (lambda (x y) (+ x y)), formals is Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil)).\nbody is Link(Link(&#x27;+&#x27;, Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))), nil), which is a nested Scheme list where the\nfirst element (body.first) is the expression (+ x y) represented as Link(&#x27;+&#x27;, Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))). body is nested\nto allow for complex expressions and nested function calls."
+ },
+ {
+  "id": 1739,
+  "en": "Implement the do_lambda_form function ({0}) in\nscheme_forms.py, which creates and returns a LambdaProcedure instance."
+ },
+ {
+  "id": 1740,
+  "en": "In Scheme, the body of a procedure can contain multiple expressions, but must include at least one.\nThe body attribute of a LambdaProcedure instance is a nested Scheme list of these expressions,\nand the formals attribute is a Link.\nLike a begin special form, evaluating the body of a procedure executes all expressions in order.\nA procedure returns the value of its last body expression."
+ },
+ {
+  "id": 1741,
+  "en": "While you cannot call a user-defined procedure yet, you can visually verify that you\nhave created the procedure correctly by evaluating a lambda expression in your interpreter."
+ },
+ {
+  "id": 1742,
+  "en": "Implement the make_child_frame method of the Frame class\n(in scheme_classes.py), which will be used to create new frames when calling\nuser-defined procedures. This method takes in two arguments: formals, which is\na Scheme list of symbols (ex: Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))), and vals, which is a\nScheme list of values (ex: Link(3, Link(5, nil))). It should return a new child frame\nwith the formal parameters bound to the values."
+ },
+ {
+  "id": 1743,
+  "en": "To do this:"
+ },
+ {
+  "id": 1744,
+  "en": "If the number of argument values does not match with the number of formal\n  parameters, raise a SchemeError."
+ },
+ {
+  "id": 1745,
+  "en": "Create a new Frame instance that is the child of this frame (called self)."
+ },
+ {
+  "id": 1746,
+  "en": "Bind each formal parameter to its corresponding value in the newly\n  created frame. The first symbol in formals should be bound to the first\n  value in vals, and so on. Remember that formals and vals are Links."
+ },
+ {
+  "id": 1747,
+  "en": "Return the new frame."
+ },
+ {
+  "id": 1748,
+  "en": "Implement the LambdaProcedure case in the scheme_apply function\nin scheme_eval_apply.py. This elif block is executed when the\nprocedure being applied is a LambdaProcedure instance."
+ },
+ {
+  "id": 1749,
+  "en": "First create a new Frame instance and bind the procedure's formal parameters to\nthe argument values by calling the make_child_frame method on the appropriate parent frame."
+ },
+ {
+  "id": 1750,
+  "en": "Then, within this new frame, evaluate each of the expressions of the body of the procedure\nusing eval_all."
+ },
+ {
+  "id": 1751,
+  "en": "Hint: Your new frame should be a child of the frame in which the lambda was\ndefined. The env provided as an argument to scheme_apply is instead the\nframe in which the procedure was called."
+ },
+ {
+  "id": 1752,
+  "en": "See {0} to remind yourself\nof the attributes of LambdaProcedure."
+ },
+ {
+  "id": 1753,
+  "en": "Currently, your Scheme interpreter is able to bind symbols to user-defined\nprocedures in the following manner:"
+ },
+ {
+  "id": 1754,
+  "en": "However, we'd like to be able to use the shorthand form of defining named\nprocedures, which is what we've been doing in homeworks and labs:"
+ },
+ {
+  "id": 1755,
+  "en": "Modify the do_define_form function in scheme_forms.py so that it correctly handles\ndefine (...) ...) expressions ({0})."
+ },
+ {
+  "id": 1756,
+  "en": "Make sure that it can handle multi-expression bodies. For example,"
+ },
+ {
+  "id": 1757,
+  "en": "There are (at least) two ways to solve this problem. One is to construct an expression (define _ (lambda ...)) and call do_define_form on it (omitting the define).  The second is to implement it directly:"
+ },
+ {
+  "id": 1758,
+  "en": "Using the given variables signature and expressions, find the defined\n  function's name (symbol), formals, and body."
+ },
+ {
+  "id": 1759,
+  "en": "Create a LambdaProcedure instance using the formals and body. (You could call do_lambda_form to do this.)"
+ },
+ {
+  "id": 1760,
+  "en": "Bind the symbol to this new LambdaProcedure instance."
+ },
+ {
+  "id": 1761,
+  "en": "Return the symbol that was bound."
+ },
+ {
+  "id": 1762,
+  "en": "Doctest Walkthrough:\nConsider the doctest do_define_form(read_line(&quot;((f x) (+ x 2))&quot;), env). This is the Python call that will evaluate\n(define (f x) (+ x 2)) in Scheme. read_line is a utility function that takes in &quot;((f x) (+ x 2))&quot; and returns its Link representation.\nTherefore, that Link representation is passed into do_define_form as its expressions parameter."
+ },
+ {
+  "id": 1763,
+  "en": "Hint for Way 2: How can we utilize the Scheme list representation of ((f x) (+ x 2)) (the structure for (define (f x) (* x 2)))\nto have the same functionality as (define f (lambda (x) (+ x 2))), which we know our Scheme interpreter (and thus our Python code) can already\nhandle?\nTry writing out the Scheme list representation yourself and consider what components you would need to extract from it in order to be able to\nreplicate the functionality of (define f (lambda (x) (+ x 2))) in Python within do_define_form."
+ },
+ {
+  "id": 1764,
+  "en": "At this point in the project, your Scheme interpreter should support the\nfollowing features:"
+ },
+ {
+  "id": 1765,
+  "en": "Creating procedures using lambda expressions,"
+ },
+ {
+  "id": 1766,
+  "en": "Defining named procedures using define expressions, and"
+ },
+ {
+  "id": 1767,
+  "en": "Calling user-defined procedures."
+ },
+ {
+  "id": 1768,
+  "en": "Check to make sure that you completed all the problems in Phase 1 and 2:"
+ },
+ {
+  "id": 1769,
+  "en": "Phase 3: Mu and Logical Forms"
+ },
+ {
+  "id": 1770,
+  "en": "All of the Scheme procedures we've seen so far use lexical scoping: the parent\nof the new call frame is the environment in which the procedure was defined.\nAnother type of scoping, which is not standard in Scheme but appears in other\nvariants of Lisp, is called dynamic scoping: the parent of the new call frame\nis the environment in which the call expression was evaluated. With dynamic\nscoping, calling the same procedure with the same arguments from different parts\nof your code can create different behavior (due to different parent frames)."
+ },
+ {
+  "id": 1771,
+  "en": "The mu special form ({0}; invented for this project) evaluates\nto a dynamically scoped procedure."
+ },
+ {
+  "id": 1772,
+  "en": "Above, the procedure f does not have a or b as arguments; however, because\nf gets called within the procedure g, it has access to the a and b\ndefined in g's frame."
+ },
+ {
+  "id": 1773,
+  "en": "Your job:"
+ },
+ {
+  "id": 1774,
+  "en": "Implement do_mu_form in scheme_forms.py to evaluate the mu special form.\n  A mu expression  evaluates to a MuProcedure. The MuProcedure class\n  (defined in scheme_classes.py) has been provided for you."
+ },
+ {
+  "id": 1775,
+  "en": "In addition to implementing do_mu_form, complete the MuProcedure case\n  within the scheme_apply function (in scheme_eval_apply.py) so that when a\n  mu procedure is called, its body is evaluated in the correct environment. When\n  a MuProcedure is called, the parent of the new call frame is the environment\n  in which that call expression was evaluated. As a result, a MuProcedure\n  does not need to store an environment as an instance attribute. Your code here should\n  be VERY similar to what you did for question 9."
+ },
+ {
+  "id": 1776,
+  "en": "This rest of the section will be completed in scheme_forms.py."
+ },
+ {
+  "id": 1777,
+  "en": "Logical special forms include if, and, or, and cond. These expressions\nare special because not all of their sub-expressions may be evaluated."
+ },
+ {
+  "id": 1778,
+  "en": "In Scheme, only #f is a false value. All other values\n(including 0 and nil) are true values. You can test whether a value is a\ntrue or false value using the provided Python functions is_scheme_true and\nis_scheme_false, defined in scheme_utils.py."
+ },
+ {
+  "id": 1779,
+  "en": "Scheme traditionally uses #f to indicate the false Boolean value. In our\ninterpreter, that is equivalent to false or False. Similarly, true,\nTrue, and #t are all equivalent. However, when unlocking tests, use\n#t and #f."
+ },
+ {
+  "id": 1780,
+  "en": "To get you started, we've provided an implementation of the if special form in\nthe do_if_form function."
+ },
+ {
+  "id": 1781,
+  "en": "Implement do_and_form and do_or_form so that and and or expressions\n({0}) are evaluated correctly."
+ },
+ {
+  "id": 1782,
+  "en": "The logical forms and and or are short-circuiting. For and, your\ninterpreter should evaluate each sub-expression from left to right, and if any\nof these is a false value, return that value. Otherwise,\nreturn the value of the last sub-expression. If there are no\nsub-expressions in an and expression, it evaluates to #t."
+ },
+ {
+  "id": 1783,
+  "en": "In your code here, you should represent Scheme's #t as Python's True\nand Scheme's #f as Python's False."
+ },
+ {
+  "id": 1784,
+  "en": "For or, evaluate each sub-expression from left to right. If any\nsub-expression evaluates to a true value, return that value. Otherwise, return\nthe value of the last sub-expression.\nIf there are no sub-expressions in an or expression,\nit evaluates to #f."
+ },
+ {
+  "id": 1785,
+  "en": "Important: Use the provided Python functions is_scheme_true and\nis_scheme_false from scheme_utils.py to test boolean values."
+ },
+ {
+  "id": 1786,
+  "en": "Problem 13"
+ },
+ {
+  "id": 1787,
+  "en": "Fill in the missing parts of do_cond_form so that it correctly implements\ncond ({0}), returning the value of the first result\nsub-expression corresponding to a true predicate, or the value of the result\nsub-expression corresponding to else."
+ },
+ {
+  "id": 1788,
+  "en": "Some special cases:"
+ },
+ {
+  "id": 1789,
+  "en": "When the true predicate does not have a corresponding result sub-expression,\n  return the predicate value."
+ },
+ {
+  "id": 1790,
+  "en": "When a result sub-expression of a cond case has multiple expressions,\n  evaluate them all and return the value of the last expression. (Hint: Use\n  eval_all.)"
+ },
+ {
+  "id": 1791,
+  "en": "Your implementation should match the following examples and the additional tests\nin tests.scm."
+ },
+ {
+  "id": 1792,
+  "en": "The value of a cond is undefined if there are no true predicates and no\nelse. In such a case, do_cond_form should return None. If there is only an\nelse, return the value of its result sub-expression. If it doesn't have one,\nreturn #t."
+ },
+ {
+  "id": 1793,
+  "en": "Additional Scheme Tests"
+ },
+ {
+  "id": 1794,
+  "en": "Your final task in Part III of this project is to make sure that your scheme\ninterpreter passes the additional suite of tests we have provided."
+ },
+ {
+  "id": 1795,
+  "en": "To run these tests (worth 1 point), run the command:"
+ },
+ {
+  "id": 1796,
+  "en": "If you have passed all of the required cases,\nyou should see 1/1 points\nreceived for tests.scm when you run python3 ok &#x2d;&#x2d;score.\nIf you are failing tests due to output from\nprint statements you've added in your code for debugging,\nmake sure to remove those as well for the tests to pass."
+ },
+ {
+  "id": 1797,
+  "en": "Congratulations! Your Scheme interpreter implementation is now complete!"
+ },
+ {
+  "id": 1798,
+  "en": "Phase 4: Write Some Scheme"
+ },
+ {
+  "id": 1799,
+  "en": "Not only is your Scheme interpreter itself a tree-recursive program, but it is\nflexible enough to evaluate other recursive programs. Implement the\nfollowing procedures in the questions.scm file, which will complete\nthe implementation of the game of {0}."
+ }
+]

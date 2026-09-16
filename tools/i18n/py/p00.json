@@ -1,0 +1,482 @@
+[
+ {
+  "id": 0,
+  "en": "Return a+abs(b), but without calling abs."
+ },
+ {
+  "id": 1,
+  "en": "Check that you didn't change the return statement of a_plus_abs_b."
+ },
+ {
+  "id": 2,
+  "en": "You don't need to edit this function. It's just here to check your work."
+ },
+ {
+  "id": 3,
+  "en": "Print the hailstone sequence starting at n and return its length."
+ },
+ {
+  "id": 4,
+  "en": "Return the product of the first n terms in a sequence."
+ },
+ {
+  "id": 5,
+  "en": "n: a positive integer term: a function that takes an index as input and produces a term"
+ },
+ {
+  "id": 6,
+  "en": "Returns the function that computes the nth application of f."
+ },
+ {
+  "id": 7,
+  "en": "Return the largest factor of n that is smaller than n."
+ },
+ {
+  "id": 8,
+  "en": "Return the result of fusing together the first n terms in a sequence and start.  The terms to be fused are term(1), term(2), ..., term(n). The function fuse is a two-argument commutative & associative function."
+ },
+ {
+  "id": 9,
+  "en": "Returns the sum: term(1) + ... + term(n), using accumulate."
+ },
+ {
+  "id": 10,
+  "en": "Returns the product: term(1) * ... * term(n), using accumulate."
+ },
+ {
+  "id": 11,
+  "en": "Returns the number of times 8 appears as a digit of num."
+ },
+ {
+  "id": 12,
+  "en": "Determines the digit distance of num."
+ },
+ {
+  "id": 13,
+  "en": "Compute the sum f_odd(1) + f_even(2) + f_odd(3) + ..., up to num."
+ },
+ {
+  "id": 14,
+  "en": "Returns the next smaller bill in order."
+ },
+ {
+  "id": 15,
+  "en": "Return the number of ways to make change."
+ },
+ {
+  "id": 16,
+  "en": "Return a shuffled list that interleaves the two halves of s."
+ },
+ {
+  "id": 17,
+  "en": "Replace all non-list elements x with f(x) in the nested list s."
+ },
+ {
+  "id": 18,
+  "en": "Returns the next larger bill in order."
+ },
+ {
+  "id": 19,
+  "en": "Return the number of ways to make change using bills."
+ },
+ {
+  "id": 20,
+  "en": "Simulate picking up every item in items and add them, one at a time, to the inventory IN PLACE. The function should return the mutated inventory."
+ },
+ {
+  "id": 21,
+  "en": "Returns True if t contains a node with the value 'berry' and False otherwise."
+ },
+ {
+  "id": 22,
+  "en": "Return the number of entries in the tree."
+ },
+ {
+  "id": 23,
+  "en": "Return a tree with all of the nodes of t and a path with labels p."
+ },
+ {
+  "id": 24,
+  "en": "Yield the elements of strictly increasing iterables incr_a and incr_b, removing repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may or may not be infinite sequences."
+ },
+ {
+  "id": 25,
+  "en": "Yields all possible paths from the root of t to a node with the label target as a list."
+ },
+ {
+  "id": 26,
+  "en": "You do not need to understand this code."
+ },
+ {
+  "id": 27,
+  "en": "Tree Data Abstraction"
+ },
+ {
+  "id": 28,
+  "en": "Construct a tree with the given label value and a list of branches."
+ },
+ {
+  "id": 29,
+  "en": "Return the label value of a tree."
+ },
+ {
+  "id": 30,
+  "en": "Return the list of branches of the given tree."
+ },
+ {
+  "id": 31,
+  "en": "Returns True if the given tree is a tree, and False otherwise."
+ },
+ {
+  "id": 32,
+  "en": "Returns True if the given tree's list of branches is empty, and False otherwise."
+ },
+ {
+  "id": 33,
+  "en": "Print a representation of this tree in which each node is indented by two spaces times its depth from the root."
+ },
+ {
+  "id": 34,
+  "en": "Returns a copy of t. Only for testing purposes."
+ },
+ {
+  "id": 35,
+  "en": "A vending machine that vends some product for some price."
+ },
+ {
+  "id": 36,
+  "en": "Set the product and its price, as well as other instance attributes."
+ },
+ {
+  "id": 37,
+  "en": "Add n to the stock and return a message about the updated stock level."
+ },
+ {
+  "id": 38,
+  "en": "E.g., Current candy stock: 3"
+ },
+ {
+  "id": 39,
+  "en": "If the machine is out of stock, return a message informing the user to restock (and return their n dollars)."
+ },
+ {
+  "id": 40,
+  "en": "E.g., Nothing left to vend. Please restock. Here is your $4."
+ },
+ {
+  "id": 41,
+  "en": "Otherwise, add n to the balance and return a message about the updated balance."
+ },
+ {
+  "id": 42,
+  "en": "E.g., Current balance: $4"
+ },
+ {
+  "id": 43,
+  "en": "Dispense the product if there is sufficient stock and funds and return a message. Update the stock and balance accordingly."
+ },
+ {
+  "id": 44,
+  "en": "E.g., Here is your candy and $2 change."
+ },
+ {
+  "id": 45,
+  "en": "If not, return a message suggesting how to correct the problem."
+ },
+ {
+  "id": 46,
+  "en": "E.g., Nothing left to vend. Please restock. Please add $3 more funds."
+ },
+ {
+  "id": 47,
+  "en": "Mutates t so that each node's label becomes the product of its own label and all labels in the corresponding subtree rooted at t."
+ },
+ {
+  "id": 48,
+  "en": "Prune the tree mutatively, keeping only the n branches of each node with the smallest labels."
+ },
+ {
+  "id": 49,
+  "en": "A cat says 'Meow!' when asked to talk."
+ },
+ {
+  "id": 50,
+  "en": "A cat can only lose a life if it has at least one life. When there are zero lives left, the 'is_alive' variable becomes False."
+ },
+ {
+  "id": 51,
+  "en": "A tree has a label and a list of branches."
+ },
+ {
+  "id": 52,
+  "en": "A linked list."
+ },
+ {
+  "id": 53,
+  "en": "Adds two Links, returning a new Link"
+ },
+ {
+  "id": 54,
+  "en": "Mutates a deep link s by replacing each item found with the result of calling func on the item. Does NOT create new Links (so no use of Link's constructor)."
+ },
+ {
+  "id": 55,
+  "en": "Does not return the modified Link object."
+ },
+ {
+  "id": 56,
+  "en": "Tests whether a number N is prime or not. Implement this function in O(sqrt(n)) time. You can assume n >= 2"
+ },
+ {
+  "id": 57,
+  "en": "sqrt(k) will give the square root of k as a floating point (decimal)"
+ },
+ {
+  "id": 58,
+  "en": "Come up with the most creative expression that evaluates to 2026 using only numbers and the +, *, and - operators (or ** and % if you'd like)."
+ },
+ {
+  "id": 59,
+  "en": "Compute the falling factorial of n to depth k."
+ },
+ {
+  "id": 60,
+  "en": "Return true if n has two eights in a row."
+ },
+ {
+  "id": 61,
+  "en": "Return the k-th digit from the right of n for positive integers n and k."
+ },
+ {
+  "id": 62,
+  "en": "Return the number among a, b, and c that is not the smallest or largest. Assume a, b, and c are all different numbers."
+ },
+ {
+  "id": 63,
+  "en": "Sum all the digits of y."
+ },
+ {
+  "id": 64,
+  "en": "Lab02 Utilities"
+ },
+ {
+  "id": 65,
+  "en": "Converts all letters to numbers 0-51, with lowercase letters mapped to 0-25 and uppercase letters mapped to 26-51"
+ },
+ {
+  "id": 66,
+  "en": "Coverts a number 0-51 to a letter"
+ },
+ {
+  "id": 67,
+  "en": "Returns the letter in the same position on the other side of the alphabet."
+ },
+ {
+  "id": 68,
+  "en": "Returns a function that applies function f to every element of an iterable."
+ },
+ {
+  "id": 69,
+  "en": "Return a function with one parameter x that returns True if f(g(x)) is equal to g(f(x)). You can assume the result of g(x) is a valid input for f and vice versa."
+ },
+ {
+  "id": 70,
+  "en": "Return the sum of the digits of non-negative integer y."
+ },
+ {
+  "id": 71,
+  "en": "Return whether positive integer n is prime."
+ },
+ {
+  "id": 72,
+  "en": "Returns a function with one parameter N that counts all the numbers from 1 to n that satisfy the two-argument predicate function Condition, where the first argument for condition is n and the second argument is the number from 1 to n."
+ },
+ {
+  "id": 73,
+  "en": "Returns a one-argument Caesar cipher function. The function should \"rotate\" a letter by an integer amount 'num' using an operation 'op' (either add or sub)."
+ },
+ {
+  "id": 74,
+  "en": "You may use the provided `letter_to_num` and `num_to_letter` functions, which will map all lowercase letters a-z to 0-25 and all uppercase letters A-Z to 26-51."
+ },
+ {
+  "id": 75,
+  "en": "Fill in the blanks '_____' to check if a number is a palindrome."
+ },
+ {
+  "id": 76,
+  "en": "This makes the type annotations work"
+ },
+ {
+  "id": 77,
+  "en": "Returns a flattened version of list s."
+ },
+ {
+  "id": 78,
+  "en": "Return a list of the elements of s that are within k of their index."
+ },
+ {
+  "id": 79,
+  "en": "This function removes the first appearance of elem in list lst."
+ },
+ {
+  "id": 80,
+  "en": "This function returns a sorted version of the list lst."
+ },
+ {
+  "id": 81,
+  "en": "Return a function can_reach(x, y, limit) that returns whether some call expression containing only f, g, and x with up to limit calls will give the result y."
+ },
+ {
+  "id": 82,
+  "en": "Return the number of ten-pairs within positive integer n."
+ },
+ {
+  "id": 83,
+  "en": "Return how many times digit appears in n."
+ },
+ {
+  "id": 84,
+  "en": "Applies fn onto each element in seq and returns a list."
+ },
+ {
+  "id": 85,
+  "en": "Keeps elements in seq only if they satisfy pred."
+ },
+ {
+  "id": 86,
+  "en": "Combines elements in seq using combiner. seq will have at least one element."
+ },
+ {
+  "id": 87,
+  "en": "Check that your two_of_three code consists of nothing but a return statement."
+ },
+ {
+  "id": 88,
+  "en": "Returns the distance between city_a and city_b according to their coordinates."
+ },
+ {
+  "id": 89,
+  "en": "Returns the name of either city_a or city_b, whichever is closest to coordinate (lat, lon). If the two cities are the same distance away from the coordinate, consider city_b to be the closer city."
+ },
+ {
+  "id": 90,
+  "en": "There's nothing for you to do for this function, it's just here for the extra doctest"
+ },
+ {
+  "id": 91,
+  "en": "Treat all the following code as being behind an abstraction layer, you shouldn't need to look at it."
+ },
+ {
+  "id": 92,
+  "en": "Add all elements in a tree."
+ },
+ {
+  "id": 93,
+  "en": "Checks if each branch has same sum of all elements and if each branch is balanced."
+ },
+ {
+  "id": 94,
+  "en": "Returns the number of unique full binary trees with exactly n leaves. E.g.,"
+ },
+ {
+  "id": 95,
+  "en": "1   2        3       3    ... *   *        *       * / \\      / \\     / \\ *   *    *   *   *   * / \\         / \\ *   *       *   *"
+ },
+ {
+  "id": 96,
+  "en": "Return a tree with only the nodes of t along paths from the root to a leaf of t for which the node labels of the path sum to n. If no paths sum to n, return None."
+ },
+ {
+  "id": 97,
+  "en": "For testing purposes."
+ },
+ {
+  "id": 98,
+  "en": "\"t: Iterator[int]\" means t is an iterator that yields integers"
+ },
+ {
+  "id": 99,
+  "en": "Insert after into s following each occurrence of before and then return s."
+ },
+ {
+  "id": 100,
+  "en": "Return a dictionary of lists that together contain the elements of s. The key for each list is the value that fn returns when called on any of the values of that list."
+ },
+ {
+  "id": 101,
+  "en": "Return the number of times that x is equal to one of the first n elements of iterator t."
+ },
+ {
+  "id": 102,
+  "en": "Generates all permutations of the given sequence. Each permutation is a list of the elements in SEQ in a different order. The permutations may be yielded in any order."
+ },
+ {
+  "id": 103,
+  "en": "Return the first value in iterator t that appears k times in a row, calling next on t as few times as possible."
+ },
+ {
+  "id": 104,
+  "en": "Return whether the transaction resulted in a changed balance."
+ },
+ {
+  "id": 105,
+  "en": "Return a string describing the transaction."
+ },
+ {
+  "id": 106,
+  "en": "A bank account that tracks its transaction history."
+ },
+ {
+  "id": 107,
+  "en": "*** YOU NEED TO MAKE CHANGES IN SEVERAL PLACES IN THIS CLASS ***"
+ },
+ {
+  "id": 108,
+  "en": "Increase the account balance by amount, add the deposit to the transaction history, and return the new balance."
+ },
+ {
+  "id": 109,
+  "en": "Decrease the account balance by amount, add the withdraw to the transaction history, and return the new balance."
+ },
+ {
+  "id": 110,
+  "en": "An email has the following instance attributes:"
+ },
+ {
+  "id": 111,
+  "en": "msg (str): the contents of the message sender (Client): the client that sent the email recipient_name (str): the name of the recipient (another client)"
+ },
+ {
+  "id": 112,
+  "en": "Each Server has one instance attribute called clients that is a dictionary from client names to client objects."
+ },
+ {
+  "id": 113,
+  "en": "Append the email to the inbox of the client it is addressed to. email is an instance of the Email class."
+ },
+ {
+  "id": 114,
+  "en": "Add a client to the clients mapping (which is a dictionary from client names to client instances). client is an instance of the Client class."
+ },
+ {
+  "id": 115,
+  "en": "A client has a server, a name (str), and an inbox (list)."
+ },
+ {
+  "id": 116,
+  "en": "Send an email with the given message to the recipient."
+ },
+ {
+  "id": 117,
+  "en": "A mint creates coins by stamping on years."
+ },
+ {
+  "id": 118,
+  "en": "The update method sets the mint's stamp to Mint.present_year."
+ },
+ {
+  "id": 119,
+  "en": "will be provided by subclasses, but not by Coin itself"
+ }
+]

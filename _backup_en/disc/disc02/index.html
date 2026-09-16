@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>
+Discussion 2 | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Discussion 2: Higher-Order Functions, Environment Diagrams
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc02.pdf" class="label label-outline">disc02.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+<!-- Switch to Pensieve:
+
+<ul>
+  <li><strong>Everyone</strong>: Go to <a href="https://www.pensieve.co/student/courses/cs61a/clazzes/cs61a_fa25/assignments/fa3437a0-88f6-44a9-a9b5-6712240a8ce9">pensieve.co</a>, log in with your @berkeley.edu email, and <strong>enter your group number</strong> (which was in the email that assigned you to this discussion). As long as you all enter the same number (any number), you'll all be using a shared document.</li>
+</ul>
+
+Once you're on Pensieve, you don't need to return to this page; Pensieve has all the same content (but more features). If for some reason Penseive doesn't work, return to this page and continue with the discussion. -->
+
+
+
+<h1 id="attendance">Attendance</h1>
+
+
+<p>Your TA will come around during discussion to check you in.
+<!-- You can start on the worksheet before being checked in; you don't need to wait for your TA to get started. --></p>
+
+<p>If you miss discussion for a good reason (such as sickness or a scheduling conflict), email <a href="mailto:cs61a@berkeley.edu">cs61a@berkeley.edu</a> within one week to receive attendance credit.
+</p>
+
+<!-- # Getting Started [5 minutes] -->
+
+<!-- Say your name and a city (or place) that you like, which is not Berkeley and is not where you have lived. Feel free to share why you like it. -->
+
+<!-- **VERY IMPORTANT:** In this discussion, don't press *Check Answer* or run any Python code until your whole group is sure that the answer is right.  Your goal should be to have **all checks pass the first time**! Figure things out and check your work by _thinking_ about what your code will do and _discussing_ with others. Not sure? Talk to your group or a TA!  (You won't get to run Python during the midterm, so get used to solving problems without it now.) -->
+
+<!-- If you want two separate Pensieve documents for the two sub-groups, just have one sub-group add 1000 to their group number. -->
+
+
+<h1 id="getting-started">Getting Started</h1>
+
+
+
+<h3 id="q1-warm-up">Q1: Warm Up</h3>
+
+
+<p>What is the value of <code>result</code> after executing <code>result = (lambda x: 2 * (lambda x: 3)(4) * x)(5)</code>?</p>
+
+<!-- Talk about it with your whole group and make sure you all agree before anybody checks the answer. -->
+
+
+<h1 id="environment-diagrams">Environment Diagrams</h1>
+
+
+<!-- <include topics/environment-diagrams/questions/bottles.md> -->
+
+<h3 id="q2-double-trouble">Q2: Double Trouble</h3>
+
+
+<p>Draw the environment diagram on paper or a whiteboard (without having the
+computer draw it for you)! Then, check your work by stepping through the
+diagram.</p>
+
+
+
+
+
+
+            <iframe
+                width="800"
+                height="460"
+                frameborder="0"
+                src="https://pythontutor.com/iframe-embed.html#code=def+double%28x%29%3A%0A++++return+x+%2A+2%0A%0Adef+triple%28x%29%3A%0A++++return+x+%2A+3%0A%0Ahat+%3D+double%0Adouble+%3D+triple%0A&codeDivHeight=460&codeDivWidth=350&cumulative=true&curInstr=1&heapPrimitives=nevernest&origin=composingprograms.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">
+            </iframe>
+        
+
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-dream-work">Q3: Dream Work</h3>
+
+
+<p>Draw an environment diagram for the code below. Then, step through the diagram with PythonTutor to check your work.</p>
+
+
+
+
+
+
+            <iframe
+                width="800"
+                height="460"
+                frameborder="0"
+                src="https://pythontutor.com/iframe-embed.html#code=def+team%28work%29%3A%0A%09return+t%28work%29+-+1%0Adef+dream%28work%2C+s%29%3A%0A%09if+work%28s-2%29%3A%0A%09%09t+%3D+not+s%0A%09return+not+t%0Awork%2C+t+%3D+3%2C+abs%0Ateam+%3D+dream%28team%2C+work+%2B+1%29+and+t&codeDivHeight=460&codeDivWidth=350&cumulative=true&curInstr=1&heapPrimitives=nevernest&origin=composingprograms.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">
+            </iframe>
+        
+
+<!-- Here's a blank diagram in case you're using a tablet: -->
+
+<!-- <img class="img-responsive center-block" src="https://i.imgur.com/A9nnHPb.png" alt="template" width=" height="> -->
+
+<div class="page-break"></div>
+
+
+
+
+<h3 id="q4-make-keeper">Q4: Make Keeper</h3>
+
+
+<p>Implement <code>make_keeper</code>, which takes a positive integer <code>n</code> and returns a
+function <code>f</code> that takes as its argument another one-argument function <code>cond</code>.
+When <code>f</code> is called on <code>cond</code>, it prints out the integers from 1 to <code>n</code>
+(including <code>n</code>) for which <code>cond</code> returns a true value when called on each of
+those integers. Each integer is printed on a separate line.</p>
+
+
+            <div class="monaco-storable" id="make_keeper-input" style="height:648px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-make_keeper-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-make_keeper-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-make_keeper-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def make_keeper(n):\n    &quot;&quot;&quot;Returns a function that takes one parameter cond and prints\n    out all integers 1..i..n where calling cond(i) returns True.\n\n    &gt;&gt;&gt; def is_even(x): # Even numbers have remainder 0 when divided by 2.\n    ...     return x % 2 == 0\n    &gt;&gt;&gt; make_keeper(5)(is_even)\n    2\n    4\n    &gt;&gt;&gt; make_keeper(5)(lambda x: True)\n    1\n    2\n    3\n    4\n    5\n    &gt;&gt;&gt; make_keeper(5)(lambda x: False)  # Nothing is printed\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "make_keeper-input"));
+            </script>
+        
+
+<!-- No peeking! First try to implement it without the hint.
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+To return a function <code>f</code>, include <code>def f(cond):</code> as the first line of the
+implementation and <code>return f</code> as the last. The <code>f</code> function should introduce <code>i
+= 1</code> in order to loop through all integers, calling <code>cond(i)</code> to determine
+whether <code>cond</code> returns true for each integer.
+</div>
+ -->
+
+<div class="page-break"></div>
+
+
+<h1 id="call-expressions">Call Expressions</h1>
+
+
+<!-- Draw an environment diagram for the code below. You can use paper or a tablet or the whiteboard. Talk to your group about how you are going to draw it, then go through each step _together_. Then, step through the diagram generated by Python Tutor to check your work. -->
+
+<!-- was in disc01 -->
+<!-- 
+            <iframe
+                width="800"
+                height="460"
+                frameborder="0"
+                src="https://pythontutor.com/iframe-embed.html#code=def+team%28work%29%3A%0A%09return+t%28work%29+-+1%0Adef+dream%28work%2C+s%29%3A%0A%09if+work%28s-2%29%3A%0A%09%09t+%3D+not+s%0A%09return+not+t%0Awork%2C+t+%3D+3%2C+abs%0Ateam+%3D+dream%28team%2C+work+%2B+1%29+and+t&codeDivHeight=460&codeDivWidth=350&cumulative=true&curInstr=1&heapPrimitives=nevernest&origin=composingprograms.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">
+            </iframe>
+        
+
+<p>Here's a blank diagram in case you're using a tablet:</p>
+
+<p><img class="img-responsive center-block" src="https://i.imgur.com/A9nnHPb.png" alt="template" width=" height="></p>
+
+<p>If you have questions, ask them instead of just looking up the answer! First ask your group, and then your TA. --></p>
+
+
+<h3 id="q5-silence-of-the-lambda">Q5: Silence of the Lambda</h3>
+
+
+<p>Draw the environment diagram on paper or a tablet (without having the
+computer draw it for you)! Then, check your work by stepping through the
+diagram with PythonTutor. This problem's video contains the solution.</p>
+
+
+
+
+
+
+            <iframe
+                width="800"
+                height="460"
+                frameborder="0"
+                src="https://pythontutor.com/iframe-embed.html#code=def+r%28f%29%3A%0A++++k+%3D+2%0A++++k%2C+m+%3D+k+%2B+1%2C+f%28k%29%0A++++return+n%0A%0An+%3D+10%0Ag+%3D+%28lambda+n%3A+lambda+k%3A+print%28k+%2A+n%29%29%28-1%29%0Ar%28g%29%0A&codeDivHeight=460&codeDivWidth=350&cumulative=true&curInstr=1&heapPrimitives=nevernest&origin=composingprograms.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false">
+            </iframe>
+        
+
+<div class="page-break"></div>
+
+<!-- **Don't run Python to check your work. You can check it just by thinking!**. -->
+
+<!-- Once your group has converged on a solution, now it's time to practice your ability to describe your own code. A good description is like a good program: concise and accurate. Nominate someone to describe how your solution works and have them present to the group. If you want feedback, you can also present to your TA. -->
+
+<!-- <include topics/hof/easy/find_digit.md> -->
+
+
+<h3 id="q6-match-maker">Q6: Match Maker</h3>
+
+
+<!-- remove if using find digit as a question -->
+<!-- Assume that <code>find_digit(k)</code> is correctly implemented. <code>find_digit</code> takes in a positive integer <code>k</code> and returns a function that takes in a positive integer <code>x</code> and returns the <code>k</code>th digit from the right of <code>x</code>. If <code>x</code> has fewer than <code>k</code> digits, it returns <code>0</code>. -->
+
+<p>Implement <code>match_k</code>, which takes in an integer <code>k</code> and returns a function
+that takes in a variable <code>x</code> and returns <code>True</code> if all the digits in <code>x</code> that
+are <code>k</code> apart are the same.</p>
+
+<p>For example, <code>match_k(2)</code> returns a one argument function that takes in <code>x</code>
+and checks if digits that are 2 away in <code>x</code> are the same.</p>
+
+<p><code>match_k(2)(1010)</code> has the value of <code>x = 1010</code> and digits 1, 0, 1, 0 going
+from left to right. <code>1 == 1</code> and <code>0 == 0</code>, so the <code>match_k(2)(1010)</code> results
+in <code>True</code>.</p>
+
+<p><code>match_k(2)(2010)</code> has the value of <code>x = 2010</code> and digits 2, 0, 1, 0 going
+from left to right. <code>2 != 1</code> and <code>0 == 0</code>, so the <code>match_k(2)(2010)</code> results
+in <code>False</code>.</p>
+
+<p><strong>Important:</strong> You may not use strings or indexing for this problem.</p>
+
+<blockquote><p><strong>Tip:</strong> Floor dividing by powers of 10 gets rid of the rightmost digits.</p></blockquote>
+
+
+            <div class="monaco-storable" id="match_k-input" style="height:504px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-match_k-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-match_k-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-match_k-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def match_k(k):\n    &quot;&quot;&quot;Returns a function that checks if digits k apart match.\n\n    &gt;&gt;&gt; match_k(2)(1010)\n    True\n    &gt;&gt;&gt; match_k(2)(2010)\n    False\n    &gt;&gt;&gt; match_k(1)(1010)\n    False\n    &gt;&gt;&gt; match_k(1)(1)\n    True\n    &gt;&gt;&gt; match_k(1)(2111111111111111)\n    False\n    &gt;&gt;&gt; match_k(3)(123123)\n    True\n    &gt;&gt;&gt; match_k(2)(123123)\n    False\n    &quot;&quot;&quot;\n    def check(x):\n        while x // (10 ** k) &gt; 0:\n            if ____________________________:\n                return ____________________________\n            x //= 10\n        ____________________________\n    ____________________________\n\n', "python", "match_k-input"));
+            </script>
+        
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+In each iteration, compare the last digit with the one that is <code>k</code> positions before it.
+</div>
+
+<div class="page-break"></div>
+
+
+<h3 id="q7-ups-and-downs-a">Q7: Ups and Downs A</h3>
+
+
+<p><strong>Definition.</strong> Two adjacent digits in a non-negative integer are an <em>increase</em> if the left digit is smaller than the right digit, and a <em>decrease</em> if the left digit is larger than the right digit.</p>
+
+<p>For example, 61127 has 2 increases (1 → 2 and 2 → 7) and 1 decrease (6 → 1).</p>
+
+<p>You may use the sign function defined below in all parts of this question.</p>
+
+<pre><code>def sign(x):
+    if x &gt; 0:
+        return 1
+    elif x &lt; 0:
+        return &#x2d;1
+    else:
+        return 0</code></pre>
+
+
+
+<p>Implement <code>ramp</code>, which takes a non-negative integer <code>n</code> and returns whether it has more <em>increases</em> than <em>decreases</em> when reading its digits from left to right (see the definition above).</p>
+
+
+            <div class="monaco-storable" id="fa19_mt1_q4a-input" style="height:378px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fa19_mt1_q4a-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fa19_mt1_q4a-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fa19_mt1_q4a-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def ramp(n):\n    &quot;&quot;&quot;Return whether non&#x2d;negative integer N has more increases than decreases.\n\n    &gt;&gt;&gt; ramp(123)   # 2 increases (1&#x2d;&gt; 2, 2&#x2d;&gt; 3) and 0 decreases\n    True\n    &gt;&gt;&gt; ramp(1315)  # 2 increases (1&#x2d;&gt; 3, 1&#x2d;&gt; 5) and 1 decrease (3&#x2d;&gt; 1)\n    True\n    &gt;&gt;&gt; ramp(176)   # 1 increase (1&#x2d;&gt; 7) and 1 decrease (7&#x2d;&gt; 6)\n    False\n    &gt;&gt;&gt; ramp(5)     # 0 increases and 0 decreases\n    False\n    &quot;&quot;&quot;\n    n, last, tally = ____________________________, ____________________________, 0\n\n    while n:\n        n, last, tally = n // 10, n % 10, ____________________________\n    return ____________________________\n\n', "python", "fa19_mt1_q4a-input"));
+            </script>
+        
+
+<div class="page-break"></div>
+
+
+<h3 id="q8-ups-and-downs-c">Q8: Ups and Downs C</h3>
+
+
+<p>The process function below uses <code>tally</code> and <code>result</code> functions to analyze all adjacent pairs of digits in a non-negative integer <code>n</code>. A <code>tally</code> function is called on each pair of adjacent digits.</p>
+
+<pre><code>def process(n, tally, result):
+    &quot;&quot;&quot;Process all pairs of adjacent digits in N using functions TALLY and RESULT.
+    &quot;&quot;&quot; 
+
+    while n &gt;= 10:
+        tally, result = tally(n % 100 // 10, n % 10)
+        n = n // 10
+    return result()</code></pre>
+
+
+
+<p>Implement <code>ups</code>, which returns two functions that can be passed as <code>tally</code> and <code>result</code> arguments to <code>process</code>, so that <code>process</code> computes whether a non-negative integer <code>n</code> has exactly <code>k</code> <em>increases</em>.</p>
+
+<p><strong>Hint:</strong> You can use <code>sign</code> from the previous page and the built-in <code>max</code> and <code>min</code> functions.</p>
+
+
+            <div class="monaco-storable" id="fa19_mt1_q4c-input" style="height:378px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fa19_mt1_q4c-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fa19_mt1_q4c-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fa19_mt1_q4c-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def ups(k):\n    &quot;&quot;&quot;Return tally and result functions that compute whether N has exactly K increases.\n\n    &gt;&gt;&gt; f, g = ups(3)\n    &gt;&gt;&gt; process(1200849, f, g)    # Exactly 3 increases: 1 &#x2d;&gt; 2, 0 &#x2d;&gt; 8, 4 &#x2d;&gt; 9\n    True\n    &gt;&gt;&gt; process(94004, f, g)      # 1 increase: 0 &#x2d;&gt; 4\n    False\n    &gt;&gt;&gt; process(122333445, f, g)  # 4 increases: 1 &#x2d;&gt; 2, 2 &#x2d;&gt; 3, 3 &#x2d;&gt; 4, 4 &#x2d;&gt; 5\n    False\n    &gt;&gt;&gt; process(0, f, g)          # 0 increases\n    False\n    &quot;&quot;&quot;\n    def f(left, right):\n        return __________(__________________________________)\n    return ____________________________, ____________________________\n\n\n', "python", "fa19_mt1_q4c-input"));
+            </script>
+        
+
+<div class="page-break"></div>
+
+<!-- # Optional Questions -->
+<!-- # Optional Exam Review -->
+
+<!-- Here are some recent Midterm 1 problems that are similar to the problems you just solved. If you have extra time, discuss them with your group. If you don't have enough time, you could schedule another meeting with your group before the midterm to go through these together.
+
+Here's a good format for group exam review:
+
+<ul>
+  <li>First, everyone read the question but don't solve it yet.</li>
+  <li>Second, see if anyone has any questions about what the problem is asking for.</li>
+  <li>Third, let everyone work individually for five minutes or so to try to make progress on their own.</li>
+  <li>Fourth, have the people who got stuck (which is ok!) explain what they tried.</li>
+  <li>Fifth, give suggestions to the people who got stuck about what they might have tried to keep making progress.</li>
+  <li>Finally, talk through potential solutions to the problem.</li>
+</ul>
+
+Avoid the temptation to look up the solution until your whole group is confident that you've reached a correct answer. -->
+
+<!-- # Optional Problems -->
+
+
+<h3 id="q9-choose-wisely-a">Q9: Choose Wisely A</h3>
+
+
+<p><strong>Definition</strong>: A <em>digit test</em> is a function that takes a non-negative integer less than 10 and returns <code>True</code> or <code>False</code>.</p>
+
+<p>Implement <code>only</code> which takes a non-negative integer <code>n</code> and a <em>digit test</em> <code>t</code>. It returns a non-negative integer containing only the digits of <code>n</code> for which <code>t</code> returns <code>True</code> when called on each of those digits. The digits should appear in the same order as they did in <code>n</code>. The number 0 has no digits. <strong>You may not use <code>str</code> or <code>repr</code> or <code>[</code> or <code>]</code> or <code>for</code>.</strong></p>
+
+
+            <div class="monaco-storable" id="fa23_mt1_q4a-input" style="height:360px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fa23_mt1_q4a-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fa23_mt1_q4a-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fa23_mt1_q4a-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def only(n, t):\n    &quot;&quot;&quot;Return only the digits of n for which t returns True when called on each digit\n\n    &gt;&gt;&gt; only(23344567, lambda d: d % 2 == 0)\n    2446\n    &gt;&gt;&gt; only(987654349675, lambda d: d &lt; 7)\n    6543465\n    &gt;&gt;&gt; only(2023, lambda d: False)\n    0\n    &quot;&quot;&quot;\n    keep = 0\n    while n:\n        n, d = n // 10, n % 10\n        if ____________________________:\n            keep = 10 * keep + ___________\n    ____________________________:\n        n, keep = ____________________________\n    return n\n', "python", "fa23_mt1_q4a-input"));
+            </script>
+        
+
+
+<h3 id="q10-choose-wisely-b">Q10: Choose Wisely B</h3>
+
+
+<p>Implement <code>every</code> which takes a <em>digit test</em> <code>t</code> and returns a function <code>digit</code> that takes a positive integer <code>n</code>. The <code>digit</code> function returns whether <code>t</code> returns True for every digit of <code>n</code>.</p>
+
+
+            <div class="monaco-storable" id="fa23_mt1_q4b-input" style="height:360px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fa23_mt1_q4b-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fa23_mt1_q4b-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fa23_mt1_q4b-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def every(t):\n    &quot;&quot;&quot;Return a function that returns whether t is True \n    for every digit of non&#x2d;negative n.\n\n    &gt;&gt;&gt; f = every(lambda d: d % 2 == 1)\n    &gt;&gt;&gt; f(37511)  # every digit is odd\n    True\n    &gt;&gt;&gt; f(2023)   # Not every digit is odd\n    False\n    &quot;&quot;&quot;\n    def digit(n):\n        while n:\n            if ____________________________:\n                ____________________________\n            n = n // 10\n        return ___________________________\n    return ___________________________\n\n', "python", "fa23_mt1_q4b-input"));
+            </script>
+        
+
+<!-- - <a href="../../exam/sp24/mt1/61a-sp24-mt1.pdf">Spring 2024 Midterm 1</a> Question 1(b) asked for the value of <code>which()()</code> after executing the following code: -->
+
+<!-- <code>
+one = 1
+def which():
+    one = 3
+
+pre&#x2d;fac9bc332dff8314689d0e926cde130d52191b9e&#x2d;pre
+
+    one = 4
+</code> -->
+
+<!-- - <a href="../../exam/fa23/mt1/61a-fa23-mt1.pdf">Fall 2023 Midterm 1</a> Question 4(b) is a typical problem that combines iteration and higher-order function. It relies on this definition from 4(a), "A *digit test* is a function that takes a non-negative integer less than 10 and returns <code>True</code> or <code>False</code>." -->
+
+<!-- - <a href="../../exam/sp24/mt1/61a-sp24-mt1.pdf">Spring 2024 Midterm 1</a> Questions 4(b) and 4(c) go together. 4(b) is very similar to the question above (4(b) from Fall 2023), and 4(c) is a typical problem that asks you to use a function that has already been defined. -->
+
+<!-- All past exams are here: <a href="../../resources/index.html">cs61a.org/resources/</a> -->
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#attendance">Attendance</a></li>
+  <li><a href="#getting-started">Getting Started</a></li>
+  <ul>
+    <li><a href="#q1-warm-up">Q1: Warm Up</a></li>
+  </ul>
+  <li><a href="#environment-diagrams">Environment Diagrams</a></li>
+  <ul>
+    <li><a href="#q2-double-trouble">Q2: Double Trouble</a></li>
+    <li><a href="#q3-dream-work">Q3: Dream Work</a></li>
+    <li><a href="#q4-make-keeper">Q4: Make Keeper</a></li>
+  </ul>
+  <li><a href="#call-expressions">Call Expressions</a></li>
+  <ul>
+    <li><a href="#q5-silence-of-the-lambda">Q5: Silence of the Lambda</a></li>
+    <li><a href="#q6-match-maker">Q6: Match Maker</a></li>
+    <li><a href="#q7-ups-and-downs-a">Q7: Ups and Downs A</a></li>
+    <li><a href="#q8-ups-and-downs-c">Q8: Ups and Downs C</a></li>
+    <li><a href="#q9-choose-wisely-a">Q9: Choose Wisely A</a></li>
+    <li><a href="#q10-choose-wisely-b">Q10: Choose Wisely B</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

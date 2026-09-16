@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+    
+    <link rel="stylesheet" href="../../assets/css/lab.css">
+
+
+    <title>
+Lab 8: Linked Lists | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 8: Linked Lists
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab08.zip" class="label label-outline">lab08.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Thursday, July 23.</i></p>
+
+
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+<p>Download <a href="lab08.zip">lab08.zip</a>.</p>
+
+
+
+
+
+
+
+
+    
+<h1 id="attendance">Attendance</h1>
+
+
+<p>You need to submit the lab problems in addition to attending to get credit for lab.</p>
+
+<p>If you miss lab for a good reason (such as sickness or a scheduling conflict) or you don't get checked in for some reason, email <a href="mailto:cs61a@berkeley.edu">cs61a@berkeley.edu</a> within one week to receive attendance credit.</p>
+
+
+<h2 id="linked-lists">Linked Lists</h2>
+
+
+<p>Consult the drop-down if you need a refresher on Linked Lists. It's
+okay to skip directly to the questions and refer back
+here should you get stuck.</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Linked Lists<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<p>A linked list is a data structure for storing a sequence of values. It is more
+efficient than a regular built-in list for certain operations, such as inserting
+a value in the middle of a long list. Linked lists are not built in, and so we
+define a class called <code>Link</code> to represent them. 
+A linked list is either a <code>Link</code> instance or <code>Link.empty</code> 
+(which represents an empty linked list).</p>
+
+<p>A instance of <code>Link</code> has two instance attributes, <code>first</code> and <code>rest</code>.</p>
+
+<p>The <code>rest</code> attribute of a <code>Link</code> instance should always be a linked list: either
+another <code>Link</code> instance or <code>Link.empty</code>. It SHOULD NEVER be <code>None</code>.</p>
+
+<p>To check if a linked list is empty, compare it to <code>Link.empty</code>. Since there is only
+ever one empty list, we can use <code>is</code> to compare, but <code>==</code> would work too.</p>
+
+<pre><code>def is_empty(s):
+    &quot;&quot;&quot;Return whether linked list s is empty.&quot;&quot;&quot;
+    return s is Link.empty:</code></pre>
+
+<p>You can mutate a <code>Link</code> object <code>s</code> in two ways:</p>
+
+<ul>
+  <li>Change the first element with <code>s.first = ...</code></li>
+  <li>Change the rest of the elements with <code>s.rest = ...</code></li>
+</ul>
+
+<p>You can make a new <code>Link</code> object by calling <code>Link</code>:</p>
+
+<ul>
+  <li><code>Link(4)</code> makes a linked list of length 1 containing 4.</li>
+  <li><code>Link(4, s)</code> makes a linked list that starts with 4 followed by the elements of linked list <code>s</code>.</li>
+</ul>
+
+</div>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Link Class<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p>Here is the implementation of the <code>Link</code> class:</p>
+
+<pre><code class="python">class Link:
+    &quot;&quot;&quot;A linked list is either a Link object or Link.empty
+
+    &gt;&gt;&gt; s = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; s.rest
+    Link(4, Link(5))
+    &gt;&gt;&gt; s.rest.rest.rest is Link.empty
+    True
+    &gt;&gt;&gt; s.rest.first * 2
+    8
+    &gt;&gt;&gt; print(s)
+    (3 4 5)
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;(&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;)&#x27;</code></pre>
+
+
+
+</div>
+
+<blockquote><p><strong>Tip:</strong>
+You can open the terminal in VS Code by pressing <strong>Control + `</strong> (the key above Tab).</p></blockquote>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+<!-- <br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Getting Started Videos<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+
+<h2 id="getting-started-videos" class="no-toc">Getting Started Videos</h2>
+
+
+<p>These videos may provide some helpful direction for tackling the coding
+problems on this assignment.</p>
+
+<blockquote><p>To see these videos, you should be logged into your berkeley.edu email.</p></blockquote>
+
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/videoseries?list=PLx38hZJ5RLZcUC3Tzbd-ghYKliOGxMS34"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "lab8-getstarted"
+                allowfullscreen></iframe><p><a href='https://youtu.be/playlist?list=PLx38hZJ5RLZcUC3Tzbd-ghYKliOGxMS34'> YouTube link </a></p>
+</div> -->
+
+
+<h3 id="visualizing-linked-lists">Visualizing Linked Lists</h3>
+
+
+<p>If you would like some support with visualizing linked lists, please navigate 
+to <a href="https://code.cs61a.org/">code.cs61a.org</a>, select <em>Start Python Interpreter</em>, 
+and call <code>autodraw()</code>.</p>
+
+
+<h3 id="q1-wwpd-linked-lists">Q1: WWPD: Linked Lists</h3>
+
+
+<p>Read over the <code>Link</code> class. Make sure you understand the doctests.</p>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code>python3 ok &#x2d;q link &#x2d;u</code></pre>
+
+<p>Enter <code>Function</code> if you believe the answer is <code>&lt;function ...&gt;</code>, <code>Error</code> if it
+errors, and <code>Nothing</code> if nothing is displayed.</p>
+
+<p>If you get stuck, try drawing out the box-and-pointer diagram for the linked
+list on a piece of paper or loading the <code>Link</code> class into the interpreter
+with <code>python3 &#x2d;i lab07.py</code>.</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; link = Link(1000)
+&gt;&gt;&gt; link.first
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;&#x30;&#x30;&#x30;</div>
+&gt;&gt;&gt; link.rest is Link.empty
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link = Link(1000, 2000)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x41;&#x73;&#x73;&#x65;&#x72;&#x74;&#x69;&#x6f;&#x6e;&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; link = Link(1000, Link())
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x54;&#x79;&#x70;&#x65;&#x45;&#x72;&#x72;&#x6f;&#x72;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; link = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; link.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x32;</div>
+&gt;&gt;&gt; link.rest.rest.rest is Link.empty
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link.first = 9001
+&gt;&gt;&gt; link.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x39;&#x30;&#x30;&#x31;</div>
+&gt;&gt;&gt; link.rest = link.rest.rest
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x33;</div>
+&gt;&gt;&gt; link = Link(1)
+&gt;&gt;&gt; link.rest = link
+&gt;&gt;&gt; link.rest.rest is Link.empty
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x46;&#x61;&#x6c;&#x73;&#x65;</div>
+&gt;&gt;&gt; link.rest.rest.rest.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link = Link(2, Link(3, Link(4)))
+&gt;&gt;&gt; link2 = Link(1, link)
+&gt;&gt;&gt; link2.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link2.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x32;</div></code></pre>
+        <button id='prompt-2' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; link = Link(5, Link(6, Link(7)))
+&gt;&gt;&gt; link                 # Look at the __repr__ method of Link
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x35;&#x2c;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x36;&#x2c;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x37;&#x29;&#x29;&#x29;</div>
+&gt;&gt;&gt; print(link)          # Look at the __str__ method of Link
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x28;&#x35;&#x20;&#x36;&#x20;&#x37;&#x29;</div></code></pre>
+        <button id='prompt-3' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 id="q2-without-one">Q2: Without One</h3>
+
+
+<p>Implement <code>without</code>, which takes a linked list <code>s</code> and a non-negative integer
+<code>i</code>. It returns a linked list with all of the elements of <code>s</code> except for the one
+at index <code>i</code>. (Assume <code>s.first</code> is the element at index 0.)</p>
+
+<p>The original linked list <code>s</code> should not be changed.</p>
+
+<blockquote><p><strong>Hint:</strong> Using recursive approach might be easier than the iterative approach.</p></blockquote>
+
+<solution>
+
+<pre><code>def without(s: Link, i: int) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Return a new linked list like s but without the element at index i.
+
+    &gt;&gt;&gt; s = Link(3, Link(5, Link(7, Link(9))))
+    &gt;&gt;&gt; without(s, 0)
+    Link(5, Link(7, Link(9)))
+    &gt;&gt;&gt; without(s, 2)
+    Link(3, Link(5, Link(9)))
+    &gt;&gt;&gt; without(s, 4)  # There is no index 4, so all of s is retained.
+    Link(3, Link(5, Link(7, Link(9))))
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q without<button id="copy-code-python3ok-qwithout" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qwithout").onclick = () => copyCode('python3 ok -q without', "copy-code-python3ok-qwithout");
+        </script>
+        <br/>
+
+
+<h3 id="q3-duplicate-link">Q3: Duplicate Link</h3>
+
+
+<p>Write a function <code>duplicate_link</code> that takes in a linked list <code>s</code> and a value <code>val</code>. 
+It <strong>mutates</strong> <code>s</code> so that each element equal to <code>val</code> is followed by an additional <code>val</code> (a duplicate copy). 
+It returns <code>None</code>. Be careful not to get into an infinite loop where you keep duplicating the new copies!</p>
+
+<blockquote><p><strong>Note</strong>: In order to insert a link into a linked list, reassign the <code>rest</code> attribute of the <code>Link</code> instances that have <code>val</code> as their <code>first</code>. Try drawing out a doctest to visualize!</p></blockquote>
+
+<solution>
+
+<pre><code>def duplicate_link(s: Link, val: int) &#x2d;&gt; None:
+    &quot;&quot;&quot;Mutates s so that each element equal to val is followed by another val.
+
+    &gt;&gt;&gt; x = Link(5, Link(4, Link(5)))
+    &gt;&gt;&gt; duplicate_link(x, 5)
+    &gt;&gt;&gt; x
+    Link(5, Link(5, Link(4, Link(5, Link(5)))))
+    &gt;&gt;&gt; y = Link(2, Link(4, Link(6, Link(8))))
+    &gt;&gt;&gt; duplicate_link(y, 10)
+    &gt;&gt;&gt; y
+    Link(2, Link(4, Link(6, Link(8))))
+    &gt;&gt;&gt; z = Link(1, Link(2, Link(2, Link(3))))
+    &gt;&gt;&gt; duplicate_link(z, 2) # ensures that back to back links with val are both duplicated
+    &gt;&gt;&gt; z
+    Link(1, Link(2, Link(2, Link(2, Link(2, Link(3))))))
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q duplicate_link<button id="copy-code-python3ok-qduplicate_link" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qduplicate_link").onclick = () => copyCode('python3 ok -q duplicate_link', "copy-code-python3ok-qduplicate_link");
+        </script>
+        <br/>
+
+
+<h3 id="q4-slice">Q4: Slice</h3>
+
+
+<p>Implement a function <code>slice_link</code> that slices a given linked list <code>link</code>. <code>slice_link</code>
+should slice the <code>link</code> starting at <code>start</code> and ending one element before
+<code>end</code>, as with a normal Python list. Additionally, similar to slicing normal 
+Python lists, this function should return a new list and not modify the original list.</p>
+
+<solution>
+
+<pre><code>def slice_link(link: Link, start: int, end: int) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Slices a linked list from start to end (as with a normal Python list) and returns
+    a linked list. You do NOT have to support negative indices.
+
+    &gt;&gt;&gt; link = Link(3, Link(1, Link(4, Link(1, Link(5, Link(9))))))
+    &gt;&gt;&gt; new = slice_link(link, 1, 4)
+    &gt;&gt;&gt; print(new)
+    (1 4 1)
+    &gt;&gt;&gt; print(slice_link(link, 0, 2))
+    (3 1)
+    &gt;&gt;&gt; print(slice_link(link, 0, 6))
+    (3 1 4 1 5 9)
+    &gt;&gt;&gt; print(slice_link(link, 2, 2))
+    ()
+    &gt;&gt;&gt; print(slice_link(link, 2, 3))
+    (4)
+    &gt;&gt;&gt; print(slice_link(link, 3, 100))
+    (1 5 9)
+    &gt;&gt;&gt; print(slice_link(link, 10, 12))
+    ()
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q slice_link<button id="copy-code-python3ok-qslice_link" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qslice_link").onclick = () => copyCode('python3 ok -q slice_link', "copy-code-python3ok-qslice_link");
+        </script>
+        <br/>
+
+
+<h3 id="q5-cycles">Q5: Cycles</h3>
+
+
+<p>The <code>Link</code> class can represent lists with cycles.  That is, a list may
+contain itself as a sublist.</p>
+
+<pre><code>&gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; s.rest.rest.rest = s
+&gt;&gt;&gt; s.rest.rest.rest.rest.rest.first
+3</code></pre>
+
+<p>Implement <code>has_cycle</code>,that returns whether its argument, a <code>Link</code>
+instance, contains a cycle.</p>
+
+<blockquote><p><em>Hint</em>: Iterate through the linked list and try keeping track of which <code>Link</code>
+objects you've already seen.</p></blockquote>
+
+<solution>
+
+<pre><code>def has_cycle(link: Link) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle(t)
+    False
+    &gt;&gt;&gt; u = Link(2, Link(2, Link(2)))
+    &gt;&gt;&gt; has_cycle(u)
+    False
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q has_cycle<button id="copy-code-python3ok-qhas_cycle" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhas_cycle").onclick = () => copyCode('python3 ok -q has_cycle', "copy-code-python3ok-qhas_cycle");
+        </script>
+        <br/>
+
+<!-- As an extra challenge, implement <code>has_cycle_constant</code> with only <a href="https://www.composingprograms.com/pages/28-efficiency.html#growth-categories">constant space</a>. (If you followed
+the hint above, you will use linear space.) The solution is short (less than 20
+lines of code), but requires a clever idea. Try to discover the solution
+yourself before asking around: -->
+
+<p><strong>Extra challenge (Optional)</strong>: Implement <code>has_cycle</code> without keeping track of all <code>Link</code> objects you've already seen.
+The solution is short (less than 20 lines of code), but requires a clever idea.
+Try to discover the solution yourself before asking around.</p>
+
+<solution>
+
+<pre><code>def has_cycle_constant(link: Link) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle_constant(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle_constant(t)
+    False
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q has_cycle_constant<button id="copy-code-python3ok-qhas_cycle_constant" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhas_cycle_constant").onclick = () => copyCode('python3 ok -q has_cycle_constant', "copy-code-python3ok-qhas_cycle_constant");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h1 id="submit-assignment">Submit Assignment</h1>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="../lab00/index.html#submitting-the-assignment">Lab 00</a> has detailed instructions.</p>
+
+<p>Correctly completing all questions is worth one point.
+<!-- If you are in the regular lab, you will need your attendance from your TA to receive that one point. -->
+Please ensure your TA has taken your attendance before leaving.</p>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">Lab Checkoff Questions</a></li>
+  <li><a href="#attendance">Attendance</a></li>
+  <ul>
+    <li><a href="#linked-lists">Linked Lists</a></li>
+  </ul>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#visualizing-linked-lists">Visualizing Linked Lists</a></li>
+    <li><a href="#q1-wwpd-linked-lists">Q1: WWPD: Linked Lists</a></li>
+    <li><a href="#q2-without-one">Q2: Without One</a></li>
+    <li><a href="#q3-duplicate-link">Q3: Duplicate Link</a></li>
+    <li><a href="#q4-slice">Q4: Slice</a></li>
+    <li><a href="#q5-cycles">Q5: Cycles</a></li>
+  </ul>
+  <ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+  </ul>
+  <li><a href="#submit-assignment">Submit Assignment</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

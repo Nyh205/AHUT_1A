@@ -1,0 +1,602 @@
+[
+ {
+  "id": 450,
+  "en": "Looking at this, these three higher-order procedures are just common recursive patterns that Scheme has built in for you.\nmap for example just does the cons, cdr, and base-case work for you!"
+ },
+ {
+  "id": 451,
+  "en": "Q1: Over or Under"
+ },
+ {
+  "id": 452,
+  "en": "Define a procedure over&#x2d;or&#x2d;under which takes in a number num1 and a number num2\nand returns the following:"
+ },
+ {
+  "id": 453,
+  "en": "-1 if num1 is less than num2"
+ },
+ {
+  "id": 454,
+  "en": "0 if num1 is equal to num2"
+ },
+ {
+  "id": 455,
+  "en": "1 if num1 is greater than num2"
+ },
+ {
+  "id": 456,
+  "en": "Note: \nRemember that every parenthesis in Scheme makes a function call. For example, just typing 0 in the Scheme interpeter will return 0. However, typing (0) will cause an Error because 0 is not a function."
+ },
+ {
+  "id": 457,
+  "en": "Challenge: Implement this in 2 different ways using if and cond!"
+ },
+ {
+  "id": 458,
+  "en": "Q2: Compose"
+ },
+ {
+  "id": 459,
+  "en": "Write the procedure composed, which takes in procedures f and g\nand returns a new procedure. This new procedure takes in a number x\nand returns the result of calling f on g of x."
+ },
+ {
+  "id": 460,
+  "en": "Note: Remember to use Scheme syntax when calling functions. The form is (func arg), not func(arg)."
+ },
+ {
+  "id": 461,
+  "en": "Q3: Repeat"
+ },
+ {
+  "id": 462,
+  "en": "Write the procedure repeat, which takes in a procedure f and a number n, and outputs a new procedure. This new procedure takes in a number x and returns the result of calling f on x a total of n times. For example:"
+ },
+ {
+  "id": 463,
+  "en": "Hint: The composed function you wrote in the previous problem might be useful."
+ },
+ {
+  "id": 464,
+  "en": "Scheme Lists"
+ },
+ {
+  "id": 465,
+  "en": "Q4: WWSD: Lists"
+ },
+ {
+  "id": 466,
+  "en": "Q5: Make a List"
+ },
+ {
+  "id": 467,
+  "en": "In this problem you will create the list with the following box-and-pointer diagram:"
+ },
+ {
+  "id": 468,
+  "en": "Challenge: try to create this list in multiple ways, and using multiple list constructors!"
+ },
+ {
+  "id": 469,
+  "en": "Q6: Without Duplicates"
+ },
+ {
+  "id": 470,
+  "en": "Implement without&#x2d;duplicates, which takes a list of numbers lst as input and returns\na list that has all of the unique elements of lst in the order that they first\nappear, but without duplicates. For example, (without&#x2d;duplicates (list 5 4 5 4 2 2))\nevaluates to (5 4 2)."
+ },
+ {
+  "id": 471,
+  "en": "Hints: To test if two numbers are equal, use the = procedure. To test if\ntwo numbers are not equal, use the not procedure in combination with =.\nYou may find it helpful to use the filter procedure with a helper lambda function to use as a filter."
+ },
+ {
+  "id": 472,
+  "en": "Consult the drop-down if you need a refresher on quasiquotation. It's\nokay to skip directly to the questions and refer back\nhere should you get stuck."
+ },
+ {
+  "id": 473,
+  "en": "The normal quote &#x27; and the quasiquote ` are both valid ways to quote an\nexpression. However, the quasiquoted expression can be unquoted with the\n\"unquote\" , (represented by a comma). When a term in a quasiquoted expression\nis unquoted, the unquoted term is evaluated, instead of being taken as literal text.\nThis mechanism is somewhat akin to using f-strings in Python, where expressions\ninside {} are evaluated and inserted into the string."
+ },
+ {
+  "id": 474,
+  "en": "Q1: WWSD: Quasiquote"
+ },
+ {
+  "id": 475,
+  "en": "It is recommended to consult the Calculator drop-down for the questions below. Consult the other drop-downs if you need a refresher on interpreters. It's okay to skip directly to the questions and refer back here should you get stuck."
+ },
+ {
+  "id": 476,
+  "en": "An interpreter is a program that allows you to interact with the\ncomputer using a specific language. It takes the code you write,\ninterprets it, and then executes the corresponding actions, often\nusing a more fundamental language to communicate with the computer\nhardware."
+ },
+ {
+  "id": 477,
+  "en": "In Project 4, you'll develop an interpreter for the Scheme\nprogramming language using Python. Interestingly, the Python\ninterpreter you've been using throughout this course is primarily\nwritten in the C programming language. At the lowest level, computers\noperate by interpreting machine code, which is a series of ones and\nzeros that instructs the computer on performing basic tasks such as\narithmetic operations and data retrieval."
+ },
+ {
+  "id": 478,
+  "en": "The language being interpreted: For Project 4, this is the Scheme language."
+ },
+ {
+  "id": 479,
+  "en": "The implementation language: This is the language used to create\n  the interpreter itself, which, for Project 4, will be Python."
+ },
+ {
+  "id": 480,
+  "en": "REPL"
+ },
+ {
+  "id": 481,
+  "en": "A common feature of interpreters is the Read-Eval-Print Loop (REPL), which processes user inputs in a cyclic fashion through three stages:"
+ },
+ {
+  "id": 482,
+  "en": "Read: The interpreter first reads the input string provided by the user.\n  This input goes through a parsing process that involves two key steps:"
+ },
+ {
+  "id": 483,
+  "en": "The lexical analysis step breaks down the input string into tokens,\n    which are the basic elements or \"words\" of the language you're\n    interpreting. These tokens represent the smallest units of meaning within the input."
+ },
+ {
+  "id": 484,
+  "en": "The syntactic analysis step takes the tokens from the previous step and organizes\n    them into a data structure that the underlying language can understand. For our\n    Scheme interpreter, we assemble the tokens into a Link object (similar to a\n    Link), to represent the structure of the original call expression."
+ },
+ {
+  "id": 485,
+  "en": "The first item in the Link represents the operator of the call expression, while the subsequent elements are the operands or arguments upon which the operation will act. Note that these operands can also be call expressions themselves (nested expressions)."
+ },
+ {
+  "id": 486,
+  "en": "Below is a summary of the read process for a Scheme expression input:"
+ },
+ {
+  "id": 487,
+  "en": "Eval: This step evaluates the expressions you've written in that programming\n  language to obtain a value. It involves the following two functions:"
+ },
+ {
+  "id": 488,
+  "en": "eval takes an expression and evaluates it based on the language's rules.\n    When the expression is a call expression, eval uses the apply function to obtain the result.\n    It will evaluate the operator and its operands in order. For example, in (add 1 2),\n    eval would identify add as the operator and 1 and 2 as the operands.\n    It evaluates add to ensure it's a valid function and then evaluates 1 and\n    2 to ensure they're valid arguments."
+ },
+ {
+  "id": 489,
+  "en": "apply takes the evaluated operator (the function) and applies it to the\n    evaluated operands (the arguments). Note that it's possible that, during this process, apply needs to evaluate more expressions (like those found within the function body). This is where apply may call back to eval, and thus these two stages are mutually recursive."
+ },
+ {
+  "id": 490,
+  "en": "Print: Display the result of evaluating the user input."
+ },
+ {
+  "id": 491,
+  "en": "Here's how all the pieces fit together:"
+ },
+ {
+  "id": 492,
+  "en": "To evaluate the expression (+ (* 3 4) 5) using the interpreter,\nscheme_eval is called on the following expressions (in this order):"
+ },
+ {
+  "id": 493,
+  "en": "By default, * evaluates to a procedure that multiplies its arguments together.\nBut * could be redefined at any time, and so the symbol * must be evaluated\neach time it is used in order to look up its current value."
+ },
+ {
+  "id": 494,
+  "en": "An interpreter is a program that executes programs. Today, we will extend the interpreter for Calculator, a simple made-up language that is a subset of Scheme. This lab is like the Scheme Project in miniature."
+ },
+ {
+  "id": 495,
+  "en": "The Calculator language includes only the four basic arithmetic operations: +, &#x2d;, *, and /. These operations can be nested and can take various numbers of arguments, just like in Scheme. A few examples of calculator expressions and their corresponding values are shown below."
+ },
+ {
+  "id": 496,
+  "en": "Calculator expressions are represented as Python objects:"
+ },
+ {
+  "id": 497,
+  "en": "Numbers are represented using Python numbers."
+ },
+ {
+  "id": 498,
+  "en": "The symbols for arithmetic operations are represented using Python strings (e.g. &#x27;+&#x27;)."
+ },
+ {
+  "id": 499,
+  "en": "Call expressions are represented using the Link class below."
+ },
+ {
+  "id": 500,
+  "en": "To represent Scheme lists in Python, we will use the Link class (in both this lab and the Scheme project). A Link instance has two attributes: first and rest. Link is always called on two arguments. To make a list, nest calls to Link and pass in nil as the second argument of the last Link."
+ },
+ {
+  "id": 501,
+  "en": "Note: In the Python code, nil is bound to Link.empty.\nSimilarly, nil in Scheme evaluates to an empty list."
+ },
+ {
+  "id": 502,
+  "en": "For example, once our interpreter reads in the Scheme expression (+ 2 3), it is represented as Link(&#x27;+&#x27;, Link(2, Link(3, nil)))."
+ },
+ {
+  "id": 503,
+  "en": "There is a map_link function that takes a one-argument Python function f and a linked list s. It returns the Scheme list that results from applying f to each element of the Scheme list."
+ },
+ {
+  "id": 504,
+  "en": "Here is the Link class and map_link function (__str__ and __repr__ methods not\nshown)."
+ },
+ {
+  "id": 505,
+  "en": "Q2: Using Link"
+ },
+ {
+  "id": 506,
+  "en": "Answer the following questions about a Link instance\nrepresenting the Calculator expression (+ (&#x2d; 2 4) 6 8)."
+ },
+ {
+  "id": 507,
+  "en": "Calculator Evaluation"
+ },
+ {
+  "id": 508,
+  "en": "For Question 3 (New Procedure), you'll need to update the calc_eval function below, which evaluates a Calculator expression. For Question 3, you'll determine what the operator and operands are for a call expression in Scheme as well as how to apply a procedure to arguments in the calc_apply line."
+ },
+ {
+  "id": 509,
+  "en": "Q3: New Procedure"
+ },
+ {
+  "id": 510,
+  "en": "Add the // operation to Calculator, a floor-division procedure such that (// dividend divisor) returns the result of dividing dividend by divisor, ignoring the remainder (dividend // divisor in Python). Handle multiple inputs as illustrated in the following example: (// dividend divisor1 divisor2 divisor3) evaluates to (((dividend // divisor1) // divisor2) // divisor3) in Python. Assume every call to // has at least two arguments."
+ },
+ {
+  "id": 511,
+  "en": "Hint: You will need to modify both the calc_eval and floor_div methods for this question!"
+ },
+ {
+  "id": 512,
+  "en": "Hint: Make sure that every element in a Link (the operator and all operands) will be calc_eval-uated once so that we can correctly apply the relevant Python operator to operands!"
+ },
+ {
+  "id": 513,
+  "en": "Q4: New Form"
+ },
+ {
+  "id": 514,
+  "en": "Add and expressions to our\nCalculator interpreter as well as introduce the Scheme boolean values\n#t and #f, represented as Python True and False.\nThe examples below assumes conditional operators (e.g. &lt;, &gt;, =, etc) have already been implemented,\nbut you do not have to worry about them for this question."
+ },
+ {
+  "id": 515,
+  "en": "In a call expression, we first evaluate the operator, then evaluate the operands, and finally apply the procedure to its arguments (just like you did for floor_div in the previous question).\nHowever, we cannot evaluate and expressions the same way we evaluate call expressions.  Since and is a special form that short circuits on the first false argument, we need to add special logic so that we don't always evaluate all of the sub-expressions."
+ },
+ {
+  "id": 516,
+  "en": "Important: To check whether some val is a false value in Scheme, use\nval is scheme_f rather than val == scheme_f because in Python 0 == False\nbut 0 is not False (crazy, right!)."
+ },
+ {
+  "id": 517,
+  "en": "Consult the drop-down if you need a refresher on macros. It's\nokay to skip directly to the questions and refer back\nhere should you get stuck."
+ },
+ {
+  "id": 518,
+  "en": "Evaluating the expression returned by the macro in the frame of the original macro call."
+ },
+ {
+  "id": 519,
+  "en": "Q5: Repeat"
+ },
+ {
+  "id": 520,
+  "en": "Define repeat, a macro that takes a number n and an expression\nexpr. Calling repeat evaluates expr in a local frame n times, and its value is\nthe final result. You will find the helper function repeated&#x2d;call useful, which\ntakes a number n and a zero-argument procedure f and calls f n number of times."
+ },
+ {
+  "id": 521,
+  "en": "For example, (repeat (+ 2 3) (print 1)) is equivalent to:"
+ },
+ {
+  "id": 522,
+  "en": "(repeated&#x2d;call (+ 2 3) (lambda () (print 1)))"
+ },
+ {
+  "id": 523,
+  "en": "and should evaluate (print 1) repeatedly 5 times."
+ },
+ {
+  "id": 524,
+  "en": "The following expression should print four four times:"
+ },
+ {
+  "id": 525,
+  "en": "(repeat 2 (repeat 2 (print &#x27;four)))"
+ },
+ {
+  "id": 526,
+  "en": "Hint: repeat"
+ },
+ {
+  "id": 527,
+  "en": "The repeated&#x2d;call procedure takes a zero-argument procedure, so\n(lambda () ___) must appear in the blank. The body of the lambda\nis expr, which must be unquoted."
+ },
+ {
+  "id": 528,
+  "en": "Hint: repeated-call"
+ },
+ {
+  "id": 529,
+  "en": "Call f on no arguments with (f). If n is 1, just call f. If n is\ngreater than 1, first call f and then call (repeated&#x2d;call (&#x2d; n 1) f)."
+ },
+ {
+  "id": 530,
+  "en": "A recursive call is a tail call if it is the last thing the function does."
+ },
+ {
+  "id": 531,
+  "en": "Example of a Tail Call:"
+ },
+ {
+  "id": 532,
+  "en": "As you can see above, the last thing that happens is a call to fact. There is nothing left to do in this frame, so we can close it and move onto the next."
+ },
+ {
+  "id": 533,
+  "en": "Example of a function without a tail call:"
+ },
+ {
+  "id": 534,
+  "en": "As you can see above, the (fact (&#x2d; n 1)) call must return and then be multiplied by n. Meaning, we have to keep that frame open until the call has completed and we can multiply."
+ },
+ {
+  "id": 535,
+  "en": "This is important because Tail-recursive functions use constant space unlike non-Tail-recursive functions which can use linear or more space."
+ },
+ {
+  "id": 536,
+  "en": "After the recursive call returns, is there any work left to do?"
+ },
+ {
+  "id": 537,
+  "en": "If yes, then it is not a tail call."
+ },
+ {
+  "id": 538,
+  "en": "If no, then it is a tail call."
+ },
+ {
+  "id": 539,
+  "en": "Q6: Concatenate"
+ },
+ {
+  "id": 540,
+  "en": "Write a tail-recursive function concatenate, which takes in s, a list of lists,\nand concatenates all the elements together into one list."
+ },
+ {
+  "id": 541,
+  "en": "Hint:\nRecall the built-in append function"
+ },
+ {
+  "id": 542,
+  "en": "A SELECT statement describes an output table based on input rows. To write one:"
+ },
+ {
+  "id": 543,
+  "en": "Describe the input rows using FROM and WHERE clauses."
+ },
+ {
+  "id": 544,
+  "en": "Group those rows and determine which groups should appear as output rows using GROUP BY and HAVING clauses."
+ },
+ {
+  "id": 545,
+  "en": "Format and order the output rows and columns using SELECT and ORDER BY clauses."
+ },
+ {
+  "id": 546,
+  "en": "Step 1 may involve joining tables (using commas) to form input rows that consist of two or more rows from existing tables."
+ },
+ {
+  "id": 547,
+  "en": "The WHERE, GROUP BY, HAVING, and ORDER BY clauses are optional."
+ },
+ {
+  "id": 548,
+  "en": "Consult the drop-down for a refresher on SQL. It's okay to skip directly to the questions and refer back here should you get stuck."
+ },
+ {
+  "id": 549,
+  "en": "Joins"
+ },
+ {
+  "id": 550,
+  "en": "To select data from multiple tables, we can use joins. There are many types\nof joins, but the only one we'll worry about is the inner join. To perform\nan inner join on two on more tables, simply list them all out in the FROM\nclause of a SELECT statement:"
+ },
+ {
+  "id": 551,
+  "en": "We can select from multiple different tables or from the same table multiple\ntimes."
+ },
+ {
+  "id": 552,
+  "en": "Let's say we have the following table that contains the names of head football\ncoaches at Cal since 2002:"
+ },
+ {
+  "id": 553,
+  "en": "When we join two or more tables, the default output is a {0}. For\nexample, if we joined big_game with coaches, we'd get the following:"
+ },
+ {
+  "id": 554,
+  "en": "If we want to match up each game with the coach that season, we'd have to\ncompare columns from the two tables in the WHERE clause:"
+ },
+ {
+  "id": 555,
+  "en": "In the query above, none of the column names are ambiguous. For example, it\nis clear that the start column comes from the coaches table because there\nisn't a column in the big_game table with that name.  However, if a column\nname exists in more than one of the tables being joined, or if we join a table\nwith itself, we must disambiguate the column names using dot notation and aliases."
+ },
+ {
+  "id": 556,
+  "en": "For examples, let's find out what the score difference is for each team between\na game in big_game and any previous games. Since each row in this table represents\none game, in order to compare two games we must join big_game with itself:"
+ },
+ {
+  "id": 557,
+  "en": "In the query above, we give the alias a to the first big_game table and the\nalias b to the second big_game table. We can then reference columns from\neach table using dot notation with the aliases, e.g. a.Berkeley,\na.Stanford, and a.Year to select from the first table."
+ },
+ {
+  "id": 558,
+  "en": "First, check that a file named sqlite_shell.py exists alongside the assignment files.\nIf you don't see it, or if you encounter problems with it, scroll down to the Troubleshooting\nsection to see how to download an official precompiled SQLite binary before proceeding."
+ },
+ {
+  "id": 559,
+  "en": "You can start an interactive SQLite session in your Terminal or Git Bash with\nthe following command:"
+ },
+ {
+  "id": 560,
+  "en": "While the interpreter is running, you can type .help to see some of the\ncommands you can run."
+ },
+ {
+  "id": 561,
+  "en": "To exit out of the SQLite interpreter, type .exit or .quit or press\nCtrl&#x2d;C.  Remember that if you see ...&gt; after pressing enter, you probably\nforgot a ;."
+ },
+ {
+  "id": 562,
+  "en": "You can also run all the statements in a .sql file by doing the following:\n(Here we're using the lab11.sql file as an example.)"
+ },
+ {
+  "id": 563,
+  "en": "Runs your code and then exits SQLite immediately afterwards."
+ },
+ {
+  "id": 564,
+  "en": "Runs your code and then opens an interactive SQLite session, which is\n  similar to running Python code with the interactive &#x2d;i flag."
+ },
+ {
+  "id": 565,
+  "en": "In addition to displaying a visual representation of the output table, the \"Step-by-step\" button lets us step\nthrough the SQL execution and visualize every transformation that takes place. This visualization is often useful\nfor smaller datasets where it's possible to look at all of the rows in a table. The visualization is not as\nuseful for the movies dataset, because each table has thousands of rows."
+ },
+ {
+  "id": 566,
+  "en": "IMDb"
+ },
+ {
+  "id": 567,
+  "en": "The IMDb 1000 dataset contains the 1000 highest rated popular movies (top 0.2% of votes) from the\n{0}."
+ },
+ {
+  "id": 568,
+  "en": "The tables in this dataset are quite large, so it's often useful to use LIMIT to\nlook at just a couple of rows in one of the tables.  To look at a few example\nrows from the titles table, which contains information about each movie:"
+ },
+ {
+  "id": 569,
+  "en": "The command beginning with .read reads in the SQL commands in imdb1000.sql, which\ncreate new tables with the movie dataset.  The .tables command lists out all of the\ntables."
+ },
+ {
+  "id": 570,
+  "en": "Here are the tables and columns you'll need for this lab. The .mode column\ncommand improves the formatting, but it doesn't work in the sqlite_shell.py\nand it's optional."
+ },
+ {
+  "id": 571,
+  "en": "tconst is a unique identifier for each movie (the t is for title), and nconst is a unique\nidentifier for each person.  These identifiers are useful for joining rows from different tables,\ne.g., to determine the rating for a particular movie, we would find the movie's nconst in the\ntitles table, and then lookup that nconst in the ratings table."
+ },
+ {
+  "id": 572,
+  "en": "Q1: Newest Movies"
+ },
+ {
+  "id": 573,
+  "en": "Create a table newest that contains the 10 newest movies in the dataset, and that has two columns:"
+ },
+ {
+  "id": 574,
+  "en": "title: The name of a movie"
+ },
+ {
+  "id": 575,
+  "en": "year: The year the movie was made"
+ },
+ {
+  "id": 576,
+  "en": "If you'd like, see if you can guess which movies will be in the results."
+ },
+ {
+  "id": 577,
+  "en": "Use FROM to specify which table to read the data from."
+ },
+ {
+  "id": 578,
+  "en": "Use ORDER BY to sort by which movies are the newest."
+ },
+ {
+  "id": 579,
+  "en": "Use LIMIT to select only the 10 newest movies."
+ },
+ {
+  "id": 580,
+  "en": "Use SELECT to put the movie title and year in the output."
+ },
+ {
+  "id": 581,
+  "en": "Q2: Movies with Dogs"
+ },
+ {
+  "id": 582,
+  "en": "Create a dog_movies table that includes one row for each movie character that includes the word \"dog\",\nand that has two columns:"
+ },
+ {
+  "id": 583,
+  "en": "title (text): The name of a movie"
+ },
+ {
+  "id": 584,
+  "en": "character (text): The name of the dog character"
+ },
+ {
+  "id": 585,
+  "en": "A single movie may appear multiple times if it has multiple dog characters."
+ },
+ {
+  "id": 586,
+  "en": "Use FROM, JOIN, and ON to combine the information in the titles and principals tables."
+ },
+ {
+  "id": 587,
+  "en": "Use WHERE to select only characters that include \"dog\"."
+ },
+ {
+  "id": 588,
+  "en": "Use SELECT to put the movie title and character in the output."
+ },
+ {
+  "id": 589,
+  "en": "Q3: Leads of Leads"
+ },
+ {
+  "id": 590,
+  "en": "Create a leads table that has two columns:"
+ },
+ {
+  "id": 591,
+  "en": "name (text): The name of an actor"
+ },
+ {
+  "id": 592,
+  "en": "lead_roles (integer): The number of movies that the actor has been the lead in"
+ },
+ {
+  "id": 593,
+  "en": "You can find lead roles by looking in the principals table for rows with ordering set to 1.\nOnly select actors who have been the lead in more than 10 movies."
+ },
+ {
+  "id": 594,
+  "en": "Use FROM and ON to combine the information in the principals and names tables."
+ },
+ {
+  "id": 595,
+  "en": "Use WHERE to select only lead roles."
+ },
+ {
+  "id": 596,
+  "en": "Use GROUP BY to create a single row for each person."
+ },
+ {
+  "id": 597,
+  "en": "Use HAVING to output only people who had more than 10 lead roles."
+ },
+ {
+  "id": 598,
+  "en": "Use SELECT to put the person's name and the count of their roles in the output."
+ },
+ {
+  "id": 599,
+  "en": "Q4: Long Movies"
+ }
+]

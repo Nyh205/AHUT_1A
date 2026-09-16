@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>
+Discussion 3 | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Discussion 3: Recursion, Tree Recursion
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc03.pdf" class="label label-outline">disc03.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+<!-- If there are fewer than 3 people in your group, merge your group with another group in the room. If your group has 6 or more students, you're welcome to split into two sub-groups and then sync up at the end. If you want two separate Pensieve documents for the two sub-groups, just have one sub-group add 1000 to their group number.
+
+Now switch to Pensieve:
+
+<ul>
+  <li><strong>Everyone</strong>: Go to <a href="https://www.pensieve.co/student/courses/cs61a/clazzes/cs61a_fa25/assignments/c6d75a5d-0f9b-410e-adc7-48ad3740fe20">pensieve.co</a>, log in with your @berkeley.edu email, and <strong>enter your group number</strong> as the room number (which was in the email that assigned you to this discussion). As long as you all enter the same number (any number), you'll all be using a shared document.</li>
+</ul>
+
+Once you're on Pensieve, you don't need to return to this page; Pensieve has all the same content (but more features). If for some reason Penseive doesn't work, return to this page and continue with the discussion. -->
+
+
+
+<h1 id="attendance">Attendance</h1>
+
+
+<p>Your TA will come around during discussion to check you in.
+<!-- You can start on the worksheet before being checked in; you don't need to wait for your TA to get started. --></p>
+
+<p>If you miss discussion for a good reason (such as sickness or a scheduling conflict), email <a href="mailto:cs61a@berkeley.edu">cs61a@berkeley.edu</a> within one week to receive attendance credit.
+</p>
+
+<!-- 
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Study Suggestion<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1"> -->
+
+
+
+<!-- </div> -->
+
+<!-- # Recursion
+
+Many students find this discussion challenging. Everything gets easier with practice. Please help each other learn. It's also long. If you don't finish, don't worry.
+
+**VERY IMPORTANT:** In this discussion, don't check your answers until your whole group is sure that the answer is right. Figure things out and check your work by _thinking_ about what your code will do.  Your goal should be to have all checks pass the first time you run them! If you need help, ask.
+
+**VERY IMPORTANT:** In this discussion, don't check your answers until your whole group is sure that the answer is right. Figure things out and check your work by _thinking_ about what your code will do. If you need help, ask. -->
+
+
+<h3 id="q1-skip-factorial">Q1: Skip Factorial</h3>
+
+
+<p>Define the base case for the <code>skip_factorial</code> function, which returns the product of <strong>every other positive</strong> integer, starting with <code>n</code>.</p>
+
+
+            <div class="monaco-storable" id="skip_factorial-input" style="height:270px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-skip_factorial-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-skip_factorial-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-skip_factorial-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def skip_factorial(n):\n    &quot;&quot;&quot;Return the product of positive integers n * (n &#x2d; 2) * (n &#x2d; 4) * ...\n\n    &gt;&gt;&gt; skip_factorial(5) # 5 * 3 * 1\n    15\n    &gt;&gt;&gt; skip_factorial(8) # 8 * 6 * 4 * 2\n    384\n    &quot;&quot;&quot;\n    if ___:\n        return ___\n    else:\n        return ___\n\n', "python", "skip_factorial-input"));
+            </script>
+        
+
+
+
+
+<h3 id="q2-swipe">Q2: Swipe</h3>
+
+
+<p>Implement <code>swipe</code>, which prints the digits of argument <code>n</code>, one per line, <strong>first backward then forward</strong>. The left-most digit is printed only once. <strong>Do not use</strong> <code>while</code> or <code>for</code> or <code>str</code>. (Use recursion, of course!)</p>
+
+
+            <div class="monaco-storable" id="swipe-input" style="height:378px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-swipe-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-swipe-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-swipe-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def swipe(n):\n    &quot;&quot;&quot;Print the digits of n, one per line, first backward then forward.\n\n    &gt;&gt;&gt; swipe(283)\n    3\n    8\n    2\n    8\n    3\n    &quot;&quot;&quot;\n    if n &lt; 10:\n        print(n)\n    else:\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n', "python", "swipe-input"));
+            </script>
+        
+
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-is-prime">Q3: Is Prime</h3>
+
+
+<p>Implement <code>is_prime</code> that takes an integer <code>n</code> greater than 1. It returns <code>True</code>
+if <code>n</code> is a prime number and <code>False</code> otherwise. Try following the approach
+below, but implement it recursively without using a <code>while</code> (or <code>for</code>)
+loop.</p>
+
+<p>You will need to define another "helper" function (a function that exists just
+to help implement this one). Does it matter whether you define it within
+<code>is_prime</code> or  as a separate function in the global frame? Try to define it to
+take as few arguments as possible.</p>
+
+
+            <div class="monaco-storable" id="is-prime-input" style="height:540px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-is-prime-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-is-prime-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-is-prime-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def is_prime(n):\n    &quot;&quot;&quot;Returns True if n is a prime number and False otherwise.\n    &gt;&gt;&gt; is_prime(9)\n    False\n    &gt;&gt;&gt; is_prime(2)\n    True\n    &gt;&gt;&gt; is_prime(16)\n    False\n    &gt;&gt;&gt; is_prime(521)\n    True\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "is-prime-input"));
+            </script>
+        
+
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q4-recursive-hailstone">Q4: Recursive Hailstone</h3>
+
+
+<!-- This was Homework 2, so this may need to be changed during the regular school year depending on content. -->
+Recall the <code>hailstone</code> function from <a href="../../hw/hw01/index.html">Homework 1</a>.
+
+<ul>
+  <li>First, pick a positive integer <code>n</code> as the start. If <code>n</code> is even, divide it by 2.</li>
+  <li>If <code>n</code> is odd, multiply it by 3 and add 1. Repeat this process until <code>n</code> is 1.</li>
+  <li>Complete this recursive version of <code>hailstone</code> that prints out the values of the sequence and returns the number of steps.</li>
+</ul>
+
+
+            <div class="monaco-storable" id="recursive-hailstone-input" style="height:630px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-recursive-hailstone-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-recursive-hailstone-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-recursive-hailstone-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def hailstone(n):\n    &quot;&quot;&quot;Print out the hailstone sequence starting at n, \n    and return the number of elements in the sequence.\n    &gt;&gt;&gt; a = hailstone(10)\n    10\n    5\n    16\n    8\n    4\n    2\n    1\n    &gt;&gt;&gt; a\n    7\n    &gt;&gt;&gt; b = hailstone(1)\n    1\n    &gt;&gt;&gt; b\n    1\n    &quot;&quot;&quot;\n    print(n)\n    if n % 2 == 0:\n        return even(n)\n    else:\n        return odd(n)\n\ndef even(n):\n    return ____\n\ndef odd(n):\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n', "python", "recursive-hailstone-input"));
+            </script>
+        
+
+</p>
+
+<div class="page-break"></div>
+
+
+<h3 id="q5-maximum-subsequence">Q5: Maximum Subsequence</h3>
+
+
+<p>A <em>subsequence</em> of a number is a series of digits from the number (not necessarily contiguous). For example, 12345 has subsequences like 123, 234, 124, 245, etc. Your task is to find the <strong>largest subsequence</strong> that is under a specified length.</p>
+
+<blockquote><p><strong>Hint:</strong> To add a digit (<code>d</code>) to an existing number (<code>n</code>), calculate: <code>n * 10 + d</code>. For instance, to add the digit <code>8</code> to <code>15</code> to get <code>158</code>, compute <code>15 * 10 + 8</code>.</p></blockquote>
+
+
+            <div class="monaco-storable" id="max-subseq-input" style="height:702px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-max-subseq-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-max-subseq-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-max-subseq-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def max_subseq(n, t):\n    &quot;&quot;&quot;\n    Return the maximum subsequence of length at most t that can be found in the given number n.\n    For example, for n = 2012 and t = 2, we have that the subsequences are\n        2\n        0\n        1\n        2\n        20\n        21\n        22\n        01\n        02\n        12\n    and of these, the maximum number is 22, so our answer is 22.\n\n    &gt;&gt;&gt; max_subseq(2012, 2)\n    22\n    &gt;&gt;&gt; max_subseq(20125, 3)\n    225\n    &gt;&gt;&gt; max_subseq(20125, 5)\n    20125\n    &gt;&gt;&gt; max_subseq(20125, 6) # note that 20125 == 020125\n    20125\n    &gt;&gt;&gt; max_subseq(12345, 3)\n    345\n    &gt;&gt;&gt; max_subseq(12345, 0) # 0 is of length 0\n    0\n    &gt;&gt;&gt; max_subseq(12345, 1)\n    5\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n', "python", "max-subseq-input"));
+            </script>
+        
+
+<!--**There are two key insights for this problem:**
+You need to split into the case where the ones digit is used and the case where it is not.
+  In the case where it is, we want to reduce <code>t</code> since we used one of the digits; in the
+  case where it isn't used, we keep <code>t</code> the same. Finally, given these two possibilities,
+  how can we continue this process of splitting into two cases to grow the subsequence and
+  find the maximum of all of the different subsequences that are below a certain length?
+In the case where we are using the ones digit, we need to attach the digit onto the end of
+  the number/subsequence that is being built (and eventually returned). For example, the way
+  to attach a digit <code>d</code> to the end of a number <code>n</code> is to do <code>10 * n + d</code>. To see this in use,
+  think about what we would need to do if we wanted to attach <code>8</code>(<code>d</code>) to the end of <code>15</code> (<code>n</code>)
+  to make <code>158</code>. We cannot just do <code>15 + 8</code> (because that is <code>23</code>), instead we need to do
+  <code>(10 * 15) + 8</code> (which is <code>150 + 8</code>, giving us <code>158</code> like we wanted). -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q6-sevens">Q6: Sevens</h3>
+
+
+<p><strong>The Game of Sevens</strong>: Players in a circle count up from 1 in the clockwise
+direction. (The starting player says 1, the player to their left says 2, etc.) If a
+number is divisible by 7 or contains a 7 (or both), switch directions. Numbers
+must be said on the beat at <a href="https://www.youtube.com/watch?v=ymJIXzvDvj4">60 beats per
+minute</a>. If someone says a number
+when it's not their turn or someone misses the beat on their turn, the game
+ends.</p>
+
+<p>For example, 5 people would count to 20 like this:</p>
+
+<pre><code>Player 1 says 1
+Player 2 says 2
+Player 3 says 3
+Player 4 says 4
+Player 5 says 5
+Player 1 says 6  # All the way around the circle
+Player 2 says 7  # Switch to counterclockwise
+Player 1 says 8
+Player 5 says 9  # Back around the circle counterclockwise
+Player 4 says 10
+Player 3 says 11
+Player 2 says 12
+Player 1 says 13
+Player 5 says 14 # Switch back to clockwise
+Player 1 says 15
+Player 2 says 16
+Player 3 says 17 # Switch back to counterclockwise
+Player 2 says 18
+Player 1 says 19
+Player 5 says 20</code></pre>
+
+
+
+<!-- Play a few games. Post the highest score your group reached on Discord. -->
+
+<p>Implement <code>sevens</code> which takes a positive integer <code>n</code> and a number of
+players <code>k</code>. It returns which of the <code>k</code> players says <code>n</code>. You may call
+<code>has_seven</code>.</p>
+
+<p>An effective approach to this problem is to simulate the game, stopping on turn
+<code>n</code>.
+The implementation must keep track of the following:</p>
+
+<ul>
+  <li>the final number <code>n</code></li>
+  <li>the current number <code>i</code></li>
+  <li>the player <code>who</code> will say <code>i</code></li>
+  <li>and the current <code>direction</code> that determines the next player (either increasing or decreasing).</li>
+</ul>
+
+<p>It works well to use integers to represent all of these, with <code>direction</code> switching between <code>1</code>
+(increase) and <code>&#x2d;1</code> (decreasing).</p>
+
+
+            <div class="monaco-storable" id="sevens-input" style="height:702px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-sevens-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-sevens-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-sevens-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def sevens(n, k):\n    &quot;&quot;&quot;Return the (clockwise) position of who says n among k players.\n\n    &gt;&gt;&gt; sevens(2, 5)\n    2\n    &gt;&gt;&gt; sevens(6, 5)\n    1\n    &gt;&gt;&gt; sevens(7, 5)\n    2\n    &gt;&gt;&gt; sevens(8, 5)\n    1\n    &gt;&gt;&gt; sevens(9, 5)\n    5\n    &gt;&gt;&gt; sevens(18, 5)\n    2\n    &quot;&quot;&quot;\n    def f(i, who, direction):\n        if i == n:\n            return who\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n    return f(1, 1, 1)\n\ndef has_seven(n):\n    if n == 0:\n        return False\n    elif n % 10 == 7:\n        return True\n    else:\n        return has_seven(n // 10)\n', "python", "sevens-input"));
+            </script>
+        
+
+
+
+<!-- This question is quite difficult but the solution is short and elegant. -->
+
+<!-- <include topics/recursion/difficult/karel.md> -->
+
+<!-- <include topics/recursion/difficult/y-combinator.md> -->
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#attendance">Attendance</a></li>
+  <ul>
+    <li><a href="#q1-skip-factorial">Q1: Skip Factorial</a></li>
+    <li><a href="#q2-swipe">Q2: Swipe</a></li>
+    <li><a href="#q3-is-prime">Q3: Is Prime</a></li>
+    <li><a href="#q4-recursive-hailstone">Q4: Recursive Hailstone</a></li>
+    <li><a href="#q5-maximum-subsequence">Q5: Maximum Subsequence</a></li>
+    <li><a href="#q6-sevens">Q6: Sevens</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

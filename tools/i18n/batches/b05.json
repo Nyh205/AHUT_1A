@@ -1,0 +1,602 @@
+[
+ {
+  "id": 750,
+  "en": "An even number is never a base case, so even always makes a recursive call to hailstone and returns one more than the length of the rest of the hailstone sequence."
+ },
+ {
+  "id": 751,
+  "en": "An odd number might be 1 (the base case) or greater than one (the recursive case). Only the recursive case should call hailstone."
+ },
+ {
+  "id": 752,
+  "en": "First check if i is a multiple of 7 or contains a 7, and if so, switch\ndirections. Then, add the direction to who and ensure that who has not\nbecome smaller than 1 or greater than k."
+ },
+ {
+  "id": 753,
+  "en": "The key point to note is that instead of iterating over each element in the\nlist, we must instead iterate over the indices of the list. Otherwise, there's\nno way to tell if we should keep a given element."
+ },
+ {
+  "id": 754,
+  "en": "6: max([t1, t2], key=label) evaluates to the t2 tree because its label 5 is\nlarger than t1's label 3. Among t2's branches (which are leaves), the left one\nlabeled 6 has a smaller label."
+ },
+ {
+  "id": 755,
+  "en": "The base case return value [label(t)] creates a one-element list of the labels along a path that starts at the root of t and also ends there, since the root is labeled x."
+ },
+ {
+  "id": 756,
+  "en": "The assignment path = find_path(b, x) allows the return value of this recursive call to be used twice: once to check if it's None (which is a false value) and again to build a longer list."
+ },
+ {
+  "id": 757,
+  "en": "The expression [label(t)] + path for a tree t and list path creates a longer list that starts with the label of t and continues with the elements of path."
+ },
+ {
+  "id": 758,
+  "en": "Solution\n                def prune_leaves(t, vals):"
+ },
+ {
+  "id": 759,
+  "en": "StopIteration"
+ },
+ {
+  "id": 760,
+  "en": "hihi"
+ },
+ {
+  "id": 761,
+  "en": "hihihi\nhihihihi"
+ },
+ {
+  "id": 762,
+  "en": "hi\nhihi"
+ },
+ {
+  "id": 763,
+  "en": "'hihi'"
+ },
+ {
+  "id": 764,
+  "en": "hihihi"
+ },
+ {
+  "id": 765,
+  "en": "'hihihihi'"
+ },
+ {
+  "id": 766,
+  "en": "Error"
+ },
+ {
+  "id": 767,
+  "en": "Tree(4, [Tree(2)])"
+ },
+ {
+  "id": 768,
+  "en": "Tree(2, [Tree(2)])"
+ },
+ {
+  "id": 769,
+  "en": "Tree(4, [Tree(8)])"
+ },
+ {
+  "id": 770,
+  "en": "Solution: Logarithmic, because our while loop iterates at most log(finn) times, due to finn being halved in every iteration. This is commonly known as Θ(log(finn)) runtime. Another way of looking at this if you duplicate the input, we only add a single iteration to the time, which also indicates logarithmic."
+ },
+ {
+  "id": 771,
+  "en": "Solution: Constant, since in the worst case scenario our function mod_7 will require 6 recursive calls to reach the base case. Consider the worst case where we have an input n such that our first call to mod_7 evaluates n % 7 as 6. Each recursive call will decrement n by 1, allowing us to eventually reach the base case of returning 0 in 6 recursive calls (n will range from 0 to 6). Since the growth of the computation is independent of the input, we say this is constant, which is commonly known as a Θ(1) runtime."
+ },
+ {
+  "id": 772,
+  "en": "count_partitions: exponential."
+ },
+ {
+  "id": 773,
+  "en": "count_partitions takes two inputs n and m so the runtime depends on both inputs. However, when determining what the order of growth is, we're mostly concerned with what happens to the runtime for larger values of n and m."
+ },
+ {
+  "id": 774,
+  "en": "The conditional statements such as if n == 0 are logical comparisons that take constant time. Therefore, what affects our runtime the most are the number of recursive calls we to count_partitions. For every function call to count_partitions we make two more recursive calls; one that uses m as a partition, and one that does not."
+ },
+ {
+  "id": 775,
+  "en": "Visualizing the tree of recursive calls for this function, we'll see that the number of function calls at each level doubles. Thus, the runtime for count_partitions is exponential."
+ },
+ {
+  "id": 776,
+  "en": "is_palindrome: linear."
+ },
+ {
+  "id": 777,
+  "en": "We're interested in seeing how the function runs in relation to\nthe length of its input, which is len(s)."
+ },
+ {
+  "id": 778,
+  "en": "In is_palindrome, it takes constant time to calculate len(s)\nand then to construct a range from 0 to len(s) (exclusive)."
+ },
+ {
+  "id": 779,
+  "en": "For each element in this range, we will select two elements from s\n(s[i] and s[len(s)&#x2d;i&#x2d;1]) and compare them, which takes some\nconstant time for each element.\nOnce we've done this for all the elements,\nwe will have built up the input list to all in linear time in relation\nto the length of is_palindrome's input."
+ },
+ {
+  "id": 780,
+  "en": "We assume that all runs in linear time in the length of its input,\nwhich is the length of the list we've just built and the same as\nthe length of is_palindrome's input."
+ },
+ {
+  "id": 781,
+  "en": "Overall, is_palindrome will therefore take linear time\nin relation to the length of its input."
+ },
+ {
+  "id": 782,
+  "en": "binary_search: logarithmic."
+ },
+ {
+  "id": 783,
+  "en": "The binary_search algorithm's runtime is dependent on the length of lst because we are searching through it to find some integer n."
+ },
+ {
+  "id": 784,
+  "en": "Again, assuming len(lst) and logical comparisons take constant time to calculate, we look at how many iterations of the while loop we might go through before completing the function call. First we check the element at the middle of our sorted list. If lst[middle] is not equal to n, the function determines whether lst[middle] is less than or greater than n and narrows our search down to either the lower half or upper half of lst, respectively."
+ },
+ {
+  "id": 785,
+  "en": "For every iteration of the while loop, binary_search cuts down the number of elements in the input lst we are searching through by half. Thus, the maximum number of iterations for the while loop before returning an index or &#x2d;1  is log(len(lst)) in base 2. binary_search takes logarithmic time in relation to the length of its input lst."
+ },
+ {
+  "id": 786,
+  "en": "Solution\n                  (define (max a b) (if (> a b) a b))\n  (define (min a b) (if (> a b) b a))\n  (define (gcd a b)"
+ },
+ {
+  "id": 787,
+  "en": "(expect (gcd 0 4) 4)\n  (expect (gcd 10 0) 10)\n  (expect (gcd 30 5) 5)\n  (expect (gcd 24 60) 12)\n  (expect (gcd 1071 462) 21)"
+ },
+ {
+  "id": 788,
+  "en": "The symbol if is not evaluated because it is the start of a special form, not\npart of a call expression. The symbols that introduce special forms (and,\nif, lambda, etc.) are never evaluated."
+ },
+ {
+  "id": 789,
+  "en": "The symbol &#x2d; is not evaluated, nor is the whole sub-expression (&#x2d; x) that it\nappears in, because (&lt; x 0) evaluates to #f. If you're still not certain\nwhy some parts are evaluated and some aren't, ask the course staff."
+ },
+ {
+  "id": 790,
+  "en": "The mystery&#x2d;macro replaces all instances of an old symbol with a new expression before evaluating the expression expr."
+ },
+ {
+  "id": 791,
+  "en": "Homework 1: Functions, Control, Higher-Order Functions"
+ },
+ {
+  "id": 792,
+  "en": "Homework 2: Recursion, Tree Recursion, Sequences and Lists"
+ },
+ {
+  "id": 793,
+  "en": "Homework 3: Mutability, Trees, Iterators, Generators"
+ },
+ {
+  "id": 794,
+  "en": "Homework 4: Object-Oriented Programming, Inheritance, Mutable Trees"
+ },
+ {
+  "id": 795,
+  "en": "Homework 5: Linked lists, Efficiency, Scheme"
+ },
+ {
+  "id": 796,
+  "en": "Homework 6: SQL"
+ },
+ {
+  "id": 797,
+  "en": "This homework is quite long, it's in your best interest to start early.\nDownload {0}. Inside the archive, you will find a file called\n{1}, along with a copy of the ok autograder."
+ },
+ {
+  "id": 798,
+  "en": "Homework 7: Finale"
+ },
+ {
+  "id": 799,
+  "en": "The end-of-semester survey counts as a survey point."
+ },
+ {
+  "id": 800,
+  "en": "Homework 1 Solutions"
+ },
+ {
+  "id": 801,
+  "en": "If b is positive, we add the numbers together. If b is negative, we\nsubtract the numbers. Therefore, we choose the operator add or sub\nbased on the sign of b."
+ },
+ {
+  "id": 802,
+  "en": "We keep track of the current length of the hailstone sequence and the current\nvalue of the hailstone sequence. From there, we loop until we hit the end of\nthe sequence, updating the length in each step."
+ },
+ {
+  "id": 803,
+  "en": "Note: we need to do floor division // to remove decimals."
+ },
+ {
+  "id": 804,
+  "en": "The prod variable is used to keep track of the product so far. We \nstart with prod = 1 since we will be multiplying, and anything multiplied \nby 1 is itself. We then initialize the counter variable k to use in the while\nloop to ensures that we get through all values 1 through k."
+ },
+ {
+  "id": 805,
+  "en": "There are many correct ways to implement make_repeater. This solution\nrepeatedly applies h."
+ },
+ {
+  "id": 806,
+  "en": "Iterating from n&#x2d;1 to 1, we return the first integer that evenly divides\nn. This is guaranteed to be the largest factor of n."
+ },
+ {
+  "id": 807,
+  "en": "We want to abstract the logic of product and summation into accumulate.\nThe differences between product and summation are:"
+ },
+ {
+  "id": 808,
+  "en": "How to fuse terms. For product, we fuse via * (mul).\n  For summation, we fuse via + (add)."
+ },
+ {
+  "id": 809,
+  "en": "The starting value. For product, we want to start off with 1 since\n  starting with 0 means that our result (via multiplying with the start)\n  will always be 0. For summation, we want to start off with 0."
+ },
+ {
+  "id": 810,
+  "en": "Homework 2 Solutions"
+ },
+ {
+  "id": 811,
+  "en": "You can find solutions for all questions in {0}."
+ },
+ {
+  "id": 812,
+  "en": "The equivalent iterative version of this problem might look something like\nthis:"
+ },
+ {
+  "id": 813,
+  "en": "The main idea is that we check each digit for a eight. The recursive solution\nis similar, except that you depend on the recursive call to count the\noccurences of eight in the rest of the number. Then, you add that to the number\nof eights you see in the current digit."
+ },
+ {
+  "id": 814,
+  "en": "Partition size is not linear. To get the next partition you need to call\n  next_smaller_dollar."
+ },
+ {
+  "id": 815,
+  "en": "Partition size is not linear. To get the next partition you need to call\n  next_larger_dollar."
+ },
+ {
+  "id": 816,
+  "en": "Homework 3 Solutions"
+ },
+ {
+  "id": 817,
+  "en": "If our current label is equal to target, we've found a path from the root to a node\ncontaining target containing only our current label, so we should yield that. From there,\nwe'll see if there are any paths starting from one of our branches that ends at a\nnode containing target. If we find these \"partial paths\" we can simply add our current\nlabel to the beinning of a path to obtain a path starting from the root."
+ },
+ {
+  "id": 818,
+  "en": "In order to do this, we'll create a generator for each of the branches which yields\nthese \"partial paths\". By calling yield_paths on each of the branches, we'll create\nexactly this generator! Then, since a generator is also an iterable, we can iterate over\nthe paths in this generator and yield the result of concatenating it with our current label."
+ },
+ {
+  "id": 819,
+  "en": "Homework 4 Solutions"
+ },
+ {
+  "id": 820,
+  "en": "Homework 5 Solutions"
+ },
+ {
+  "id": 821,
+  "en": "We avoid unnecessary pow calls by squaring the result of base^(exp/2) when exp is even."
+ },
+ {
+  "id": 822,
+  "en": "The else clause, which is for odd values of exp, multiplies the result of base^(exp&#x2d;1) by base."
+ },
+ {
+  "id": 823,
+  "en": "When exp is even, computing base^exp requires one more call than computing base^(exp/2). When exp is odd, computing base^exp requires two more calls than computing base^((exp&#x2d;1)/2)."
+ },
+ {
+  "id": 824,
+  "en": "So we have a logarithmic runtime for pow with respect to exp."
+ },
+ {
+  "id": 825,
+  "en": "We know our solution must be recursive because Scheme handles recursion much better than it handles iteration."
+ },
+ {
+  "id": 826,
+  "en": "The provided code returns x when n is zero. This is the correct base case for repeatedly&#x2d;cube; we just need to write the recursive case."
+ },
+ {
+  "id": 827,
+  "en": "In the recursive case, the provided code returns (* y y y), which is the cube of y. We use recursion to set y to the result of cubing x n &#x2d; 1 times. Then the cube of y is the result of cubing x n times, as desired."
+ },
+ {
+  "id": 828,
+  "en": "The second element of a list s is the first element of the rest of s. So we define (cadr s) as the car of the cdr of s."
+ },
+ {
+  "id": 829,
+  "en": "The provided cddr procedure takes a list s and returns a list that starts at the third element of s. So we define (caddr s) as the car of the cddr of s."
+ },
+ {
+  "id": 830,
+  "en": "Homework 6 Solutions"
+ },
+ {
+  "id": 831,
+  "en": "We need information from both the parents and the dogs table. This time, the\nonly rows that make sense are the ones where a child is matched up with their\nparent. Finally, we order the result by descending height."
+ },
+ {
+  "id": 832,
+  "en": "We know that at a minimum, we need information from both the dogs and sizes\ntable. Finally, we filter and keep only the rows that make sense: a size that\ncorresponds to the size of the dog we're currently considering."
+ },
+ {
+  "id": 833,
+  "en": "Roughly speaking, there are two tasks we need to solve here:"
+ },
+ {
+  "id": 834,
+  "en": "Figure out which dogs are siblings"
+ },
+ {
+  "id": 835,
+  "en": "A sibling is someone you share a parent with. This will probably involve the\nparents table."
+ },
+ {
+  "id": 836,
+  "en": "It might be tempting to join this with dogs, but there isn't any extra\ninformation provided by a dogs table that we need at this time. Furthermore, we\nstill need information on sibling for a given dog, since the parents table\njust associates each dog to a parent."
+ },
+ {
+  "id": 837,
+  "en": "The next step, therefore, is to match all children to all other children by\njoining the parents table to itself. The only rows here that make sense are the\nrows that represent sibling relationships since they share the same parent."
+ },
+ {
+  "id": 838,
+  "en": "Remember that we want to avoid duplicates! If dog A and B are siblings, we don't\nwant both A/B and B/A to appear in the final result. We also definitely don't\nwant A/A to be a sibling pair. Enforcing ordering on the sibling names ensures\nthat we don't have either issue."
+ },
+ {
+  "id": 839,
+  "en": "Construct sentences based on sibling information"
+ },
+ {
+  "id": 840,
+  "en": "After determining the siblings, constructing the sentences just requires us to\nget the size of each sibling. We could join on the dogs and sizes tables as\nwe did in an earlier problem, but there's no need to redo that work. Instead,\nwe'll reuse our size_of_dogs table to figure out the size of each sibling in\neach pair."
+ },
+ {
+  "id": 841,
+  "en": "本实验讲解如何配置你的电脑以完成作业，并介绍一些 Python 的基础知识。如果你需要帮助，可以查阅课程文档，或与同学一起讨论。"
+ },
+ {
+  "id": 842,
+  "en": "环境配置（Setup）：配置本课程所需的基本软件。这需要下面列出的几个组件。"
+ },
+ {
+  "id": 843,
+  "en": "安装终端（Terminal）：安装一个终端，以便你与本课程中的文件交互并运行 ok 命令。"
+ },
+ {
+  "id": 844,
+  "en": "安装 Python 3：在电脑上安装 Python 3.8 或更高版本（最好是 Python 3.11 或更高版本）。"
+ },
+ {
+  "id": 845,
+  "en": "安装文本编辑器：安装用于编辑本课程 .py 文件的软件。几乎所有学生都用 VS Code。"
+ },
+ {
+  "id": 846,
+  "en": "实操：使用终端：带你熟悉如何使用终端和 Python 解释器。"
+ },
+ {
+  "id": 847,
+  "en": "附录：有用的 Python 命令行选项：这些命令对调试你的工作很有用，但不是完成实验所必需的。我们把它们列出来，因为它们很可能在整个课程中对你有帮助。"
+ },
+ {
+  "id": 848,
+  "en": "1) Python 会输出什么？(WWPD)"
+ },
+ {
+  "id": 849,
+  "en": "实验作业的一部分内容是预测 Python 解释器的行为。我们把这类问题称为「Python 会输出什么？」。"
+ },
+ {
+  "id": 850,
+  "en": "在这门课中，我们使用一个叫 ok 的程序来评估你的知识。\n每个作业都会附带 ok。下面我们来讲如何用 ok 完成一道 WWPD 题目。"
+ },
+ {
+  "id": 851,
+  "en": "打开终端，确认你在 lab00 目录中——也就是包含本次作业解压后实验文件的目录。在该目录下输入 ls，确认存在以下文件："
+ },
+ {
+  "id": 852,
+  "en": "lab00.py：本实验的起始文件"
+ },
+ {
+  "id": 853,
+  "en": "lab00.ok：ok 的配置文件"
+ },
+ {
+  "id": 854,
+  "en": "命令 python3 ok &#x2d;q python&#x2d;basics &#x2d;u 让 Python 解释器运行当前工作目录中名为 ok 的文件。\n&#x2d;q python&#x2d;basics &#x2d;u 是传给 ok 程序的输入，用来指定要运行哪道题。"
+ },
+ {
+  "id": 855,
+  "en": "正如环境配置一节所说，如果 python3 命令不起作用，请尝试用 python 或 py。"
+ },
+ {
+  "id": 856,
+  "en": "在 VS Code 中打开整个 lab00 文件夹。你可以把文件夹拖到 VS Code 应用上，或打开 VS Code 后在 File（文件）菜单中使用 Open Folder...（打开文件夹）。\n打开 lab00 文件夹后，你会在 VS Code 窗口左侧面板的文件资源管理器中看到 lab00.py 文件。点击它开始编辑\nlab00.py——这个文件就是你要提交以获得实验学分的文件。"
+ },
+ {
+  "id": 857,
+  "en": "重要：在 VS Code 的 File（文件）菜单中打开 Auto Save（自动保存）。这样每当你修改文件时，内容就会自动保存。如果你没有启用 Auto Save，请务必经常保存你的工作。"
+ },
+ {
+  "id": 858,
+  "en": "推荐：使用 VS Code 内置的终端（菜单中的 Terminal &gt; New Terminal，即「终端 &gt; 新建终端」）。如果你按上面的说明在 VS Code 中打开了作业文件夹，那么 VS Code 终端的工作目录会自动设置为作业文件夹，这样你就不必再切换目录来检查你的工作了。"
+ },
+ {
+  "id": 859,
+  "en": "现在完成本实验。你应该会看到一个名为 twenty_twenty_six 的函数，它有一个空白的 return 语句。这个空白是你唯一需要修改的地方。\n把它替换成一个计算结果为 2026 的表达式。你能想到最有创意的表达式是什么？"
+ },
+ {
+  "id": 860,
+  "en": "我们还会用 ok 来测试你的代码。切换到终端，确认你在包含 ok 和 lab00.py 的 lab00 目录中。"
+ },
+ {
+  "id": 861,
+  "en": "小技巧：如果你在 VS Code 中打开了 lab00 文件夹，并在 VS Code 的 Terminal（终端）菜单里选择 New Terminal（新建终端），那么终端会自动处于 lab00 目录中。"
+ },
+ {
+  "id": 862,
+  "en": "请记住，如果你用的是 Windows 且 python3 命令不起作用，请尝试只用\npython 或 py。"
+ },
+ {
+  "id": 863,
+  "en": "附录：有用的 Python 命令行选项"
+ },
+ {
+  "id": 864,
+  "en": "ls：列出当前目录中的所有文件（list）"
+ },
+ {
+  "id": 865,
+  "en": "cd &lt;目录路径&gt;：切换到指定的目录（change directory）"
+ },
+ {
+  "id": 866,
+  "en": "mkdir &lt;目录名&gt;：用给定名称创建一个新目录（make directory）"
+ },
+ {
+  "id": 867,
+  "en": "以下是在文件上运行 Python 的几种最常见方式。"
+ },
+ {
+  "id": 868,
+  "en": "&#x2d;i：&#x2d;i 选项会运行你提供的文件中的代码，然后打开一个交互式会话（带有 &gt;&gt;&gt; 提示符）。你可以计算表达式，例如调用你定义的函数。要退出，输入\n  exit()。你也可以用键盘快捷键：Linux/Mac 上是 Ctrl&#x2d;D，Windows 上是 Ctrl&#x2d;Z  Enter。"
+ },
+ {
+  "id": 869,
+  "en": "如果你在交互式运行时修改了 Python 文件，你需要退出并重启解释器，这些修改才会生效。"
+ },
+ {
+  "id": 870,
+  "en": "下面是如何交互式运行 lab00.py："
+ },
+ {
+  "id": 871,
+  "en": "&#x2d;m doctest：运行文件中的 doctest，也就是函数文档字符串（docstring）中的示例。"
+ },
+ {
+  "id": 872,
+  "en": "文件中的每个测试都由 &gt;&gt;&gt; 及其后的 Python 代码和期望输出组成。"
+ },
+ {
+  "id": 873,
+  "en": "下面是如何运行 lab00.py 中的 doctest："
+ },
+ {
+  "id": 874,
+  "en": "当我们的代码通过所有 doctest 时，不会显示任何输出。否则，会显示失败测试的相关信息。"
+ },
+ {
+  "id": 875,
+  "en": "Lab 1: Functions, Control"
+ },
+ {
+  "id": 876,
+  "en": "Lab 2: Higher-Order Functions, Lambda Expressions"
+ },
+ {
+  "id": 877,
+  "en": "Lab 3: Sequences, Recursion"
+ },
+ {
+  "id": 878,
+  "en": "Lab 4: Sequences, Tree Recursion, Trees"
+ },
+ {
+  "id": 879,
+  "en": "Lab 5: Mutability, Iterators, Generators"
+ },
+ {
+  "id": 880,
+  "en": "Lab 6: OOP"
+ },
+ {
+  "id": 881,
+  "en": "Lab 7: Mutable Trees"
+ },
+ {
+  "id": 882,
+  "en": "Lab 8: Linked Lists"
+ },
+ {
+  "id": 883,
+  "en": "Lab 9: Scheme, Scheme Lists"
+ },
+ {
+  "id": 884,
+  "en": "Lab 10: Interpreters, Tail Calls"
+ },
+ {
+  "id": 885,
+  "en": "Lab 11: SQL"
+ },
+ {
+  "id": 886,
+  "en": "Lab 12: Final Review"
+ },
+ {
+  "id": 887,
+  "en": "Lab 0 Solutions"
+ },
+ {
+  "id": 888,
+  "en": "What does cd do?"
+ },
+ {
+  "id": 889,
+  "en": "Change into specified directory."
+ },
+ {
+  "id": 890,
+  "en": "What does ls do?"
+ },
+ {
+  "id": 891,
+  "en": "Lists all files in current directory."
+ },
+ {
+  "id": 892,
+  "en": "What does mkdir do?"
+ },
+ {
+  "id": 893,
+  "en": "Makes a new directory."
+ },
+ {
+  "id": 894,
+  "en": "This lab explains how to setup your computer to complete assignments and\nintroduces some of the basics of Python. If you need any help, please post on Ed or ask for help at your assigned lab section."
+ },
+ {
+  "id": 895,
+  "en": "Here's an outline of the lab:"
+ },
+ {
+  "id": 896,
+  "en": "Setup: Setting up the essential software for the course. This will require several\n  components, listed below."
+ },
+ {
+  "id": 897,
+  "en": "Install a Terminal: Install a terminal so you can interact with files\n    in this course and run OK commands."
+ },
+ {
+  "id": 898,
+  "en": "Install Python 3: Install Python version 3.8 or later (ideally Python 3.11 or later) on your\n    computer."
+ },
+ {
+  "id": 899,
+  "en": "Install a Text Editor: Install software to edit .py files for this\n    course. Almost all students use VS Code."
+ }
+]

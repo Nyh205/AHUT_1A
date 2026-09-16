@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../assets/js/hl.js"></script>
+    <script src="../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/mono-blue.css">
+    <link rel="icon" href="../assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 0: Getting Started (Windows Setup) | AHUT_1A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>Lab 0: Getting Started (Windows Setup)</h1>
+    </header>
+     
+<h2 id="setup">Setup</h2>
+
+
+
+<h4 id="terminal">Terminal</h4>
+
+
+<p>The terminal is a program that allows you to interact with your computer
+by entering commands.</p>
+
+<p>You already have one called <code>Windows PowerShell</code>. Open it up and you should be good to go.</p>
+
+<!-- As of fall 2025, prefer that students use PowerShell for less confusion
+
+<pre><code> since it is one less thing to install and PS commands are different from Unix commands.
+ VS Code also defaults the integrated terminal on Windows to be PS rather than Git Bash.</code></pre>
+
+ -->
+<!-- <include git-bash.md> -->
+
+
+<h4 id="python">Python</h4>
+
+
+<p>Python 3 is the primary programming language used in this course. This course requires
+Python 3.8+ (we recommend Python 3.11). If you have an older version of Python installed,
+please make sure to download and install Python 3.11. You can check your Python
+version with the command <code>python3 ––version</code>.</p>
+
+<p>If you'll be using PowerShell, open the Microsoft Store and search for "Python." Install Python 3.11 by the Python Software Foundation.</p>
+
+<p><strong>Verify</strong>: We can use the terminal to check if your Python interpreter was installed
+correctly. Try the following command in PowerShell:</p>
+
+<pre><code>python3 ––version</code></pre>
+
+<p>If the installation worked, you should see some text that says "Python 3.XX.XX."
+Be sure that the version is listed as Python 3.8 or later.</p>
+
+<blockquote class="help-windows">
+If the <code>python3 &#x2d;&#x2d;version</code> command doesn't work, first try closing and reopening
+your terminal. If that doesn't work, try using <code>python &#x2d;&#x2d;version</code> or <code>py &#x2d;&#x2d;version</code>
+instead.
+</blockquote>
+
+
+<h4 id="text-editor">Text Editor</h4>
+
+
+<p>The <strong>Python interpreter</strong> that you just installed allows you to <em>run</em> Python
+code. You will also need a <strong>text editor</strong>, where you will <em>write</em> Python code.</p>
+
+<p><a href="https://code.visualstudio.com/">Visual Studio Code (VS Code)</a> will be required for an assignment later in the course.
+It is also the most popular choice among the staff for this course for writing Python.</p>
+
+<p><strong>We highly recommend using VS Code for this class.</strong> This will help us support
+you best since most of staff uses VS Code. Please do not use word processors such as Microsoft Word to edit programs. Word processors can add extra content to documents that will confuse the interpreter.</p>
+
+<p><strong>Important</strong>: Do not use the "Github Copilot" extension in VS Code in this course. It will prevent you from learning what you need to learn by filling in answers for you. If you have that installed for some reason, please disable it.</p>
+
+<ul>
+  <li>Open the Extensions panel (Ctrl+Shift+X or ⌘+Shift+X) in VSCode.</li>
+  <li>Search for GitHub Copilot</li>
+  <li>Click the ⚙️ (gear) icon next to it.</li>
+  <li>Choose Disable (keeps it installed but inactive) or Uninstall (removes it completely).</li>
+</ul>
+
+<p><strong>Tip:</strong> You can open a terminal directly on VS Code. Thus, when running terminal commands, you can manage everything in VS Code rather than navigating back and forth between VS Code and a separate
+terminal application. You can open an embedded terminal by going to
+<code>Terminal &gt; New Terminal</code> in VS Code's navigation bar.</p>
+
+<p><img class="img-responsive center-block" src="assets/vscode-embedded-terminal-windows.PNG" alt="Open the VS Code embedded terminal" width=" height="></p>
+
+<alwaystoggle prompt="Other Text Editors">
+
+<p><strong>Other Text Editors</strong></p>
+
+<p>For your reference, we've written some guides on other popular text
+editors:</p>
+
+<ul>
+  <li><a href="vim.html">Vim</a>: A command-line editor.</li>
+  <li><a href="emacs.html">Emacs</a>: A command-line editor.</li>
+</ul>
+
+<p>Some students also use:</p>
+
+<ul>
+  <li><a href="https://www.jetbrains.com/pycharm/">PyCharm</a>: A desktop editor designed for Python.</li>
+</ul>
+
+</alwaystoggle>
+
+<p><strong>Pair Programming</strong></p>
+
+<p>Throughout this course, you'll have many chances to collaboratively code in labs and projects. We recommend you download these pair programming extensions now to use in the future.</p>
+
+<p>For sharing code, you can follow the instructions for your editor:</p>
+
+<ul>
+  <li><a href="vscode.html#pair-programming">VS Code</a></li>
+</ul>
+
+
+<h2 id="walkthroughs-amp-reviews">Walkthroughs &amp; Reviews</h2>
+
+
+<alwaystoggle prompt="Review: Your Computer's File System">
+
+<h3 id="review-your-computer-s-file-system">Review: Your Computer's File System</h3>
+
+
+<p>Your computer stores files. Each file is contained in a <strong>directory</strong> (also called a <strong>folder</strong>).
+Directories may also be contained in other directories. All the files and directories on your
+computer form a hierarchical, tree-like structure. Here's an example of what that could look like.</p>
+
+<p><img class="img-responsive center-block" src="assets/file-tree-windows.png" alt="Example Windows File System" width=" height="></p>
+
+<p>On this computer, for example, we can see that the <code>C:\</code> directory contains another directory called
+<code>readings</code>, which contains two files: <code>chapter1.pdf</code> and <code>chapter2.pdf</code>.</p>
+
+<p>Just like how in real life we have addresses so that we can locate buildings, computers use <strong>paths</strong>
+to locate files. For example, <code>C:\readings\chapter1.pdf</code> is a path that references a particular file
+on your computer: the file <code>chapter1.pdf</code>, which is contained in the folder <code>readings</code>, which is
+contained in the folder <code>C:\</code>.</p>
+
+<p><code>C:\readings\chapter1.pdf</code> is an example of what we call an <strong>absolute path</strong> because it uniquely
+identifies a specific file or folder within the computer. The other kind of path is a
+<strong>relative path</strong>, which identifies a location on the computer <em>relative</em> to some <strong>working directory</strong>.
+For example, if the working directory is <code>C:\notes\</code>, then the relative path <code>unit1\lec1.docx</code> refers to
+the <code>lec1.docx</code> file contained in the folder <code>unit1</code> contained in the folder <code>notes</code> contained in <code>C:\</code>.
+You can think of a relative path as a series of steps you take starting at the working directory to
+get to some other location in the computer.</p>
+
+<p>In Windows, you can tell absolute paths apart from relative paths because absolute paths begin with a
+letter and a colon (<code>C:\syllabus.pdf</code>), while relative paths never do.
+(There can also be paths that start with a backslash <code>\</code>, but they are beyond the scope of this
+course. You should never use a path starting with a backslash in this course.)</p>
+
+<p>The meaning of a relative path changes depending on what the working directory is.
+For example, the path <code>lec1.docx</code> references a different file if the working directory is
+<code>C:\notes\unit1\</code> than if the working directory is <code>C:\notes\unit2\</code>. If the working directory
+is <code>C:\readings\</code>, on the other hand, the path <code>lec1.docx</code> is meaningless, because there is no file
+named <code>lec1.docx</code> contained in the <code>C:\readings\</code> folder.
+</alwaystoggle></p>
+
+<alwaystoggle prompt="Walkthrough: Using the Terminal">
+
+<h3 id="walkthrough-using-the-terminal">Walkthrough: Using the Terminal</h3>
+
+
+<p>The terminal is a program that allows you to interact with your computer
+by entering commands.</p>
+
+<p>Open up your terminal. You will see some text stating the name of your
+terminal, followed by a terminal prompt, a character
+that tells you that the terminal is ready to accept inputs. The prompt is usually <code>&gt;</code> if you are on Windows.</p>
+
+<p><img class="img-responsive center-block" src="assets/terminal_windows.PNG" alt="starting the terminal" width=" height="></p>
+
+
+<h4 id="working-directory-and-home-directory">Working Directory and Home Directory</h4>
+
+
+<p>Your terminal is always open in some folder, also known as the terminal's working directory.
+The path to the working directory is visible next to <code>PS</code> in PowerShell. In the above screenshot of PowerShell, the working directory is <code>C:\Users\adity</code>.</p>
+
+<p>When you first open your terminal, you will start in the "home directory."
+This is the default working directory for your terminal.</p>
+
+
+<h4 id="commands">Commands</h4>
+
+<p>There are many different commands that you can use.
+The command you will use most in this class is <code>python3</code>, which tells the computer
+to run the Python interpreter. Try it out:</p>
+
+<pre><code>python3</code></pre>
+
+<p>You should see some text printed out about the
+interpreter followed by <code>&gt;&gt;&gt;</code> on its own line. This is where you can type in Python
+code. Try typing some expressions you saw in lecture, or just play around to see
+what happens! You can type <code>exit()</code> or <code>Control&#x2d;Z</code> and press enter to return to the command line.</p>
+
+<blockquote class="help-windows">
+If <code>python3</code> doesn't work, try using <code>python</code> or <code>py</code> instead.
+</blockquote>
+
+<p>You can also run Python code stored in a file by entering <code>python3 &lt;path&gt;</code>,
+where <path> is a path to the file you want to run.
+You'll have an opportunity to use this version of the <code>python3</code> command when you
+complete the lab.</p>
+
+
+<h4 id="terminal-vs-python-interpreter">Terminal vs Python Interpreter</h4>
+
+
+<p>Let's pause and think about the difference between the terminal and the Python interpreter.</p>
+
+<p><img class="img-responsive center-block" src="assets/terminal-vs-interpreter.png" alt="interpreter vs terminal" width=" height="></p>
+
+<ol>
+  <li>Which is the terminal?</li>
+  <li>Which one is the Python interpreter?</li>
+  <li>Which one is my code editor?</li>
+  <li>And how can you tell?</li>
+</ol>
+
+<p>Both A and D are my terminal. This is where you can run commands like <code>python3</code>. D is the terminal that is built-in to VS Code.</p>
+
+<p>B is the Python interpreter. You can tell because of the <code>&gt;&gt;&gt;</code> prompt that means you've started a Python interpreter. You can also tell because the command that started it is visible: <code>python3</code>. The <code>python3</code> command launches a Python interpreter. If you type an ordinary command into the Python interpreter, you'll probably get a syntax error! Here's an example:</p>
+
+<p><img class="img-responsive center-block" src="assets/interpreter-syntax-error.png" alt="interpreter syntax error" width=" height="></p>
+
+<p>C is my code editor. This is where I can write Python code to be executed via my terminal.
+</alwaystoggle></p>
+
+<alwaystoggle prompt="Walkthrough: Organizing Your Files">
+
+<h3 id="walkthrough-organizing-your-files">Walkthrough: Organizing Your Files</h3>
+
+
+<p>In this section, you will learn how to manage files using terminal commands.
+Start by opening your terminal.</p>
+
+<blockquote><p>Make sure your prompt does not begin with <code>&gt;&gt;&gt;</code>. If it begins with <code>&gt;&gt;&gt;</code>
+you are still in a Python interpreter, and you need to exit. See above for how.</p></blockquote>
+
+
+<h4 id="directories">Directories</h4>
+
+
+<p>The first command you'll use is <code>ls</code>. Try typing it in your terminal:</p>
+
+<pre><code>ls</code></pre>
+
+<p>The <code>ls</code> command (which stands for <strong>l</strong>i<strong>s</strong>t) lists all the files and folders in the current working directory.
+Recall that "directory" is another name for a folder (such as the <code>Documents</code> folder).</p>
+
+<p>Since your working directory is the home directory right now, after you type <code>ls</code> you should see the contents of your home directory. In Powershell, you can tell directories apart from
+files because files have a length listed, while directories do not.</p>
+
+
+<h4 id="cli-vs-gui">CLI vs GUI</h4>
+
+<p>Remember that you can access the files and directories (folders) on your computer in two different ways.
+You can either use the terminal (which is a <strong>c</strong>ommand <strong>l</strong>ine <strong>i</strong>nterface, or CLI) or you can use
+File Explorer. File Explorer is an example of a <strong>g</strong>raphical <strong>u</strong>ser
+<strong>i</strong>nterface (GUI). The techniques for navigating are different, but the files are the same. For example,
+here's how my folder for this course looks in my GUI:</p>
+
+<p><img class="img-responsive center-block" src="assets/finder-path-example-windows.PNG" alt="GUI folder example" width=" height="></p>
+
+<p>And here's how the exact same folder looks in Powershell:</p>
+
+<p><img class="img-responsive center-block" src="assets/terminal-path-example-windows.PNG" alt="CLI folder exmaple" width=" height="></p>
+
+<p>The contents of the folder can be found listed in the GUI, and underneath the yellow <code>ls</code> command in PowerShell</p>
+
+
+<h4 id="changing-directories">Changing Directories</h4>
+
+
+<p>To move into another directory, use the <code>cd</code> command (which stands for <strong>c</strong>hange
+<strong>d</strong>irectory). <code>cd</code> takes in a path as input and changes the working directory
+of your terminal to be directory identified by that path.</p>
+
+<p>Let's try moving into your <code>Desktop</code> directory.
+First, make sure you're in your home directory by typing:</p>
+
+<pre><code>cd ~</code></pre>
+
+<blockquote><p><code>~</code> is a special shorthand way of referring to the home
+directory. It is a path to the home directory.</p></blockquote>
+
+<p>Then, use the <code>ls</code> command to see if the <code>Desktop</code> directory is present.</p>
+
+<p>If you see the <code>Desktop</code> directory, you can move into it with the following command:</p>
+
+<pre><code>cd Desktop</code></pre>
+
+<p>However, if the <code>Desktop</code> directory is not listed, it might be located elsewhere on your
+system.
+This can happen due to system configurations or custom setups.
+Find your Desktop in your file explorer and open it. Right click on the "address bar"
+at the top of the window and click "Copy Address".</p>
+
+<p><img class="img-responsive center-block" src="assets/windows-file-explorer-address-bar.png" alt="Copy address example" width=" height="></p>
+
+<p>The absolute path to your Desktop (e.g. <code>C:\Users\adity\OneDrive\Desktop\</code>)
+is now copied to your clipboard. Enter <code>cd &lt;absolute path to desktop&gt;</code> into the terminal
+to change directories into the Desktop.</p>
+
+
+<h4 id="making-new-directories">Making New Directories</h4>
+
+
+<p>Once you're in the <code>Desktop</code> directory, the next command you'll use is <code>mkdir</code>, which
+stands for <strong>m</strong>a<strong>k</strong>e a new <strong>dir</strong>ectory. <code>mkdir</code> takes in a name as input and creates
+a new directory with that name. The new directory is stored in the current working directory.</p>
+
+<p>Let's make a directory called <code>cs61a</code> in your <code>Desktop</code> directory to store all of the assignments for this class:</p>
+
+<pre><code>mkdir cs61a</code></pre>
+
+<p>A folder named <code>cs61a</code> will appear on your Desktop.
+You can verify this by using the <code>ls</code> command again or by checking your Desktop using File Explorer.</p>
+
+<p>Now, let's create some more directories. First, make sure you are in the <code>cs61a</code> directory,
+which should have an absolute path like <code>C:\Users\&lt;USER&gt;\Desktop\cs61a</code> where <code>&lt;USER&gt;</code> is your actual username.
+Then, create three new folders called <code>projects</code>, <code>lab</code>, and <code>hw</code>. All of them should be inside your <code>cs61a</code> folder:</p>
+
+<pre><code>cd cs61a
+mkdir projects
+mkdir lab
+mkdir hw</code></pre>
+
+<p>Now if you list the contents of the directory (using <code>ls</code>), you'll see three
+folders, <code>projects</code>, <code>lab</code>, and <code>hw</code>.</p>
+
+
+<h4 id="more-directory-changing">More Directory Changing</h4>
+
+
+<ul>
+  <li><code>cd ..</code> (two dots). The <code>..</code> means "the parent directory", or one directory above your current directory.</li>
+</ul>
+
+<blockquote><p>You do not have to keep your files on your Desktop if you prefer otherwise.
+Where you keep your files locally will not affect your grade. Do whatever is
+easiest and most convenient for you!</p></blockquote>
+
+
+<h4 id="downloading-the-assignment">Downloading the Assignment</h4>
+
+
+<p>If you haven't already, download the zip archive, <a href="../lab/lab00/lab00.zip">lab00.zip</a>, which
+contains all the files that you'll need for this lab. On most computers, <code>lab00.zip</code> will probably be located in a
+directory called <code>Downloads</code> in your home directory.</p>
+
+<p>You must expand the zip archive before you can work on the lab files.
+In File Explorer, you need to first click on the .zip file, then choose "Extract all". If you
+run into trouble, you can search online for how to unzip a file.
+Different operating systems and different browsers have different ways of
+unzipping.</p>
+
+<p>You only need to unzip the files once.</p>
+
+<p>Once you unzip <code>lab00.zip</code>, you'll have a new folder called <code>lab00</code> which
+contains the following files (check it out by using <code>cd</code> to navigate into the folder and
+<code>ls</code> to list its contents):</p>
+
+<ul>
+  <li><code>lab00.py</code>: The template file you'll be adding your code to</li>
+  <li><code>ok</code>: A program used to test and submit assignments</li>
+  <li><code>lab00.ok</code>: A configuration file for <code>ok</code></li>
+</ul>
+
+
+<h4 id="moving-files">Moving Files</h4>
+
+
+<p>Move the unzipped <code>lab00</code> directory into the <code>lab</code> folder you created earlier
+by dragging and dropping it into the correct folder using the File Explorer GUI.
+(You can also do this using terminal commands if you know how.)</p>
+
+<p>Now, go to the <code>lab00</code> folder that you just moved. Try using <code>cd</code> to navigate
+your own way! If you get stuck, you can use the following command:</p>
+
+<pre><code>cd ~/Desktop/cs61a/lab/lab00</code></pre>
+
+
+<h4 id="summary">Summary</h4>
+
+
+<p>Here is a summary of the commands we just went over for your reference:</p>
+
+<ul>
+  <li><code>ls</code>: <strong>l</strong>i<strong>s</strong>ts all files in the current directory</li>
+  <li><code>cd &lt;path to directory&gt;</code>: <strong>c</strong>hange into the specified <strong>d</strong>irectory</li>
+  <li><code>mkdir &lt;directory name&gt;</code>: <strong>m</strong>a<strong>k</strong>es a new <strong>dir</strong>ectory with the given name</li>
+</ul>
+
+<p>The exams for this course will not test you on how the file system works or what
+the definition of an absolute path is.
+However, these skills are essential for completing all of the assignments in this
+course. You can reference this page in the future.</p>
+
+<p>Finally, you are ready to start editing the lab files! Don't worry if this seems
+complicated—it will get much easier over time. Just keep practicing!</p>
+
+<p><a href="../lab/lab00/index.html#setup-and-walkthroughs">Continue Lab 0</a>
+</alwaystoggle></p>
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#setup">Setup</a></li>
+  <ul>
+    <li><a href="#terminal">Terminal</a></li>
+    <li><a href="#python">Python</a></li>
+    <li><a href="#text-editor">Text Editor</a></li>
+  </ul>
+  <li><a href="#walkthroughs-amp-reviews">Walkthroughs &amp; Reviews</a></li>
+  <ul>
+    <li><a href="#review-your-computer-s-file-system">Review: Your Computer's File System</a></li>
+    <li><a href="#walkthrough-using-the-terminal">Walkthrough: Using the Terminal</a></li>
+    <ul>
+      <li><a href="#working-directory-and-home-directory">Working Directory and Home Directory</a></li>
+      <li><a href="#commands">Commands</a></li>
+      <li><a href="#terminal-vs-python-interpreter">Terminal vs Python Interpreter</a></li>
+    </ul>
+    <li><a href="#walkthrough-organizing-your-files">Walkthrough: Organizing Your Files</a></li>
+    <ul>
+      <li><a href="#directories">Directories</a></li>
+      <li><a href="#cli-vs-gui">CLI vs GUI</a></li>
+      <li><a href="#changing-directories">Changing Directories</a></li>
+      <li><a href="#making-new-directories">Making New Directories</a></li>
+      <li><a href="#more-directory-changing">More Directory Changing</a></li>
+      <li><a href="#downloading-the-assignment">Downloading the Assignment</a></li>
+      <li><a href="#moving-files">Moving Files</a></li>
+      <li><a href="#summary">Summary</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../index.html">CS 61A</a></h3>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../js/jsplumb.min.js"></script>
+    <script src="../assets/js/network_storage.js"></script>
+    <script src="../assets/js/code_tabindex.js"></script>
+    <script src="../assets/js/storable.js"></script>
+    <script src="../assets/js/editor.js"></script>
+    <script src="../assets/js/copy-button.js"></script>
+    <script src="../assets/js/env-diagram.js"></script>
+    
+<script src="../js/jsplumb.min.js"></script>
+<script src="../assets/js/storable.js"></script>
+<script src="../assets/js/env-diagram.js"></script>
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  </body>
+</html>
