@@ -1,0 +1,1120 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/lab.css">
+
+
+    <title>实验 12 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 12 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab12.zip" class="label label-outline">lab12.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+
+
+    
+
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+<p>本次 lab 汇集了本课程部分专题的练习题。还有一些尚未涉及的专题会出现在讨论课练习册上。</p>
+
+
+
+
+<h2 id="mutable-trees">可变的树</h2>
+
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        可变的树<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+<code>Tree</code> 实例有两个实例属性：
+
+<ul>
+  <li><code>label</code> 是存储在树根处的值。</li>
+  <li><code>branches</code> 是一个由 <code>Tree</code> 实例组成的列表，保存了树中其余部分的标签。</li>
+</ul>
+
+<p><code>Tree</code> 类（省略了 <code>__repr__</code> 和 <code>__str__</code> 方法）的定义如下：</p>
+
+<pre><code>class Tree:
+    &quot;&quot;&quot;A tree has a label and a list of branches.
+
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; t.label
+    3
+    &gt;&gt;&gt; t.branches[0].label
+    2
+    &gt;&gt;&gt; t.branches[1].is_leaf()
+    True
+    &quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        self.label = label
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches</code></pre>
+
+<p>要用标签 <code>x</code>（任意值）和分支列表 <code>bs</code>（由 <code>Tree</code> 实例组成的列表）构造一个 <code>Tree</code> 实例并把它命名为 <code>t</code>，可以写 <code>t = Tree(x, bs)</code>。</p>
+
+<p>对于树 <code>t</code>：</p>
+
+<ul>
+  <li>它的根标签可以是任意值，<code>t.label</code> 求值的结果就是它。</li>
+  <li>它的分支总是 <code>Tree</code> 实例，<code>t.branches</code> 求值的结果是它的分支<strong>列表</strong>。</li>
+  <li>如果 <code>t.branches</code> 为空，<code>t.is_leaf()</code> 返回 <code>True</code>，否则返回 <code>False</code>。</li>
+  <li>要构造一个标签为 <code>x</code> 的叶子，写 <code>Tree(x)</code>。</li>
+</ul>
+
+<page-break>
+
+<p>显示一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>repr(t)</code> 返回一个 Python 表达式，对它求值会得到一棵等价的树。</li>
+  <li><code>str(t)</code> 为每个标签输出一行，其缩进比它的父节点多一级，子节点显示在父节点下方。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t = Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; t         # displays the contents of repr(t)
+Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; print(t)  # displays the contents of str(t)
+3
+  1
+    4
+    1
+  5
+    9</code></pre>
+
+
+
+<p>修改（也就是 mutate）一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>t.label = y</code> 把 <code>t</code> 的根标签改为 <code>y</code>（任意值）。</li>
+  <li><code>t.branches = ns</code> 把 <code>t</code> 的分支改为 <code>ns</code>（由 <code>Tree</code> 实例组成的列表）。</li>
+  <li>修改 <code>t.branches</code> 会改变 <code>t</code>。例如，<code>t.branches.append(Tree(y))</code> 会把一个标签为 <code>y</code> 的叶子添加为最右边的分支。</li>
+  <li>修改 <code>t</code> 中任意一个分支都会改变 <code>t</code>。例如，<code>t.branches[0].label = y</code> 会把最左边分支的根标签改为 <code>y</code>。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t.label = 3.0
+&gt;&gt;&gt; t.branches[1].label = 5.0
+&gt;&gt;&gt; t.branches.append(Tree(2, [Tree(6)]))
+&gt;&gt;&gt; print(t)
+3.0
+  1
+    4
+    1
+  5.0
+    9
+  2
+    6</code></pre>
+
+
+
+<page-break>
+
+<p>下面总结了以函数式抽象实现的树数据抽象与以类实现的树数据抽象之间的区别：</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>-</th>
+    <th>树的构造函数与选择函数</th>
+    <th>Tree 类</th>
+  </tr>
+  <tr>
+    <td>构造树</td>
+    <td>给定一个标签和一个分支列表来构造一棵树时，我们调用 <code>tree(label, branches)</code></td>
+    <td>给定一个标签和一个分支列表来构造一个树对象时，我们调用 <code>Tree(label, branches)</code>（它会调用 <code>Tree.__init__</code> 方法）。</td>
+  </tr>
+  <tr>
+    <td>根标签与分支</td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别调用 <code>label(t)</code> 或 <code>branches(t)</code></td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别访问实例属性 <code>t.label</code> 或 <code>t.branches</code>。</td>
+  </tr>
+  <tr>
+    <td>可变性</td>
+    <td>函数式的树数据抽象是不可变的（在遵守其抽象屏障的前提下），因为我们无法给调用表达式赋值</td>
+    <td><code>Tree</code> 实例的 <code>label</code> 和 <code>branches</code> 属性可以被重新赋值，从而修改这棵树。</td>
+  </tr>
+  <tr>
+    <td>判断树是否为叶子</td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用函数 <code>is_leaf(t)</code></td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用方法 <code>t.is_leaf()</code>。这个方法只能在 <code>Tree</code> 对象上调用。</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+</div>
+
+
+<h3 id="visualizing-trees">可视化树</h3>
+
+
+<p>如果你想借助可视化工具来理解树结构，请前往 <a href="https://code.cs61a.org/">code.cs61a.org</a>，选择 <em>Start Python Interpreter</em>，然后调用 <code>autodraw()</code>。</p>
+
+
+<h3 id="q1-delete">Q1：删除</h3>
+
+
+<p>实现 <code>delete</code> 函数：它接收一棵树 <code>t</code>，并移除所有标签为 <code>x</code> 的非根节点。每个保留下来的节点的父节点，是它最近的、未被移除的祖先节点。根节点永远不会被移除，即使它的标签是 <code>x</code>。</p>
+
+<solution>
+
+<pre><code>def delete(t, x):
+    &quot;&quot;&quot;Remove all nodes labeled x below the root within Tree t. When a non&#x2d;leaf
+    node is deleted, the deleted node&#x27;s children become children of its parent.
+
+    The root node will never be removed.
+
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(2), Tree(2)]), Tree(2), Tree(2, [Tree(2, [Tree(2), Tree(2)])])])
+    &gt;&gt;&gt; delete(t, 2)
+    &gt;&gt;&gt; t
+    Tree(3)
+    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(4, [Tree(2)]), Tree(5)]), Tree(3, [Tree(6), Tree(2)]), Tree(4)])
+    &gt;&gt;&gt; delete(t, 2)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(4), Tree(5), Tree(3, [Tree(6)]), Tree(4)])
+    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(4), Tree(5)]), Tree(3, [Tree(6), Tree(2)]), Tree(2, [Tree(6),  Tree(2), Tree(7), Tree(8)]), Tree(4)])
+    &gt;&gt;&gt; delete(t, 2)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(4), Tree(5), Tree(3, [Tree(6)]), Tree(6), Tree(7), Tree(8), Tree(4)])
+    &quot;&quot;&quot;
+    new_branches = []
+<div class="sol-highlight">    for b in t.branches:</div><div class="sol-highlight">        delete(b, x)</div>        if b.label == x:
+<div class="sol-highlight">            new_branches.extend(b.branches)</div>        else:
+<div class="sol-highlight">            new_branches.append(b)</div><div class="sol-highlight">    t.branches = new_branches</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q delete<button id="copy-code-python3ok-qdelete" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdelete").onclick = () => copyCode('python3 ok -q delete', "copy-code-python3ok-qdelete");
+        </script>
+        <br/>
+
+
+<h2 id="recursion-and-tree-recursion">递归与树递归</h2>
+
+
+
+<h3 id="q2-subsequences">Q2：子序列</h3>
+
+
+<p>序列 <code>s</code> 的子序列是从 <code>s</code> 中取出的一部分元素，且保持它们在 <code>s</code> 中出现的先后顺序。考虑列表 <code>[1, 2, 3]</code>，它的子序列包括 <code>[]</code>、<code>[1, 3]</code>、<code>[2]</code> 和 <code>[1, 2, 3]</code>。</p>
+
+<p>编写一个函数，接收一个列表，返回该列表所有可能的子序列。子序列应以列表的列表形式返回，其中每个内层列表都是原始输入的一个子序列。</p>
+
+<p>为此，你可能希望先编写一个函数 <code>insert_into_all</code>：它接收一个元素和一个列表的列表，把该元素添加到每个内层列表的开头，并返回得到的新列表。</p>
+
+<solution>
+
+<pre><code>def insert_into_all(item, nested_list):
+    &quot;&quot;&quot;Return a new list consisting of all the lists in nested_list,
+    but with item added to the front of each. You can assume that
+    nested_list is a list of lists.
+
+    &gt;&gt;&gt; nl = [[], [1, 2], [3]]
+    &gt;&gt;&gt; insert_into_all(0, nl)
+    [[0], [0, 1, 2], [0, 3]]
+    &quot;&quot;&quot;
+<div class="sol-highlight">    return [[item] + lst for lst in nested_list]</div>
+def subseqs(s):
+    &quot;&quot;&quot;Return a nested list (a list of lists) of all subsequences of S.
+    The subsequences can appear in any order. You can assume S is a list.
+
+    &gt;&gt;&gt; seqs = subseqs([1, 2, 3])
+    &gt;&gt;&gt; sorted(seqs)
+    [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+    &gt;&gt;&gt; subseqs([])
+    [[]]
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if not s:</div><div class="sol-highlight">        return [[]]</div>    else:
+<div class="sol-highlight">        subset = subseqs(s[1:])</div><div class="sol-highlight">        return insert_into_all(s[0], subset) + subset</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q subseqs<button id="copy-code-python3ok-qsubseqs" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsubseqs").onclick = () => copyCode('python3 ok -q subseqs', "copy-code-python3ok-qsubseqs");
+        </script>
+        <br/>
+
+
+<h3 id="q3-non-decreasing-subsequences">Q3：非递减子序列</h3>
+
+
+<p>我们要编写一个函数，它接收一个列表，返回一个列表的列表，其中每个列表都是原始输入的一个子序列。</p>
+
+<p>但我们有一个条件：只保留相邻元素<em>非递减</em>的那些子序列。例如，<code>[1, 3, 2]</code> 是 <code>[1, 3, 2, 4]</code> 的子序列，但由于 <code>2</code> &lt; <code>3</code>，这个子序列<em>不会</em>出现在我们的结果中。</p>
+
+<p>你可以假设传入的列表 <code>s</code> 中只包含非负元素。</p>
+
+<!--
+**Hints:**
+
+<!-- 1. The helper function is meant to help create the non decreasing sub sequences by keeping using a prev variable that tracks the integer that was last put in the list. 
+
+<ol>
+  <li>Instead of a = <strong><em></em></strong><strong><em></em></strong><strong><em></em></strong><strong><em>_ b = </em></strong><strong><em></em></strong><strong><em></em></strong><strong><em></em></strong>_, here are some more helpful variable names:</li>
+</ol>
+
+rec_call_if_we_use_first_number = ______________________ 
+rec_call_if_we_don't_use_first_number = ______________________
+
+<ol>
+  <li>For the call to insert<em>into</em>all: think about which variable from hint 2 you should prepend s[0] to and which you should add.  --></li>
+</ol>
+
+<!-- **Fill in the blanks** to complete the implementation of the <code>non_decrease_subseqs</code>
+function. You may assume that the input list contains no negative elements. -->
+
+<p>你可以使用辅助函数 <code>insert_into_all</code>。</p>
+
+<solution>
+
+<pre><code><div class="sol-highlight">def insert_into_all(item, lsts):
+    &quot;&quot;&quot;Assuming that lsts is a list of lists, return a new list consisting of
+    all the lists in lsts, but with item added to the front of each.
+
+    &gt;&gt;&gt; lsts = [[], [1, 2], [3]]
+    &gt;&gt;&gt; insert_into_all(0, lsts)
+    [[0], [0, 1, 2], [0, 3]]
+    &quot;&quot;&quot;
+    return [[item] + lst for lst in lsts]</div>def non_decrease_subseqs(s):
+    &quot;&quot;&quot;Return a nested list of all subsequences of S (a list of lists) 
+    for which the elements of the subsequence are nondecreasing. The 
+    subsequences can appear in any order. You can assume S is a list.
+
+    &gt;&gt;&gt; seqs = non_decrease_subseqs([1, 3, 2])
+    &gt;&gt;&gt; sorted(seqs)
+    [[], [1], [1, 2], [1, 3], [2], [3]]
+    &gt;&gt;&gt; non_decrease_subseqs([])
+    [[]]
+    &gt;&gt;&gt; seqs2 = non_decrease_subseqs([1, 1, 2])
+    &gt;&gt;&gt; sorted(seqs2)
+    [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
+    &quot;&quot;&quot;
+    def subseq_helper(s, prev):
+        if not s:
+<div class="sol-highlight">            return [[]]</div>        elif s[0] &lt; prev:
+<div class="sol-highlight">            return subseq_helper(s[1:], prev)</div>        else:
+<div class="sol-highlight">            a = subseq_helper(s[1:], s[0])</div><div class="sol-highlight">            b = subseq_helper(s[1:], prev)</div><div class="sol-highlight">            return insert_into_all(s[0], a) + b</div><div class="sol-highlight">    return subseq_helper(s, 0)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q non_decrease_subseqs<button id="copy-code-python3ok-qnon_decrease_subseqs" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qnon_decrease_subseqs").onclick = () => copyCode('python3 ok -q non_decrease_subseqs', "copy-code-python3ok-qnon_decrease_subseqs");
+        </script>
+        <br/>
+
+
+<h2 id="mutability">可变性</h2>
+
+
+
+<h3 id="q4-common-players">Q4：共同队员</h3>
+
+
+<p>实现函数 <code>common_players</code>。<code>common_players</code> 接收一个 <code>roster</code> 字典，该字典把队员映射到他们所属的队伍，并返回一个新的字典，把队伍映射到该队伍中队员的列表。列表中队员名字的顺序无关紧要。</p>
+
+<solution>
+
+<pre><code>def common_players(roster):
+    &quot;&quot;&quot;Returns a dictionary containing values along with a corresponding
+    list of keys that had that value from the original dictionary.
+    &gt;&gt;&gt; full_roster = {
+    ...     &quot;bob&quot;: &quot;Team A&quot;,
+    ...     &quot;barnum&quot;: &quot;Team B&quot;,
+    ...     &quot;beatrice&quot;: &quot;Team C&quot;,
+    ...     &quot;bernice&quot;: &quot;Team B&quot;,
+    ...     &quot;ben&quot;: &quot;Team D&quot;,
+    ...     &quot;belle&quot;: &quot;Team A&quot;,
+    ...     &quot;bill&quot;: &quot;Team B&quot;,
+    ...     &quot;bernie&quot;: &quot;Team B&quot;,
+    ...     &quot;baxter&quot;: &quot;Team A&quot;
+    ... }
+    &gt;&gt;&gt; player_dict = common_players(full_roster)
+    &gt;&gt;&gt; type(player_dict) == dict
+    True
+    &gt;&gt;&gt; for key, val in sorted(player_dict.items()):
+    ...     print(key, list(sorted(val)))
+    Team A [&#x27;baxter&#x27;, &#x27;belle&#x27;, &#x27;bob&#x27;]
+    Team B [&#x27;barnum&#x27;, &#x27;bernice&#x27;, &#x27;bernie&#x27;, &#x27;bill&#x27;]
+    Team C [&#x27;beatrice&#x27;]
+    Team D [&#x27;ben&#x27;]
+    &quot;&quot;&quot;
+<div class="sol-highlight">    result_dict = {}
+    for player in roster:
+        team = roster[player]
+        if team in result_dict:
+            result_dict[team] += [player]
+        else:
+            result_dict[team] = [player]
+    return result_dict</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q common_players<button id="copy-code-python3ok-qcommon_players" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcommon_players").onclick = () => copyCode('python3 ok -q common_players', "copy-code-python3ok-qcommon_players");
+        </script>
+        <br/>
+
+
+<h2 id="generators">生成器</h2>
+
+
+
+<h3 id="q5-stair-ways">Q5：爬楼梯的方式</h3>
+
+
+<p>假设你想爬上一段有 <code>n</code> 级台阶的楼梯，其中 <code>n</code> 是正整数。你每次可以迈<strong>一级</strong>或<strong>两级台阶</strong>。</p>
+
+<p>编写一个生成器函数 <code>stair_ways</code>，产出你爬上这段楼梯的所有不同方式。</p>
+
+<p>每一种爬楼梯的「方式」都可以用一个由 1 和 2 组成的列表来表示，其中每个数字表示你这次是迈一级还是两级台阶。</p>
+
+<p>例如，对于有 3 级台阶的楼梯，共有三种爬法：</p>
+
+<ul>
+  <li>每次迈一级：<code>[1, 1, 1]</code>。</li>
+  <li>先迈两级再迈一级：<code>[2, 1]</code>。</li>
+  <li>先迈一级再迈两级：[1, 2]。</li>
+</ul>
+
+<p>因此，<code>stair_ways(3)</code> 应该产出 <code>[1, 1, 1]</code>、<code>[2, 1]</code> 和 <code>[1, 2]</code>。它们可以以任意顺序产出。</p>
+
+<blockquote><p><strong>提示：</strong>用递归的思路思考这个问题。如果你站在第 n 级台阶上，那么你刚刚可能是从哪一级台阶过来的？</p></blockquote>
+
+<solution>
+
+<pre><code>def stair_ways(n):
+    &quot;&quot;&quot;
+    Yield all the ways to climb a set of n stairs taking
+    1 or 2 steps at a time.
+
+    &gt;&gt;&gt; list(stair_ways(0))
+    [[]]
+    &gt;&gt;&gt; s_w = stair_ways(4)
+    &gt;&gt;&gt; sorted([next(s_w) for _ in range(5)])
+    [[1, 1, 1, 1], [1, 1, 2], [1, 2, 1], [2, 1, 1], [2, 2]]
+    &gt;&gt;&gt; list(s_w) # Ensure you&#x27;re not yielding extra
+    []
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if n == 0:
+        yield []
+    elif n == 1:
+        yield [1]
+    else:
+        for way in stair_ways(n &#x2d; 1):
+            yield [1] + way
+        for way in stair_ways(n &#x2d; 2):
+            yield [2] + way</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q stair_ways<button id="copy-code-python3ok-qstair_ways" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qstair_ways").onclick = () => copyCode('python3 ok -q stair_ways', "copy-code-python3ok-qstair_ways");
+        </script>
+        <br/>
+
+
+<h2 id="object-oriented-programming">面向对象编程</h2>
+
+
+
+<h3 id="election">选举游戏</h3>
+
+
+<p>我们来实现一个名为 Election 的游戏。在这个游戏中，两名玩家相互竞争，争取赢得最多的选票。两位玩家一开始都拥有 0 张选票和 100 点人气值。</p>
+
+<p>两位玩家轮流行动，先手是第一位玩家。每一轮，当前玩家选择一个动作。动作有两种类型：</p>
+
+<ul>
+  <li>玩家可以发起<em>辩论</em>（debate），从而获得或失去 50 点人气值。如果该玩家的人气值为 <code>p1</code>，另一位玩家的人气值为 <code>p2</code>，那么该玩家获得 50 点人气值的概率是 <code>max(0.1, p1 / (p1 + p2))</code>。注意这里的 <code>max</code> 保证了概率永远不会低于 0.1。</li>
+  <li>玩家可以发表<em>演讲</em>（speech）。如果该玩家的人气值为 <code>p1</code>，另一位玩家的人气值为 <code>p2</code>，那么该玩家获得 <code>p1 // 10</code> 张选票和人气值，而另一位玩家失去 <code>p2 // 10</code> 点人气值。</li>
+</ul>
+
+<p>当某位玩家达到 50 张选票，或者总共进行了 10 轮（每位玩家各行动 5 轮）时，游戏结束。游戏结束时选票更多的一方获胜！</p>
+
+
+<h3 id="q6-player">Q6：Player 类</h3>
+
+
+<p>首先，我们来实现 <code>Player</code> 类。请填写 <code>debate</code> 和 <code>speech</code> 方法，它们接收另一位玩家 <code>other</code>，并按照上面的描述实现正确的行为。另外还有几点需要注意：</p>
+
+<ul>
+  <li>每个玩家都带有一个随机数生成器（实例属性 <code>random_func</code>），它是一个不接受参数的函数，调用时返回 0 到 1 之间的随机浮点数。</li>
+  <li>在 <code>debate</code> 方法中，你应该调用 <code>random_func</code> 函数来获得一个随机数。如果这个随机数小于上面描述的概率，该玩家就获得 50 点人气值，否则失去 50 点人气值。</li>
+  <li>任何一位玩家的人气值都不应该变成负数。如果出现了负数，就把它设为 0。</li>
+</ul>
+
+<solution>
+
+<pre><code>### Phase 1: The Player Class
+class Player:
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; random = make_test_random()
+    &gt;&gt;&gt; p1 = Player(&#x27;Hill&#x27;, random)
+    &gt;&gt;&gt; p2 = Player(&#x27;Don&#x27;, random)
+    &gt;&gt;&gt; p1.popularity
+    100
+    &gt;&gt;&gt; p1.debate(p2)  # random() should return 0.0
+    &gt;&gt;&gt; p1.popularity
+    150
+    &gt;&gt;&gt; p2.popularity
+    100
+    &gt;&gt;&gt; p2.votes
+    0
+    &gt;&gt;&gt; p2.speech(p1)
+    &gt;&gt;&gt; p2.votes
+    10
+    &gt;&gt;&gt; p2.popularity
+    110
+    &gt;&gt;&gt; p1.popularity
+    135
+    &gt;&gt;&gt; p1.speech(p2)
+    &gt;&gt;&gt; p1.votes
+    13
+    &gt;&gt;&gt; p1.popularity
+    148
+    &gt;&gt;&gt; p2.votes
+    10
+    &gt;&gt;&gt; p2.popularity
+    99
+    &gt;&gt;&gt; for _ in range(4):  # 0.1, 0.2, 0.3, 0.4
+    ...     p1.debate(p2)
+    &gt;&gt;&gt; p2.debate(p1)
+    &gt;&gt;&gt; p2.popularity
+    49
+    &gt;&gt;&gt; p2.debate(p1)
+    &gt;&gt;&gt; p2.popularity
+    0
+    &quot;&quot;&quot;
+    def __init__(self, name, random_func):
+        self.name = name
+        self.votes = 0
+        self.popularity = 100
+        self.random_func = random_func
+
+    def debate(self, other):
+<div class="sol-highlight">        prob = max(0.1, self.popularity / (self.popularity + other.popularity))
+        if self.random_func() &lt; prob:
+            self.popularity += 50
+        else:
+            self.popularity = max(0, self.popularity &#x2d; 50)</div>
+    def speech(self, other):
+<div class="sol-highlight">        self.votes += self.popularity // 10
+        self.popularity += self.popularity // 10
+        other.popularity = max(0, other.popularity &#x2d; (other.popularity // 10))</div>
+    def choose(self, other):
+        return self.speech</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q Player<button id="copy-code-python3ok-qPlayer" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qPlayer").onclick = () => copyCode('python3 ok -q Player', "copy-code-python3ok-qPlayer");
+        </script>
+        <br/>
+
+
+<h3 id="q7-game">Q7：Game 类</h3>
+
+
+<p>现在，实现 <code>Game</code> 类。请填写 <code>play</code> 方法，它应该让两位玩家轮流行动，从 <code>p1</code> 开始，每人每次进行一轮。<code>Player</code> 类中的 <code>choose</code> 方法返回应该被调用以执行该动作的方法，即 <code>debate</code> 或 <code>speech</code>。</p>
+
+<p>此外，请填写 <code>winner</code> 方法，它应返回选票更多的玩家；如果双方选票相同，则返回 <code>None</code>。</p>
+
+<solution>
+
+<pre><code>### Phase 2: The Game Class
+class Game:
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; random = make_test_random()
+    &gt;&gt;&gt; p1, p2 = Player(&#x27;Hill&#x27;,random), Player(&#x27;Don&#x27;, random)
+    &gt;&gt;&gt; g = Game(p1, p2)
+    &gt;&gt;&gt; winner = g.play()
+    &gt;&gt;&gt; p1 is winner
+    True
+    &gt;&gt;&gt; # Additional correctness tests
+    &gt;&gt;&gt; winner is g.winner()
+    True
+    &gt;&gt;&gt; g.turn
+    10
+    &gt;&gt;&gt; p1.votes = p2.votes
+    &gt;&gt;&gt; print(g.winner())
+    None
+    &quot;&quot;&quot;
+    def __init__(self, player1, player2):
+        self.p1 = player1
+        self.p2 = player2
+        self.turn = 0
+
+    def play(self):
+        while not self.game_over():
+<div class="sol-highlight">            if self.turn % 2 == 0:
+                curr, other = self.p1, self.p2
+            else:
+                curr, other = self.p2, self.p1
+            curr.choose(other)(other)
+            self.turn += 1</div>        return self.winner()
+
+    def game_over(self):
+        return max(self.p1.votes, self.p2.votes) &gt;= 50 or self.turn &gt;= 10
+
+    def winner(self):
+<div class="sol-highlight">        if self.p1.votes &gt; self.p2.votes:
+            return self.p1
+        elif self.p2.votes &gt; self.p1.votes:
+            return self.p2
+        else:
+            return None</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q Game<button id="copy-code-python3ok-qGame" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qGame").onclick = () => copyCode('python3 ok -q Game', "copy-code-python3ok-qGame");
+        </script>
+        <br/>
+
+
+<h3 id="q8-new-players-optional">Q8：新的玩家（可选）</h3>
+
+
+<p><code>Player</code> 类中的 <code>choose</code> 方法很无趣，因为它总是返回 <code>speech</code> 方法。我们来实现两个继承自 <code>Player</code> 的新类，让它们的 <code>choose</code> 方法更有意思。</p>
+
+<p>实现 <code>AggressivePlayer</code> 类中的 <code>choose</code> 方法：如果该玩家的人气值小于或等于 <code>other</code> 的人气值，就返回 <code>debate</code> 方法，否则返回 <code>speech</code>。同时实现 <code>CautiousPlayer</code> 类中的 <code>choose</code> 方法：如果该玩家的人气值为 0，就返回 <code>debate</code> 方法，否则返回 <code>speech</code>。</p>
+
+<solution>
+
+<pre><code>### Phase 3: New Players
+class AggressivePlayer(Player):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; random = make_test_random()
+    &gt;&gt;&gt; p1, p2 = AggressivePlayer(&#x27;Don&#x27;, random), Player(&#x27;Hill&#x27;, random)
+    &gt;&gt;&gt; g = Game(p1, p2)
+    &gt;&gt;&gt; winner = g.play()
+    &gt;&gt;&gt; p1 is winner
+    True
+    &gt;&gt;&gt; # Additional correctness tests
+    &gt;&gt;&gt; p1.popularity = p2.popularity
+    &gt;&gt;&gt; p1.choose(p2) == p1.debate
+    True
+    &gt;&gt;&gt; p1.popularity += 1
+    &gt;&gt;&gt; p1.choose(p2) == p1.debate
+    False
+    &gt;&gt;&gt; p2.choose(p1) == p2.speech
+    True
+    &quot;&quot;&quot;
+    def choose(self, other):
+<div class="sol-highlight">        if self.popularity &lt;= other.popularity:
+            return self.debate
+        else:
+            return self.speech</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q AggressivePlayer<button id="copy-code-python3ok-qAggressivePlayer" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qAggressivePlayer").onclick = () => copyCode('python3 ok -q AggressivePlayer', "copy-code-python3ok-qAggressivePlayer");
+        </script>
+        <br/>
+
+<solution>
+
+<pre><code>class CautiousPlayer(Player):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; random = make_test_random()
+    &gt;&gt;&gt; p1, p2 = CautiousPlayer(&#x27;Hill&#x27;, random), AggressivePlayer(&#x27;Don&#x27;, random)
+    &gt;&gt;&gt; p1.popularity = 0
+    &gt;&gt;&gt; p1.choose(p2) == p1.debate
+    True
+    &gt;&gt;&gt; p1.popularity = 1
+    &gt;&gt;&gt; p1.choose(p2) == p1.debate
+    False
+    &gt;&gt;&gt; # Additional correctness tests
+    &gt;&gt;&gt; p2.choose(p1) == p2.speech
+    True
+    &quot;&quot;&quot;
+    def choose(self, other):
+<div class="sol-highlight">        if self.popularity == 0:
+            return self.debate
+        else:
+            return self.speech</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q CautiousPlayer<button id="copy-code-python3ok-qCautiousPlayer" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qCautiousPlayer").onclick = () => copyCode('python3 ok -q CautiousPlayer', "copy-code-python3ok-qCautiousPlayer");
+        </script>
+        <br/>
+
+
+<h2 id="linked-lists">链表</h2>
+
+
+
+<h3 id="q9-two-list">Q9：两个列表</h3>
+
+
+<p>实现函数 <code>two_list</code>，它接收两个列表并返回一个链表。第一个列表包含我们想要放进链表的各个值，第二个列表包含每个对应值的数量。假设两个列表长度相同且长度至少为 1，并假设第二个列表中的所有元素都大于 0。</p>
+
+<solution>
+
+<pre><code>def two_list(vals, counts):
+    &quot;&quot;&quot;
+    Returns a linked list according to the two lists that were passed in. Assume
+    vals and counts are the same size. Elements in vals represent the value, and the
+    corresponding element in counts represents the number of this value desired in the
+    final linked list. Assume all elements in counts are greater than 0. Assume both
+    lists have at least one element.
+    &gt;&gt;&gt; a = [1, 3]
+    &gt;&gt;&gt; b = [1, 1]
+    &gt;&gt;&gt; c = two_list(a, b)
+    &gt;&gt;&gt; c
+    Link(1, Link(3))
+    &gt;&gt;&gt; a = [1, 3, 2]
+    &gt;&gt;&gt; b = [2, 2, 1]
+    &gt;&gt;&gt; c = two_list(a, b)
+    &gt;&gt;&gt; c
+    Link(1, Link(1, Link(3, Link(3, Link(2)))))
+    &quot;&quot;&quot;
+<div class="sol-highlight">    def helper(count, index):
+        if count == 0:
+            if index + 1 == len(vals):
+                return Link.empty
+            return Link(vals[index + 1], helper(counts[index + 1] &#x2d; 1, index + 1))
+        return Link(vals[index], helper(count &#x2d; 1, index))
+    return helper(counts[0], 0)
+
+#Iterative solution
+def two_list_iterative(vals, counts):
+    result = Link(None)
+    p = result
+    for index in range(len(vals)):
+        item = vals[index]
+        for _ in range(counts[index]):
+            p.rest = Link(item)
+            p = p.rest
+    return result.rest</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q two_list<button id="copy-code-python3ok-qtwo_list" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qtwo_list").onclick = () => copyCode('python3 ok -q two_list', "copy-code-python3ok-qtwo_list");
+        </script>
+        <br/>
+
+
+<h2 id="scheme-tail-recursion">Scheme / 尾递归</h2>
+
+
+
+<h3 id="q10-accumulate">Q10：accumulate</h3>
+
+
+<p>填写过程 <code>accumulate</code> 的定义，它按照以下参数把前 <code>n</code> 个自然数（即 1 到 n，包含两端）合并起来：</p>
+
+<ol>
+  <li><code>merger</code>：一个接受两个参数的函数</li>
+  <li><code>start</code>：我们开始合并时的起始数字</li>
+  <li><code>n</code>：要合并的自然数个数</li>
+  <li><code>term</code>：一个接受一个参数的函数，用于计算序列的第 <em>n</em> 项</li>
+</ol>
+
+<p>例如，我们可以用乘法运算符作为 <code>merger</code>、以 1 作为乘积的起点，求出 1 到 5 所有数字的乘积：</p>
+
+<pre><code class="scheme">scm&gt; (define (identity x) x)
+scm&gt; (accumulate * 1 5 identity)  ; 1 * 1 * 2 * 3 * 4 * 5
+120</code></pre>
+
+
+
+<p>我们也可以用加法运算符作为 <code>merger</code>、以 <code>square</code> 作为 <code>term</code>，求出同样这些数字的平方和：</p>
+
+<pre><code class="scheme">scm&gt; (define (square x) (* x x))
+scm&gt; (accumulate + 0 5 square)  ; 0 + 1^2 + 2^2 + 3^2 + 4^2 + 5^2
+55
+scm&gt; (accumulate + 5 5 square)  ; 5 + 1^2 + 2^2 + 3^2 + 4^2 + 5^2
+60</code></pre>
+
+
+
+<p>你可以假设 <code>merger</code> 总是可交换的：也就是说，参数的顺序无关紧要。</p>
+
+<solution>
+
+<pre><code class="scheme">(define (accumulate merger start n term)
+<div class="sol-highlight">  (if (= n 0)
+    start
+    (accumulate merger (merger (term n) start) (&#x2d; n 1) term))</div>)</code></pre>
+
+
+</solution>
+
+<p>用 ok 解锁并测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q accumulate -u
+python3 ok -q accumulate<button id="copy-code-python3ok-qaccumulate-upython3ok-qaccumulate" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qaccumulate-upython3ok-qaccumulate").onclick = () => copyCode('python3 ok -q accumulate -u\npython3 ok -q accumulate', "copy-code-python3ok-qaccumulate-upython3ok-qaccumulate");
+        </script>
+        <br/>
+
+<!--
+<div class="sol-highlight">
+
+<ul>
+  <li>Base case: only one item to accumulate, so we return the <code>start</code>ing value</li>
+  <li>Recursive call: returns the result of accumulating n-1 numbers,
+  beginning with <code>start</code> using <code>term</code>.  All that's missing is the current
+  value <code>n</code>.</li>
+</ul>
+
+</div>
+-->
+
+
+<h3 id="q11-tail-recursive-accumulate-optional">Q11：尾递归 accumulate（可选）</h3>
+
+<p>在本次作业的前面部分，你在 Scheme 中实现了 <code>accumulate</code>。提醒一下，<code>accumulate</code> 会按照参数 <code>merger</code>、<code>start</code>、<code>n</code> 和 <code>term</code> 把前 <code>n</code> 个自然数合并起来。</p>
+
+<p>你可以参考你自己实现的 accumulate，回忆这个函数的作用，并复习它的实现方式。</p>
+
+<p>把你实现的 <code>accumulate</code> 改写为尾递归的。它仍然要通过所有针对「普通」<code>accumulate</code> 的测试！</p>
+
+<p>你可以假设输入的 <code>merger</code> 和 <code>term</code> 过程都是正确的尾递归。</p>
+
+<p>如果你在上一题中实现的 <code>accumulate</code> 已经是尾递归的，你可以直接把那个解答抄过来（把 accumulate 相应地替换为 <code>accumulate&#x2d;tail</code>）。</p>
+
+<blockquote><p>如果你遇到了 recursion depth exceeded（递归深度超出）错误，而且你使用的是 staff 版解释器，那么很可能是你的解答不是正确的尾递归。</p>
+
+<p>我们通过用一个非常大的输入调用 <code>accumulate&#x2d;tail</code> 来检验你的解答是否是尾递归的。如果你的解答不是尾递归、并且没有使用常数个环境帧，它将无法成功运行。</p></blockquote>
+
+<solution>
+
+<pre><code class="scheme">(define (accumulate&#x2d;tail merger start n term)
+<div class="sol-highlight">  (define (accum&#x2d;helper x so&#x2d;far)
+    (if (= x 0)
+      so&#x2d;far
+      (accum&#x2d;helper (&#x2d; x 1) (merger (term x) so&#x2d;far))
+    ))
+  (accum&#x2d;helper n start))
+; ALT solution
+(define (accumulate&#x2d;tail merger start n term)
+  (if (= n 0)
+    start
+    (accumulate&#x2d;tail merger (merger (term n) start) (&#x2d; n 1) term))</div>)</code></pre>
+
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q accumulate-tail<button id="copy-code-python3ok-qaccumulate-tail" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qaccumulate-tail").onclick = () => copyCode('python3 ok -q accumulate-tail', "copy-code-python3ok-qaccumulate-tail");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>如果我们在 Python 中用迭代的方式实现它，可能会是这样：</p>
+
+<pre><code>def accumulate(merger, start, n, term):
+    total = start
+    while n &gt; 0:
+        total = merger(total, term(n))
+        n &#x2d;= 1
+    return total</code></pre>
+
+<p>考虑到这一点，我们可以在 Scheme 中创建一个辅助函数，帮助我们跟踪累计的总和。这个值会在每次递归调用中更新。</p>
+
+<p>另一种解法只是用 <code>start</code> 值来追踪我们目前用过的所有值，但它的实际作用是一样的。</p>
+
+</div>
+
+<br>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+</div>
+<div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#mutable-trees">可变的树</a></li>
+    <ul>
+      <li><a href="#visualizing-trees">可视化树</a></li>
+      <li><a href="#q1-delete">Q1：删除</a></li>
+    </ul>
+    <li><a href="#recursion-and-tree-recursion">递归与树递归</a></li>
+    <ul>
+      <li><a href="#q2-subsequences">Q2：子序列</a></li>
+      <li><a href="#q3-non-decreasing-subsequences">Q3：非递减子序列</a></li>
+    </ul>
+    <li><a href="#mutability">可变性</a></li>
+    <ul>
+      <li><a href="#q4-common-players">Q4：共同队员</a></li>
+    </ul>
+    <li><a href="#generators">生成器</a></li>
+    <ul>
+      <li><a href="#q5-stair-ways">Q5：爬楼梯的方式</a></li>
+    </ul>
+    <li><a href="#object-oriented-programming">面向对象编程</a></li>
+    <ul>
+      <li><a href="#election">选举游戏</a></li>
+      <li><a href="#q6-player">Q6：Player 类</a></li>
+      <li><a href="#q7-game">Q7：Game 类</a></li>
+      <li><a href="#q8-new-players-optional">Q8：新的玩家（可选）</a></li>
+    </ul>
+    <li><a href="#linked-lists">链表</a></li>
+    <ul>
+      <li><a href="#q9-two-list">Q9：两个列表</a></li>
+    </ul>
+    <li><a href="#scheme-tail-recursion">Scheme / 尾递归</a></li>
+    <ul>
+      <li><a href="#q10-accumulate">Q10：accumulate</a></li>
+      <li><a href="#q11-tail-recursive-accumulate-optional">Q11：尾递归 accumulate（可选）</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

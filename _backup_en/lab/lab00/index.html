@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+    
+    <link rel="stylesheet" href="../../assets/css/lab.css">
+
+
+    <title>
+Lab 0: Getting Started | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 0: Getting Started
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab00.zip" class="label label-outline">lab00.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Tuesday, June 23.</i></p>
+
+
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+<p>Download <a href="lab00.zip">lab00.zip</a>.</p>
+
+
+
+
+
+
+
+
+    
+<p><strong>This lab is required for all students.</strong></p>
+
+
+<h1 id="attendance">Attendance</h1>
+
+
+<p>You need to submit the lab problems in addition to attending to get credit for lab.</p>
+
+<p>If you miss lab for a good reason (such as sickness or a scheduling conflict) or you don't get checked in for some reason, email <a href="mailto:cs61a@berkeley.edu">cs61a@berkeley.edu</a> within one week to receive attendance credit.</p>
+
+
+<h2 id="introduction">Introduction</h2>
+
+
+<p>This lab explains how to setup your computer to complete assignments and
+introduces some of the basics of Python. If you need any help, please post on Ed or ask for help at your assigned lab section.</p>
+
+<p>Here's an outline of the lab:</p>
+
+<ul>
+  <li><p><strong>Setup</strong>: Setting up the essential software for the course. This will require several
+  components, listed below.</p>
+
+  <ul>
+    <li><strong>Install a Terminal</strong>: Install a terminal so you can interact with files
+    in this course and run OK commands.</li>
+    <li><strong>Install Python 3</strong>: Install Python version 3.8 or later (ideally Python 3.11 or later) on your
+    computer.</li>
+    <li><strong>Install a Text Editor</strong>: Install software to edit <code>.py</code> files for this
+    course. Almost all students use VS Code.</li>
+  </ul></li>
+  <li><strong>Review: Your Computer's File System</strong> This is an overview of how your computer's file system
+  works, including the meaning of both absolute and relative file paths.</li>
+  <li><strong>Walkthrough: Using the Terminal</strong>: This walks you through how to use the
+  terminal and Python interpreter.</li>
+  <li><strong>Walkthrough: Organizing your Files</strong>: This section walks you through how to
+  use your terminal to organize and navigate files for this course.
+  <strong>Everyone should read this section.</strong></li>
+  <li><strong>Required: Doing the Assignment</strong>: You must complete this section to get
+  credit for the assignment. The main goal of this part is to give you practice using our
+  software.</li>
+  <li><strong>Required: Submitting the Assignment</strong>: Turn in your work.</li>
+  <li><strong>Appendix: Useful Python Command Line Options</strong>: These are commands that are
+  useful in debugging your work, but not required to complete the lab. We
+  include them because they are likely to be helpful to you throughout
+  the course.</li>
+</ul>
+
+
+<h2 id="setup">Setup</h2>
+
+
+<blockquote><p>To setup your device, select the guide that corresponds to your operating system.</p></blockquote>
+
+<ul>
+  <li><strong><a href="../../articles/setup-windows.html">Guide for Windows</a></strong></li>
+  <li><strong><a href="../../articles/setup-mac.html">Guide for Mac &amp; Linux</a></strong></li>
+</ul>
+
+
+<h2 id="your-first-assignment">Your First Assignment</h2>
+
+
+<blockquote><p>When working on assignments, ensure that your terminal's working directory is correct (which is likely where you unzipped the assignment).</p></blockquote>
+
+
+<h3 id="1-what-would-python-do-wwpd">1) What Would Python Do? (WWPD)</h3>
+
+
+<p>One component of lab assignments is to predict how the Python interpreter will
+behave. We call these questions "What Would Python Do?"</p>
+
+<p>In this class, we use a program called <code>ok</code> to assess your knowledge.
+<code>ok</code> will be included with every assignment. Let's go through
+how to do a WWPD question with <code>ok</code>.</p>
+
+<p>Open your terminal, and make sure you are in the <code>lab00</code> directory that contains
+the unzipped lab files for this assignment. In that directory, type <code>ls</code> to verify
+that there are the following files:</p>
+
+<ul>
+  <li><code>lab00.py</code>: the starter file for this lab</li>
+  <li><code>ok</code>: our testing program</li>
+  <li><code>lab00.ok</code>: a configuration file for <code>ok</code></li>
+</ul>
+
+<p>If you don't see these files, use <code>cd</code> to navigate to the correct directory.</p>
+
+<blockquote><p>Attempting to run <code>ok</code> in a directory that does not have <code>ok</code> will produce an error.</p></blockquote>
+
+<p>Enter the following in your terminal, which will run <code>ok</code> and begin this section:</p>
+
+<pre><code>python3 ok &#x2d;q python&#x2d;basics &#x2d;u</code></pre>
+
+<blockquote><p>The command <code>python3 ok &#x2d;q python&#x2d;basics &#x2d;u</code> tells the Python interpreter
+to run the file with the name <code>ok</code> in the current working directory.
+<code>&#x2d;q python&#x2d;basics &#x2d;u</code> are inputs provided to the <code>ok</code> program that identify
+which question to run.</p>
+
+<p>As stated in the setup section, if the <code>python3</code> command does not work,
+please try using <code>python</code> or <code>py</code>.</p></blockquote>
+
+<p>You will be prompted to enter the output of various statements/expressions.
+You must enter them correctly to move on, but there is no penalty for
+incorrect answers.</p>
+
+<p>The first time you run Ok, you will be prompted for your bCourses email.
+Please follow <a href="../../articles/using-ok.html#signing-in-with-ok">these directions</a>.</p>
+
+<pre><code>&gt;&gt;&gt; x = 20
+&gt;&gt;&gt; x + 2
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x32;&#x32;</div>
+&gt;&gt;&gt; x
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x32;&#x30;</div>
+&gt;&gt;&gt; y = 5
+&gt;&gt;&gt; y = y + 3
+&gt;&gt;&gt; y * 2
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;&#x36;</div>
+&gt;&gt;&gt; y + x
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x32;&#x38;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 id="2-implementing-functions">2) Implementing Functions</h3>
+
+
+<p>Open the entire <code>lab00</code> folder in VS Code. You can drag the folder onto the VS
+Code application or open VS Code and use <code>Open Folder...</code> in the <code>File</code> menu.
+Once you open the <code>lab00</code> folder, you'll see the <code>lab00.py</code> file in the file
+explorer on the left panel of your VS Code window. Click it to start editing
+<code>lab00.py</code>, which is the file you will submit to receive credit for the lab.</p>
+
+<p><strong>Important</strong>: Turn on <code>Auto Save</code> in the <code>File</code> menu of VS Code. Then, whenever
+you change a file, the contents will be saved. If you don't enable <code>Auto Save</code>,
+be sure to frequently save your work.</p>
+
+<p><strong>Recommended</strong>: Use the terminal inside VS Code (<code>Terminal &gt; New Terminal</code> in
+the menu). If you opened the assignment folder in VS Code as instructed above,
+then the VS Code terminal's working directory will automatically be set to the
+assignment folder, which means you won't have to change directories to check
+your work.</p>
+
+<p>Now complete the lab. You should see a function called <code>twenty_twenty_six</code> that
+has a blank <code>return</code> statement. That blank is the only part you should change.
+Replace it with an expression that evaluates to 2026.  What's the most creative
+expression you can come up with?</p>
+
+
+<h3 id="3-running-tests">3) Running Tests</h3>
+
+
+<p>We'll also use <code>ok</code> to test your code. Switch to the terminal. Make sure you are in the <code>lab00</code> directory that contains
+<code>ok</code> and <code>lab00.py</code>.</p>
+
+<blockquote><p><strong>Pro tip:</strong> If you
+opened the <code>lab00</code> folder in VS Code and select <code>New Terminal</code> in the <code>Terminal</code>
+menu of VS Code, then the terminal will automatically be in the <code>lab00</code>
+directory.</p></blockquote>
+
+<p>Now, run <code>ok</code> with this command to test your code:</p>
+
+<pre><code>python3 ok</code></pre>
+
+<blockquote class="help-windows">
+
+<p>Remember, if you are using Windows and the <code>python3</code> command does not work, please try using just
+<code>python</code> or <code>py</code>.</p>
+
+</blockquote>
+
+<p>If you wrote your code correctly and you finished unlocking your tests, you should see a successful test:</p>
+
+<pre><code>=====================================================================
+Assignment: Lab 0
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Test summary
+    2 test cases passed! No cases failed.</code></pre>
+
+<p>If you didn't pass the tests, <code>ok</code> will instead show you something like this:</p>
+
+<pre><code>&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Doctests for twenty_twenty_six
+
+&gt;&gt;&gt; from lab00 import *
+&gt;&gt;&gt; twenty_twenty_six()
+0
+
+# Error: expected
+#     2026
+# but got
+#     0
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Test summary
+    0 test cases passed before encountering first failed test case</code></pre>
+
+<p>Fix your code in your text editor until the test passes.</p>
+
+<blockquote><p>Every time you run <code>ok</code>, <code>ok</code> will try to back up your work. Don't worry if it
+says that the "Connection timed out" or that you're not enrolled in the
+course. You can still submit this assignment and get credit.</p></blockquote>
+
+
+<h3 id="4-pre-semester-survey">4) Pre-Semester Survey</h3>
+
+
+<p>As part of this assignment, fill out the
+<a href="https://go.cs61a.org/pre-semester-survey">Pre-Semester Survey</a> form.</p>
+
+<p>Once you finish the survey, you will be presented with a passphrase. Put
+this passphrase, as a string, on the line that says
+<code>passphrase = &#x27;REPLACE_THIS_WITH_PASSPHRASE&#x27;</code> in the Python file for this assignment.
+E.g. if the passphrase is <code>abc</code>, then the line should be <code>passphrase = &#x27;abc&#x27;</code>.</p>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q presem_survey<button id="copy-code-python3ok-qpresem_survey" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qpresem_survey").onclick = () => copyCode('python3 ok -q presem_survey', "copy-code-python3ok-qpresem_survey");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h2 id="submitting-the-assignment">Submitting the Assignment</h2>
+
+
+<p>Now that you have completed your first assignment, it is time to turn it in. You can follow these next steps to submit your work and get points.</p>
+
+<blockquote><p><strong>Important:</strong> You only need to submit to <em>Gradescope</em>; you do not need to submit to <em>Ok</em>.</p></blockquote>
+
+
+<h3 id="submit-with-gradescope">Submit with Gradescope</h3>
+
+
+<ol>
+  <li><p>Log in with <strong>School Credentials</strong> using your CalNet ID to <a href="https://www.gradescope.com/">Gradescope</a>. You’ll be taken to your <strong>Dashboard</strong> as soon as you log in.</p>
+
+  <p float="left">
+  <img class="img-responsive center-block" src="assets/gradescope-loginscreen.png" width="200" height = "200" alt = "Gradescope login page">
+  <img class="img-responsive center-block" src="assets/gradescope-login.png" width="200" height = "100" alt = "select Calnet ID">
+  </p></li>
+  <li>On your <strong>Dashboard</strong>, select this course. (You should have already been added to Gradescope. If this is not the case, please make a private Ed post.) This will take you to the list of assignments in the course that you are able to submit. On this list, you will see the status of the assignment, the release date, and the due date.</li>
+  <li>Click on the assignment Lab 0 to open it.</li>
+  <li><p>When the dialog box appears, click on the gray area that says <strong>Drag &amp; Drop</strong>. This will open your file finder and you should select your code file <code>lab00.py</code> that you edited for this assignment.</p>
+
+  <p><img class="img-responsive center-block" src="assets/gradescope-submit.png" alt="gradescope submit" width=" height="> <br></p></li>
+  <li><p>Once you have chosen your file select the <strong>Upload</strong> button. When your upload is successful, you’ll see a confirmation message on your screen and you will receive an email.</p>
+
+  <p><img class="img-responsive center-block" src="assets/gradescope-upload.png" alt="gradescope upload" width=" height="></p></li>
+  <li><p>Next, wait a few minutes for the autograder to grade your code file. Your final score will appear at the right and your output should be the same as the one you tested locally. You can check the code that you submitted at the top right where there is a tab labeled <strong>Code</strong>. If there are any errors, you can edit your <code>lab00.py</code> code and click <strong>Resubmit</strong> at the bottom of your screen to resubmit your code file. Assignments can be resubmitted as many times as you would like before the deadline.</p>
+
+  <p><img class="img-responsive center-block" src="assets/gradescope-results.png" alt="gradescope results" width=" height="></p></li>
+</ol>
+
+<p>Your responses to WWPD questions are not submitted to Gradescope, and they do not need to be. Lab credit is based on code writing questions.</p>
+
+<p><strong>Congratulations</strong>, you just submitted your first assignment!</p>
+
+
+<h2 id="appendix-useful-python-command-line-options">Appendix: Useful Python Command Line Options</h2>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Terminal Commands<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<ul>
+  <li><code>ls</code>: <strong>l</strong>i<strong>s</strong>ts all files in the current directory</li>
+  <li><code>cd &lt;path to directory&gt;</code>: <strong>c</strong>hange into the specified <strong>d</strong>irectory</li>
+  <li><code>mkdir &lt;directory name&gt;</code>: <strong>m</strong>a<strong>k</strong>es a new <strong>dir</strong>ectory with the given name</li>
+</ul>
+
+</div>
+
+<p>Here are the most common ways to run Python on a file.</p>
+
+<ol>
+  <li><p>Using no command-line options will run the code in the file you provide and
+  return you to the command line. If your file just contains function
+  definitions, you'll see no output unless there is a syntax error.</p>
+
+<pre><code>python3 lab00.py</code></pre></li>
+  <li><p><strong><code>&#x2d;i</code></strong>: The <code>&#x2d;i</code> option runs the code in the file you provide, then opens
+  an interactive session (with a <code>&gt;&gt;&gt;</code> prompt). You can then evaluate
+  expressions such as calling functions you defined. To exit, type
+  <code>exit()</code>. You can also use the keyboard shortcut <code>Ctrl&#x2d;D</code> on Linux/Mac
+  machines or <code>Ctrl&#x2d;Z  Enter</code> on Windows.</p>
+
+  <p>If you edit the Python file while running it interactively, you will need to
+  exit and restart the interpreter in order for those changes to take effect.</p>
+
+  <p>Here's how we can run <code>lab00.py</code> interactively:</p>
+
+<pre><code>python3 &#x2d;i lab00.py</code></pre></li>
+  <li><p><strong><code>&#x2d;m doctest</code></strong>: Runs the doctests in a file, which are the examples in
+  the docstrings of functions.</p>
+
+  <p>Each test in the file consists of <code>&gt;&gt;&gt;</code> followed by some Python code and
+  the expected output.</p>
+
+  <p>Here's how we can run the doctests in <code>lab00.py</code>:</p>
+
+<pre><code> python3 &#x2d;m doctest lab00.py</code></pre>
+
+  <p>When our code passes all of the doctests, no output is displayed. Otherwise,
+  information about the tests that failed will be displayed.</p></li>
+</ol>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">Lab Checkoff Questions</a></li>
+  <li><a href="#attendance">Attendance</a></li>
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#your-first-assignment">Your First Assignment</a></li>
+    <ul>
+      <li><a href="#1-what-would-python-do-wwpd">1) What Would Python Do? (WWPD)</a></li>
+      <li><a href="#2-implementing-functions">2) Implementing Functions</a></li>
+      <li><a href="#3-running-tests">3) Running Tests</a></li>
+      <li><a href="#4-pre-semester-survey">4) Pre-Semester Survey</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+    <li><a href="#submitting-the-assignment">Submitting the Assignment</a></li>
+    <ul>
+      <li><a href="#submit-with-gradescope">Submit with Gradescope</a></li>
+    </ul>
+    <li><a href="#appendix-useful-python-command-line-options">Appendix: Useful Python Command Line Options</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

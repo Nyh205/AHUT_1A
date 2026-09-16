@@ -1,0 +1,958 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 8 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 8：链表、效率
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc08.pdf" class="label label-outline">disc08.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+
+<webonly>
+
+
+
+<!-- # Getting Started
+
+Everybody say your name and your birthday and then tell the group about your
+favorite birthday party you've attended (either for your birthday or someone
+else's).
+
+**Pro tip:** Groups tend not to ask for help unless they've been stuck for a
+looooooong time. Try asking for help sooner. We're pretty helpful! You might
+learn something. -->
+
+
+<h1 id="linked-lists">链表</h1>
+
+
+<p>链表是一个 <code>Link</code> 对象或 <code>Link.empty</code>。</p>
+
+<p>你可以用两种方式修改一个 <code>Link</code> 对象 <code>s</code>：</p>
+
+<ul>
+  <li>用 <code>s.first = ...</code> 改变第一个元素</li>
+  <li>用 <code>s.rest = ...</code> 改变其余的元素</li>
+</ul>
+
+
+
+<p>你可以通过调用 <code>Link</code> 来创建一个新的 <code>Link</code> 对象：</p>
+
+<ul>
+  <li><code>Link(4)</code> 创建一个长度为 1、包含 4 的链表。</li>
+  <li><code>Link(4, s)</code> 创建一个链表，它以 4 开头，后面跟着链表 s 的元素。</li>
+</ul>
+
+
+
+<!-- 
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Link Class<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1"> -->
+
+<pre><code>class Link:
+    &quot;&quot;&quot;A linked list is either a Link object or Link.empty
+
+    &gt;&gt;&gt; s = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; s.rest
+    Link(4, Link(5))
+    &gt;&gt;&gt; s.rest.rest.rest is Link.empty
+    True
+    &gt;&gt;&gt; s.rest.first * 2
+    8
+    &gt;&gt;&gt; print(s)
+    (3 4 5)
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;(&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;)&#x27;</code></pre>
+
+
+<!-- </div> -->
+
+<!-- **Drawing time:** Pick a way for your group to draw diagrams. Paper, a
+whiteboard, or a tablet, are all fine. If you don't have anything like that, ask
+another group in the room if they have extra paper. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q1-strange-loop">第 1 题：奇怪的循环</h3>
+
+
+<p>下面是一个带环的 <code>Link</code> 对象，它表示一个由 1 无限重复构成的列表。把它作为一个参考 doctest 可能有助于你解决这个问题。</p>
+
+<pre><code>&gt;&gt;&gt; ones = Link(1)
+&gt;&gt;&gt; ones.rest = ones
+&gt;&gt;&gt; [ones.first, ones.rest.first, ones.rest.rest.first, ones.rest.rest.rest.first]
+[1, 1, 1, 1]
+&gt;&gt;&gt; ones.rest is ones
+True</code></pre>
+
+
+
+<p>实现 <code>strange_loop</code>，它不接收参数，返回一个 <code>Link</code> 对象 <code>s</code>，使得 <code>s.rest.first.rest</code> is <code>s</code>。</p>
+
+<p>先画出你想创建的链表的图，然后写代码把它创建出来。
+<!-- 
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Nested Linked Lists<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+For <code>s.rest.first.rest</code> to exist at all, the second element of <code>s</code>, called
+<code>s.rest.first</code>, must itself be a linked list.
+</div></p>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: A Picture<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+<img class="img-responsive center-block" src="https://i.imgur.com/e7qhrNQ.png" alt="Strange loop" width=" height=">
+</div>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Code<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+Making a cycle requires two steps: making
+a linked list without a cycle, then modifying it. First create, for example, <code>s
+= Link(6, Link(Link(1)))</code>, then change <code>s.rest.first.rest</code> to create the cycle.
+</div> -->
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="strange_loop-input" style="height:360px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-strange_loop-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-strange_loop-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-strange_loop-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def strange_loop() &#x2d;&gt; Link:\n    &quot;&quot;&quot;Return a Link s for which s.rest.first.rest is s.\n\n    &gt;&gt;&gt; s = strange_loop()\n    &gt;&gt;&gt; s.rest.first.rest is s\n    True\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "strange_loop-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def strange_loop() &#x2d;&gt; Link:
+    &quot;&quot;&quot;Return a Link s for which s.rest.first.rest is s.
+
+    &gt;&gt;&gt; s = strange_loop()
+    &gt;&gt;&gt; s.rest.first.rest is s
+    True
+    &quot;&quot;&quot;
+    s = Link(1, Link(Link(2)))
+    s.rest.first.rest = s
+    return s
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-sum-two-ways">第 2 题：两种方式求和</h3>
+
+
+<p>实现 <code>sum_rec</code> 和 <code>sum_iter</code>。它们各接收一个由数字组成的链表 <code>s</code> 和一个非负整数 <code>k</code>，返回 <code>s</code> 中前 <code>k</code> 个元素之和。如果 <code>s</code> 中的元素少于 <code>k</code> 个，则把它们全部相加。如果 <code>k</code> 为 0 或 <code>s</code> 为空，和为 0。</p>
+
+<p>用递归实现 <code>sum_rec</code>。不要用递归实现 <code>sum_iter</code>；改用 <code>while</code> 循环。</p>
+
+<p>要着手递归实现，考虑例子 a = Link(1, Link(6, Link(8))) 和调用 <code>sum_rec(a, 2)</code>。写下有助于计算 <code>sum_rec(a, 2)</code> 的那个递归调用。然后写下该递归调用应当返回什么。讨论这个返回值对计算 <code>sum_rec(a, 2)</code> 的返回值有什么帮助。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="sum_two_ways-input" style="height:648px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-sum_two_ways-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-sum_two_ways-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-sum_two_ways-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def sum_rec(s: Link, k: int) &#x2d;&gt; int:\n    &quot;&quot;&quot;Return the sum of the first k elements in s.\n\n    &gt;&gt;&gt; a = Link(1, Link(6, Link(8)))\n    &gt;&gt;&gt; sum_rec(a, 2)\n    7\n    &gt;&gt;&gt; sum_rec(a, 5)\n    15\n    &gt;&gt;&gt; sum_rec(Link.empty, 1)\n    0\n    &quot;&quot;&quot;\n    # Use a recursive call to sum_rec; don&#x27;t call sum_iter\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\ndef sum_iter(s: Link, k: int) &#x2d;&gt; int:\n    &quot;&quot;&quot;Return the sum of the first k elements in s.\n\n    &gt;&gt;&gt; a = Link(1, Link(6, Link(8)))\n    &gt;&gt;&gt; sum_iter(a, 2)\n    7\n    &gt;&gt;&gt; sum_iter(a, 5)\n    15\n    &gt;&gt;&gt; sum_iter(Link.empty, 1)\n    0\n    &quot;&quot;&quot;\n    # Don&#x27;t call sum_rec or sum_iter\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n', "python", "sum_two_ways-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def sum_rec(s: Link, k: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return the sum of the first k elements in s.
+
+    &gt;&gt;&gt; a = Link(1, Link(6, Link(8)))
+    &gt;&gt;&gt; sum_rec(a, 2)
+    7
+    &gt;&gt;&gt; sum_rec(a, 5)
+    15
+    &gt;&gt;&gt; sum_rec(Link.empty, 1)
+    0
+    &quot;&quot;&quot;
+    # Use a recursive call to sum_rec; don&#x27;t call sum_iter
+    if k == 0 or s is Link.empty:
+        return 0
+    return s.first + sum_rec(s.rest, k &#x2d; 1)
+
+def sum_iter(s: Link, k: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return the sum of the first k elements in s.
+
+    &gt;&gt;&gt; a = Link(1, Link(6, Link(8)))
+    &gt;&gt;&gt; sum_iter(a, 2)
+    7
+    &gt;&gt;&gt; sum_iter(a, 5)
+    15
+    &gt;&gt;&gt; sum_iter(Link.empty, 1)
+    0
+    &quot;&quot;&quot;
+    # Don&#x27;t call sum_rec or sum_iter
+    total = 0
+    while k &gt; 0 and s is not Link.empty:
+        total, s, k = total + s.first, s.rest, k &#x2d; 1
+    return total
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Recursive Version<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+Add <code>s.first</code> to the sum of the first <code>k&#x2d;1</code> elements in <code>s.rest</code>. Your base case
+condition should include <code>s is Link.empty</code> so that you're checking whether <code>s</code>
+is empty before ever evaluating <code>s.first</code> or <code>s.rest</code>.
+</div>
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Iterative Version<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+Introduce a new name, such as <code>total</code>, then repeatedly (in a <code>while</code> loop) add
+<code>s.first</code> to <code>total</code>, set <code>s = s.rest</code> to advance through the linked list, and reduce <code>k</code> by one.
+</div> -->
+
+<!-- **Discussion time:** When adding up numbers, the intermediate sums depend on the
+order. <code>(1 + 3) + 5</code> and <code>1 + (3 + 5)</code> both equal 9, but the first one makes 4
+along the way while the second makes 8 along the way. For the same linked list
+<code>s</code> and length <code>k</code>, will <code>sum_rec</code> and <code>sum_iter</code> both make the same
+intermediate sums along the way?
+
+For a summation, the order of additions doesn't affect the result, but for other
+operations this ordering matters. For example, <code>(2 ** 3) ** 5</code> is much smaller
+than <code>2 ** (3 ** 5)</code>. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-overlap">第 3 题：重叠</h3>
+
+
+<p>实现 <code>overlap</code>，它接收两个由数字组成的链表 <code>s</code> 和 <code>t</code>，两者都按递增顺序排列，且各自列表内没有重复元素。它返回同时出现在两个列表中的数字个数。</p>
+
+<p>这可以在与 <code>s</code> 和 <code>t</code> 总长度成<em>线性</em>时间内完成：总是把首元素较小的那个链表向前推进，直到两个首元素相等（计数加一，两个都推进）或其中一个链表为空（可以返回了）。
+<!-- Here's a
+<a href="https://youtu.be/UZ9nOiyMQ8A?si=W0N2ecsTHR5p8c2z&t=137">lecture video clip</a>
+about this (but the video uses Python lists instead of linked lists). --></p>
+
+<!-- Take a vote to decide whether to use recursion or iteration.
+Either way works (and the solutions are about the same complexity/difficulty).
+(If you finish quickly, implement it the other way too!) -->
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="overlap-input" style="height:558px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-overlap-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-overlap-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-overlap-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def overlap(s: Link, t: Link) &#x2d;&gt; int:\n    &quot;&quot;&quot;For increasing s and t, count the numbers that appear in both.\n\n    &gt;&gt;&gt; a = Link(3, Link(4, Link(6, Link(7, Link(9, Link(10))))))\n    &gt;&gt;&gt; b = Link(1, Link(3, Link(5, Link(7, Link(8)))))\n    &gt;&gt;&gt; overlap(a, b)  # 3 and 7\n    2\n    &gt;&gt;&gt; overlap(a.rest, b)  # just 7\n    1\n    &gt;&gt;&gt; overlap(Link(0, a), Link(0, b))\n    3\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "overlap-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def overlap(s: Link, t: Link) &#x2d;&gt; int:
+    &quot;&quot;&quot;For increasing s and t, count the numbers that appear in both.
+
+    &gt;&gt;&gt; a = Link(3, Link(4, Link(6, Link(7, Link(9, Link(10))))))
+    &gt;&gt;&gt; b = Link(1, Link(3, Link(5, Link(7, Link(8)))))
+    &gt;&gt;&gt; overlap(a, b)  # 3 and 7
+    2
+    &gt;&gt;&gt; overlap(a.rest, b)  # just 7
+    1
+    &gt;&gt;&gt; overlap(Link(0, a), Link(0, b))
+    3
+    &quot;&quot;&quot;
+    if s is Link.empty or t is Link.empty:
+        return 0
+    if s.first == t.first:
+        return 1 + overlap(s.rest, t.rest)
+    elif s.first &lt; t.first:
+        return overlap(s.rest, t)
+    elif s.first &gt; t.first:
+        return overlap(s, t.rest)
+
+def overlap_iterative(s, t):
+    &quot;&quot;&quot;For increasing s and t, count the numbers that appear in both.
+
+    &gt;&gt;&gt; a = Link(3, Link(4, Link(6, Link(7, Link(9, Link(10))))))
+    &gt;&gt;&gt; b = Link(1, Link(3, Link(5, Link(7, Link(8)))))
+    &gt;&gt;&gt; overlap(a, b)  # 3 and 7
+    2
+    &gt;&gt;&gt; overlap(a.rest, b)  # just 7
+    1
+    &gt;&gt;&gt; overlap(Link(0, a), Link(0, b))
+    3
+    &quot;&quot;&quot;
+    res = 0
+    while s is not Link.empty and t is not Link.empty:
+        if s.first == t.first:
+            res += 1
+            s = s.rest
+            t = t.rest
+        elif s.first &lt; t.first:
+            s = s.rest
+        else:
+            t = t.rest
+    return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Template for Recursion<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-7">
+
+<pre><code>    if s is Link.empty or t is Link.empty:
+        return 0
+    if s.first == t.first:
+        return __________________
+    elif s.first &lt; t.first:
+        return __________________
+    elif s.first &gt; t.first:
+        return __________________</code></pre>
+
+
+</div>
+
+
+        <button id='toggle-8' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Template for Iteration<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-8">
+
+<pre><code>    k = 0
+    while s is not Link.empty and t is not Link.empty:
+        if s.first == t.first:
+            __________________
+        elif s.first &lt; t.first:
+            __________________
+        elif s.first &gt; t.first:
+            __________________
+    return k</code></pre>
+
+
+</div> -->
+
+<div class="page-break"></div>
+
+<!-- # Extra Fun -->
+
+<!-- Some of you have requested additional practice with generators.  Wouldn't it be
+fun to use a generator for a linked list problem?! -->
+
+
+<h3 id="q4-iterate-in-order">第 4 题：按顺序迭代</h3>
+
+
+<p>实现 <code>iterate_in_order</code>，它接收两个由数字组成的链表 <code>s</code> 和 <code>t</code>，两者都按递增顺序排列，且各自列表内没有重复元素。它返回一个生成器，按非递减顺序迭代 <code>s</code> 和 <code>t</code> 中的所有元素。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="iterate_in_order-input" style="height:666px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-iterate_in_order-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-iterate_in_order-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-iterate_in_order-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def iterate_in_order(s: Link, t: Link):\n    &quot;&quot;&quot;For increasing s and t, yields the elements in s and t, in non&#x2d;decreasing order.\n\n    &gt;&gt;&gt; a = Link(3, Link(4, Link(6, Link(7, Link(9, Link(10))))))\n    &gt;&gt;&gt; b = Link(1, Link(3, Link(5, Link(7, Link(8)))))\n    &gt;&gt;&gt; t = iterate_in_order(a, b)\n    &gt;&gt;&gt; for item in t:\n    ...     print(item)\n    1\n    3\n    3\n    4\n    5\n    6\n    7\n    7\n    8\n    9\n    10\n    &gt;&gt;&gt; t = iterate_in_order(Link.empty, b)\n    &gt;&gt;&gt; for item in t:\n    ...      print(item)\n    1\n    3\n    5\n    7\n    8\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n', "python", "iterate_in_order-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def iterate_in_order(s: Link, t: Link):
+    &quot;&quot;&quot;For increasing s and t, yields the elements in s and t, in non&#x2d;decreasing order.
+
+    &gt;&gt;&gt; a = Link(3, Link(4, Link(6, Link(7, Link(9, Link(10))))))
+    &gt;&gt;&gt; b = Link(1, Link(3, Link(5, Link(7, Link(8)))))
+    &gt;&gt;&gt; t = iterate_in_order(a, b)
+    &gt;&gt;&gt; for item in t:
+    ...     print(item)
+    1
+    3
+    3
+    4
+    5
+    6
+    7
+    7
+    8
+    9
+    10
+    &gt;&gt;&gt; t = iterate_in_order(Link.empty, b)
+    &gt;&gt;&gt; for item in t:
+    ...      print(item)
+    1
+    3
+    5
+    7
+    8
+    &quot;&quot;&quot;
+    while s is not Link.empty or t is not Link.empty:
+        if s is Link.empty:
+            yield t.first
+            t = t.rest
+        elif t is Link.empty or s.first &lt;= t.first:
+            yield s.first
+            s = s.rest
+        else:
+            yield t.first
+            t = t.rest
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h1 id="efficiency">效率</h1>
+
+
+<p>求一个函数运行时间的增长量级的技巧：</p>
+
+<ul>
+  <li>如果函数是递归的，确定递归调用的次数以及每次递归调用的运行时间。</li>
+  <li>如果函数是迭代的，确定内层循环的次数以及每次循环的运行时间。</li>
+  <li>忽略系数。执行 <code>n</code> 次操作的函数和执行 <code>100 * n</code> 次操作的函数都是线性的。</li>
+  <li>取最大的增长量级。如果函数的第一部分运行时间是线性的，第二部分是平方的，那么整个函数的运行时间就是平方的。</li>
+</ul>
+
+
+<h3 id="q5-the-first-order-of-growth">第 5 题：第一阶……增长量级</h3>
+
+
+<p><code>rey</code> 的效率是多少？</p>
+
+<pre><code>def rey(finn):
+    poe = 0
+    while finn &gt;= 2:
+        poe += finn
+        finn = finn / 2
+    return</code></pre>
+
+
+
+<p>从以下选项中选择一项：</p>
+
+<ul>
+  <li>常数</li>
+  <li>对数</li>
+  <li>线性</li>
+  <li>平方</li>
+  <li>指数</li>
+  <li>以上都不是</li>
+</ul>
+
+
+            你的答案：
+            <input class="form-control storable" id="wwpd-growth-1-input" type="text">
+            <div class="storable-status"></div>
+        
+
+<div class="sol-highlight">
+  <strong>解答</strong>：对数级，因为 <code>finn</code> 在每次迭代中都会减半，所以我们的 while 循环最多迭代 log(<code>finn</code>) 次。这通常称为 Θ(log(<code>finn</code>)) 的运行时间。另一种看法是：如果把输入翻倍，时间只增加一次迭代，这也说明它是对数级的。
+</div>
+
+<p><code>mod_7</code> 的效率是多少？</p>
+
+<pre><code>def mod_7(n):
+    if n % 7 == 0:
+        return 0
+    else:
+        return 1 + mod_7(n &#x2d; 1)</code></pre>
+
+
+
+<p>从以下选项中选择一项：</p>
+
+<ul>
+  <li>常数</li>
+  <li>对数</li>
+  <li>线性</li>
+  <li>平方</li>
+  <li>指数</li>
+  <li>以上都不是</li>
+</ul>
+
+
+            你的答案：
+            <input class="form-control storable" id="wwpd-growth-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+<div class="sol-highlight">
+ <strong>解答</strong>：常数级，因为在最坏情况下，我们的函数 <code>mod_7</code> 需要 <code>6</code> 次递归调用才能到达基线条件。考虑最坏情况：输入的 <code>n</code> 使得第一次调用 <code>mod_7</code> 时 <code>n % 7</code> 的值为 6。每次递归调用都会把 <code>n</code> 减 <code>1</code>，于是经过 6 次递归调用（<code>n</code> 从 <code>0</code> 到 6）最终会到达返回 0 的基线条件。由于计算量的增长与输入无关，我们说它是常数级的，通常称为 Θ(<code>1</code>) 的运行时间。
+</div>
+
+<div class="page-break"></div>
+
+
+<h3 id="q6-efficiency-practice">第 6 题：效率练习</h3>
+
+
+<p>为下面定义的函数选择填入空白的词：<code>&lt;function&gt;</code> 的运行时间是输入长度的 <code>____</code> 时间。</p>
+
+<ul>
+  <li>常数</li>
+  <li>对数</li>
+  <li>线性</li>
+  <li>平方</li>
+  <li>指数</li>
+  <li>以上都不是</li>
+</ul>
+
+<p>假设 <code>len</code> 的运行时间是常数时间，<code>all</code> 的运行时间与输入长度成线性关系。通过索引取列表中的一个元素需要常数时间。构造一个 range 需要常数时间。</p>
+
+<pre><code>def count_partitions(n, m):
+    &quot;&quot;&quot;Counts the number of partitions of a positive integer n, 
+    using parts up to size m.&quot;&quot;&quot;
+    if n == 0:
+        return 1
+    elif n &lt; 0:
+        return 0
+    elif m == 0:
+        return 0
+    else:
+        with_m = count_partitions(n&#x2d;m, m)
+        without_m = count_partitions(n, m&#x2d;1)
+        return with_m + without_m
+
+def is_palindrome(s):
+    &quot;&quot;&quot;Return whether a list of numbers s is a palindrome.&quot;&quot;&quot;
+    return all([s[i] == s[len(s) &#x2d; i &#x2d; 1] for i in range(len(s))])
+
+def binary_search(lst, n):
+    &quot;&quot;&quot;Takes in a sorted list lst and returns the index where integer n
+    is contained in lst. Returns &#x2d;1 if n does not exist in lst.&quot;&quot;&quot;
+    low = 0
+    high = len(lst)
+    while low &lt;= high:
+        middle = (low + high) // 2
+        if lst[middle] == n:
+            return middle
+        elif n &lt; lst[middle]:
+            high = middle &#x2d; 1
+        else:
+            low = middle + 1
+    return &#x2d;1</code></pre>
+
+
+
+<blockquote><p><code>is_palindrome</code> 这道题改编自 2019 年秋季 <a href="../../exam/fa19/final/61a-fa19-final.pdf#page=7">final</a> 的第 6(d) 题。</p></blockquote>
+
+<!-- <p>Use Ok to test your understanding:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q efficiency_practice -u<button id="copy-code-python3ok-qefficiency_practice-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qefficiency_practice-u").onclick = () => copyCode('python3 ok -q efficiency_practice -u', "copy-code-python3ok-qefficiency_practice-u");
+        </script>
+        <br/> -->
+
+<div class="sol-highlight">
+
+<blockquote><p><strong>count_partitions：指数级。</strong></p></blockquote>
+
+<p><code>count_partitions</code> 接受两个输入 <code>n</code> 和 <code>m</code>，因此运行时间取决于这两个输入。不过在判断增长阶时，我们主要关心的是当 <code>n</code> 和 <code>m</code> 的取值更大时运行时间如何变化。</p>
+
+<p>像 <code>if n == 0</code> 这样的条件语句是逻辑比较，只需要常数时间。因此，对运行时间影响最大的是我们调用 <code>count_partitions</code> 递归的次数。每次调用 <code>count_partitions</code> 都会再发起两次递归调用：一次使用 <code>m</code> 作为一个分划，另一次不使用。</p>
+
+<p>如果把该函数的递归调用树画出来，我们会发现每一层的函数调用数都翻倍。因此，<code>count_partitions</code> 的运行时间是指数级的。</p>
+
+<blockquote><p><strong>is_palindrome：线性级。</strong></p></blockquote>
+
+<p>我们关心的是函数的运行时间与其输入长度之间的关系，这里的输入长度就是 <code>len(s)</code>。</p>
+
+<p>在 <code>is_palindrome</code> 中，计算 <code>len(s)</code> 以及构造从 0 到 <code>len(s)</code>（不含）的 range 都只需要常数时间。</p>
+
+<p>对于这个 range 中的每个元素，我们会从 <code>s</code> 中取出两个元素
+（<code>s[i]</code> 和 <code>s[len(s)&#x2d;i&#x2d;1]</code>）并比较它们，每个元素都需要一些
+常数时间。
+对所有元素都完成这一步之后，
+我们就以与 <code>is_palindrome</code> 输入长度成线性的时间
+构造出了完整的列表。</p>
+
+<p>我们假设 <code>all</code> 的运行时间与<em>其</em>输入长度成线性，
+这里的输入就是我们刚刚构造的列表，其长度与
+<code>is_palindrome</code> 的输入长度相同。</p>
+
+<p>总的来说，因此 <code>is_palindrome</code> 的运行时间与其输入长度成线性。</p>
+
+<blockquote><p><strong>binary_search：对数级。</strong></p></blockquote>
+
+<p><code>binary_search</code> 算法的运行时间取决于 <code>lst</code> 的长度，因为我们要在其中搜索某个整数 <code>n</code>。</p>
+
+<p>同样，假设计算 <code>len(lst)</code> 和逻辑比较都只需要常数时间，我们来看函数调用结束前 while 循环可能迭代多少次。首先我们检查有序列表中间的那个元素。如果 <code>lst[middle]</code> 不等于 <code>n</code>，函数就判断 <code>lst[middle]</code> 是小于还是大于 <code>n</code>，并相应地把搜索范围缩小到 <code>lst</code> 的前半部分或后半部分。</p>
+
+<p>while 循环每迭代一次，<code>binary_search</code> 就把要搜索的输入 <code>lst</code> 中的元素个数减少一半。因此，while 循环在返回某个下标或 <code>&#x2d;1</code> 之前的最大迭代次数是以 2 为底的 log(len(<code>lst</code>))。<code>binary_search</code> 的运行时间与其输入 lst 的长度成对数关系。</p>
+
+</div>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#linked-lists">链表</a></li>
+  <ul>
+    <li><a href="#q1-strange-loop">第 1 题：奇怪的循环</a></li>
+    <li><a href="#q2-sum-two-ways">第 2 题：两种方式求和</a></li>
+    <li><a href="#q3-overlap">第 3 题：重叠</a></li>
+    <li><a href="#q4-iterate-in-order">第 4 题：按顺序迭代</a></li>
+  </ul>
+  <li><a href="#efficiency">效率</a></li>
+  <ul>
+    <li><a href="#q5-the-first-order-of-growth">第 5 题：第一阶……增长量级</a></li>
+    <li><a href="#q6-efficiency-practice">第 6 题：效率练习</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

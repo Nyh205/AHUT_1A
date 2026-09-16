@@ -1,0 +1,482 @@
+[
+ {
+  "id": 120,
+  "en": "A Virahanka Fibonacci number."
+ },
+ {
+  "id": 121,
+  "en": "Return the maximum path sum of the tree."
+ },
+ {
+  "id": 122,
+  "en": "Add d leaves containing v to each node at every depth d."
+ },
+ {
+  "id": 123,
+  "en": "Return whether there is a path in a Tree where the entries along the path spell out a particular target."
+ },
+ {
+  "id": 124,
+  "en": "Return a list of the entries in this tree in the order that they would be visited by a preorder traversal (see problem description)."
+ },
+ {
+  "id": 125,
+  "en": "Mutates t using the functions in the linked list funcs."
+ },
+ {
+  "id": 126,
+  "en": "Return a new linked list like s but without the element at index i."
+ },
+ {
+  "id": 127,
+  "en": "Mutates s so that each element equal to val is followed by another val."
+ },
+ {
+  "id": 128,
+  "en": "Slices a linked list from start to end (as with a normal Python list) and returns a linked list. You do NOT have to support negative indices."
+ },
+ {
+  "id": 129,
+  "en": "Return whether link contains a cycle."
+ },
+ {
+  "id": 130,
+  "en": "You do not need to understand any of this code!"
+ },
+ {
+  "id": 131,
+  "en": "UPDATE THIS FOR Q2, e.g (+ 1 2), + is the operator"
+ },
+ {
+  "id": 132,
+  "en": "UPDATE THIS FOR Q2, e.g (+ 1 2), 1 and 2 are operands"
+ },
+ {
+  "id": 133,
+  "en": "and expressions"
+ },
+ {
+  "id": 134,
+  "en": "define expressions"
+ },
+ {
+  "id": 135,
+  "en": "Call expressions"
+ },
+ {
+  "id": 136,
+  "en": "UPDATE THIS FOR Q2, what is type(operator)?"
+ },
+ {
+  "id": 137,
+  "en": "Looking up procedures"
+ },
+ {
+  "id": 138,
+  "en": "Numbers and booleans"
+ },
+ {
+  "id": 139,
+  "en": "Looking up variables"
+ },
+ {
+  "id": 140,
+  "en": "Scheme's #t"
+ },
+ {
+  "id": 141,
+  "en": "Scheme's #f"
+ },
+ {
+  "id": 142,
+  "en": "Show the value in the Scheme REPL."
+ },
+ {
+  "id": 143,
+  "en": "Return the length of a linked list."
+ },
+ {
+  "id": 144,
+  "en": "Map function f over linked list s."
+ },
+ {
+  "id": 145,
+  "en": "Remove all nodes labeled x below the root within Tree t. When a non-leaf node is deleted, the deleted node's children become children of its parent."
+ },
+ {
+  "id": 146,
+  "en": "The root node will never be removed."
+ },
+ {
+  "id": 147,
+  "en": "Return a new list consisting of all the lists in nested_list, but with item added to the front of each. You can assume that nested_list is a list of lists."
+ },
+ {
+  "id": 148,
+  "en": "Return a nested list (a list of lists) of all subsequences of S. The subsequences can appear in any order. You can assume S is a list."
+ },
+ {
+  "id": 149,
+  "en": "Return a nested list of all subsequences of S (a list of lists) for which the elements of the subsequence are nondecreasing. The subsequences can appear in any order. You can assume S is a list."
+ },
+ {
+  "id": 150,
+  "en": "Returns a dictionary containing values along with a corresponding list of keys that had that value from the original dictionary."
+ },
+ {
+  "id": 151,
+  "en": "Yield all the ways to climb a set of n stairs taking 1 or 2 steps at a time."
+ },
+ {
+  "id": 152,
+  "en": "You do not need to understand what this function does. It is used for testing."
+ },
+ {
+  "id": 153,
+  "en": "A deterministic random function that cycles between [0.0, 0.1, 0.2, ..., 0.9] for testing purposes."
+ },
+ {
+  "id": 154,
+  "en": "Phase 1: The Player Class"
+ },
+ {
+  "id": 155,
+  "en": "Phase 2: The Game Class"
+ },
+ {
+  "id": 156,
+  "en": "Phase 3: New Players"
+ },
+ {
+  "id": 157,
+  "en": "Returns a linked list according to the two lists that were passed in. Assume vals and counts are the same size. Elements in vals represent the value, and the corresponding element in counts represents the number of this value desired in the final linked list. Assume all elements in counts are greater than 0. Assume both lists have at least one element."
+ },
+ {
+  "id": 158,
+  "en": "Ants Vs. SomeBees."
+ },
+ {
+  "id": 159,
+  "en": "Core Classes #"
+ },
+ {
+  "id": 160,
+  "en": "A Place holds insects and has an exit to another Place."
+ },
+ {
+  "id": 161,
+  "en": "Create a Place with the given NAME and EXIT."
+ },
+ {
+  "id": 162,
+  "en": "name -- A string; the name of this Place. exit -- The Place reached by exiting this Place (may be None)."
+ },
+ {
+  "id": 163,
+  "en": "Phase 1: Add an entrance to the exit"
+ },
+ {
+  "id": 164,
+  "en": "Asks the insect to add itself to this place. This method exists so that it can be overridden in subclasses."
+ },
+ {
+  "id": 165,
+  "en": "Asks the insect to remove itself from this place. This method exists so that it can be overridden in subclasses."
+ },
+ {
+  "id": 166,
+  "en": "An Insect, the base class of Ant and Bee, has health and a Place."
+ },
+ {
+  "id": 167,
+  "en": "Every insect gets a unique id number"
+ },
+ {
+  "id": 168,
+  "en": "ADD CLASS ATTRIBUTES HERE"
+ },
+ {
+  "id": 169,
+  "en": "Create an Insect with a health and a starting PLACE."
+ },
+ {
+  "id": 170,
+  "en": "assign a unique ID to every insect"
+ },
+ {
+  "id": 171,
+  "en": "Reduce health by DAMAGE_TAKEN, and remove the insect from its place if it has no health remaining. Decorated in gui.py for GUI support."
+ },
+ {
+  "id": 172,
+  "en": "The action performed each turn."
+ },
+ {
+  "id": 173,
+  "en": "Called when health reaches 0 or below. Decorated in gui.py to support GUI"
+ },
+ {
+  "id": 174,
+  "en": "An Ant occupies a place and does work for the colony."
+ },
+ {
+  "id": 175,
+  "en": "Only implemented Ant classes should be instantiated"
+ },
+ {
+  "id": 176,
+  "en": "Double this ants's damage, if it has not already been doubled."
+ },
+ {
+  "id": 177,
+  "en": "HarvesterAnt produces 1 additional food per turn for the colony."
+ },
+ {
+  "id": 178,
+  "en": "OVERRIDE CLASS ATTRIBUTES HERE"
+ },
+ {
+  "id": 179,
+  "en": "Produce 1 additional food for the colony."
+ },
+ {
+  "id": 180,
+  "en": "gamestate -- The GameState, used to access game state information."
+ },
+ {
+  "id": 181,
+  "en": "ThrowerAnt throws a leaf each turn at the nearest Bee in its range."
+ },
+ {
+  "id": 182,
+  "en": "ADD/OVERRIDE CLASS ATTRIBUTES HERE"
+ },
+ {
+  "id": 183,
+  "en": "Return a random Bee from the nearest Place (excluding the Hive) that contains Bees and is reachable from the ThrowerAnt's Place by following entrances. D This method returns None if there is no such Bee (or none in range)."
+ },
+ {
+  "id": 184,
+  "en": "An Ant that is not in a Place has no nearest Bee"
+ },
+ {
+  "id": 185,
+  "en": "REPLACE THIS LINE"
+ },
+ {
+  "id": 186,
+  "en": "Throw a leaf at the target Bee, reducing its health."
+ },
+ {
+  "id": 187,
+  "en": "Throw a leaf at the nearest Bee in range."
+ },
+ {
+  "id": 188,
+  "en": "Return a random bee from a list of bees, or return None if bees is empty."
+ },
+ {
+  "id": 189,
+  "en": "Extensions #"
+ },
+ {
+  "id": 190,
+  "en": "A ThrowerAnt that only throws leaves at Bees at most 3 places away."
+ },
+ {
+  "id": 191,
+  "en": "Change to True to view in the GUI"
+ },
+ {
+  "id": 192,
+  "en": "A ThrowerAnt that only throws leaves at Bees at least 5 places away."
+ },
+ {
+  "id": 193,
+  "en": "FireAnt cooks any Bee in its Place when it expires."
+ },
+ {
+  "id": 194,
+  "en": "Create an Ant with a HEALTH quantity."
+ },
+ {
+  "id": 195,
+  "en": "Reduce health by DAMAGE_TAKEN, and remove the FireAnt from its place if it has no health remaining."
+ },
+ {
+  "id": 196,
+  "en": "Make sure to reduce the health of each bee in the current place, and apply the additional damage if the fire ant dies."
+ },
+ {
+  "id": 197,
+  "en": "The WallAnt class"
+ },
+ {
+  "id": 198,
+  "en": "The HungryAnt Class"
+ },
+ {
+  "id": 199,
+  "en": "ContainerAnt can share a space with other ants by containing them."
+ },
+ {
+  "id": 200,
+  "en": "Special handling for container ants"
+ },
+ {
+  "id": 201,
+  "en": "Container was removed. Contained ant should remain in the game"
+ },
+ {
+  "id": 202,
+  "en": "default to normal behavior"
+ },
+ {
+  "id": 203,
+  "en": "ProtectorAnt provides protection to other Ants."
+ },
+ {
+  "id": 204,
+  "en": "The TankAnt class"
+ },
+ {
+  "id": 205,
+  "en": "Water is a place that can only hold waterproof insects."
+ },
+ {
+  "id": 206,
+  "en": "Add an Insect to this place. If the insect is not waterproof, reduce its health to 0."
+ },
+ {
+  "id": 207,
+  "en": "The ScubaThrower class"
+ },
+ {
+  "id": 208,
+  "en": "QueenAnt boosts the damage of all ants behind her."
+ },
+ {
+  "id": 209,
+  "en": "A queen ant throws a leaf, but also doubles the damage of ants in her tunnel."
+ },
+ {
+  "id": 210,
+  "en": "Reduce health by DAMAGE_TAKEN, and if the QueenAnt has no health remaining, signal the end of the game."
+ },
+ {
+  "id": 211,
+  "en": "Extra Challenge #"
+ },
+ {
+  "id": 212,
+  "en": "ThrowerAnt that causes Slow on Bees."
+ },
+ {
+  "id": 213,
+  "en": "ThrowerAnt that intimidates Bees, making them back away instead of advancing."
+ },
+ {
+  "id": 214,
+  "en": "NinjaAnt does not block the path and damages all bees in its place."
+ },
+ {
+  "id": 215,
+  "en": "ThrowerAnt that damages all Insects standing in its path."
+ },
+ {
+  "id": 216,
+  "en": "laser beam sound effect"
+ },
+ {
+  "id": 217,
+  "en": "Play laser sound effect. Decorated in gui.py"
+ },
+ {
+  "id": 218,
+  "en": "Bees #"
+ },
+ {
+  "id": 219,
+  "en": "A Bee moves from place to place, following exits and stinging ants."
+ },
+ {
+  "id": 220,
+  "en": "Attack an ANT, reducing its health by 1."
+ },
+ {
+  "id": 221,
+  "en": "Move from the Bee's current Place to a new PLACE."
+ },
+ {
+  "id": 222,
+  "en": "Return True if this Bee cannot advance to the next Place."
+ },
+ {
+  "id": 223,
+  "en": "Special handling for NinjaAnt"
+ },
+ {
+  "id": 224,
+  "en": "A Bee's action stings the Ant that blocks its exit if it is blocked, or moves to the exit of its current place otherwise."
+ },
+ {
+  "id": 225,
+  "en": "If this Bee has not been scared before, cause it to attempt to go backwards LENGTH times."
+ },
+ {
+  "id": 226,
+  "en": "Class of Bee that has higher damage."
+ },
+ {
+  "id": 227,
+  "en": "The leader of the bees. Damage to the boss by any attack is capped."
+ },
+ {
+  "id": 228,
+  "en": "Play sound effect when boss arrives! Decorated in gui.py"
+ },
+ {
+  "id": 229,
+  "en": "The Place from which the Bees launch their assault."
+ },
+ {
+  "id": 230,
+  "en": "assault_plan -- An AssaultPlan; when & where bees enter the colony."
+ },
+ {
+  "id": 231,
+  "en": "The following attributes are always None for a Hive"
+ },
+ {
+  "id": 232,
+  "en": "Game Components #"
+ },
+ {
+  "id": 233,
+  "en": "An ant collective that manages global game state and simulates time."
+ },
+ {
+  "id": 234,
+  "en": "Attributes: time -- elapsed time food -- the colony's available food total places -- A list of all places in the colony (including a Hive) bee_entrances -- A list of places that bees can enter"
+ },
+ {
+  "id": 235,
+  "en": "Create an GameState for simulating a game."
+ },
+ {
+  "id": 236,
+  "en": "Arguments: beehive -- a Hive full of bees ant_types -- a list of ant classes create_places -- a function that creates the set of places dimensions -- a pair containing the dimensions of the game layout"
+ },
+ {
+  "id": 237,
+  "en": "Configure the places in the colony."
+ },
+ {
+  "id": 238,
+  "en": "Ask ants to take actions"
+ },
+ {
+  "id": 239,
+  "en": "Ask bees to take actions"
+ }
+]

@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1500,
+  "en": "Once you've done that, you can run the GUI from your terminal and play Hog in your browser:"
+ },
+ {
+  "id": 1501,
+  "en": "Phase 1: Rules of the Game"
+ },
+ {
+  "id": 1502,
+  "en": "In the first phase, you will develop a simulator for the game of Hog."
+ },
+ {
+  "id": 1503,
+  "en": "The dice.py file represents dice using non-pure zero-argument functions.\nThese functions are non-pure because they may have different return values each\ntime they are called, and so a side-effect of calling the function is\nchanging what will be returned when the function is called again."
+ },
+ {
+  "id": 1504,
+  "en": "Here's the documentation from dice.py that you need to read in order to\nsimulate dice in this project."
+ },
+ {
+  "id": 1505,
+  "en": "Check your understanding by unlocking the following tests."
+ },
+ {
+  "id": 1506,
+  "en": "You can exit the unlocker by typing exit()."
+ },
+ {
+  "id": 1507,
+  "en": "Typing Ctrl-C on Windows to exit out of the unlocker has been known to cause\nproblems, so avoid doing so."
+ },
+ {
+  "id": 1508,
+  "en": "Implement the roll_dice function in hog.py. It takes two arguments: a\npositive integer called num_rolls, which specifies the number of times to roll a die, and a\ndice function. It returns the number of points scored by rolling the die\nnum_rolls times in a turn: either the sum of the outcomes or 1 (Sow\nSad)."
+ },
+ {
+  "id": 1509,
+  "en": "To obtain a single outcome of a dice roll, call dice(). You should call\ndice() exactly num_rolls times in the body of roll_dice."
+ },
+ {
+  "id": 1510,
+  "en": "Remember to call dice() exactly num_rolls times even if Sow Sad happens\nin the middle of rolling. By doing so, you will correctly simulate rolling\nall the dice together (and the user interface will work correctly)."
+ },
+ {
+  "id": 1511,
+  "en": "Note: The roll_dice function, and many other functions throughout the\nproject, makes use of default argument values—you can see this in the\nfunction heading:"
+ },
+ {
+  "id": 1512,
+  "en": "The argument dice=six_sided indicates that the dice parameter in the\nroll_dice function is optional. If no value is provided for dice, then\nsix_sided will be used by default."
+ },
+ {
+  "id": 1513,
+  "en": "For example, calling roll_dice(3, four_sided), simulates rolling 3 four-sided dice, while calling roll_dice(3)\nsimulates rolling 3 six-sided dice due to the default argument."
+ },
+ {
+  "id": 1514,
+  "en": "Understand the problem:"
+ },
+ {
+  "id": 1515,
+  "en": "Note: You will not be able to test your code using ok until you unlock\nthe test cases for the corresponding question."
+ },
+ {
+  "id": 1516,
+  "en": "Write code and check your work:"
+ },
+ {
+  "id": 1517,
+  "en": "Check out the {0}!"
+ },
+ {
+  "id": 1518,
+  "en": "If the tests don't pass, it's time to debug. You can observe the behavior of\nyour function using Python directly. First, start the Python interpreter and\nload the hog.py file."
+ },
+ {
+  "id": 1519,
+  "en": "Then, you can call your roll_dice function on any number of dice you want."
+ },
+ {
+  "id": 1520,
+  "en": "You will find that the previous expression may have a different result each\ntime you call it, since it is simulating random dice rolls. You can also use\ntest dice that fix the outcomes of the dice in advance. For example, rolling\ntwice when you know that the dice will come up 3 and 4 should give a total\noutcome of 7."
+ },
+ {
+  "id": 1521,
+  "en": "On most systems, you can evaluate the same expression again by pressing the\nup arrow, then pressing enter or return. To evaluate earlier commands, press\nthe up arrow repeatedly."
+ },
+ {
+  "id": 1522,
+  "en": "If you find a problem, you first need to change your hog.py file to fix the\nproblem, and save the file. Then, to check whether your fix works, you'll\nhave to quit the Python interpreter by either using exit() or Ctrl^D, and\nre-run the interpreter to test the changes you made. Pressing the up arrow in\nboth the terminal and the Python interpreter should give you access to your\nprevious expressions, even after restarting Python."
+ },
+ {
+  "id": 1523,
+  "en": "Continue debugging your code and running the ok tests until they all pass."
+ },
+ {
+  "id": 1524,
+  "en": "One more debugging tip: to start the interactive interpreter automatically\nupon failing an ok test, use &#x2d;i. For example, python3 ok &#x2d;q 01 &#x2d;i will\nrun the tests for question 1, then start an interactive interpreter with\nhog.py loaded if a test fails."
+ },
+ {
+  "id": 1525,
+  "en": "Implement boar_brawl, which takes the player's current score player_score and the\nopponent's current score opponent_score, and returns the number of points scored when\nthe player rolls 0 dice and Boar Brawl is invoked."
+ },
+ {
+  "id": 1526,
+  "en": "Don't assume that scores are below 100. Write your boar_brawl function so\nthat it works correctly for any non-negative score."
+ },
+ {
+  "id": 1527,
+  "en": "Important: Your implementation should not use str, lists, or\ncontain square brackets [ ].  The test cases will check if those have\nbeen used."
+ },
+ {
+  "id": 1528,
+  "en": "You can also test boar_brawl interactively by running python3 &#x2d;i hog.py\nfrom the terminal and calling boar_brawl on various inputs."
+ },
+ {
+  "id": 1529,
+  "en": "Implement the take_turn function, which returns the number of points scored\nfor a turn by rolling the given dice num_rolls times."
+ },
+ {
+  "id": 1530,
+  "en": "Your implementation of take_turn should call both the roll_dice and\nboar_brawl functions rather than repeating their implementations."
+ },
+ {
+  "id": 1531,
+  "en": "First, implement num_factors, which takes in a positive integer n and determines the number\nof factors that n has."
+ },
+ {
+  "id": 1532,
+  "en": "1 and n are both factors of n!"
+ },
+ {
+  "id": 1533,
+  "en": "After, implement sus_points and sus_update."
+ },
+ {
+  "id": 1534,
+  "en": "sus_points takes in a player's score and returns the player's\n  new score after applying the Sus Fuss rule, even if the score remains unchanged. For example,\n  sus_points(5) should return 5 and sus_points(21) should return 23. You should use num_factors\n  and the provided is_prime function in your implementation."
+ },
+ {
+  "id": 1535,
+  "en": "sus_update returns a player's total score after they roll num_rolls dice, taking\n  both Boar Brawl and Sus Fuss into account. You should use sus_points in\n  this function."
+ },
+ {
+  "id": 1536,
+  "en": "You can look at the implementation of simple_update provided in hog.py and use that\n  as a starting point for your sus_update function."
+ },
+ {
+  "id": 1537,
+  "en": "Recall that take_turn already took the Boar Brawl rule into consideration!"
+ },
+ {
+  "id": 1538,
+  "en": "Implement the play function, which simulates a full game of Hog. Players take\nturns rolling dice until one of the players reaches the goal score.\nThe function then returns the final scores of both players."
+ },
+ {
+  "id": 1539,
+  "en": "To determine how many dice are rolled each turn, call the current player's\nstrategy function (Player 0 uses strategy0 and Player 1 uses strategy1). A\nstrategy is a function that, given a player's score and their opponent's\nscore, returns the number of dice that the current player will roll in that\nturn. A simple example strategy is always_roll_5 which appears above play."
+ },
+ {
+  "id": 1540,
+  "en": "To determine the updated score for a player after they take a turn, call the\nupdate function. An update function takes the number\nof dice to roll, the current player's score, the opponent's score, and the\ndice function used to simulate rolling dice. It returns the updated score\nof the current player after they take their turn. Two examples of update functions\nare simple_update and sus_update. Remember, update functions return the player's\ntotal score after their turn, not just the change in score."
+ },
+ {
+  "id": 1541,
+  "en": "The game ends when a player reaches or exceeds the goal score by the end of their turn,\nafter all applicable rules have been applied. play will then return the\nfinal total scores of both players, with Player 0's score first and Player 1's\nscore second."
+ },
+ {
+  "id": 1542,
+  "en": "Some example calls to play are:"
+ },
+ {
+  "id": 1543,
+  "en": "play(always_roll_5, always_roll_5, simple_update) simulates two players\n  that both always roll 5 dice each turn, playing with just the Sow Sad and Boar\n  Brawl rules."
+ },
+ {
+  "id": 1544,
+  "en": "play(always_roll_5, always_roll_5, sus_update) simulates two players\n  that both always roll 5 dice each turn, playing with the Sus Fuss rule in\n  addition to the Sow Sad and Boar Brawl rules (i.e. all the rules)."
+ },
+ {
+  "id": 1545,
+  "en": "Important: For the user interface to work, a strategy function should be\ncalled only once per turn.  Only call strategy0 when it is Player 0's turn\nand only call strategy1 when it is Player 1's turn."
+ },
+ {
+  "id": 1546,
+  "en": "If who is the current player, the next player is 1 &#x2d; who."
+ },
+ {
+  "id": 1547,
+  "en": "To call play(always_roll_5, always_roll_5, sus_update) and print out\n  what happens each turn, run python3 hog_ui.py from the terminal."
+ },
+ {
+  "id": 1548,
+  "en": "Congratulations! You have finished Phase 1 of this project!"
+ },
+ {
+  "id": 1549,
+  "en": "Interlude: User Interfaces"
+ },
+ {
+  "id": 1550,
+  "en": "There are no required problems in this section of the project, just some\nexamples for you to read and understand. See Phase 2 for the remaining\nproject problems."
+ },
+ {
+  "id": 1551,
+  "en": "Animation created by Tristan &amp; Tyler Roath"
+ },
+ {
+  "id": 1552,
+  "en": "Printing Game Events"
+ },
+ {
+  "id": 1553,
+  "en": "We have built a simulator for the game, but haven't added any code to describe\nhow the game events should be displayed to a person. Therefore, we've built a\ncomputer game that no one can play. (Lame!)"
+ },
+ {
+  "id": 1554,
+  "en": "However, the simulator is expressed in terms of small functions, and we can\nreplace each function by a version that prints out what happens when it is\ncalled. Using higher-order functions, we can do so without changing much of our\noriginal code.  An example appears in hog_ui.py, which you are encouraged to\nread."
+ },
+ {
+  "id": 1555,
+  "en": "The play_and_print function calls the same play function just implemented,\nbut using:"
+ },
+ {
+  "id": 1556,
+  "en": "new strategy functions (e.g., printing_strategy(0, always_roll_5)) that\n  print out the scores and number of dice rolled."
+ },
+ {
+  "id": 1557,
+  "en": "a new update function (sus_update_and_print) that prints the outcome of\n  each turn."
+ },
+ {
+  "id": 1558,
+  "en": "a new dice function (printing_dice(six_sided)) that prints the outcome of\n  rolling the dice."
+ },
+ {
+  "id": 1559,
+  "en": "Notice how much of the original simulator code can be reused."
+ },
+ {
+  "id": 1560,
+  "en": "Running python3 hog_ui.py from the terminal calls\nplay_and_print(always_roll_5, always_roll_5)."
+ },
+ {
+  "id": 1561,
+  "en": "Accepting User Input"
+ },
+ {
+  "id": 1562,
+  "en": "The built-in input function waits for the user to type a line of text and\nthen returns that text as a string. The built-in int function can take a\nstring containing the digits of an integer and return that integer."
+ },
+ {
+  "id": 1563,
+  "en": "The interactive_strategy function returns a strategy that let's a person\nchoose how many dice to roll each turn by calling input."
+ },
+ {
+  "id": 1564,
+  "en": "With this strategy, we can finally play a game using our play function:"
+ },
+ {
+  "id": 1565,
+  "en": "Running python3 hog_ui.py &#x2d;n 1 from the terminal calls\nplay_and_print(interactive_strategy(0), always_roll_5), which plays a game\nbetweem a human (Player 0) and a computer strategy that always rolls 5."
+ },
+ {
+  "id": 1566,
+  "en": "Running python3 hog_ui.py &#x2d;n 2 from the terminal calls\nplay_and_print(interactive_strategy(0), interactive_strategy(1)), which plays\na game between two human players."
+ },
+ {
+  "id": 1567,
+  "en": "You are welcome to change hog_ui.py in any way you want, for example to use\ndifferent strategies than always_roll_5."
+ },
+ {
+  "id": 1568,
+  "en": "Graphical User Interface (GUI)"
+ },
+ {
+  "id": 1569,
+  "en": "We have also provided a web-based graphical user interface for the game using a similar approach as hog_ui.py called hog_gui.py. You can run it from the terminal:"
+ },
+ {
+  "id": 1570,
+  "en": "Like hog_ui.py, the GUI relies on your simulator implementation, so if you have any bugs in your code, they will be reflected in the GUI. This means you can also use the GUI as a debugging tool; however, it's better to run the tests first."
+ },
+ {
+  "id": 1571,
+  "en": "If you want, you can look at the hog_gui.py file and the contents of the gui_files directory included with your version of the project to see how the GUI works. However, the GUI implementation uses several other programming languages: Javascript, HTML, and CSS."
+ },
+ {
+  "id": 1572,
+  "en": "Phase 2: Strategies"
+ },
+ {
+  "id": 1573,
+  "en": "In this phase, you will experiment with ways to improve upon the simple always_roll_five\nstrategy of always rolling five dice. A strategy is a function that\ntakes two arguments: the current player's score and their opponent's score. It\nreturns the number of dice the player will roll, which can be from 0 to 10\n(inclusive)."
+ },
+ {
+  "id": 1574,
+  "en": "Implement always_roll, a higher-order function that takes a number of dice\nn and returns a strategy function that always rolls n dice. Thus, always_roll(5)\nwould be equivalent to always_roll_5."
+ },
+ {
+  "id": 1575,
+  "en": "A strategy has a fixed number of possible argument values. For example, in a game with a goal of\n100, there are only 100 possible score values (0-99) and 100 possible\nopponent_score values (0-99), resulting in 10,000 possible argument combinations to a strategy function."
+ },
+ {
+  "id": 1576,
+  "en": "Player Score"
+ },
+ {
+  "id": 1577,
+  "en": "Opponent Score Combinations"
+ },
+ {
+  "id": 1578,
+  "en": "Implement is_always_roll, which takes a strategy and returns whether that\nstrategy always rolls the same number of dice for every possible argument\ncombination, where each score is up to goal points."
+ },
+ {
+  "id": 1579,
+  "en": "Reminder: The game continues until one player reaches goal points (in\nthe above example goal is set to 100, but it could be any number).\nEnsure your solution considers every possible combination of score and opponent_score for the specified goal."
+ },
+ {
+  "id": 1580,
+  "en": "Implement make_averaged, which is a higher-order function that\ntakes a function original_function as an argument."
+ },
+ {
+  "id": 1581,
+  "en": "The return value of make_averaged is a function that takes in the same\narguments as original_function. When called with specific arguments, this function should repeatedly\ncall original_function on those same arguments times_called times, and return the average of the results.\nTake a look at the make_averaged doctest. Be sure to keep track of what values are being passed into the function!"
+ },
+ {
+  "id": 1582,
+  "en": "Doctest Walkthrough:\nTake a close look at the make_averaged doctest. Here, original_function is roll_dice.\nNotice the line averaged_dice(1, dice). This implies that the arguments for roll_dice are (1, dice) (think about why!) Observe how averaged_dice accepts the same arguments as roll_dice. The arguments are not passed directly to roll_dice but rather to averaged_dice. (Think about how this can be achieved!) Keep in mind, make_averaged should work with any original_function that shares the same argument structure as the function returned by make_averaged.\nIn this example, rolling a single die is considered a sample (roll_dice(1, dice)). Since times_called is set to 40, this sampling is repeated 40 times. The make_averaged function then calculates the average result of these 40 calls to roll_dice."
+ },
+ {
+  "id": 1583,
+  "en": "Important:\nTo implement this function, you will need to use a new piece of Python syntax.\nWe would like to write a function that accepts an arbitrary number of arguments,\nand then calls another function using exactly those arguments. Here's how\nit works."
+ },
+ {
+  "id": 1584,
+  "en": "Instead of listing formal parameters for a function, you can write *args,\nwhich represents all of the arguments that get passed into the\nfunction. We can then call another function with these same arguments by\npassing these *args into this other function. For example:"
+ },
+ {
+  "id": 1585,
+  "en": "Here, we can pass any number of arguments into print_and_return via the\n*args syntax. We can also use *args inside our print_and_return\nfunction to make another function call with the same arguments."
+ },
+ {
+  "id": 1586,
+  "en": "Implement max_scoring_num_rolls, which runs an experiment using a die with a fixed number of sides to\ndetermine the number of rolls (from 1 to 10) that gives the maximum average\nscore for a turn. Your implementation should use make_averaged and roll_dice."
+ },
+ {
+  "id": 1587,
+  "en": "If two numbers of rolls are tied for the maximum average score, return the\nlower number. For example, if both 3 and 6 achieve the same maximum average score,\nreturn 3."
+ },
+ {
+  "id": 1588,
+  "en": "You might find it useful to read the doctest for this problem and make_averaged (Problem 8), before doing the unlocking test."
+ },
+ {
+  "id": 1589,
+  "en": "Important: In order to pass all of our tests, please make sure that you are\ntesting dice rolls starting from 1 going up to 10, rather than from 10 to 1."
+ },
+ {
+  "id": 1590,
+  "en": "Running Experiments"
+ },
+ {
+  "id": 1591,
+  "en": "The provided run_experiments function calls\nmax_scoring_num_rolls(six_sided) and prints the result. You will likely find\nthat rolling 6 dice maximizes the result of roll_dice using six-sided dice."
+ },
+ {
+  "id": 1592,
+  "en": "To call this function and see the result, run hog.py with the &#x2d;r flag:"
+ },
+ {
+  "id": 1593,
+  "en": "In addition, run_experiments compares various strategies to always_roll(6).\nYou are welcome to change the implementation of run_experiments as you wish.\nNote that running experiments with boar_strategy and sus_strategy will not\nhave accurate results until you implement them in the next two problems."
+ },
+ {
+  "id": 1594,
+  "en": "Some of the experiments may take up to a minute to run. You can always reduce\nthe number of trials in your call to make_averaged to speed up experiments."
+ },
+ {
+  "id": 1595,
+  "en": "Running experiments won't affect your score on the project."
+ },
+ {
+  "id": 1596,
+  "en": "A strategy can try to take advantage of the Boar Brawl rule by rolling 0 when\nit is most beneficial to do so. Implement boar_strategy, which returns 0\nwhenever rolling 0 would give at least threshold points and returns\nnum_rolls otherwise. This strategy should not also take into account\nthe Sus Fuss rule."
+ },
+ {
+  "id": 1597,
+  "en": "Hint: You can use the boar_brawl function you defined in Problem 2."
+ },
+ {
+  "id": 1598,
+  "en": "You should find that running python3 hog.py &#x2d;r now shows a win rate for\nboar_strategy close to 66-67%."
+ },
+ {
+  "id": 1599,
+  "en": "A better strategy would take advantage of both Boar Brawl and Sus Fuss in\ncombination.\nFor example, if a player has 53 points and their opponent has 60, rolling 0\nwould bring them to 62, which is a sus number, and so they would end the\nturn with 67 points: a gain of 67 - 53 = 14!"
+ },
+ {
+  "id": 1600,
+  "en": "The sus_strategy returns 0 whenever rolling 0 would result in a score that\nis at least threshold points more than the player's score at the\nstart of turn."
+ },
+ {
+  "id": 1601,
+  "en": "Hint: You can use the sus_update function you defined in Problem 4."
+ },
+ {
+  "id": 1602,
+  "en": "You should find that running python3 hog.py &#x2d;r now shows a win rate for\nsus_strategy close to 67-69%."
+ },
+ {
+  "id": 1603,
+  "en": "Optional: Problem 12"
+ },
+ {
+  "id": 1604,
+  "en": "Implement final_strategy, which combines these ideas and any other ideas you\nhave to achieve a high win rate against the baseline strategy. Some\nsuggestions:"
+ },
+ {
+  "id": 1605,
+  "en": "If you know the goal score (by default it is 100), there's no benefit to\n  scoring more than the goal. Check whether you can win by rolling 0, 1 or 2\n  dice. If you are in the lead, you might decide to take fewer risks."
+ },
+ {
+  "id": 1606,
+  "en": "Instead of using a threshold, roll 0 whenever it would give you more points\n  on average than rolling 6."
+ },
+ {
+  "id": 1607,
+  "en": "You can check that your final strategy is valid by running ok."
+ },
+ {
+  "id": 1608,
+  "en": "Congratulations, you have reached the end of your first CS 61A project!\nIf you haven't already, relax and enjoy a few games of Hog with a friend."
+ },
+ {
+  "id": 1609,
+  "en": "Scheme Interpreter"
+ },
+ {
+  "id": 1610,
+  "en": "Eval calls apply,"
+ },
+ {
+  "id": 1611,
+  "en": "which just calls eval again!"
+ },
+ {
+  "id": 1612,
+  "en": "When does it all end?"
+ },
+ {
+  "id": 1613,
+  "en": "Important submission note: For full credit,"
+ },
+ {
+  "id": 1614,
+  "en": "Submit with Phase 1 and Phase 2 complete by Thursday 08/06 (worth 1 pt)."
+ },
+ {
+  "id": 1615,
+  "en": "Submit with all phases complete by Thursday 08/13."
+ },
+ {
+  "id": 1616,
+  "en": "Try to attempt the problems and run their ok tests in order, as some later problems will depend\non earlier problems in their implementation."
+ },
+ {
+  "id": 1617,
+  "en": "In this project, you will use Python to implement an interpreter for a subset of\nthe Scheme language. The subset of the language used in this project is\ndescribed in the {0} section of Composing Programs, as\nwell as this {1} and {2}."
+ },
+ {
+  "id": 1618,
+  "en": "To learn more about Scheme, you can read\n{0} online for\nfree. Examples from Chapters 1 and 2 are included as test cases for this\nproject. Language features from Chapters 3, 4, and 5 are not part of this\nproject, but of course you are welcome to extend your interpreter to implement\nmore of the language."
+ },
+ {
+  "id": 1619,
+  "en": "You can download all of the project code as a {0}."
+ },
+ {
+  "id": 1620,
+  "en": "Files you will edit:"
+ },
+ {
+  "id": 1621,
+  "en": "scheme_eval_apply.py: the recursive evaluator for Scheme expressions"
+ },
+ {
+  "id": 1622,
+  "en": "scheme_forms.py: Python functions for evaluating special forms in Scheme (such as define, lambda, and, cond, etc.)"
+ },
+ {
+  "id": 1623,
+  "en": "scheme_classes.py: Python classes that describe Scheme expressions"
+ },
+ {
+  "id": 1624,
+  "en": "questions.scm: Scheme procedures for you to implement"
+ },
+ {
+  "id": 1625,
+  "en": "The rest of the files in the project:"
+ },
+ {
+  "id": 1626,
+  "en": "link.py: defines the Link class, nil, and map_link"
+ },
+ {
+  "id": 1627,
+  "en": "scheme.py: the interpreter read-eval-print loop or REPL (the user interface to the interpreter)"
+ },
+ {
+  "id": 1628,
+  "en": "scheme_builtins.py: built-in Scheme procedures"
+ },
+ {
+  "id": 1629,
+  "en": "scheme_reader.py: the reader (parser) for Scheme expressions"
+ },
+ {
+  "id": 1630,
+  "en": "scheme_tokens.py: the tokenizer for Scheme input"
+ },
+ {
+  "id": 1631,
+  "en": "scheme_utils.py: functions for inspecting Scheme expressions"
+ },
+ {
+  "id": 1632,
+  "en": "buffer.py: a utility class for the scheme reader"
+ },
+ {
+  "id": 1633,
+  "en": "ucb.py: utility functions for use in 61A projects"
+ },
+ {
+  "id": 1634,
+  "en": "tests.scm: a collection of test cases written in Scheme"
+ },
+ {
+  "id": 1635,
+  "en": "ok: the autograder"
+ },
+ {
+  "id": 1636,
+  "en": "tests: a directory of tests used by ok"
+ },
+ {
+  "id": 1637,
+  "en": "mytests.rst: a file where you can add your own tests"
+ },
+ {
+  "id": 1638,
+  "en": "scheme_eval_apply.py"
+ },
+ {
+  "id": 1639,
+  "en": "scheme_forms.py"
+ },
+ {
+  "id": 1640,
+  "en": "scheme_classes.py"
+ },
+ {
+  "id": 1641,
+  "en": "questions.scm"
+ },
+ {
+  "id": 1642,
+  "en": "Interpreter details"
+ },
+ {
+  "id": 1643,
+  "en": "Scheme features"
+ },
+ {
+  "id": 1644,
+  "en": "Read-Eval-Print. The interpreter reads Scheme expressions, evaluates them,\nand displays the results."
+ },
+ {
+  "id": 1645,
+  "en": "The starter code provided for the Scheme interpreter is enough to successfully\nevaluate the first expression above, a number. However, more complicated\noperations such as the second example (a call to a built-in procedure) and the\nthird (a computation of 5 squared) will not work yet."
+ },
+ {
+  "id": 1646,
+  "en": "Load. You can load a file by passing in a symbol for the file name.\nFor example, to load tests.scm, evaluate the following call expression."
+ },
+ {
+  "id": 1647,
+  "en": "Symbols. In the dialect of Scheme we use in CS 61A, a symbol (or\nidentifier) is a sequence of letters (a-z and A-Z), digits, and characters in\n!$%&amp;*/:&lt;=&gt;?@^_~&#x2d;+. that do not form a valid integer or floating-point numeral."
+ },
+ {
+  "id": 1648,
+  "en": "Our version of Scheme is case-insensitive: two identifiers are considered\nidentical if they differ only in the capitalization of letters.\nThey are internally represented and printed in lower case:"
+ },
+ {
+  "id": 1649,
+  "en": "Running the interpreter"
+ }
+]

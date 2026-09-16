@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>作业 5 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+作业 5：链表、效率、Scheme
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw05.zip" class="label label-outline">hw05.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+
+
+
+
+
+
+<h2>说明</h2>
+
+<p>下载 <a href="hw05.zip">hw05.zip</a>。在压缩包中，你会找到一个名为 <a href="hw05.py">hw05.py</a> 的文件，以及一份 <code>ok</code> 自动评分器的副本。</p>
+
+
+
+<p><strong>关于 Ok 的使用：</strong>如果你对如何使用 Ok 有任何疑问，请参阅 <a href="../../articles/using-ok.html">本指南</a>
+
+
+  <p><strong>阅读材料：</strong>你可能会觉得以下参考资料有用：</p>
+  <ul>
+  <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+  <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程参考</a></li>
+</ul>
+  
+
+<p><strong>评分：</strong>作业按照正确性评分。每做错一道题，总分减一分。<strong>本次作业满分为 2 分。</strong>
+
+
+
+
+    
+<p>每个 Scheme 作业都附带了 61A 的 Scheme 解释器。要启动它，在终端中输入 <code>python3 scheme</code>。要加载一个名为 <code>f.scm</code> 的 Scheme 文件，输入 <code>python3 scheme &#x2d;i f.scm</code>。要退出 Scheme 解释器，输入 <code>(exit)</code>。</p>
+
+<h3 id="recommended-vs-code-extensions">推荐的 VS Code 扩展</h3>
+
+
+<p>我们建议你安装 <a href="https://marketplace.visualstudio.com/items?itemName=sjhuangx.vscode-scheme">vscode-scheme</a> 扩展，这样可以高亮显示括号。</p>
+
+<p>之前：</p>
+
+<img class="img-responsive center-block" src="assets/before.png" width="600">
+
+<p>之后：</p>
+
+<img class="img-responsive center-block" src="assets/after.png" width="600">
+
+<p>此外，Scheme 作业还可以使用 61a-bot（<a href="../../articles/61a-bot.html">安装说明</a>）VS Code 扩展。这个机器人也已经集成到 <code>ok</code> 中。</p>
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+</p>
+
+
+<h2 id="linked-lists">链表</h2>
+
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        链表<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p>下面是 <code>Link</code> 类的实现：</p>
+
+<pre><code class="python">class Link:
+    &quot;&quot;&quot;A linked list is either a Link object or Link.empty
+
+    &gt;&gt;&gt; s = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; s.rest
+    Link(4, Link(5))
+    &gt;&gt;&gt; s.rest.rest.rest is Link.empty
+    True
+    &gt;&gt;&gt; s.rest.first * 2
+    8
+    &gt;&gt;&gt; print(s)
+    (3 4 5)
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;(&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;)&#x27;</code></pre>
+
+
+
+<table class='table table-bordered'>
+    <tr>
+        <th></th>
+        <th>可变链表</th>
+        <th>普通链表</th>
+    </tr>
+    <tr>
+        <td>特性</td>
+        <td>- 用自定义对象 <code>Link</code> 表示 <br>
+            - 有方法和属性 <br>
+            - 可变
+        </td>
+        <td>- 用抽象数据类型表示 <br>
+            - 有选择器函数 <br>
+            - 不可变
+        </td>
+    </tr>
+    <tr>
+        <td>示例</td>
+        <td>
+<pre><code>>>> s = Link(1, Link(2, Link(3, Link(4))))
+>>> s
+Link(1, Link(2, Link(3, Link(4))))
+>>> s.first = 9
+>>> s
+Link(9, Link(2, Link(3, Link(4))))
+</code></pre>
+        </td>
+        <td>
+<pre><code>>>> s = link(1, link(2, link(3, link(4))))
+>>> s
+[1, [2, [3, [4, 'empty']]]]
+>>> first(s) = 9
+  File "<stdin>", line 1
+SyntaxError: can't assign to function call
+</code></pre>
+        </td>
+    <tr>
+        <td>解释</td>
+        <td>
+            <code>Link</code> 是可变的，因为我们创建了一个对象 <code>Link</code>，它的属性允许我们直接访问其中的元素。这使我们能够改变这些元素，从而修改 <code>Link</code>。
+        </td>
+        <td>
+            <code>link</code> 不是可变的，因为它的选择器函数只把元素的值返回给我们。我们无法改变或重新赋值这些值。
+        </td>
+    </tr>
+</table>
+
+</div>
+
+
+<h3 id="q1-add-links">Q1：连接链表</h3>
+
+
+<!-- Let's implement a method in order to add together items of <code>link1</code> and <code>link2</code>. -->
+<!-- Do not assume that the links are the same length. -->
+
+<p>编写函数 <code>add_link</code>，它接收两个链表 <code>link1</code> 和 <code>link2</code>，返回一个把 <code>link2</code> 连接到 <code>link1</code> 末尾的<em>新</em>链表。</p>
+
+<p>你可以假设输入的链表是浅层的；它的任何元素本身都不是另一个链表。</p>
+
+<blockquote><p><strong>注意</strong>：你<em>不能</em>假设输入的两个链表长度相同。</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p>挑战（选做）：不要假设输入的链表是浅层的（即你的输入可以是嵌套链表）。提示：使用内置的 <code>type</code> 函数。</p></blockquote>
+
+<solution>
+
+<pre><code>def add_links(link1: Link, link2: Link) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Adds two Links, returning a new Link
+
+    &gt;&gt;&gt; l1 = Link(1, Link(2))
+    &gt;&gt;&gt; l2 = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; new = add_links(l1, l2)
+    &gt;&gt;&gt; print(new)
+    (1 2 3 4 5)
+    &gt;&gt;&gt; new2 = add_links(l2,l1)
+    &gt;&gt;&gt; print(new2)
+    (3 4 5 1 2)
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q add_links<button id="copy-code-python3ok-qadd_links" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qadd_links").onclick = () => copyCode('python3 ok -q add_links', "copy-code-python3ok-qadd_links");
+        </script>
+        <br/>
+
+
+<h3 id="q2-mutable-mapping">Q2：可变映射</h3>
+
+
+<p>实现 <code>deep_map_mut(func, s)</code>，它把函数 <code>func</code> 应用于链表 <code>s</code> 中的每个元素。如果某个元素本身也是一个链表，就递归地把 <code>func</code> 也应用到它的元素上。</p>
+
+<p>你的实现应当<em>修改</em>原链表。<strong>不要创建任何新的链表。</strong>该函数返回 <code>None</code>。</p>
+
+<blockquote><p><strong>提示</strong>：你可以使用内置的 <code>isinstance</code> 函数判断某个元素是否为链表。</p>
+
+<pre><code>&gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
+&gt;&gt;&gt; isinstance(s, Link)
+True
+&gt;&gt;&gt; isinstance(s, int)
+False</code></pre></blockquote>
+
+<!-- separator for the indent blocks -->
+
+<blockquote><p><strong>构造检查</strong>：本题最后一个测试用例检查你的函数没有创建任何新的链表。如果你没通过这个 doctest，请确认你没有通过调用构造函数来创建链表，即</p>
+
+<pre><code>s = Link(1)</code></pre></blockquote>
+
+<solution>
+
+<pre><code>def deep_map_mut(func, s: Link) &#x2d;&gt; None:
+    &quot;&quot;&quot;Mutates a deep link s by replacing each item found with the
+    result of calling func on the item. Does NOT create new Links (so
+    no use of Link&#x27;s constructor).
+
+    Does not return the modified Link object.
+
+    &gt;&gt;&gt; link1 = Link(3, Link(Link(4), Link(5, Link(6))))
+    &gt;&gt;&gt; square = lambda x: x * x
+    &gt;&gt;&gt; print(link1)
+    (3 (4) 5 6)
+    &gt;&gt;&gt; link2 = Link(1, Link(Link(Link(2, Link(3))), Link(4)))
+    &gt;&gt;&gt; double = lambda x: x * 2
+    &gt;&gt;&gt; print(link2)
+    (1 ((2 3)) 4)
+    &gt;&gt;&gt; # Disallow the use of making new Links before calling deep_map_mut
+    &gt;&gt;&gt; Link.__init__, hold = lambda *args: print(&quot;Do not create any new Links.&quot;), Link.__init__
+    &gt;&gt;&gt; try:
+    ...     deep_map_mut(square, link1)
+    ...     deep_map_mut(double, link2)
+    ... finally:
+    ...     Link.__init__ = hold
+    &gt;&gt;&gt; print(link1)
+    (9 (16) 25 36)
+    &gt;&gt;&gt; print(link2)
+    (2 ((4 6)) 8)
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q deep_map_mut<button id="copy-code-python3ok-qdeep_map_mut" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdeep_map_mut").onclick = () => copyCode('python3 ok -q deep_map_mut', "copy-code-python3ok-qdeep_map_mut");
+        </script>
+        <br/>
+
+
+<h2 id="efficiency">效率</h2>
+
+<br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        效率<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+<guide>
+那些棘手的效率例子属于 61B，而不是 61A。我们只在基础层面上探讨效率；例如，即使输入很大，我们也把乘法和其他基本操作的运行时间视为常数。
+
+<p>除了把算法分为指数、平方、线性、对数和常数之外，我们还引入了大 Θ 记号，但不会深入讲解运行时间分析的细节。</p>
+
+<p>这里有一个细微的差别：在 AHUT_1A 中，我们针对输入做运行时间分析。在后续课程（如 61B、CS 170 等）中，运行时间分析是针对输入的<em>规模</em>（即比特数）进行的。如果这让你困惑，不用太在意。只需保持一致，并告诉学生：我们考虑的是输入变化时函数的运行时间会如何变化。
+</guide></p>
+
+<p>在这门课中，我们主要关注<em>正确性</em>——程序是否产生正确的输出。然而，计算机科学家也对构造<em>高效</em>的问题解法感兴趣。量化效率的一种方式是确定函数的<em>运行时间</em>如何随输入变化。在这门课中，我们用函数执行的操作次数来衡量它的运行时间。</p>
+
+<p>函数 <code>f(n)</code> 具有……</p>
+
+<ul>
+  <li>常数运行时间，如果 <code>f</code> 的运行时间不依赖于 <code>n</code>。它的运行时间是 Θ(<code>1</code>)。</li>
+  <li>对数运行时间，如果 <code>f</code> 的运行时间与 <code>log(n)</code> 成正比。它的运行时间是 Θ(<code>log(n)</code>)。</li>
+  <li>线性运行时间，如果 <code>f</code> 的运行时间与 <code>n</code> 成正比。它的运行时间是 Θ(<code>n</code>)。</li>
+  <li>平方运行时间，如果 <code>f</code> 的运行时间与 <code>n^2</code> 成正比。它的运行时间是 Θ(<code>n^2</code>)。</li>
+  <li>指数运行时间，如果 <code>f</code> 的运行时间与 <code>b^n</code> 成正比，其中 <code>b</code> 是某个常数。它的运行时间是 Θ(<code>b^n</code>)。</li>
+</ul>
+
+<p><strong>例 1：</strong>计算 <code>square(1)</code> 需要一次乘法操作，计算 <code>square(100)</code> 也需要一次乘法操作。一般来说，调用 <code>square(n)</code> 产生的操作次数是<em>常数</em>，不随 <code>n</code> 变化。我们说 <code>square</code> 的运行时间复杂度是 Θ(1)。</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>函数调用</th>
+    <th>返回值</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>square(1)</code></td>
+    <td>1*1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>square(2)</code></td>
+    <td>2*2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>square(100)</code></td>
+    <td>100*100</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>square(n)</code></td>
+    <td>n*n</td>
+    <td>1</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>例 2：</strong>计算 <code>factorial(1)</code> 需要一次乘法操作，而计算 <code>factorial(100)</code> 需要 100 次乘法操作。随着 <code>n</code> 增大，<code>factorial</code> 的运行时间<em>线性</em>增长。我们说 <code>factorial</code> 的运行时间复杂度是 Θ(<code>n</code>)。</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>函数调用</th>
+    <th>返回值</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>factorial(1)</code></td>
+    <td>1*1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>factorial(2)</code></td>
+    <td>2*1*1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>factorial(100)</code></td>
+    <td>100*99*...*1*1</td>
+    <td>100</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>factorial(n)</code></td>
+    <td>n*(n-1)*...*1*1</td>
+    <td>n</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>例 3：</strong>考虑下面这个函数：</p>
+
+<pre><code>def bar(n):
+    for a in range(n):
+        for b in range(n):
+            print(a,b)</code></pre>
+
+<p>计算 <code>bar(1)</code> 会调用一次 <code>print</code>，而计算 <code>bar(100)</code> 会调用 10,000 次 <code>print</code>。随着 <code>n</code> 增大，<code>bar</code> 的运行时间<em>平方</em>增长。我们说 <code>bar</code> 的运行时间复杂度是 Θ(<code>n^2</code>)。</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>函数调用</th>
+    <th>操作次数（print 调用次数）</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>bar(1)</code></td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>bar(2)</code></td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>bar(100)</code></td>
+    <td>10000</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>bar(n)</code></td>
+    <td>n^2</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>例 4：</strong>考虑下面这个函数：</p>
+
+<pre><code>def rec(n):
+    if n == 0:
+        return 1
+    else:
+        return rec(n &#x2d; 1) + rec(n &#x2d; 1)</code></pre>
+
+<p>计算 <code>rec(1)</code> 会执行一次加法操作。计算 <code>rec(4)</code> 会执行 <code>2^4 &#x2d; 1</code> = 15 次加法操作，如下图示所示。</p>
+
+<p>在计算 <code>rec(4)</code> 的过程中，有两次对 <code>rec(3)</code> 的调用、四次对 <code>rec(2)</code> 的调用、八次对 <code>rec(1)</code> 的调用，以及 16 次对 <code>rec(0)</code> 的调用。</p>
+
+<p>所以我们有八个 <code>rec(0) + rec(0)</code> 的实例、四个 <code>rec(1) + rec(1)</code> 的实例、两个 <code>rec(2) + rec(2)</code> 的实例，以及一个 <code>rec(3) + rec(3)</code> 的实例，总共 1 + 2 + 4 + 8 = 15 次加法操作。</p>
+
+<p><img class="img-responsive center-block" src="assets/rec.png" alt="Above: Call structure of rec(4)." title="Rec Tree" width=" height="></p>
+
+<p>随着 <code>n</code> 增大，<code>rec</code> 的运行时间<em>指数</em>增长。特别地，当 <code>n</code> 增加 1 时，<code>rec</code> 的运行时间大约翻倍。我们说 <code>rec</code> 的运行时间复杂度是 Θ(<code>2^n</code>)。</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>函数调用</th>
+    <th>返回值</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>rec(1)</code></td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>rec(2)</code></td>
+    <td>4</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><code>rec(10)</code></td>
+    <td>1024</td>
+    <td>1023</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>rec(n)</code></td>
+    <td>2^n</td>
+    <td>2^n - 1</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p>求一个函数运行时间的增长量级的技巧：</p>
+
+<ul>
+  <li>如果函数是递归的，确定递归调用的次数以及每次递归调用的运行时间。</li>
+  <li>如果函数是迭代的，确定内层循环的次数以及每次循环的运行时间。</li>
+  <li>忽略系数。执行 <code>n</code> 次操作的函数和执行 <code>100 * n</code> 次操作的函数都是线性的。</li>
+  <li>取最大的增长量级。如果函数的第一部分运行时间是线性的，第二部分是平方的，那么整个函数的运行时间就是平方的。</li>
+  <li><p>在这门课中，我们只考虑常数、对数、线性、平方和指数这几种运行时间。
+  </div></p>
+
+  <h3 id="q3-prime">Q3：质数</h3></li>
+</ul>
+
+<p>编写一个函数，在 O(sqrt(n)) 时间内返回一个数是否为质数，其中 sqrt 表示平方根。你可以假设 n >= 2。</p>
+
+<blockquote><p><strong>提示：</strong>你不需要检查每一个比 n 小的数是否能整除 n</p></blockquote>
+
+<solution>
+
+<pre><code>from math import sqrt
+def is_prime_sqrt(n: int) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Tests whether a number N is prime or not. Implement this function
+    in O(sqrt(n)) time. You can assume n &gt;= 2
+
+    &gt;&gt;&gt; is_prime_sqrt(2)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(67092481)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(524287)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(2251748274470911)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(6700417)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(44895587973889)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(2147483647)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(67280421310721)
+    True
+    &quot;&quot;&quot;
+    # sqrt(k) will give the square root of k as a floating point (decimal)
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q is_prime_sqrt<button id="copy-code-python3ok-qis_prime_sqrt" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qis_prime_sqrt").onclick = () => copyCode('python3 ok -q is_prime_sqrt', "copy-code-python3ok-qis_prime_sqrt");
+        </script>
+        <br/>
+
+
+<h2 id="scheme">Scheme</h2>
+
+<br>
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        调用表达式<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+Scheme 使用波兰前缀表示法，其中运算符表达式位于操作数表达式之前。例如，要计算 <code>3 * (4 + 2)</code>，我们写成：
+
+<pre><code>scm&gt; (* 3 (+ 4 2))
+18</code></pre>
+
+
+
+<p>与 Python 一样，求值一个调用表达式时要：</p>
+
+<ol>
+  <li>求值运算符，它应该求值得到一个过程（procedure）。</li>
+  <li>从左到右求值各个操作数。</li>
+  <li>把过程作用到已求值的操作数上。</li>
+</ol>
+
+<p>下面是几个使用内置过程的例子：</p>
+
+<pre><code class="scheme">scm&gt; (+ 1 2)
+3
+scm&gt; (&#x2d; 10 (/ 6 2))
+7
+scm&gt; (modulo 35 4)
+3
+scm&gt; (even? (quotient 45 2))
+#t</code></pre>
+
+
+</div>
+<br>
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        define 形式<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-5">
+<code>define</code> 形式用于给符号赋值。它的语法如下：
+
+<pre><code>(define &lt;symbol&gt; &lt;expression&gt;)</code></pre>
+
+<pre><code class="scheme">scm&gt; (define pi (+ 3 0.14))
+pi
+scm&gt; pi
+3.14</code></pre>
+
+
+
+<p>求值 <code>define</code> 表达式时：</p>
+
+<ol>
+  <li>求值最后一个子表达式（<code>&lt;expression&gt;</code>），在这个例子里它求值为 <code>3.14</code>。</li>
+  <li>把这个值绑定到符号 (<code>symbol</code>) 上，在这个例子里就是 <code>pi</code>。</li>
+  <li>返回该符号。</li>
+</ol>
+
+<p><code>define</code> 形式也可以定义新的过程，详见「定义函数」一节。
+</div>
+<br>
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        cond 形式<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-6">
+<code>cond</code> 特殊形式可以包含多个谓词（类似 Python 中的 if/elif）：</p>
+
+<pre><code>(cond
+    (&lt;p1&gt; &lt;e1&gt;)
+    (&lt;p2&gt; &lt;e2&gt;)
+    ...
+    (&lt;pn&gt; &lt;en&gt;)
+    (else &lt;else&#x2d;expression&gt;))</code></pre>
+
+<p>每个子句中的第一个表达式是谓词，第二个表达式是与该谓词对应的返回表达式。<code>else</code> 子句是可选的；如果所有谓词都不为真，它的 <code>&lt;else&#x2d;expression&gt;</code> 就是返回表达式。</p>
+
+<p>求值规则如下：</p>
+
+<ol>
+  <li>按顺序求值谓词 <code>&lt;p1&gt;</code>、<code>&lt;p2&gt;</code>、……、<code>&lt;pn&gt;</code>，直到其中一个求值为真值（<code>#f</code> 以外的任何值）。</li>
+  <li>求值并返回第一个求值为真的谓词表达式所对应的返回表达式。</li>
+  <li>如果所有谓词都不求值为真，并且存在 <code>else</code> 子句，则求值并返回 <code>&lt;else&#x2d;expression&gt;</code>。</li>
+</ol>
+
+<p>例如，下面这个 <code>cond</code> 表达式返回距离 <code>x</code> 最近的 3 的倍数：</p>
+
+<pre><code class="scheme">scm&gt; (define x 5)
+x
+scm&gt; (cond ((= (modulo x 3) 0) x)
+            ((= (modulo x 3) 1) (&#x2d; x 1))
+            ((= (modulo x 3) 2) (+ x 1)))
+6</code></pre>
+
+
+</div>
+
+<h3 id="q4-pow">Q4：幂运算</h3>
+
+
+<p>实现一个过程 <code>pow</code>，它把一个数 <code>base</code> 提升到非负整数 <code>exp</code> 次幂。递归调用 <code>pow</code> 的次数应当随 <code>exp</code> 对数增长，而不是线性增长。例如，<code>(pow 2 32)</code> 应当产生 5 次递归 <code>pow</code> 调用，而不是 32 次。</p>
+
+<blockquote><p><em>提示：</em></p>
+
+<ol>
+  <li>x<sup>2y</sup> = (x<sup>y</sup>)<sup>2</sup></li>
+  <li>x<sup>2y+1</sup> = x(x<sup>y</sup>)<sup>2</sup></li>
+</ol>
+
+<p>例如，216 = (28)2 且 217 = 2 * (28)2。</p>
+
+<p>你可以使用内置谓词 <code>even?</code> 和 <code>odd?</code>。此外，过程 <code>square</code> 已经为你定义好了。</p>
+
+<p>Scheme 没有 <code>while</code> 或 <code>for</code> 语句，所以请用递归来解决这道题。</p></blockquote>
+
+<solution>
+
+<pre><code class="scheme">(define (square n) (* n n))
+
+(define (pow base exp)
+  'YOUR-CODE-HERE
+)</code></pre>
+
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q pow<button id="copy-code-python3ok-qpow" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qpow").onclick = () => copyCode('python3 ok -q pow', "copy-code-python3ok-qpow");
+        </script>
+        <br/>
+
+
+
+
+<h3 id="q5-repeatedly-cube">Q5：反复求立方</h3>
+
+
+<p>实现 <code>repeatedly&#x2d;cube</code>，它接收一个数 <code>x</code>，并将它立方 <code>n</code> 次。</p>
+
+<p>下面是 <code>repeatedly&#x2d;cube</code> 的一些行为示例：</p>
+
+<pre><code class="scheme">scm&gt; (repeatedly&#x2d;cube 100 1) ; 1 cubed 100 times is still 1
+1
+scm&gt; (repeatedly&#x2d;cube 2 2) ; (2^3)^3
+512
+scm&gt; (repeatedly&#x2d;cube 3 2) ; ((2^3)^3)^3
+134217728</code></pre>
+
+
+
+<solution>
+
+<pre><code class="scheme">(define (repeatedly&#x2d;cube n x)
+    (if (zero? n)
+        x
+        (begin
+            (define y ___)
+            ___)))
+</code></pre>
+
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q repeatedly-cube<button id="copy-code-python3ok-qrepeatedly-cube" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qrepeatedly-cube").onclick = () => copyCode('python3 ok -q repeatedly-cube', "copy-code-python3ok-qrepeatedly-cube");
+        </script>
+        <br/>
+
+
+
+
+<h3 id="q6-cadr-and-caddr">Q6：Cadr 与 Caddr</h3>
+
+
+<p>定义过程 <code>cadr</code>，它返回列表的第二个元素。再定义 <code>caddr</code>，它返回列表的第三个元素。试着用 <code>car</code> 和 <code>cdr</code> 来表示 <code>cadr</code> 和 <code>caddr</code>。</p>
+
+<solution>
+
+<pre><code class="scheme">(define (cddr s)
+  (cdr (cdr s)))
+
+(define (cadr s)
+  'YOUR-CODE-HERE
+)
+
+(define (caddr s)
+  'YOUR-CODE-HERE
+)</code></pre>
+
+
+
+</solution>
+
+
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q cadr-caddr<button id="copy-code-python3ok-qcadr-caddr" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcadr-caddr").onclick = () => copyCode('python3 ok -q cadr-caddr', "copy-code-python3ok-qcadr-caddr");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="exam-practice">历年考题</h1>
+
+
+<p>作业中还会包含往年的考题供你练习。这些题目不需要提交；如果你想练练手，可以随意尝试！</p>
+
+<ol>
+  <li>2019 年秋季期末 Q7b：<a href="../../exam/fa19/final/61a-fa19-final.pdf#page=9">Mull It Over</a></li>
+  <li>2018 年春季期中考试二 Q4(a)：<a href="../../exam/sp18/mt2/61a-sp18-mt2.pdf#page=6">序列</a></li>
+</ol>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#recommended-vs-code-extensions">推荐的 VS Code 扩展</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#linked-lists">链表</a></li>
+    <ul>
+      <li><a href="#q1-add-links">Q1：连接链表</a></li>
+      <li><a href="#q2-mutable-mapping">Q2：可变映射</a></li>
+    </ul>
+    <li><a href="#efficiency">效率</a></li>
+    <ul>
+      <li><a href="#q3-prime">Q3：质数</a></li>
+    </ul>
+    <li><a href="#scheme">Scheme</a></li>
+    <ul>
+      <li><a href="#q4-pow">Q4：幂运算</a></li>
+      <li><a href="#q5-repeatedly-cube">Q5：反复求立方</a></li>
+      <li><a href="#q6-cadr-and-caddr">Q6：Cadr 与 Caddr</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#exam-practice">历年考题</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+    
+    <link rel="stylesheet" href="../../assets/css/lab.css">
+
+
+    <title>实验 7：可变树 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 7：可变树
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab07.zip" class="label label-outline">lab07.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+
+
+
+
+
+
+
+<h2 id='starter-files'>起始文件</h2>
+
+<p>下载 <a href="lab07.zip">lab07.zip</a>。</p>
+
+
+
+
+
+
+
+
+    
+
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+<h2 id="mutable-trees">可变的树</h2>
+
+<p>如果你需要复习可变树（Mutable Trees），请查阅本节。你可以直接跳到题目部分，遇到困难时再回来查阅。</p>
+
+<br>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        可变的树<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+
+<h2 id="mutable-trees" class="no-toc">可变的树</h2>
+
+
+<p><code>Tree</code> 实例有两个实例属性：</p>
+
+<ul>
+  <li><code>label</code> 是存储在树根处的值。</li>
+  <li><code>branches</code> 是一个由 <code>Tree</code> 实例组成的列表，保存了树中其余部分的标签。</li>
+</ul>
+
+<p><code>Tree</code> 类（省略了 <code>__repr__</code> 和 <code>__str__</code> 方法）的定义如下：</p>
+
+<pre><code>class Tree:
+    &quot;&quot;&quot;A tree has a label and a list of branches.
+
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; t.label
+    3
+    &gt;&gt;&gt; t.branches[0].label
+    2
+    &gt;&gt;&gt; t.branches[1].is_leaf()
+    True
+    &quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        self.label = label
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches</code></pre>
+
+<p>要用标签 <code>x</code>（任意值）和分支列表 <code>bs</code>（由 <code>Tree</code> 实例组成的列表）构造一个 <code>Tree</code> 实例并把它命名为 <code>t</code>，可以写 <code>t = Tree(x, bs)</code>。</p>
+
+<p>对于树 <code>t</code>：</p>
+
+<ul>
+  <li>它的根标签可以是任意值，<code>t.label</code> 求值的结果就是它。</li>
+  <li>它的分支总是 <code>Tree</code> 实例，<code>t.branches</code> 求值的结果是它的分支<strong>列表</strong>。</li>
+  <li>如果 <code>t.branches</code> 为空，<code>t.is_leaf()</code> 返回 <code>True</code>，否则返回 <code>False</code>。</li>
+  <li>要构造一个标签为 <code>x</code> 的叶子，写 <code>Tree(x)</code>。</li>
+</ul>
+
+<page-break>
+
+<p>显示一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>repr(t)</code> 返回一个 Python 表达式，对它求值会得到一棵等价的树。</li>
+  <li><code>str(t)</code> 为每个标签输出一行，其缩进比它的父节点多一级，子节点显示在父节点下方。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t = Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; t         # displays the contents of repr(t)
+Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; print(t)  # displays the contents of str(t)
+3
+  1
+    4
+    1
+  5
+    9</code></pre>
+
+
+
+<p>修改（也就是 mutate）一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>t.label = y</code> 把 <code>t</code> 的根标签改为 <code>y</code>（任意值）。</li>
+  <li><code>t.branches = ns</code> 把 <code>t</code> 的分支改为 <code>ns</code>（由 <code>Tree</code> 实例组成的列表）。</li>
+  <li>修改 <code>t.branches</code> 会改变 <code>t</code>。例如，<code>t.branches.append(Tree(y))</code> 会把一个标签为 <code>y</code> 的叶子添加为最右边的分支。</li>
+  <li>修改 <code>t</code> 中任意一个分支都会改变 <code>t</code>。例如，<code>t.branches[0].label = y</code> 会把最左边分支的根标签改为 <code>y</code>。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t.label = 3.0
+&gt;&gt;&gt; t.branches[1].label = 5.0
+&gt;&gt;&gt; t.branches.append(Tree(2, [Tree(6)]))
+&gt;&gt;&gt; print(t)
+3.0
+  1
+    4
+    1
+  5.0
+    9
+  2
+    6</code></pre>
+
+
+
+<page-break>
+
+<p>下面总结了以函数式抽象实现的树数据抽象与以类实现的树数据抽象之间的区别：</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>-</th>
+    <th>树的构造函数与选择函数</th>
+    <th>Tree 类</th>
+  </tr>
+  <tr>
+    <td>构造树</td>
+    <td>给定一个标签和一个分支列表来构造一棵树时，我们调用 <code>tree(label, branches)</code></td>
+    <td>给定一个标签和一个分支列表来构造一个树对象时，我们调用 <code>Tree(label, branches)</code>（它会调用 <code>Tree.__init__</code> 方法）。</td>
+  </tr>
+  <tr>
+    <td>根标签与分支</td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别调用 <code>label(t)</code> 或 <code>branches(t)</code></td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别访问实例属性 <code>t.label</code> 或 <code>t.branches</code>。</td>
+  </tr>
+  <tr>
+    <td>可变性</td>
+    <td>函数式的树数据抽象是不可变的（在遵守其抽象屏障的前提下），因为我们无法给调用表达式赋值</td>
+    <td><code>Tree</code> 实例的 <code>label</code> 和 <code>branches</code> 属性可以被重新赋值，从而修改这棵树。</td>
+  </tr>
+  <tr>
+    <td>判断树是否为叶子</td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用函数 <code>is_leaf(t)</code></td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用方法 <code>t.is_leaf()</code>。这个方法只能在 <code>Tree</code> 对象上调用。</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+</div>
+
+
+<h3 id="visualizing-trees">可视化树</h3>
+
+
+<p>如果你想借助可视化工具来理解树结构，请前往 <a href="https://code.cs61a.org/">code.cs61a.org</a>，选择 <em>Start Python Interpreter</em>，然后调用 <code>autodraw()</code>。</p>
+
+<br>
+
+
+<h3 id="q1-maximum-path-sum">Q1：最大路径和</h3>
+
+
+<p>编写一个函数，接收一棵树，返回从根到叶子的任意路径上各节点值之和的最大值。</p>
+
+<solution>
+
+<pre><code>def max_path_sum(t):
+    &quot;&quot;&quot;Return the maximum path sum of the tree.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(5, [Tree(1), Tree(3)]), Tree(10)])
+    &gt;&gt;&gt; max_path_sum(t)
+    11
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q max_path_sum<button id="copy-code-python3ok-qmax_path_sum" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmax_path_sum").onclick = () => copyCode('python3 ok -q max_path_sum', "copy-code-python3ok-qmax_path_sum");
+        </script>
+        <br/>
+
+
+<h3 id="q2-add-leaves">Q2：添加叶子</h3>
+
+
+<p>实现 <code>add_d_leaves</code> 函数，它接收一个 <code>Tree</code> 实例 <code>t</code> 和一个数 <code>v</code>。</p>
+
+<p>我们把 <code>t</code> 中某个节点的深度定义为从根到该节点所经过的边数。因此根的深度为 0。</p>
+
+<p>对于树中的每个节点，你都应该为它添加 <code>d</code> 个叶子，其中 <code>d</code> 是该节点的深度。每个新增叶子的 label 都应为 <code>v</code>。如果该节点原本已有分支，你应把这些叶子添加到分支列表的末尾。</p>
+
+<p>例如，你应为深度 1 的每个节点添加 1 个 label 为 <code>v</code> 的叶子，为深度 2 的每个节点添加 2 个叶子，依此类推。</p>
+
+<p>下面是一个树 <code>t</code> 的示例（左侧），以及令 <code>v</code> 为 5 调用 <code>add_d_leaves</code> 之后的结果。
+<img class="img-responsive center-block" src="assets/add_leaves.png" alt="add" width=" height="></p>
+
+<blockquote><p><strong>提示：</strong>使用一个辅助函数来记录深度！</p>
+
+<p><strong>提示：</strong>注意向树中添加新叶子的时机。我们只想给树中原有的节点添加叶子，而不是给我们新添加的节点添加叶子。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p>看看下面的 doctest，试着画出第二个 doctest 的过程，以便直观地理解该函数是如何修改 <code>t3</code> 的。</p></blockquote>
+
+<!-- <code-input add_d_leaves lang:python>
+
+<pre><code>def add_d_leaves(t, v):
+    &quot;&quot;&quot;Add d leaves containing v to each node at every depth d.
+
+    &gt;&gt;&gt; t_one_to_four = Tree(1, [Tree(2), Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+      3
+        4
+    &gt;&gt;&gt; add_d_leaves(t_one_to_four, 5)
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+        5
+      3
+        4
+          5
+          5
+        5
+
+    &gt;&gt;&gt; t0 = Tree(9)
+    &gt;&gt;&gt; add_d_leaves(t0, 4)
+    &gt;&gt;&gt; t0
+    Tree(9)
+    &gt;&gt;&gt; t1 = Tree(1, [Tree(3)])
+    &gt;&gt;&gt; add_d_leaves(t1, 4)
+    &gt;&gt;&gt; t1
+    Tree(1, [Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; t2 = Tree(2, [Tree(5), Tree(6)])
+    &gt;&gt;&gt; t3 = Tree(3, [t1, Tree(0), t2])
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+      0
+      2
+        5
+        6
+    &gt;&gt;&gt; add_d_leaves(t3, 10)
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+            10
+            10
+            10
+          10
+          10
+        10
+      0
+        10
+      2
+        5
+          10
+          10
+        6
+          10
+          10
+        10
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</code-input>
+
+ --></p>
+
+<solution>
+
+<pre><code>def add_d_leaves(t, v):
+    &quot;&quot;&quot;Add d leaves containing v to each node at every depth d.
+
+    &gt;&gt;&gt; t_one_to_four = Tree(1, [Tree(2), Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+      3
+        4
+    &gt;&gt;&gt; add_d_leaves(t_one_to_four, 5)
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+        5
+      3
+        4
+          5
+          5
+        5
+
+    &gt;&gt;&gt; t0 = Tree(9)
+    &gt;&gt;&gt; add_d_leaves(t0, 4)
+    &gt;&gt;&gt; t0
+    Tree(9)
+    &gt;&gt;&gt; t1 = Tree(1, [Tree(3)])
+    &gt;&gt;&gt; add_d_leaves(t1, 4)
+    &gt;&gt;&gt; t1
+    Tree(1, [Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; t2 = Tree(2, [Tree(5), Tree(6)])
+    &gt;&gt;&gt; t3 = Tree(3, [t1, Tree(0), t2])
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+      0
+      2
+        5
+        6
+    &gt;&gt;&gt; add_d_leaves(t3, 10)
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+            10
+            10
+            10
+          10
+          10
+        10
+      0
+        10
+      2
+        5
+          10
+          10
+        6
+          10
+          10
+        10
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q add_d_leaves<button id="copy-code-python3ok-qadd_d_leaves" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qadd_d_leaves").onclick = () => copyCode('python3 ok -q add_d_leaves', "copy-code-python3ok-qadd_d_leaves");
+        </script>
+        <br/>
+
+
+<h3 id="q3-has-path">Q3：路径匹配</h3>
+
+
+<p>编写函数 <code>has_path</code>，它接收一棵 Tree <code>t</code> 和一个字符串 <code>target</code>。如果存在一条从根出发的路径，其路径上各节点的条目依次拼出 <code>target</code>，则返回 <code>True</code>，否则返回 <code>False</code>。你可以假设每个节点的 <code>label</code> 都恰好是一个字符。</p>
+
+<blockquote><p>这种数据结构称为 trie（字典树），它有许多很酷的应用，例如自动补全。</p></blockquote>
+
+<solution>
+
+<pre><code>def has_path(t, target):
+    &quot;&quot;&quot;Return whether there is a path in a Tree where the entries along the path
+    spell out a particular target.
+
+    &gt;&gt;&gt; greetings = Tree(&#x27;h&#x27;, [Tree(&#x27;i&#x27;),
+    ...                        Tree(&#x27;e&#x27;, [Tree(&#x27;l&#x27;, [Tree(&#x27;l&#x27;, [Tree(&#x27;o&#x27;)])]),
+    ...                                   Tree(&#x27;y&#x27;)])])
+    &gt;&gt;&gt; print(greetings)
+    h
+      i
+      e
+        l
+          l
+            o
+        y
+    &gt;&gt;&gt; has_path(greetings, &#x27;h&#x27;)
+    True
+    &gt;&gt;&gt; has_path(greetings, &#x27;i&#x27;)
+    False
+    &gt;&gt;&gt; has_path(greetings, &#x27;hi&#x27;)
+    True
+    &gt;&gt;&gt; has_path(greetings, &#x27;hello&#x27;)
+    True
+    &gt;&gt;&gt; has_path(greetings, &#x27;hey&#x27;)
+    True
+    &gt;&gt;&gt; has_path(greetings, &#x27;bye&#x27;)
+    False
+    &gt;&gt;&gt; has_path(greetings, &#x27;hint&#x27;)
+    False
+    &quot;&quot;&quot;
+    assert len(target) &gt; 0, &#x27;no path for empty target.&#x27;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q has_path<button id="copy-code-python3ok-qhas_path" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhas_path").onclick = () => copyCode('python3 ok -q has_path', "copy-code-python3ok-qhas_path");
+        </script>
+        <br/>
+
+
+<h3 id="q4-preorder">Q4：前序遍历</h3>
+
+
+<p>定义函数 <code>preorder</code>，它接收一个 <code>Tree</code> 实例，返回树中所有 label 的列表，顺序与打印该树时它们出现的顺序一致。</p>
+
+<p>下图展示了各节点被打印的顺序，箭头表示函数调用。</p>
+
+<p><img class="img-responsive center-block" src="assets/preorder.png" alt="preorder" width=" height="></p>
+
+<blockquote><p>树中节点的这种排列顺序称为前序遍历（preorder traversal）。</p></blockquote>
+
+<solution>
+
+<pre><code>def preorder(t):
+    &quot;&quot;&quot;Return a list of the entries in this tree in the order that they
+    would be visited by a preorder traversal (see problem description).
+
+    &gt;&gt;&gt; numbers = Tree(8, [Tree(2), Tree(9, [Tree(4), Tree(5)]), Tree(6, [Tree(7)])])
+    &gt;&gt;&gt; print(numbers)
+    8
+      2
+      9
+        4
+        5
+      6
+        7
+    &gt;&gt;&gt; preorder(numbers)
+    [8, 2, 9, 4, 5, 6, 7]
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+class Tree:
+    &quot;&quot;&quot;A tree has a label and a list of branches.
+
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; t.label
+    3
+    &gt;&gt;&gt; t.branches[0].label
+    2
+    &gt;&gt;&gt; t.branches[1].is_leaf()
+    True
+    &quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        self.label = label
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches
+
+    def __repr__(self):
+        if self.branches:
+            branch_str = &#x27;, &#x27; + repr(self.branches)
+        else:
+            branch_str = &#x27;&#x27;
+        return &#x27;Tree({0}{1})&#x27;.format(repr(self.label), branch_str)
+
+    def __str__(self):
+        return &#x27;\n&#x27;.join(self.indented())
+
+    def indented(self):
+        lines = []
+        for b in self.branches:
+            for line in b.indented():
+                lines.append(&#x27;  &#x27; + line)
+        return [str(self.label)] + lines</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q preorder<button id="copy-code-python3ok-qpreorder" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qpreorder").onclick = () => copyCode('python3 ok -q preorder', "copy-code-python3ok-qpreorder");
+        </script>
+        <br/>
+
+<!--  -->
+
+
+<h3 id="q5-level-mutation-link">Q5：按层变换</h3>
+
+
+<p>提醒一下，节点的深度定义为从根到该节点所经过的边数。因此根自身的深度为 0，因为根与自身之间没有边。</p>
+
+<p>给定一棵树 <code>t</code> 和一个由一元函数构成的链表 <code>funcs</code>，编写一个函数，使用 <code>funcs</code> 中对应深度的函数来修改 <code>t</code> 的 label。例如：</p>
+
+<ul>
+  <li>根节点（深度 0）的 label 将使用 <code>funcs</code> 中深度 0 处的函数（<code>funcs.first</code>）来修改。</li>
+  <li>树的第一层上的 label 将使用 <code>funcs</code> 中深度 1 处的函数（<code>funcs.rest.first</code>）来修改，依此类推。</li>
+</ul>
+
+<p><code>funcs</code> 中的每个函数接收一个 label 值，并返回一个合法的 label 值。</p>
+
+<p>如果某个节点是叶子，而 <code>funcs</code> 中还有剩余函数，则应把这些剩余函数<em>按顺序</em>全部作用于该叶子节点的 label。如果 <code>funcs</code> 为空，则树保持<em>不变</em>。</p>
+
+<p>请参考 doctest 中的例子。</p>
+
+<solution>
+
+<pre><code>def level_mutation_link(t, funcs):
+	&quot;&quot;&quot;Mutates t using the functions in the linked list funcs.
+
+	&gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(3)])])
+	&gt;&gt;&gt; funcs = Link(lambda x: x + 1, Link(lambda y: y * 5, Link(lambda z: z ** 2)))
+	&gt;&gt;&gt; level_mutation_link(t, funcs)
+	&gt;&gt;&gt; t    # At level 0, apply x + 1; at level 1, apply y * 5; at level 2 (leaf), apply z ** 2
+	Tree(2, [Tree(10, [Tree(9)])])
+	&gt;&gt;&gt; t2 = Tree(1, [Tree(2), Tree(3, [Tree(4)])])
+	&gt;&gt;&gt; level_mutation_link(t2, funcs)
+	&gt;&gt;&gt; t2    # Level 0: 1+1=2; Level 1: 2*5=10 =&gt; 10**2 = 100, 3*5=15; Level 2 (leaf): 4**2=16
+	Tree(2, [Tree(100), Tree(15, [Tree(16)])])
+	&gt;&gt;&gt; t3 = Tree(1, [Tree(2)])
+	&gt;&gt;&gt; level_mutation_link(t3, funcs)
+	&gt;&gt;&gt; t3    # Level 0: 1+1=2; Level 1: 2*5=10; no further levels, so apply remaining z ** 2: 10**2=100
+	Tree(2, [Tree(100)])
+	&quot;&quot;&quot;
+	if _____________________:
+		return
+	t.label = _____________________
+	remaining = _____________________
+	if __________________:
+		while _____________________:
+			_____________________
+			remaining = remaining.rest
+	for b in t.branches:
+		_____________________
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q level_mutation_link<button id="copy-code-python3ok-qlevel_mutation_link" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlevel_mutation_link").onclick = () => copyCode('python3 ok -q level_mutation_link', "copy-code-python3ok-qlevel_mutation_link");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+</div>
+<div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#mutable-trees">可变的树</a></li>
+    <ul>
+      <li><a href="#visualizing-trees">可视化树</a></li>
+      <li><a href="#q1-maximum-path-sum">Q1：最大路径和</a></li>
+      <li><a href="#q2-add-leaves">Q2：添加叶子</a></li>
+      <li><a href="#q3-has-path">Q3：路径匹配</a></li>
+      <li><a href="#q4-preorder">Q4：前序遍历</a></li>
+      <li><a href="#q5-level-mutation-link">Q5：按层变换</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

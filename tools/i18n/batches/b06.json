@@ -1,0 +1,602 @@
+[
+ {
+  "id": 900,
+  "en": "Review: Your Computer's File System This is an overview of how your computer's file system\n  works, including the meaning of both absolute and relative file paths."
+ },
+ {
+  "id": 901,
+  "en": "Walkthrough: Using the Terminal: This walks you through how to use the\n  terminal and Python interpreter."
+ },
+ {
+  "id": 902,
+  "en": "Walkthrough: Organizing your Files: This section walks you through how to\n  use your terminal to organize and navigate files for this course.\n  Everyone should read this section."
+ },
+ {
+  "id": 903,
+  "en": "Required: Doing the Assignment: You must complete this section to get\n  credit for the assignment. The main goal of this part is to give you practice using our\n  software."
+ },
+ {
+  "id": 904,
+  "en": "Required: Submitting the Assignment: Turn in your work."
+ },
+ {
+  "id": 905,
+  "en": "Appendix: Useful Python Command Line Options: These are commands that are\n  useful in debugging your work, but not required to complete the lab. We\n  include them because they are likely to be helpful to you throughout\n  the course."
+ },
+ {
+  "id": 906,
+  "en": "Setup"
+ },
+ {
+  "id": 907,
+  "en": "To setup your device, select the guide that corresponds to your operating system."
+ },
+ {
+  "id": 908,
+  "en": "Your First Assignment"
+ },
+ {
+  "id": 909,
+  "en": "When working on assignments, ensure that your terminal's working directory is correct (which is likely where you unzipped the assignment)."
+ },
+ {
+  "id": 910,
+  "en": "1) What Would Python Do? (WWPD)"
+ },
+ {
+  "id": 911,
+  "en": "One component of lab assignments is to predict how the Python interpreter will\nbehave. We call these questions \"What Would Python Do?\""
+ },
+ {
+  "id": 912,
+  "en": "In this class, we use a program called ok to assess your knowledge.\nok will be included with every assignment. Let's go through\nhow to do a WWPD question with ok."
+ },
+ {
+  "id": 913,
+  "en": "Open your terminal, and make sure you are in the lab00 directory that contains\nthe unzipped lab files for this assignment. In that directory, type ls to verify\nthat there are the following files:"
+ },
+ {
+  "id": 914,
+  "en": "lab00.py: the starter file for this lab"
+ },
+ {
+  "id": 915,
+  "en": "ok: our testing program"
+ },
+ {
+  "id": 916,
+  "en": "lab00.ok: a configuration file for ok"
+ },
+ {
+  "id": 917,
+  "en": "If you don't see these files, use cd to navigate to the correct directory."
+ },
+ {
+  "id": 918,
+  "en": "Attempting to run ok in a directory that does not have ok will produce an error."
+ },
+ {
+  "id": 919,
+  "en": "Enter the following in your terminal, which will run ok and begin this section:"
+ },
+ {
+  "id": 920,
+  "en": "The command python3 ok &#x2d;q python&#x2d;basics &#x2d;u tells the Python interpreter\nto run the file with the name ok in the current working directory.\n&#x2d;q python&#x2d;basics &#x2d;u are inputs provided to the ok program that identify\nwhich question to run."
+ },
+ {
+  "id": 921,
+  "en": "As stated in the setup section, if the python3 command does not work,\nplease try using python or py."
+ },
+ {
+  "id": 922,
+  "en": "You will be prompted to enter the output of various statements/expressions.\nYou must enter them correctly to move on, but there is no penalty for\nincorrect answers."
+ },
+ {
+  "id": 923,
+  "en": "The first time you run Ok, you will be prompted for your bCourses email.\nPlease follow {0}."
+ },
+ {
+  "id": 924,
+  "en": "2) Implementing Functions"
+ },
+ {
+  "id": 925,
+  "en": "Open the entire lab00 folder in VS Code. You can drag the folder onto the VS\nCode application or open VS Code and use Open Folder... in the File menu.\nOnce you open the lab00 folder, you'll see the lab00.py file in the file\nexplorer on the left panel of your VS Code window. Click it to start editing\nlab00.py, which is the file you will submit to receive credit for the lab."
+ },
+ {
+  "id": 926,
+  "en": "Important: Turn on Auto Save in the File menu of VS Code. Then, whenever\nyou change a file, the contents will be saved. If you don't enable Auto Save,\nbe sure to frequently save your work."
+ },
+ {
+  "id": 927,
+  "en": "Recommended: Use the terminal inside VS Code (Terminal &gt; New Terminal in\nthe menu). If you opened the assignment folder in VS Code as instructed above,\nthen the VS Code terminal's working directory will automatically be set to the\nassignment folder, which means you won't have to change directories to check\nyour work."
+ },
+ {
+  "id": 928,
+  "en": "Now complete the lab. You should see a function called twenty_twenty_six that\nhas a blank return statement. That blank is the only part you should change.\nReplace it with an expression that evaluates to 2026.  What's the most creative\nexpression you can come up with?"
+ },
+ {
+  "id": 929,
+  "en": "3) Running Tests"
+ },
+ {
+  "id": 930,
+  "en": "We'll also use ok to test your code. Switch to the terminal. Make sure you are in the lab00 directory that contains\nok and lab00.py."
+ },
+ {
+  "id": 931,
+  "en": "Pro tip: If you\nopened the lab00 folder in VS Code and select New Terminal in the Terminal\nmenu of VS Code, then the terminal will automatically be in the lab00\ndirectory."
+ },
+ {
+  "id": 932,
+  "en": "Now, run ok with this command to test your code:"
+ },
+ {
+  "id": 933,
+  "en": "Remember, if you are using Windows and the python3 command does not work, please try using just\npython or py."
+ },
+ {
+  "id": 934,
+  "en": "If you wrote your code correctly and you finished unlocking your tests, you should see a successful test:"
+ },
+ {
+  "id": 935,
+  "en": "If you didn't pass the tests, ok will instead show you something like this:"
+ },
+ {
+  "id": 936,
+  "en": "Fix your code in your text editor until the test passes."
+ },
+ {
+  "id": 937,
+  "en": "Every time you run ok, ok will try to back up your work. Don't worry if it\nsays that the \"Connection timed out\" or that you're not enrolled in the\ncourse. You can still submit this assignment and get credit."
+ },
+ {
+  "id": 938,
+  "en": "4) Pre-Semester Survey"
+ },
+ {
+  "id": 939,
+  "en": "Appendix: Useful Python Command Line Options"
+ },
+ {
+  "id": 940,
+  "en": "Terminal Commands"
+ },
+ {
+  "id": 941,
+  "en": "ls: lists all files in the current directory"
+ },
+ {
+  "id": 942,
+  "en": "cd &lt;path to directory&gt;: change into the specified directory"
+ },
+ {
+  "id": 943,
+  "en": "mkdir &lt;directory name&gt;: makes a new directory with the given name"
+ },
+ {
+  "id": 944,
+  "en": "Lab 1 Solutions"
+ },
+ {
+  "id": 945,
+  "en": "What does the modulo operator (%) do?"
+ },
+ {
+  "id": 946,
+  "en": "It calculates the remainder of a division."
+ },
+ {
+  "id": 947,
+  "en": "What is the difference between return and print?"
+ },
+ {
+  "id": 948,
+  "en": "Return terminates a function call immediately, while print does not."
+ },
+ {
+  "id": 949,
+  "en": "Print displays text without quotes, while return displays text with quotes."
+ },
+ {
+  "id": 950,
+  "en": "What is the difference between true division (/) and floor division (//)?"
+ },
+ {
+  "id": 951,
+  "en": "Floor division truncates the result of true division."
+ },
+ {
+  "id": 952,
+  "en": "Lab 2 Solutions"
+ },
+ {
+  "id": 953,
+  "en": "What is a higher order function?"
+ },
+ {
+  "id": 954,
+  "en": "A function that takes in another function as input, returns a function as output, or both."
+ },
+ {
+  "id": 955,
+  "en": "What is the parent frame of a function?"
+ },
+ {
+  "id": 956,
+  "en": "Frame in which the function was defined (not called)."
+ },
+ {
+  "id": 957,
+  "en": "Why do we use higher order functions?"
+ },
+ {
+  "id": 958,
+  "en": "DRY (don't repeat yourself), generalization"
+ },
+ {
+  "id": 959,
+  "en": "We must create a function to take x using lambda or def, then compare the two quantities."
+ },
+ {
+  "id": 960,
+  "en": "One question that might be nice to ask is:\nin what ways is the logic for count_fives and count_primes similar,\nand in what ways are they different?"
+ },
+ {
+  "id": 961,
+  "en": "The answer to the first question can tell us the logic that we want to\ninclude in our count_cond function, while the answer to the second\nquestion can tell us where in count_cond we want to be able to have\nthe difference in behavior observed between count_fives and\ncount_primes."
+ },
+ {
+  "id": 962,
+  "en": "It'll be helpful to also keep in mind that we want count_cond to return\na function that, when an argument n is passed in, will behave similarly\nto count_fives or count_primes. In other words, count_cond is a\nhigher order function that returns a function, that then contains the\nlogic common to both count_fives and count_primes."
+ },
+ {
+  "id": 963,
+  "en": "Lab 3 Solutions"
+ },
+ {
+  "id": 964,
+  "en": "Why is type checking good practice and how can you use it to help you solve problems?"
+ },
+ {
+  "id": 965,
+  "en": "It helps catches bugs while you write your code and it helps you think about the inputs and solve problems!"
+ },
+ {
+  "id": 966,
+  "en": "Is there any scenario we would use list comprehension over regular lists?"
+ },
+ {
+  "id": 967,
+  "en": "It's more concise and in recursive functions it can build the result in the same line, especially useful for tree recursion for nested list construction."
+ },
+ {
+  "id": 968,
+  "en": "How do you index the first, the middle, and last element of a list?"
+ },
+ {
+  "id": 969,
+  "en": "Given a list lst, index the first element using lst[0], middle with lst[len(lst) // 2], and last with lst[&#x2d;1].\n  (Technically this way of accessing the middle element will give the right middle element in even lists)"
+ },
+ {
+  "id": 970,
+  "en": "Lab 4 Solutions"
+ },
+ {
+  "id": 971,
+  "en": "What are the two restrictions for a key in a dictionary?"
+ },
+ {
+  "id": 972,
+  "en": "A key must be unique and a key cannot be a list or a dictionary"
+ },
+ {
+  "id": 973,
+  "en": "Why is it important not to violate the abstraction barrier?"
+ },
+ {
+  "id": 974,
+  "en": "They separate parts of a program so that changes in one part won't affect another"
+ },
+ {
+  "id": 975,
+  "en": "Describe the tree's constructor function"
+ },
+ {
+  "id": 976,
+  "en": "tree(label, branches=[]) returns a tree object with a root node called label and the specified branches"
+ },
+ {
+  "id": 977,
+  "en": "Lab 5 Solutions"
+ },
+ {
+  "id": 978,
+  "en": "What is the difference between the \"is\" operator and the \"==\" operator?"
+ },
+ {
+  "id": 979,
+  "en": "\"is\" checks if expressions on both sides evaluate to the same object, while \"==\" checks if they evaluate to equal values."
+ },
+ {
+  "id": 980,
+  "en": "What does the map function do?"
+ },
+ {
+  "id": 981,
+  "en": "map takes a function and an iterable as arguments and returns a new iterator over the function applied to each element of the original iterable."
+ },
+ {
+  "id": 982,
+  "en": "Does calling a generator function execute its body? Why or why not?"
+ },
+ {
+  "id": 983,
+  "en": "Calling a generator function does not execute its body. Instead, it returns a generator, which, when iterated through, executes the body."
+ },
+ {
+  "id": 984,
+  "en": "Lab 6 Solutions"
+ },
+ {
+  "id": 985,
+  "en": "What is the main goal of Object Oriented Programming?"
+ },
+ {
+  "id": 986,
+  "en": "Classes create abstraction barriers between the use and implementation of data. A class serves as a template for all objects whose type is that class, and you can create multiple objects that store different data."
+ },
+ {
+  "id": 987,
+  "en": "What is the difference between an instance variable and a class variable?"
+ },
+ {
+  "id": 988,
+  "en": "An instance variable is specific to a given object and different between objects, whereas a class variable is something that belongs to the class as a whole."
+ },
+ {
+  "id": 989,
+  "en": "Do we have to explicitly pass in “self” when calling a method?"
+ },
+ {
+  "id": 990,
+  "en": "No, when one of an object's methods is called, the object is implicitly provided as the argument for self."
+ },
+ {
+  "id": 991,
+  "en": "Remember that next must return a VirFib object! With this in mind, our\nfirst goal is to calculate the next VirFib object and return it. One\napproach is to figure out the base case (self.value == 0) and then decide what\ninformation is needed for the following call to next."
+ },
+ {
+  "id": 992,
+  "en": "You might also note that storing the current value makes the solution look very\nsimilar to the iterative version of the virfib problem."
+ },
+ {
+  "id": 993,
+  "en": "Lab 7 Solutions"
+ },
+ {
+  "id": 994,
+  "en": "What's the difference between the mutable tree class and the tree constructor and selector functions you've seen before?"
+ },
+ {
+  "id": 995,
+  "en": "Implemented as a class, can mutate the tree versus having to return a new tree every time"
+ },
+ {
+  "id": 996,
+  "en": "How do we get the label, branches, and figure out if a tree is a leaf?"
+ },
+ {
+  "id": 997,
+  "en": "tree.label, tree.branches, tree.is_leaf()"
+ },
+ {
+  "id": 998,
+  "en": "Lab 8 Solutions"
+ },
+ {
+  "id": 999,
+  "en": "For all of the questions, let link be the instance. They should know this distinction."
+ },
+ {
+  "id": 1000,
+  "en": "How do you check if the next element in a Linked List is empty?"
+ },
+ {
+  "id": 1001,
+  "en": "Check if link.rest is Link.empty"
+ },
+ {
+  "id": 1002,
+  "en": "How do you retrieve the element 3 from Link(2, Link(3))?"
+ },
+ {
+  "id": 1003,
+  "en": "You use link.rest.first. It's important to realize that .rest still returns a Link OR Link.empty."
+ },
+ {
+  "id": 1004,
+  "en": "Why should you use Link.empty instead of an empty tuple () or null/falsy values"
+ },
+ {
+  "id": 1005,
+  "en": "Breaks the abstraction barrier and there's more risk for error (is can help check reliably because Link.empty\n  is a class attribute)!"
+ },
+ {
+  "id": 1006,
+  "en": "Lab 9 Solutions"
+ },
+ {
+  "id": 1007,
+  "en": "What parts of Scheme are similar to what we learned in Python?"
+ },
+ {
+  "id": 1008,
+  "en": "It is a functional programming language that is recursive-based, lexical scoped, and all lists are linked lists!"
+ },
+ {
+  "id": 1009,
+  "en": "What are the different ways you can create a list in scheme?"
+ },
+ {
+  "id": 1010,
+  "en": "cons chains, list procedures, quote &#x27; ` for creation; append, map, reduce, and filter are useful\n  for list transformation/derivations."
+ },
+ {
+  "id": 1011,
+  "en": "What are some resources you can refer to if you ever need help on Scheme?"
+ },
+ {
+  "id": 1012,
+  "en": "Refer to the Scheme Specification/Built-Ins under the Resources tab!"
+ },
+ {
+  "id": 1013,
+  "en": "Lab 10 Solutions"
+ },
+ {
+  "id": 1014,
+  "en": "What are the three steps of evaluation for a Scheme expression?"
+ },
+ {
+  "id": 1015,
+  "en": "First evaluate the operand (check that it exists in the current frame), then evaluate the operands, and finally apply the operator to the operands."
+ },
+ {
+  "id": 1016,
+  "en": "What is the purpose of macros?"
+ },
+ {
+  "id": 1017,
+  "en": "Macros in Scheme let you create your own commands by changing code before it runs."
+ },
+ {
+  "id": 1018,
+  "en": "Why is tail recursion beneficial in Scheme?"
+ },
+ {
+  "id": 1019,
+  "en": "Tail recursion is beneficial because it allows frames that won't be used in the future to be closed, which saves space."
+ },
+ {
+  "id": 1020,
+  "en": "Lab 11 Solutions"
+ },
+ {
+  "id": 1021,
+  "en": "What order do the clauses in a SQL command appear in?"
+ },
+ {
+  "id": 1022,
+  "en": "When would you use where versus having?"
+ },
+ {
+  "id": 1023,
+  "en": "Having is used after group by on aggregated rows, where is used when group by not applied yet."
+ },
+ {
+  "id": 1024,
+  "en": "How do you give a table an alias in a SQL command?"
+ },
+ {
+  "id": 1025,
+  "en": "table AS alias"
+ },
+ {
+  "id": 1026,
+  "en": "Lab 12 Solutions"
+ },
+ {
+  "id": 1027,
+  "en": "If we were to implement this iteratively in Python, it might look\nsomething like:"
+ },
+ {
+  "id": 1028,
+  "en": "With that in mind, we can create a helper function in Scheme to help us\ntrack a running total. This will be updated in each recursive call."
+ },
+ {
+  "id": 1029,
+  "en": "The alternative solution simply uses the start value to track all the\nvalues we've used so far, but it effectively functions the same."
+ },
+ {
+  "id": 1030,
+  "en": "Ants Vs. SomeBees"
+ },
+ {
+  "id": 1031,
+  "en": "The bees are coming!"
+ },
+ {
+  "id": 1032,
+  "en": "Create a better soldier"
+ },
+ {
+  "id": 1033,
+  "en": "With inherit-ants."
+ },
+ {
+  "id": 1034,
+  "en": "For full credit:"
+ },
+ {
+  "id": 1035,
+  "en": "Submit with Phase 1 and Phase 2 complete by Thursday 07/23."
+ },
+ {
+  "id": 1036,
+  "en": "Submit with all phases complete by Tuesday 07/28."
+ },
+ {
+  "id": 1037,
+  "en": "Solve the problems in order, since some later problems depend on earlier\nproblems."
+ },
+ {
+  "id": 1038,
+  "en": "You can get 1 bonus point by submitting the entire project by\nMonday 07/27."
+ },
+ {
+  "id": 1039,
+  "en": "In this project, you will create a {0} game called Ants Vs.\nSomeBees. You populate your colony with the bravest ants you\ncan muster. Your ants must protect their queen from the evil bees invading\nyour territory. Irritate the bees enough by throwing leaves at them, and they\nwill be vanquished. Fail to pester the airborne intruders adequately, and your\nqueen will succumb to the bees' wrath. This game is inspired by PopCap Games'\n{1}."
+ },
+ {
+  "id": 1040,
+  "en": "This project uses an object-oriented programming paradigm,\nfocusing on material from {0} of Composing Programs. The\nproject also involves understanding, extending, and testing a large program."
+ },
+ {
+  "id": 1041,
+  "en": "The {0} archive contains several files, but all of your\nchanges will be made to ants.py."
+ },
+ {
+  "id": 1042,
+  "en": "ants.py: The game logic of Ants Vs. SomeBees"
+ },
+ {
+  "id": 1043,
+  "en": "ants_plans.py: The details of each difficulty level"
+ },
+ {
+  "id": 1044,
+  "en": "ucb.py: Utility functions"
+ },
+ {
+  "id": 1045,
+  "en": "gui.py: A graphical user interface (GUI) for Ants Vs. SomeBees."
+ },
+ {
+  "id": 1046,
+  "en": "ok: The autograder"
+ },
+ {
+  "id": 1047,
+  "en": "proj3.ok: The ok configuration file"
+ },
+ {
+  "id": 1048,
+  "en": "libs: A directory of libraries used by gui.py"
+ },
+ {
+  "id": 1049,
+  "en": "static: A directory of images and files used by gui.py"
+ }
+]

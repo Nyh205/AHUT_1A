@@ -1,0 +1,888 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 4 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 4：序列、树
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc04.pdf" class="label label-outline">disc04.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+
+
+
+<!-- In this discussion, don't use a Python interpreter to run code until you are confident your solution is correct. Figure things out and check your work by _thinking_ about what your code will do. Not sure? Draw an environment diagram! -->
+
+<!-- # Sequences -->
+
+<h1 id="lists">列表</h1>
+
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        列表概述<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+你们中有些人已经知道一些我们还没讲的列表操作，比如 <code>append</code>。今天不要用这些。你只需要用到列表字面量（例如 <code>[1, 2, 3]</code>）、元素选择（例如 <code>s[0]</code>）、列表加法（例如 <code>[1] + [2, 3]</code>）、<code>len</code>（例如 <code>len(s)</code>）和切片（例如 <code>s[1:]</code>）。就用这些！这周晚些时候我们会介绍其他列表操作，到时有很多时间。
+
+<p>关于列表，最重要的一点是：非空列表 <code>s</code> 可以拆分成它的第一个元素 <code>s[0]</code> 和列表的其余部分 <code>s[1:]</code>。</p>
+
+<pre><code>&gt;&gt;&gt; s = [2, 3, 6, 4]
+&gt;&gt;&gt; s[0]
+2
+&gt;&gt;&gt; s[1:]
+[3, 6, 4]</code></pre>
+
+
+</div>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        列表推导式概述<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+列表推导式描述一个列表中的元素，求值后得到一个包含这些元素的新列表。
+
+<p>它有两种形式：</p>
+
+<pre><code>[&lt;expression&gt; for &lt;element&gt; in &lt;sequence&gt;]
+[&lt;expression&gt; for &lt;element&gt; in &lt;sequence&gt; if &lt;conditional&gt;]</code></pre>
+
+<p>下面这个例子从 <code>[1, 2, 3, 4]</code> 开始，用 <code>if i % 2 == 0</code> 挑出偶数元素 <code>2</code> 和 <code>4</code>，再用 <code>i*i</code> 分别把它们平方。<code>for i</code> 的作用是给 <code>[1, 2, 3, 4]</code> 中的每个元素起一个名字。</p>
+
+<pre><code>&gt;&gt;&gt; [i*i for i in [1, 2, 3, 4] if i % 2 == 0]
+[4, 16]</code></pre>
+
+<p>这个列表推导式求值后得到的是一个列表，其中包含：</p>
+
+<ul>
+  <li><code>i*i</code> 的值</li>
+  <li>对应序列 <code>[1, 2, 3, 4]</code> 中的每个元素 <code>i</code></li>
+  <li>且满足 <code>i % 2 == 0</code></li>
+</ul>
+
+<p>换句话说，这个列表推导式会创建一个新列表，其中包含原列表 <code>[1, 2, 3, 4]</code> 中每个偶数元素的平方。</p>
+
+<p>我们也可以把列表推导式改写成等价的 <code>for</code> 语句，例如上面的例子可以改写成：</p>
+
+<pre><code>&gt;&gt;&gt; result = []
+&gt;&gt;&gt; for i in [1, 2, 3, 4]:
+...     if i % 2 == 0:
+...         result = result + [i*i]
+&gt;&gt;&gt; result
+[4, 16]</code></pre>
+
+</div>
+
+
+<h3 id="q1-even-weighted">Q1：偶数加权</h3>
+
+
+<p>写一个函数，接受一个列表 <code>s</code>，返回一个新列表：只保留 <code>s</code> 中下标为偶数的元素，并把它们乘以各自对应的下标。请先用普通的 <code>for</code> 循环解决这个问题（不要用列表推导式）。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="even-weighted-loop-input" style="height:252px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-even-weighted-loop-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-even-weighted-loop-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-even-weighted-loop-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def even_weighted_loop(s):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]\n    &gt;&gt;&gt; even_weighted_loop(x)\n    [0, 6, 20]\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n', "python", "even-weighted-loop-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def even_weighted_loop(s):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]
+    &gt;&gt;&gt; even_weighted_loop(x)
+    [0, 6, 20]
+    &quot;&quot;&quot;
+    result = []
+    for i in range(len(s)):
+        if i % 2 == 0:
+            result = result + [i * s[i]]
+    return result
+</code></pre>
+
+            </div>
+        
+
+<p>既然你已经用 <code>for</code> 循环做过了，现在试试用列表推导式！</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="even-weighted-comprehension-input" style="height:180px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-even-weighted-comprehension-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-even-weighted-comprehension-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-even-weighted-comprehension-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def even_weighted_comprehension(s):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]\n    &gt;&gt;&gt; even_weighted_comprehension(x)\n    [0, 6, 20]\n    &quot;&quot;&quot;\n    return [_________________________________________________]\n\n', "python", "even-weighted-comprehension-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def even_weighted_comprehension(s):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; x = [1, 2, 3, 4, 5, 6]
+    &gt;&gt;&gt; even_weighted_comprehension(x)
+    [0, 6, 20]
+    &quot;&quot;&quot;
+    return [i * s[i] for i in range(len(s)) if i % 2 == 0]
+</code></pre>
+
+            </div>
+        
+
+<div class="sol-highlight">
+
+<p>关键之处在于：我们不应当遍历列表中的每个元素，而应当遍历列表的下标。
+否则，就无法判断某个元素是否应该保留。</p>
+
+<!--<a href="https://www.youtube.com/watch?v=Am6m8YgAnYY&list=PLx38hZJ5RLZdJgRCgpaTbmRXKAHOUmomO&index=4">Video walkthrough</a> -->
+
+</div>
+
+
+<h1 id="dictionaries">字典</h1>
+
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        字典概述<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<p>字典是 Python 的一种数据结构，它把<em>键</em>映射到<em>值</em>。对于字典 <code>d</code>：</p>
+
+<ul>
+  <li>每个键恰好映射到一个值，可以用 <code>d[&lt;key&gt;]</code> 访问。</li>
+  <li>如果你尝试 <code>d[&lt;key&gt;]</code>，但 <code>&lt;key&gt;</code> 不是 <code>d</code> 中有效的键，就会报错。</li>
+  <li>你可以用 <code>&lt;key&gt; in d</code> 来测试（返回 <code>True</code> 或 <code>False</code>）某个键是否在 <code>d</code> 中。</li>
+  <li><code>d.get(&lt;key&gt;, &lt;default&gt;)</code> 会返回 <code>d</code> 中 <code>&lt;key&gt;</code> 映射到的值；如果 <code>&lt;key&gt;</code> 不是 <code>d</code> 中的键，就返回 <code>&lt;default&gt;</code>。</li>
+  <li>可以分别用 <code>d.keys()</code>、<code>d.values()</code> 或 <code>d.items()</code> 来访问键、值或键值对的序列。</li>
+  <li>键可以是任意不可变类型（例如字符串、数字和元组），但不能是可变类型（例如列表）。</li>
+  <li>你可以在 <code>for</code> 循环中使用 <code>d</code>（例如 <code>for k in d</code>），这样会遍历 <code>d</code> 中的键。</li>
+</ul>
+
+</div>
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-happy-givers">Q2：快乐互赠者</h3>
+
+
+<p>在某个讨论班里，一些人在节日期间互赠礼物。如果两个人互相赠送礼物，我们就称他们为「<strong>快乐互赠者</strong>」。实现函数 <code>happy_givers</code>，它接受一个 <code>gifts</code> 字典，该字典把人映射到他送礼物的人。<code>happy_givers</code> 输出该班所有快乐互赠者的列表，列表顺序无关紧要。</p>
+
+<p>注意，如果某人收到了礼物但没有送出礼物，他不会作为键出现在 <code>gifts</code> 字典中。（他只作为值出现。）你可以假设没有人给自己送礼物。</p>
+
+<p>找到解法之后，作为挑战，试着用列表推导式在一行内实现一个解法。</p>
+
+<p><em>选做：设想另一种情况：字典中每个人都是键，其值是他送过礼物的所有人的列表。试着针对这种结构实现一个解法，找出所有快乐互赠者的列表。</em></p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="happy_givers-input" style="height:396px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-happy_givers-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-happy_givers-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-happy_givers-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def happy_givers(gifts):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; gift_recipients = {\n    ...     &quot;Alice&quot;: &quot;Eve&quot;, # Alice gave a gift to Eve\n    ...     &quot;Bob&quot;: &quot;Finn&quot;,\n    ...     &quot;Christina&quot;: &quot;Alice&quot;,\n    ...     &quot;David&quot;: &quot;Gina&quot;, # Gina is not a key because she didn&#x27;t give anyone a gift\n    ...     &quot;Eve&quot;: &quot;Alice&quot;,\n    ...     &quot;Finn&quot;: &quot;Bob&quot;,\n    ... }\n    &gt;&gt;&gt; list(sorted(happy_givers(gift_recipients))) # Order does not matter\n    [&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Eve&#x27;, &#x27;Finn&#x27;]\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n', "python", "happy_givers-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def happy_givers(gifts):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; gift_recipients = {
+    ...     &quot;Alice&quot;: &quot;Eve&quot;, # Alice gave a gift to Eve
+    ...     &quot;Bob&quot;: &quot;Finn&quot;,
+    ...     &quot;Christina&quot;: &quot;Alice&quot;,
+    ...     &quot;David&quot;: &quot;Gina&quot;, # Gina is not a key because she didn&#x27;t give anyone a gift
+    ...     &quot;Eve&quot;: &quot;Alice&quot;,
+    ...     &quot;Finn&quot;: &quot;Bob&quot;,
+    ... }
+    &gt;&gt;&gt; list(sorted(happy_givers(gift_recipients))) # Order does not matter
+    [&#x27;Alice&#x27;, &#x27;Bob&#x27;, &#x27;Eve&#x27;, &#x27;Finn&#x27;]
+    &quot;&quot;&quot;
+    output = []
+    for giver in gifts:
+        recipient = gifts[giver]
+        if recipient in gifts and gifts[recipient] == giver:
+            output = output + [giver]
+    return output
+    # Alternate solution using list comprehension
+    # return [giver for giver in gifts if gifts[giver] in gifts and gifts[gifts[giver]] == giver]
+
+    #Optional problem solution
+    #output = []
+    #for giver in gifts:
+    #   for recipient in gifts[giver]:
+    #       if (recipient in gifts) and (giver in gifts[recipient]) and (giver not in output):
+    #           output = output + [giver]
+    #return output
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h1 id="trees">树</h1>
+
+
+<p>对于树 <code>t</code>：</p>
+
+<ul>
+  <li>它的根标签可以是任意值，<code>label(t)</code> 会返回它。</li>
+  <li>它的分支也是树，<code>branches(t)</code> 会返回一个由分支组成的列表。</li>
+  <li>用 <code>tree(label(t), branches(t))</code> 可以构造出一棵完全相同的树。</li>
+  <li>你可以调用以树为参数的函数，例如 <code>is_leaf(t)</code>。</li>
+  <li>这就是操作树的方式。不要使用 <code>t == x</code>、<code>t[0]</code>、<code>x in t</code> 或 <code>list(t)</code> 等写法。</li>
+  <li>没有办法在不破坏抽象屏障的前提下修改一棵树。</li>
+</ul>
+
+<p>下面是一棵示例树 <code>t1</code>，它的分支 <code>branches(t1)[1]</code> 就是 <code>t2</code>。</p>
+
+<pre><code class="python">t2 = tree(5, [tree(6), tree(7)])
+t1 = tree(3, [tree(4), t2])</code></pre>
+
+
+
+<p><img class="img-responsive center-block" src="assets/example_tree_illustration.png" alt="Example Tree" width="100%" height="></p>
+
+<p><strong>路径</strong>是一系列树，其中每一棵都是下一棵的父节点。</p>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        树的实现<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<!-- You don't need to know how <code>tree</code>, <code>label</code>, and <code>branches</code> are implemented in
+order to use them correctly, but here is the implementation from lecture. -->
+
+<pre><code class="python">def tree(label, branches=[]):
+    for branch in branches:
+        assert is_tree(branch), &#x27;branches must be trees&#x27;
+    return [label] + list(branches)
+
+def label(tree):
+    return tree[0]
+
+def branches(tree):
+    return tree[1:]
+
+def is_leaf(tree):
+    return not branches(tree)
+
+def is_tree(tree):
+    if type(tree) != list or len(tree) &lt; 1:
+        return False
+    for branch in branches(tree):
+        if not is_tree(branch):
+            return False
+    return True</code></pre>
+
+
+</div>
+
+
+<h3 id="q3-warm-up">Q3：热身</h3>
+
+
+<p><code>result</code> 绑定到什么值？</p>
+
+<pre><code>result = label(min(branches(max([t1, t2], key=label)), key=label))</code></pre>
+
+
+
+<div class="sol-highlight">
+
+<p><strong>参考答案</strong></p>
+
+<p>6：<code>max([t1, t2], key=label)</code> 的结果是 <code>t2</code> 这棵树，因为它的标签 5 大于
+<code>t1</code> 的标签 3。在 <code>t2</code> 的分支（都是叶子）中，左边那棵标签为 6 的树标签更小。</p>
+
+</div>
+
+<p>多么绕啊！</p>
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        key 有什么作用？<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<p>下面快速复习一下 <code>key</code> 函数在 <code>max</code> 和 <code>min</code> 中是如何工作的，</p>
+
+<p><code>max(s, key=f)</code> 返回 <code>s</code> 中使得 <code>f(x)</code> 最大的元素 <code>x</code>。</p>
+
+<pre><code class="python">&gt;&gt;&gt; s = [&#x2d;3, &#x2d;5, &#x2d;4, &#x2d;1, &#x2d;2]
+&gt;&gt;&gt; max(s)
+&#x2d;1
+&gt;&gt;&gt; max(s, key=abs)
+&#x2d;5
+&gt;&gt;&gt; max([abs(x) for x in s])
+5</code></pre>
+
+
+
+<p>因此，<code>max([t1, t2], key=label)</code> 返回 label 最大的那棵树，在这里是 <code>t2</code>。
+</div></p>
+
+<p>如果你在想的话：这个表达式并没有违反抽象屏障。<code>[t1, t2]</code> 和 <code>branches(t)</code> 都是列表（不是树），所以对它们调用 <code>min</code> 和 <code>max</code> 是没问题的。</p>
+
+<div class="page-break"></div>
+
+
+<h3 id="q4-has-path">Q4：是否存在路径</h3>
+
+
+<p>实现 <code>has_path</code>，它接受一棵树 <code>t</code> 和一个列表 <code>p</code>，返回从 <code>t</code> 的根出发是否存在标签序列为 <code>p</code> 的路径。例如，<code>t1</code> 有一条从根出发、标签为 <code>[3, 5, 6]</code> 的路径，但没有 <code>[3, 4, 6]</code> 或 <code>[5, 6]</code>。</p>
+
+<p><strong>重要</strong>：在动手实现这个函数之前，请先讨论课上关于树处理函数的递归调用的这些问题：</p>
+
+<ul>
+  <li>我可以先做哪个小的选择（比如探索哪个分支）？</li>
+  <li>对于每个选项，我应该进行什么样的递归调用？</li>
+  <li><p>我该如何合并这些递归调用的结果？</p>
+
+  <ul>
+    <li><strong>它们返回什么类型的值？</strong></li>
+    <li>这些返回值是什么意思？</li>
+  </ul></li>
+</ul>
+
+
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="has_path-input" style="height:576px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-has_path-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-has_path-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-has_path-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def has_path(t, p):\n    &quot;&quot;&quot;Return whether tree t has a path from the root with labels p.\n\n    &gt;&gt;&gt; t2 = tree(5, [tree(6), tree(7)])\n    &gt;&gt;&gt; t1 = tree(3, [tree(4), t2])\n    &gt;&gt;&gt; has_path(t1, [5, 6])        # This path is not from the root of t1\n    False\n    &gt;&gt;&gt; has_path(t2, [5, 6])        # This path is from the root of t2\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 5])        # This path does not go to a leaf, but that&#x27;s ok\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 5, 6])     # This path goes to a leaf\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 4, 5, 6])  # There is no path with these labels\n    False\n    &quot;&quot;&quot;\n    if p == ____:  # when len(p) is 1\n        return True\n    elif label(t) != ____:\n        return False\n    else:\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n', "python", "has_path-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def has_path(t, p):
+    &quot;&quot;&quot;Return whether tree t has a path from the root with labels p.
+
+    &gt;&gt;&gt; t2 = tree(5, [tree(6), tree(7)])
+    &gt;&gt;&gt; t1 = tree(3, [tree(4), t2])
+    &gt;&gt;&gt; has_path(t1, [5, 6])        # This path is not from the root of t1
+    False
+    &gt;&gt;&gt; has_path(t2, [5, 6])        # This path is from the root of t2
+    True
+    &gt;&gt;&gt; has_path(t1, [3, 5])        # This path does not go to a leaf, but that&#x27;s ok
+    True
+    &gt;&gt;&gt; has_path(t1, [3, 5, 6])     # This path goes to a leaf
+    True
+    &gt;&gt;&gt; has_path(t1, [3, 4, 5, 6])  # There is no path with these labels
+    False
+    &quot;&quot;&quot;
+    if p == [label(t)]:
+        return True
+    elif label(t) != p[0]:
+        return False
+    else:
+        return any([has_path(b, p[1:]) for b in branches(t)])
+
+        for b in branches(t):
+            if has_path(b, p[1:]):
+                return True
+        return False
+
+
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+
+
+<!-- **New Rule:** Whoever in your group helped type the answer to the last question should not type the answer to the next one. Instead, just ask questions and give suggestions; give other members of your group a chance to type the answer. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q5-find-path">Q5：寻找路径</h3>
+
+
+<p>实现 <code>find_path</code>，它接受一棵标签各不相同的树 <code>t</code> 和一个值 <code>x</code>，返回一个列表，其中包含从 <code>t</code> 的根到标签为 <code>x</code> 的节点这条路径上各节点的标签。</p>
+
+<p>如果 <code>x</code> 不是 <code>t</code> 中的标签，返回 <code>None</code>。假定 <code>t</code> 的标签互不相同。</p>
+
+</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="find_path-input" style="height:432px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-find_path-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-find_path-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-find_path-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def find_path(t, x):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; t2 = tree(5, [tree(6), tree(7)])\n    &gt;&gt;&gt; t1 = tree(3, [tree(4), t2])\n    &gt;&gt;&gt; find_path(t1, 5)\n    [3, 5]\n    &gt;&gt;&gt; find_path(t1, 4)\n    [3, 4]\n    &gt;&gt;&gt; find_path(t1, 6)\n    [3, 5, 6]\n    &gt;&gt;&gt; find_path(t2, 6)\n    [5, 6]\n    &gt;&gt;&gt; print(find_path(t1, 2))\n    None\n    &quot;&quot;&quot;\n    if _______________________________________:\n        return _______________________________________\n    _______________________________________:\n        path = _______________________________________\n        if path:\n            return _______________________________________\n    return None\n', "python", "find_path-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def find_path(t, x):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; t2 = tree(5, [tree(6), tree(7)])
+    &gt;&gt;&gt; t1 = tree(3, [tree(4), t2])
+    &gt;&gt;&gt; find_path(t1, 5)
+    [3, 5]
+    &gt;&gt;&gt; find_path(t1, 4)
+    [3, 4]
+    &gt;&gt;&gt; find_path(t1, 6)
+    [3, 5, 6]
+    &gt;&gt;&gt; find_path(t2, 6)
+    [5, 6]
+    &gt;&gt;&gt; print(find_path(t1, 2))
+    None
+    &quot;&quot;&quot;
+    if label(t) == x:
+        return [label(t)]
+    for b in branches(t):
+        path = find_path(b, x)
+        if path:
+            return [label(t)] + path
+    return None</code></pre>
+
+            </div>
+        
+
+<div class="sol-highlight">
+基线条件返回的值 <code>[label(t)]</code> 创建了一个单元素列表，表示一条从 <code>t</code> 的根出发、
+也终止于根的路径上的标签，因为根的标签正是 <code>x</code>。
+
+<p>赋值语句 <code>path = find_path(b, x)</code> 让这次递归调用的返回值可以被使用两次：
+一次用来检查它是否为 <code>None</code>（None 是假值），另一次用来构造更长的列表。</p>
+
+<p>对于树 <code>t</code> 和列表 <code>path</code>，表达式 <code>[label(t)] + path</code> 生成一个更长的列表，
+它以 <code>t</code> 的标签开头，后面接着 <code>path</code> 中的元素。</p>
+
+</div>
+
+</p>
+
+<!-- **Description Time!** When your group has completed this question, it's time to
+describe why this function does not have a base case that uses <code>is_leaf</code>. If you
+can't figure it out, talk to a TA. -->
+
+<div class="page-break"></div>
+
+<!-- # Big Word Search
+
+For each person, the rest of the group should try to guess their *big word*
+(from the Getting Started section). The group only gets one guess. After they
+guess, reveal your *big word* and how many times you used it during discussion. -->
+
+<!-- Tree problems often appear on exams. Here's one: -->
+
+
+<h3 id="q6-pruning-leaves">Q6：修剪叶子</h3>
+
+
+<p>实现 <code>prune_leaves</code>，它接受一棵树 <code>t</code> 和一个值的元组 <code>vals</code>，返回 <code>t</code> 的一个版本，其中所有标签在 <code>vals</code> 中的<strong>叶子</strong>都被删除。不要删除非叶节点，也不要删除不匹配 <code>vals</code> 中任何项的叶子。如果修剪后树中不再有任何节点，返回 <code>None</code>。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="disc04-q6-input" style="height:630px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-disc04-q6-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-disc04-q6-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-disc04-q6-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def prune_leaves(t, vals):\n\n&quot;&quot;&quot;Return a version of t (a new tree) with all leaves that have a label\nthat appears in vals removed. Return None if the entire tree is\npruned away.\n\n&gt;&gt;&gt; t = tree(2)\n&gt;&gt;&gt; print(prune_leaves(t, (1, 2)))\nNone\n&gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])\n&gt;&gt;&gt; print_tree(numbers)\n1\n  2\n  3\n    4\n    5\n  6\n    7\n&gt;&gt;&gt; print_tree(prune_leaves(numbers, (3, 4, 6, 7)))\n1\n  2\n  3\n    5\n  6\n&quot;&quot;&quot;\n"*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n', "scheme", "disc04-q6-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>解答</b>
+                def prune_leaves(t, vals):
+
+<pre><code>&quot;&quot;&quot;Return a version of t (a new tree) with all leaves that have a label
+that appears in vals removed. Return None if the entire tree is
+pruned away.
+
+&gt;&gt;&gt; t = tree(2)
+&gt;&gt;&gt; print(prune_leaves(t, (1, 2)))
+None
+&gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+&gt;&gt;&gt; print_tree(numbers)
+1
+  2
+  3
+    4
+    5
+  6
+    7
+&gt;&gt;&gt; print_tree(prune_leaves(numbers, (3, 4, 6, 7)))
+1
+  2
+  3
+    5
+  6
+&quot;&quot;&quot;
+if is_leaf(t) and (label(t) in vals):
+  return None
+new_branches = []
+for b in branches(t):
+  new_branch = prune_leaves(b, vals)
+  if new_branch:
+    new_branches.append(new_branch)
+return tree(label(t), new_branches)
+</code></pre>
+
+            </div>
+        
+
+<p><img class="img-responsive center-block" src="https://thumbs.dreamstime.com/b/happy-playful-penguin-waving-dancing-joy-silhouette-ai-generated-detailed-illustration-its-flippers-463465826.jpg" alt=" width="10%" height="></p>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lists">列表</a></li>
+  <ul>
+    <li><a href="#q1-even-weighted">Q1：偶数加权</a></li>
+  </ul>
+  <li><a href="#dictionaries">字典</a></li>
+  <ul>
+    <li><a href="#q2-happy-givers">Q2：快乐互赠者</a></li>
+  </ul>
+  <li><a href="#trees">树</a></li>
+  <ul>
+    <li><a href="#q3-warm-up">Q3：热身</a></li>
+    <li><a href="#q4-has-path">Q4：是否存在路径</a></li>
+    <li><a href="#q5-find-path">Q5：寻找路径</a></li>
+    <li><a href="#q6-pruning-leaves">Q6：修剪叶子</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

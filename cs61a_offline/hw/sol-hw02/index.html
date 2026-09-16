@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>作业 2 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+作业 2 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw02.zip" class="label label-outline">hw02.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<p>你可以在 <a href="hw02.py">hw02.py</a> 中找到所有题目的解答。</p>
+
+    
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+
+<h2 id="recursion">递归</h2>
+
+
+
+<h3 id="q1-num-eights">Q1：8 的个数</h3>
+
+
+<p>写一个递归函数 <code>num_eights</code>，接收一个正整数 <code>num</code>，返回数字 8 在 <code>num</code> 中出现的次数。</p>
+
+<blockquote><p><strong>重要：</strong>使用递归；如果你使用任何赋值语句或循环，测试都会失败。（你可以定义新函数，但那里也不要写赋值语句。）</p></blockquote>
+
+<solution>
+
+<pre><code>def num_eights(num: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Returns the number of times 8 appears as a digit of num.
+
+    &gt;&gt;&gt; num_eights(3)
+    0
+    &gt;&gt;&gt; num_eights(8)
+    1
+    &gt;&gt;&gt; num_eights(88888888)
+    8
+    &gt;&gt;&gt; num_eights(2638)
+    1
+    &gt;&gt;&gt; num_eights(86380)
+    2
+    &gt;&gt;&gt; num_eights(12345)
+    0
+    &gt;&gt;&gt; num_eights(8782089)
+    3
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban all assignment statements
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;num_eights&#x27;,
+    ...       [&#x27;Assign&#x27;, &#x27;AnnAssign&#x27;, &#x27;AugAssign&#x27;, &#x27;NamedExpr&#x27;, &#x27;For&#x27;, &#x27;While&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if num % 10 == 8:
+        return 1 + num_eights(num // 10)
+    elif num &lt; 10:
+        return 0
+    else:
+        return num_eights(num // 10)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q num_eights<button id="copy-code-python3ok-qnum_eights" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qnum_eights").onclick = () => copyCode('python3 ok -q num_eights', "copy-code-python3ok-qnum_eights");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>这个问题的等价迭代版本大致是这样：</p>
+
+<pre><code>total = 0
+while num &gt; 0:
+    if num % 10 == 8:
+        total = total + 1
+    num = num // 10
+return total</code></pre>
+
+<p>主要思路是逐位检查数字是否为 8。递归解法
+与之类似，只不过你依赖递归调用来统计
+数字其余部分中 8 的个数。然后，把它加到
+你在当前数位中看到的 8 的个数上。</p>
+
+</div>
+
+
+<h3 id="q2-digit-distance">Q2：数字距离</h3>
+
+
+<p>对于给定的整数，<em>数字距离</em>是相邻数字之间绝对差的和。例如：</p>
+
+<ul>
+  <li><code>61</code> 的数字距离是 <code>5</code>，因为 <code>6 &#x2d; 1</code> 的绝对值是 <code>5</code>。</li>
+  <li><code>71253</code> 的数字距离是 <code>12</code>（<code>abs(7&#x2d;1) + abs(1&#x2d;2) + abs(2&#x2d;5) + abs(5&#x2d;3)</code> = <code>6 + 1 + 3 + 2</code>）。</li>
+  <li><code>6</code> 的数字距离是 <code>0</code>，因为没有相邻的数字对。</li>
+</ul>
+
+<p>写一个函数求一个正整数的数字距离。你必须使用递归，否则测试会失败。</p>
+
+<solution>
+
+<pre><code>def digit_distance(num: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Determines the digit distance of num.
+
+    &gt;&gt;&gt; digit_distance(3)
+    0
+    &gt;&gt;&gt; digit_distance(777) # 0 + 0
+    0
+    &gt;&gt;&gt; digit_distance(314) # 2 + 3
+    5
+    &gt;&gt;&gt; digit_distance(31415926535) # 2 + 3 + 3 + 4 + ... + 2
+    32
+    &gt;&gt;&gt; digit_distance(3464660003)  # 1 + 2 + 2 + 2 + ... + 3
+    16
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban all loops
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;digit_distance&#x27;,
+    ...       [&#x27;For&#x27;, &#x27;While&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if num &lt; 10:
+        return 0
+    return abs(num % 10 &#x2d; (num // 10) % 10) + digit_distance(num // 10)
+
+# Alternate solution 1
+def digit_distance_alt(num):
+    def helper(prev, num):
+        if num == 0:
+            return 0
+        dist = abs(prev &#x2d; num % 10)
+        return dist + helper(num % 10, num // 10)
+    return helper(num % 10, num // 10)
+
+# Alternate solution 2
+def digit_distance_alt_2(num):
+    def helper(dist, prev, num):
+        if num == 0:
+            return dist
+        dist += abs(prev &#x2d; num % 10)
+        prev = num % 10
+        num //= 10
+        return helper(dist, prev, num)
+    return helper(0, num % 10, num // 10)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q digit_distance<button id="copy-code-python3ok-qdigit_distance" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdigit_distance").onclick = () => copyCode('python3 ok -q digit_distance', "copy-code-python3ok-qdigit_distance");
+        </script>
+        <br/>
+
+
+<h3 id="q3-interleaved-sum">Q3：交错求和</h3>
+
+
+<p>写一个函数 <code>interleaved_sum</code>，它接收一个数 <code>num</code> 和两个单参数函数：<code>f_odd</code> 和 <code>f_even</code>。它返回从 1 到 <code>num</code>（<em>含</em>）中，把 <code>f_odd</code> 作用在每个奇数上、把 <code>f_even</code> 作用在每个偶数上之后所得的总和。</p>
+
+<p>例如，执行 <code>interleaved_sum(5, lambda x: x, lambda x: x * x)</code> 返回 <code>1 + 2*2 + 3 + 4*4 + 5 = 29</code>。</p>
+
+<blockquote><p><strong>重要：</strong>实现这个函数时不要使用任何循环，也不要直接判断一个数是奇数还是偶数（不要用 <code>%</code>）。与其直接检查一个数是偶数还是奇数，不如从 1 开始，因为你知道 1 是奇数。</p>
+
+<p><strong>提示：</strong>引入一个内部辅助函数，它接收一个奇数 <code>k</code>，计算从 <code>k</code> 到 <code>num</code>（含 <code>num</code>）的交错和。你也可以使用相互递归。</p></blockquote>
+
+<solution>
+
+<pre><code>def interleaved_sum(num: int, f_odd, f_even) &#x2d;&gt; int:
+    &quot;&quot;&quot;Compute the sum f_odd(1) + f_even(2) + f_odd(3) + ..., up
+    to num.
+
+    &gt;&gt;&gt; identity = lambda x: x
+    &gt;&gt;&gt; square = lambda x: x * x
+    &gt;&gt;&gt; triple = lambda x: x * 3
+    &gt;&gt;&gt; interleaved_sum(5, identity, square) # 1   + 2*2 + 3   + 4*4 + 5
+    29
+    &gt;&gt;&gt; interleaved_sum(5, square, identity) # 1*1 + 2   + 3*3 + 4   + 5*5
+    41
+    &gt;&gt;&gt; interleaved_sum(4, triple, square)   # 1*3 + 2*2 + 3*3 + 4*4
+    32
+    &gt;&gt;&gt; interleaved_sum(4, square, triple)   # 1*1 + 2*3 + 3*3 + 4*3
+    28
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;interleaved_sum&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;, &#x27;Mod&#x27;]) # ban loops and %
+    True
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;interleaved_sum&#x27;, [&#x27;BitAnd&#x27;, &#x27;BitOr&#x27;, &#x27;BitXor&#x27;]) # ban bitwise operators, don&#x27;t worry about these if you don&#x27;t know what they are
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    def sum_from(k):
+        if k &gt; num:
+            return 0
+        elif k == num:
+            return f_odd(k)
+        else:
+            return f_odd(k) + f_even(k+1) + sum_from(k + 2)
+    return sum_from(1)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q interleaved_sum<button id="copy-code-python3ok-qinterleaved_sum" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qinterleaved_sum").onclick = () => copyCode('python3 ok -q interleaved_sum', "copy-code-python3ok-qinterleaved_sum");
+        </script>
+        <br/>
+
+
+<h2 id="tree-recursion">树形递归</h2>
+
+
+
+<h3 id="q4-count-dollars">Q4：数美元</h3>
+
+
+<p>给定一个正整数 <code>sum_needed</code>，如果一组美元纸币的金额之和等于 <code>sum_needed</code>，就说这组纸币能凑出 <code>sum_needed</code>。这里我们使用美国常见的纸币面额：1、5、10、20、50 和 100。例如，下面这些组合都能凑出 <code>15</code>：</p>
+
+<ul>
+  <li>15 张 1 美元</li>
+  <li>10 张 1 美元、1 张 5 美元</li>
+  <li>5 张 1 美元、2 张 5 美元</li>
+  <li>5 张 1 美元、1 张 10 美元</li>
+  <li>3 张 5 美元</li>
+  <li>1 张 5 美元、1 张 10 美元</li>
+</ul>
+
+<p>因此，凑出 <code>15</code> 共有 6 种方式。写一个<strong>递归</strong>函数 <code>count_dollars</code>，接收一个正整数 <code>sum_needed</code>，返回用 1、5、10、20、50 和 100 美元纸币凑出 <code>sum_needed</code> 的方式数。</p>
+
+<p><em>在你的解答中使用 <code>next_smaller_dollar</code>：<code>next_smaller_dollar</code> 会返回输入面额的下一个更小面额（例如 <code>next_smaller_dollar(5)</code> 是 <code>1</code>）。如果不存在下一个面额，该函数会返回 <code>None</code>。</em></p>
+
+<blockquote><p><strong>重要：</strong>必须使用递归；如果使用循环，测试会失败。</p>
+
+<p><strong>提示：</strong>
+参考 <code>count_partitions</code> 的 <a href="https://www.composingprograms.com/pages/17-recursive-functions.html#example-partitions">implementation</a>，它给出了如何用更小的部分累加到目标值的计数示例。
+如果你需要在递归调用之间跟踪多个值，可以考虑编写一个辅助函数。</p></blockquote>
+
+<solution>
+
+<pre><code>def next_smaller_dollar(bill: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Returns the next smaller bill in order.&quot;&quot;&quot;
+    if bill == 100:
+        return 50
+    if bill == 50:
+        return 20
+    if bill == 20:
+        return 10
+    elif bill == 10:
+        return 5
+    elif bill == 5:
+        return 1
+
+def count_dollars(sum_needed: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return the number of ways to make change.
+
+    &gt;&gt;&gt; count_dollars(15)  # 15 $1 bills, 10 $1 &amp; 1 $5 bills, ... 1 $5 &amp; 1 $10 bills
+    6
+    &gt;&gt;&gt; count_dollars(10)  # 10 $1 bills, 5 $1 &amp; 1 $5 bills, 2 $5 bills, 10 $1 bills
+    4
+    &gt;&gt;&gt; count_dollars(20)  # 20 $1 bills, 15 $1 &amp; $5 bills, ... 1 $20 bill
+    10
+    &gt;&gt;&gt; count_dollars(45)  # How many ways to make change for 45 dollars?
+    44
+    &gt;&gt;&gt; count_dollars(100) # How many ways to make change for 100 dollars?
+    344
+    &gt;&gt;&gt; count_dollars(200) # How many ways to make change for 200 dollars?
+    3274
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;count_dollars&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    def constrained_count(sum_needed, largest_bill):
+        if sum_needed == 0:
+            return 1
+        if sum_needed &lt; 0:
+            return 0
+        if largest_bill == None:
+            return 0
+        without_dollar_bill = constrained_count(sum_needed, next_smaller_dollar(largest_bill))
+        with_dollar_bill = constrained_count(sum_needed &#x2d; largest_bill, largest_bill)
+        return without_dollar_bill + with_dollar_bill
+    return constrained_count(sum_needed, 100)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q count_dollars<button id="copy-code-python3ok-qcount_dollars" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcount_dollars").onclick = () => copyCode('python3 ok -q count_dollars', "copy-code-python3ok-qcount_dollars");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>这与 <code>count_partitions</code> 问题非常相似，只有几处细微差别：</p>
+
+<ul>
+  <li>没有给出最大划分大小，所以我们需要创建一个辅助函数，它接收两个参数：当前需要的总和与纸币面值。</li>
+  <li>分划大小不是线性的。要得到下一个分划，你需要调用
+  <code>next_smaller_dollar</code>。</li>
+</ul>
+
+</div>
+
+
+<h2 id="sequences">序列</h2>
+
+
+
+<h3 id="q5-shuffle">Q5：洗牌</h3>
+
+
+<p>实现 <code>shuffle</code>，它接收一个元素个数为偶数的序列 <code>s</code>（例如列表或 range）。它返回一个新列表，把 <code>s</code> 前半部分的元素与后半部分的元素<em>交错排列</em>。它不会修改 <code>s</code>。</p>
+
+<p>把两个序列 <code>s0</code> 和 <code>s1</code> <em>交错排列</em>，就是创建一个新列表，依次包含 <code>s0</code> 的第一个元素、<code>s1</code> 的第一个元素、<code>s0</code> 的第二个元素、<code>s1</code> 的第二个元素，依此类推。例如，如果 <code>s = [1, 2, 3, 4, 5, 6]</code>，那么前半部分是 <code>s0 = [1, 2, 3]</code>，后半部分是 <code>s1 = [4, 5, 6]</code>，把 <code>s0</code> 和 <code>s1</code> 交错排列会得到 <code>[1, 4, 2, 5, 3, 6]</code>。</p>
+
+<solution>
+
+<pre><code>def shuffle(s: list) &#x2d;&gt; list:
+    &quot;&quot;&quot;Return a shuffled list that interleaves the two halves of s.
+
+    &gt;&gt;&gt; shuffle(range(6))
+    [0, 3, 1, 4, 2, 5]
+    &gt;&gt;&gt; letters = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;f&#x27;, &#x27;g&#x27;, &#x27;h&#x27;]
+    &gt;&gt;&gt; shuffle(letters)
+    [&#x27;a&#x27;, &#x27;e&#x27;, &#x27;b&#x27;, &#x27;f&#x27;, &#x27;c&#x27;, &#x27;g&#x27;, &#x27;d&#x27;, &#x27;h&#x27;]
+    &gt;&gt;&gt; shuffle(shuffle(letters))
+    [&#x27;a&#x27;, &#x27;c&#x27;, &#x27;e&#x27;, &#x27;g&#x27;, &#x27;b&#x27;, &#x27;d&#x27;, &#x27;f&#x27;, &#x27;h&#x27;]
+    &gt;&gt;&gt; letters  # Original list should not be modified
+    [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;f&#x27;, &#x27;g&#x27;, &#x27;h&#x27;]
+    &quot;&quot;&quot;
+    assert len(s) % 2 == 0, &#x27;len(seq) must be even&#x27;
+<div class="sol-highlight">    half = len(s) // 2
+    shuffled = []
+    for i in range(half):
+        shuffled.append(s[i])
+        shuffled.append(s[half + i])
+    return shuffled</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q shuffle<button id="copy-code-python3ok-qshuffle" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qshuffle").onclick = () => copyCode('python3 ok -q shuffle', "copy-code-python3ok-qshuffle");
+        </script>
+        <br/>
+
+
+<h3 id="q6-deep-map">Q6：深度映射</h3>
+
+
+<p><strong>定义：</strong><em>数字嵌套列表</em>是包含数字和列表的列表。它可能只包含数字、只包含列表，或者两者混合。其中的列表也必须是<em>数字嵌套列表</em>。例如：<code>[1, [2, [3]], 4]</code>、[1, 2, 3] 和 <code>[[1, 2], [3, 4]]</code> 都是<em>数字嵌套列表</em>。</p>
+
+<p>写一个函数 <code>deep_map</code>，它接收两个参数：一个数字嵌套列表 <code>s</code> 和一个单参数函数 <code>f</code>。它会<strong>就地</strong>修改 <code>s</code>，把 s 中的每个数字替换为对它调用 <code>f</code> 的结果。</p>
+
+<blockquote><p><strong>重要：</strong><code>deep_map</code> 返回 <code>None</code>，并且不应创建任何新列表。</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>提示：</strong>如果 <code>a</code> 是列表，<code>type(a) == list</code> 的求值结果为 <code>True</code>。</p></blockquote>
+
+<solution>
+
+<pre><code>def deep_map(f, s: list) &#x2d;&gt; list:
+    &quot;&quot;&quot;Replace all non&#x2d;list elements x with f(x) in the nested list s.
+
+    &gt;&gt;&gt; six = [1, 2, [3, [4], 5], 6]
+    &gt;&gt;&gt; deep_map(lambda x: x * x, six)
+    &gt;&gt;&gt; six
+    [1, 4, [9, [16], 25], 36]
+    &gt;&gt;&gt; # Check that you&#x27;re not making new lists
+    &gt;&gt;&gt; s = [3, [1, [4, [1]]]]
+    &gt;&gt;&gt; s1 = s[1]
+    &gt;&gt;&gt; s2 = s1[1]
+    &gt;&gt;&gt; s3 = s2[1]
+    &gt;&gt;&gt; deep_map(lambda x: x + 1, s)
+    &gt;&gt;&gt; s
+    [4, [2, [5, [2]]]]
+    &gt;&gt;&gt; s1 is s[1]
+    True
+    &gt;&gt;&gt; s2 is s1[1]
+    True
+    &gt;&gt;&gt; s3 is s2[1]
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    for i in range(len(s)):
+        if type(s[i]) == list:
+            deep_map(f, s[i])
+        else:
+            s[i] = f(s[i])</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q deep_map<button id="copy-code-python3ok-qdeep_map" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdeep_map").onclick = () => copyCode('python3 ok -q deep_map', "copy-code-python3ok-qdeep_map");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="optional-questions">选做题</h1>
+
+
+<blockquote><p>这些是选做题。即使不做，本次作业仍然可以拿到全部学分。不过它们是不错的练习，建议还是做一下！</p></blockquote>
+
+
+<h3 id="q7-count-dollars-upward">Q7：从大到小数美元</h3>
+
+
+<p>写一个<strong>递归</strong>函数 <code>count_dollars_upward</code>，它与 <code>count_dollars</code> 一样，只是使用 <code>next_larger_dollar</code>，后者会返回输入面额的下一个更大面额（例如 <code>next_larger_dollar(5)</code> 是 <code>10</code>）。<em>如果不存在下一个面额，该函数会返回 <code>None</code>。</em></p>
+
+<blockquote><p><strong>重要：</strong>必须使用递归；如果使用循环，测试会失败。</p></blockquote>
+
+<solution>
+
+<pre><code>def next_larger_dollar(bill: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Returns the next larger bill in order.&quot;&quot;&quot;
+    if bill == 1:
+        return 5
+    elif bill == 5:
+        return 10
+    elif bill == 10:
+        return 20
+    elif bill == 20:
+        return 50
+    elif bill == 50:
+        return 100
+
+def count_dollars_upward(sum_needed: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return the number of ways to make change using bills.
+
+    &gt;&gt;&gt; count_dollars_upward(15)  # 15 $1 bills, 10 $1 &amp; 1 $5 bills, ... 1 $5 &amp; 1 $10 bills
+    6
+    &gt;&gt;&gt; count_dollars_upward(10)  # 10 $1 bills, 5 $1 &amp; 1 $5 bills, 2 $5 bills, 10 $1 bills
+    4
+    &gt;&gt;&gt; count_dollars_upward(20)  # 20 $1 bills, 15 $1 &amp; $5 bills, ... 1 $20 bill
+    10
+    &gt;&gt;&gt; count_dollars_upward(45)  # How many ways to make change for 45 dollars?
+    44
+    &gt;&gt;&gt; count_dollars_upward(100) # How many ways to make change for 100 dollars?
+    344
+    &gt;&gt;&gt; count_dollars_upward(200) # How many ways to make change for 200 dollars?
+    3274
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;count_dollars_upward&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    def constrained_count(sum_needed, smallest_bill):
+        if sum_needed == 0:
+            return 1
+        if sum_needed &lt; 0:
+            return 0
+        if smallest_bill == None:
+            return 0
+        without_dollar_bill = constrained_count(sum_needed, next_larger_dollar(smallest_bill))
+        with_dollar_bill = constrained_count(sum_needed &#x2d; smallest_bill, smallest_bill)
+        return without_dollar_bill + with_dollar_bill
+    return constrained_count(sum_needed, 1)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q count_dollars_upward<button id="copy-code-python3ok-qcount_dollars_upward" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcount_dollars_upward").onclick = () => copyCode('python3 ok -q count_dollars_upward', "copy-code-python3ok-qcount_dollars_upward");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>这与 <code>count_partitions</code> 问题非常相似，只有几处细微差别：</p>
+
+<ul>
+  <li>没有给出最大划分大小，所以我们需要创建一个辅助函数，它接收两个参数：当前需要的总和与纸币面值。</li>
+  <li>分划大小不是线性的。要得到下一个分划，你需要调用
+  <code>next_larger_dollar</code>。</li>
+</ul>
+
+</div>
+
+
+<h2 id="exam-practice">历年考题</h2>
+
+
+<p>下面是一些往年考试中的相关题目，供你练习。这些是选做题，无法提交。</p>
+
+<ol>
+  <li>2017 年秋季 MT1 Q4a：<a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/exam/fa17/mt1/61a-fa17-mt1.pdf#page=5">Digital</a></li>
+  <li>2019 年秋季期末 Q6b：<a href="https://inst.eecs.berkeley.edu/~cs61a/sp21/exam/fa19/final/61a-fa19-final.pdf#page=6">Palindromes</a></li>
+</ol>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#recursion">递归</a></li>
+    <ul>
+      <li><a href="#q1-num-eights">Q1：8 的个数</a></li>
+      <li><a href="#q2-digit-distance">Q2：数字距离</a></li>
+      <li><a href="#q3-interleaved-sum">Q3：交错求和</a></li>
+    </ul>
+    <li><a href="#tree-recursion">树形递归</a></li>
+    <ul>
+      <li><a href="#q4-count-dollars">Q4：数美元</a></li>
+    </ul>
+    <li><a href="#sequences">序列</a></li>
+    <ul>
+      <li><a href="#q5-shuffle">Q5：洗牌</a></li>
+      <li><a href="#q6-deep-map">Q6：深度映射</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#optional-questions">选做题</a></li>
+  <ul>
+    <li><a href="#q7-count-dollars-upward">Q7：从大到小数美元</a></li>
+  </ul>
+  <ul>
+    <li><a href="#exam-practice">历年考题</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

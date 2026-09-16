@@ -1,0 +1,482 @@
+[
+ {
+  "id": 240,
+  "en": "Check if player won"
+ },
+ {
+  "id": 241,
+  "en": "Simulate an attack on the ant colony. This is called by the GUI to play the game."
+ },
+ {
+  "id": 242,
+  "en": "Bees invade from hive"
+ },
+ {
+  "id": 243,
+  "en": "After yielding, players have time to place ants"
+ },
+ {
+  "id": 244,
+  "en": "After yielding, wait for throw leaf animation to play, then ask bees to take action"
+ },
+ {
+  "id": 245,
+  "en": "Place an ant if enough food is available."
+ },
+ {
+  "id": 246,
+  "en": "This method is called by the current strategy to deploy ants."
+ },
+ {
+  "id": 247,
+  "en": "Remove an Ant from the game."
+ },
+ {
+  "id": 248,
+  "en": "Display a notification! Decorated in gui.py for GUI support"
+ },
+ {
+  "id": 249,
+  "en": "Play the sound effect when ants win! Decorated in gui.py"
+ },
+ {
+  "id": 250,
+  "en": "AntHomeBase at the end of the tunnel, where the queen normally resides."
+ },
+ {
+  "id": 251,
+  "en": "Add an Insect to this Place."
+ },
+ {
+  "id": 252,
+  "en": "Can't actually add Ants to a AntHomeBase. However, if a Bee attempts to enter the AntHomeBase, a AntsLoseException is raised, signaling the end of a game."
+ },
+ {
+  "id": 253,
+  "en": "Signal that Ants win."
+ },
+ {
+  "id": 254,
+  "en": "Signal that Ants lose."
+ },
+ {
+  "id": 255,
+  "en": "Return a list of all implemented Ant classes."
+ },
+ {
+  "id": 256,
+  "en": "Return a list of all implemented Bee classes."
+ },
+ {
+  "id": 257,
+  "en": "Base game over Exception."
+ },
+ {
+  "id": 258,
+  "en": "Exception to signal that the ants win."
+ },
+ {
+  "id": 259,
+  "en": "Exception to signal that the ants lose."
+ },
+ {
+  "id": 260,
+  "en": "Layouts #"
+ },
+ {
+  "id": 261,
+  "en": "Register a mix of wet and and dry places."
+ },
+ {
+  "id": 262,
+  "en": "Register dry tunnels."
+ },
+ {
+  "id": 263,
+  "en": "Assault Plans #"
+ },
+ {
+  "id": 264,
+  "en": "The Bees' plan of attack for the colony.  Attacks come in timed waves."
+ },
+ {
+  "id": 265,
+  "en": "An AssaultPlan is a dictionary from times (int) to waves (list of Bees)."
+ },
+ {
+  "id": 266,
+  "en": "Add a wave at time with count Bees that have the specified health."
+ },
+ {
+  "id": 267,
+  "en": "Place all Bees in the beehive and return the list of Bees."
+ },
+ {
+  "id": 268,
+  "en": "Adding 1 bee of health 3 at timestamp TIME"
+ },
+ {
+  "id": 269,
+  "en": "Assing 1 wasp of health 3 at timestamp 4"
+ },
+ {
+  "id": 270,
+  "en": "Adding 2 bees (1 bee for time = 3, 5) of health 3 at timestamp 3, 5, 7, 9, 11, 13, 15"
+ },
+ {
+  "id": 271,
+  "en": "Change number of bees to 1"
+ },
+ {
+  "id": 272,
+  "en": "Adding 1 Wasp of health 2 at time 6, 9, 12"
+ },
+ {
+  "id": 273,
+  "en": "Adding 1 Ninja of health 1 at time 7, 10"
+ },
+ {
+  "id": 274,
+  "en": "Adding 1 Wasp (health 3) and 1 Ninja (health 2) at time 12, 14"
+ },
+ {
+  "id": 275,
+  "en": "Adding 2 Wasp (health 3) + 2 Ninja (health 3) at time 13, 15, 17"
+ },
+ {
+  "id": 276,
+  "en": "Adding 2 bees of health 5 at timestamp 16, 18, 20, 22"
+ },
+ {
+  "id": 277,
+  "en": "Adding 2 bees of health 6 at timestamp 24, 26, 28, 30"
+ },
+ {
+  "id": 278,
+  "en": "Adding 2 Ninja of health 3 at time 20, 23, 26, 29"
+ },
+ {
+  "id": 279,
+  "en": "Adding 1 Wasp of health 5 at time 21, 23, 25"
+ },
+ {
+  "id": 280,
+  "en": "Adding 2 Wasp of health 6 at time 28, 29, 30"
+ },
+ {
+  "id": 281,
+  "en": "Adding 2 bees (1 bee for time = 3) of health 3 at timestamp 3, 5, 7"
+ },
+ {
+  "id": 282,
+  "en": "Adding 3 bees of health 3 at timestamp 9, 11, 13, 15"
+ },
+ {
+  "id": 283,
+  "en": "Adding 1 Wasp of health 2 at time 5, 8"
+ },
+ {
+  "id": 284,
+  "en": "Adding 3 Ninja of health 1 at time 7, 9"
+ },
+ {
+  "id": 285,
+  "en": "Adding 2 Wasp (health 3) and 1 Ninja (health 3) at time 10, 12, 14"
+ },
+ {
+  "id": 286,
+  "en": "Adding 3 Wasp (health 3) + 3 Ninja (health 3) at time 13, 15, 17"
+ },
+ {
+  "id": 287,
+  "en": "Adding 3 bees of health 5 at timestamp 16, 18, 20, 22"
+ },
+ {
+  "id": 288,
+  "en": "Adding 3 bees of health 6 at timestamp 24, 26, 28, 30"
+ },
+ {
+  "id": 289,
+  "en": "Adding 2 Ninja of health 3 at time 20, 22, 24, 26, 28"
+ },
+ {
+  "id": 290,
+  "en": "Adding 2 Wasp of health 6 at time 21, 23, 25"
+ },
+ {
+  "id": 291,
+  "en": "Adding 4 Wasp of health 8 at time 28, 29, 30"
+ },
+ {
+  "id": 292,
+  "en": "Adding 2 bees of health 3 at timestamp 3, 5, 7"
+ },
+ {
+  "id": 293,
+  "en": "Adding 1 Wasp of health 2 at time 5, 7, 9, 11"
+ },
+ {
+  "id": 294,
+  "en": "Adding 3 Ninja of health 2 at time 7, 9, 11"
+ },
+ {
+  "id": 295,
+  "en": "Adding 2 Wasp (health 3) and 2 Ninja (health 3) at time 10, 12, 14"
+ },
+ {
+  "id": 296,
+  "en": "Adding 3 Wasp (health 4) + 3 Ninja (health 3) at time 13, 15, 17"
+ },
+ {
+  "id": 297,
+  "en": "Adding 3 bees of health 6 at timestamp 16, 18, 20, 22, 24"
+ },
+ {
+  "id": 298,
+  "en": "Adding 4 bees of health 6 at timestamp 26, 28, 30"
+ },
+ {
+  "id": 299,
+  "en": "Adding 2 Wasp of health 8 at time 21, 23, 25"
+ },
+ {
+  "id": 300,
+  "en": "Adding 4 Wasp of health 10 at time 28, 29, 30"
+ },
+ {
+  "id": 301,
+  "en": "Reads command-line arguments and returns a game state with these options."
+ },
+ {
+  "id": 302,
+  "en": "The UCB module contains functions specific to projects at UC Berkeley."
+ },
+ {
+  "id": 303,
+  "en": "Call fn with command line arguments.  Used as a decorator."
+ },
+ {
+  "id": 304,
+  "en": "The main decorator marks the function that starts a program. For example,"
+ },
+ {
+  "id": 305,
+  "en": "@main def my_run_function(): # function body"
+ },
+ {
+  "id": 306,
+  "en": "Use this instead of the typical __name__ == \"__main__\" predicate."
+ },
+ {
+  "id": 307,
+  "en": "Discard the script name from command line"
+ },
+ {
+  "id": 308,
+  "en": "Call the main function"
+ },
+ {
+  "id": 309,
+  "en": "A decorator that prints a function's name, its arguments, and its return values each time the function is called. For example,"
+ },
+ {
+  "id": 310,
+  "en": "@trace def compute_something(x, y): # function body"
+ },
+ {
+  "id": 311,
+  "en": "Here, print out the return value."
+ },
+ {
+  "id": 312,
+  "en": "Print an indented message (used with trace)."
+ },
+ {
+  "id": 313,
+  "en": "Print information about the current line of code."
+ },
+ {
+  "id": 314,
+  "en": "Start an interactive interpreter session in the current environment."
+ },
+ {
+  "id": 315,
+  "en": "On Unix: <Control>-D exits the interactive session and returns to normal execution. In Windows: <Control>-Z <Enter> exits the interactive session and returns to normal execution."
+ },
+ {
+  "id": 316,
+  "en": "evaluate commands in current namespace"
+ },
+ {
+  "id": 317,
+  "en": "exit on interrupt"
+ },
+ {
+  "id": 318,
+  "en": "Typing test implementation"
+ },
+ {
+  "id": 319,
+  "en": "Phase 1 #"
+ },
+ {
+  "id": 320,
+  "en": "Return the Kth paragraph from PARAGRAPHS for which the SELECT function returns True. If there are fewer than K such paragraphs, return an empty string."
+ },
+ {
+  "id": 321,
+  "en": "Arguments: paragraphs: a list of strings representing paragraphs select: a function that returns True for paragraphs that meet its criteria k: an integer representing which paragraph to return"
+ },
+ {
+  "id": 322,
+  "en": "Return a function that takes in a paragraph and returns whether that paragraph contains one of the words in keywords."
+ },
+ {
+  "id": 323,
+  "en": "Arguments: keywords: a list of keywords"
+ },
+ {
+  "id": 324,
+  "en": "Return the accuracy (percentage of words entered correctly) of ENTERED compared to the corresponding words in SOURCE."
+ },
+ {
+  "id": 325,
+  "en": "Arguments: entered: a string that may contain typos source: a model string without errors"
+ },
+ {
+  "id": 326,
+  "en": "Return the words-per-minute (WPM) of the ENTERED string."
+ },
+ {
+  "id": 327,
+  "en": "Arguments: entered: an entered string elapsed: an amount of time in seconds"
+ },
+ {
+  "id": 328,
+  "en": "Phase 4 (EC) #"
+ },
+ {
+  "id": 329,
+  "en": "A general memoization decorator."
+ },
+ {
+  "id": 330,
+  "en": "convert *args into a tuple representation"
+ },
+ {
+  "id": 331,
+  "en": "A memoization function."
+ },
+ {
+  "id": 332,
+  "en": "Phase 2 #"
+ },
+ {
+  "id": 333,
+  "en": "Returns the element of WORD_LIST that has the smallest difference from ENTERED_WORD based on DIFF_FUNCTION. If multiple words are tied for the smallest difference, return the one that appears closest to the front of WORD_LIST. If the lowest difference is greater than LIMIT, return ENTERED_WORD instead."
+ },
+ {
+  "id": 334,
+  "en": "Arguments: entered_word: a string representing a word that may contain typos word_list: a list of strings representing source words diff_function: a function quantifying the difference between two words limit: a number"
+ },
+ {
+  "id": 335,
+  "en": "A diff function for autocorrect that determines how many letters in ENTERED need to be substituted to create SOURCE, then adds the difference in their lengths to this value and returns the result."
+ },
+ {
+  "id": 336,
+  "en": "Arguments: entered: a starting word source: a string representing a desired goal word limit: a number representing an upper bound on the number of chars that must change"
+ },
+ {
+  "id": 337,
+  "en": "A diff function for autocorrect that computes the edit distance from ENTERED to SOURCE. This function takes in a string ENTERED, a string SOURCE, and a number LIMIT."
+ },
+ {
+  "id": 338,
+  "en": "Arguments: entered: a starting word source: a string representing a desired goal word limit: a number representing an upper bound on the number of edits"
+ },
+ {
+  "id": 339,
+  "en": "Base cases should go here, you may add more base cases as needed."
+ },
+ {
+  "id": 340,
+  "en": "Recursive cases should go below here"
+ },
+ {
+  "id": 341,
+  "en": "Feel free to remove or add additional cases"
+ },
+ {
+  "id": 342,
+  "en": "Fill in these lines"
+ },
+ {
+  "id": 343,
+  "en": "Ignore the line below"
+ },
+ {
+  "id": 344,
+  "en": "A diff function that takes in a string ENTERED, a string SOURCE, and a number LIMIT. If you implement this function, it will be used."
+ },
+ {
+  "id": 345,
+  "en": "REPLACE THIS WITH YOUR LIMIT"
+ },
+ {
+  "id": 346,
+  "en": "Phase 3 #"
+ },
+ {
+  "id": 347,
+  "en": "Upload a report of your id and progress so far to the multiplayer server. Returns the progress so far."
+ },
+ {
+  "id": 348,
+  "en": "Arguments: entered: a list of the words entered so far source: a list of the words in the typing source user_id: a number representing the id of the current user upload: a function used to upload progress to the multiplayer server"
+ },
+ {
+  "id": 349,
+  "en": "Return a dictionary {'words': words, 'times': times} where times is a list of lists that stores the durations it took each player to type each word in words."
+ },
+ {
+  "id": 350,
+  "en": "Arguments: words: a list of words, in the order they are entered. timestamps_per_player: A list of lists of timestamps including the time each player started typing, followed by the time each player finished typing each word."
+ },
+ {
+  "id": 351,
+  "en": "A shorter name (for convenience)"
+ },
+ {
+  "id": 352,
+  "en": "You may remove this line"
+ },
+ {
+  "id": 353,
+  "en": "Return a list of lists indicating which words each player entered fastest. In case of a tie, the player with the lower index is considered to be the one who entered it the fastest."
+ },
+ {
+  "id": 354,
+  "en": "Arguments: words_and_times: a dictionary {'words': words, 'times': times} where words is a list of the words entered and times is a list of lists of times spent by each player typing each word."
+ },
+ {
+  "id": 355,
+  "en": "verify that the input is properly formed"
+ },
+ {
+  "id": 356,
+  "en": "contains an *index* for each player"
+ },
+ {
+  "id": 357,
+  "en": "contains an *index* for each word"
+ },
+ {
+  "id": 358,
+  "en": "Check that words_and_times is a {'words': words, 'times': times} dictionary in which each element of times is a list of numbers the same length as words."
+ },
+ {
+  "id": 359,
+  "en": "Return the time it took player_num to type the word at word_index, given a list of lists of times returned by time_per_word."
+ }
+]

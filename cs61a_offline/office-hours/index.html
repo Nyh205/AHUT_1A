@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../assets/js/hl.js"></script>
+    <script src="../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/mono-blue.css">
+    <link rel="icon" href="../assets/images/favicon.ico">
+
+    
+    <link rel="stylesheet" href="../css/fullcalendar.min.css">
+    <link rel="stylesheet" href="../assets/css/calendar.css">
+
+
+    <title>
+Office Hours | AHUT_1A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<header>
+  <h1>Office Hours</h1>
+</header>
+
+<p>When you come to office hours, join the <b><a
+href="https://oh.cs61a.org">office hours queue</a></b>. A member of the course staff
+will call your name and answer your questions. While most students come to
+office hours for assignment help, you're welcome to come ask any question or
+discuss any topic related to the course.</p>
+
+<!-- OH Public & Lectures & Holidays in United States -->
+<iframe src="https://calendar.google.com/calendar/embed?src=c_9c3039f083a8220d44474e452d3bdd82d192a92426ac96fae5ea3832d30b6def%40group.calendar.google.com&ctz=America%2FLos_Angeles&color=%233F51B5&color=%239E69AF&color=%230B8043&mode=WEEK&showCalendars=0&showTabs=0&showPrint=0" style="border-width:0; margin-top:30px" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../index.html">CS 61A</a></h3>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="../js/gcal.js"></script>
+    <script type="text/javascript" src="../assets/js/config.js"></script>
+    <script type="text/javascript" src="../assets/js/calendar.js"></script>
+
+  </body>
+</html>

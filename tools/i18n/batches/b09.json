@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1350,
+  "en": "Implement wpm, which computes the words per minute, a measure of typing\nspeed, given a string entered and the amount of elapsed time in seconds.\nDespite its name, words per minute is not based on the number of words typed,\nbut instead the number of groups of 5 characters, so that a typing test is not\nbiased by the length of words. The formula for words per minute is calculated by dividing the total number of characters typed (including spaces) by 5 (the average word length) and then dividing the result by the elapsed time in minutes."
+ },
+ {
+  "id": 1351,
+  "en": "For example, the string &quot;I am glad!&quot; contains ten characters\n(not including the quotation marks). The words per minute calculation uses 2 as\nthe number of words entered (because 10 / 5 = 2). If someone typed this string in\n30 seconds (half a minute), their speed would be 4 words per minute."
+ },
+ {
+  "id": 1352,
+  "en": "Time to test your typing speed! You can use the command line to test your\ntyping speed on paragraphs about a particular subject. For example, the command\nbelow will load paragraphs about cats or kittens. See the run_typing_test\nfunction for the implementation if you're curious (but it is defined for you)."
+ },
+ {
+  "id": 1353,
+  "en": "You can also try out the web-based graphical user interface (GUI) using the\nfollowing command.\n(You may have to use Ctrl+C or Cmd+C on your terminal to quit the GUI\nafter you close the tab in your browser)."
+ },
+ {
+  "id": 1354,
+  "en": "Phase 2: Autocorrect"
+ },
+ {
+  "id": 1355,
+  "en": "In the web-based GUI, there is an \"Enable Auto-Correct\" option, but right now it\ndoesn't do anything. Let's implement automatic typo correction. Whenever the\nuser presses the space bar, if the last word they typed doesn't match a word in\nthe dictionary but is close to one, then that similar word will be substituted\nfor what they typed."
+ },
+ {
+  "id": 1356,
+  "en": "Implement autocorrect, which takes a entered_word, a\nword_list, a diff_function, and a limit. The goal of autocorrect\nis to return the word in word_list that is closest to the provided\nentered_word, as determined by diff_function."
+ },
+ {
+  "id": 1357,
+  "en": "Specifically, autocorrect does the following:"
+ },
+ {
+  "id": 1358,
+  "en": "If the entered_word is contained inside the word_list, autocorrect\n  returns that word."
+ },
+ {
+  "id": 1359,
+  "en": "Otherwise, autocorrect returns the word from word_list\n  that has the lowest difference from the provided entered_word.\n  This difference is the number returned by the diff_function."
+ },
+ {
+  "id": 1360,
+  "en": "However, if the lowest difference between entered_word and any\n  of the words in word_list is greater than limit, then entered_word is returned\n  instead. In other words, limit sets a maximum threshold on how severe a typo can\n  be for it to still be corrected."
+ },
+ {
+  "id": 1361,
+  "en": "Assume that entered_word and all elements of word_list are lowercase and\nhave no punctuation."
+ },
+ {
+  "id": 1362,
+  "en": "Important:\nIf multiple strings in word_list are tied for the lowest difference\nfrom entered_word, autocorrect should return the string that appears\nearliest (with the smallest index) in word_list."
+ },
+ {
+  "id": 1363,
+  "en": "A diff function takes in three arguments. The first is the entered_word, the second is\nthe source word (in this case, a word from word_list), and\nthe third argument is the limit. The output of the diff function, which is\na number, represents the amount of difference between the two strings."
+ },
+ {
+  "id": 1364,
+  "en": "Here is an example of a diff function that computes the minimum of 1 + limit\nand the difference in length between the two input strings:"
+ },
+ {
+  "id": 1365,
+  "en": "Note:\nFor conciseness, some unlocking tests use a ternary operator when defining a lambda function. A ternary operator is the one-line version of an if statement."
+ },
+ {
+  "id": 1366,
+  "en": "For example, in one of the ok tests, we define a diff function as first_diff = lambda w1, w2, limit: 1 if w1[0] != w2[0] else 0.\nHere, lambda function returns 1 if the first characters of w1 and w2 are different, otherwise it returns 0."
+ },
+ {
+  "id": 1367,
+  "en": "Here is a helpful hint for implementing autocorrect:"
+ },
+ {
+  "id": 1368,
+  "en": "Note:\nOptionally, for a one-line solution, try using max or min with the optional key argument (which takes in a one-argument function).\nFor example, max([&#x2d;7, 2, &#x2d;1], key=abs) would return &#x2d;7 since abs(&#x2d;7) is greater than abs(2) and abs(&#x2d;1)."
+ },
+ {
+  "id": 1369,
+  "en": "Implement furry_fixes, a diff function that could be passed into the diff_function parameter in autocorrect.\nThis function takes in two strings and returns the minimum number of characters that must be changed in the entered\nword in order to transform it into the source word. If the strings are not of\nequal length, the difference in lengths is added to the total change count."
+ },
+ {
+  "id": 1370,
+  "en": "Important:\nYou may not use while, for, or list comprehensions in your implementation.\nUse recursion."
+ },
+ {
+  "id": 1371,
+  "en": "If the number of characters that must change is greater than limit,\nthen furry_fixes should return any number larger than limit and\nshould minimize the amount of computation needed to do so."
+ },
+ {
+  "id": 1372,
+  "en": "Why is there a limit? From Problem 5, we know that autocorrect will reject any source\nword whose difference with the entered word is greater than limit. It doesn't\nmatter if the difference is greater than limit by 1 or by 100; autocorrect will\nreject it just the same. Therefore, as soon as we know the difference is above limit,\nit makes sense to stop making recursive calls, saving time,\neven if the returned difference won't be exactly correct."
+ },
+ {
+  "id": 1373,
+  "en": "These two calls to furry_fixes should take about the same amount of time to\nevaluate:"
+ },
+ {
+  "id": 1374,
+  "en": "To ensure that you are correctly saving time by stopping the recursion after\nlimit is reached, there is an autograder test that measures the performance of\nyour solution based on the number of function calls that it makes. If you fail\nthis test, consider adding a base case related to the limit."
+ },
+ {
+  "id": 1375,
+  "en": "Hint: you will need more than one base case to solve this problem."
+ },
+ {
+  "id": 1376,
+  "en": "String Slicing"
+ },
+ {
+  "id": 1377,
+  "en": "A string is a sequence of characters. (Letters, digits, and punctuation are all characters.) A slice of a string is another string that contains some of the characters of the original. Here are some examples:"
+ },
+ {
+  "id": 1378,
+  "en": "Try enabling auto-correct in the GUI. Does it help you type faster? Are the\ncorrections accurate?"
+ },
+ {
+  "id": 1379,
+  "en": "Implement minimum_mewtations, a more advanced diff function that can be used in autocorrect, which\nreturns the minimum number of edit operations needed to transform the entered word into\nthe source word."
+ },
+ {
+  "id": 1380,
+  "en": "There are three kinds of edit operations, with some examples:"
+ },
+ {
+  "id": 1381,
+  "en": "Add a letter to entered."
+ },
+ {
+  "id": 1382,
+  "en": "Adding &quot;k&quot; to &quot;itten&quot; gives us &quot;kitten&quot;."
+ },
+ {
+  "id": 1383,
+  "en": "Remove a letter from entered."
+ },
+ {
+  "id": 1384,
+  "en": "Removing &quot;s&quot; from &quot;scat&quot; gives us &quot;cat&quot;."
+ },
+ {
+  "id": 1385,
+  "en": "Substitute a letter in entered for another."
+ },
+ {
+  "id": 1386,
+  "en": "Substituting &quot;z&quot; with &quot;j&quot; in &quot;zaguar&quot; gives us &quot;jaguar&quot;."
+ },
+ {
+  "id": 1387,
+  "en": "Each edit operation increases the difference between two words by 1."
+ },
+ {
+  "id": 1388,
+  "en": "We have provided a template of an implementation in cats.py. You may modify the template however you want or delete it entirely."
+ },
+ {
+  "id": 1389,
+  "en": "Hint:\nOne of the recursive calls in minimum_mewtations will be similar to furry_fixes.\nHowever, because minimum_mewtations considers three specific types of edits (add, remove, substitute),\nthere will need to be additional recursive calls to handle each of these cases."
+ },
+ {
+  "id": 1390,
+  "en": "If the number of edits required is greater than limit, then\nminimum_mewtations should return any number larger than limit (such as\nlimit + 1) and should stop making recursive calls once the limit is reached to\nsave time."
+ },
+ {
+  "id": 1391,
+  "en": "These two calls to minimum_mewtations should take about the same amount of\ntime to evaluate:"
+ },
+ {
+  "id": 1392,
+  "en": "To ensure that your code stops making recursive calls after the limit is\nreached, there is an autograder test that measures the performance of your\nsolution based on the number of function calls that it makes."
+ },
+ {
+  "id": 1393,
+  "en": "Important:\nYou should not use any helper functions in your implementation of minimum_mewtations. Otherwise the autograder test might fail."
+ },
+ {
+  "id": 1394,
+  "en": "Important:\nRemember to remove the following line of code when you are ready to test your implementation:"
+ },
+ {
+  "id": 1395,
+  "en": "Try enabling auto-correct and typing again. Are the corrections more accurate?"
+ },
+ {
+  "id": 1396,
+  "en": "(Optional) Extension: Final Diff"
+ },
+ {
+  "id": 1397,
+  "en": "You may optionally design your own diff function called\nfinal_diff. Here are some ideas for making even more accurate corrections:"
+ },
+ {
+  "id": 1398,
+  "en": "Take into account which additions and deletions are more likely than others.\n  For example, it's much more likely that you'll accidentally leave out a\n  letter if it appears twice in a row."
+ },
+ {
+  "id": 1399,
+  "en": "Treat two adjacent letters that have swapped positions as one change,\n  not two."
+ },
+ {
+  "id": 1400,
+  "en": "Try to incorporate common misspellings."
+ },
+ {
+  "id": 1401,
+  "en": "Letters near to each other on the keyboard are more commonly substituted."
+ },
+ {
+  "id": 1402,
+  "en": "You can also set the limit you'd like your diff function to use by changing\nthe value of the variable FINAL_DIFF_LIMIT in cats.py."
+ },
+ {
+  "id": 1403,
+  "en": "You can check your final_diff's success rate on a provided dataset of common\nmisspellings by running:"
+ },
+ {
+  "id": 1404,
+  "en": "If you don't know where to start, try copy-pasting your code for furry_fixes\nand minimum_mewtations into final_diff and scoring them. Looking at the\ntypos they fixed (and didn't fix) might give you some ideas!"
+ },
+ {
+  "id": 1405,
+  "en": "Checkpoint Submission"
+ },
+ {
+  "id": 1406,
+  "en": "Phase 3: Multiplayer"
+ },
+ {
+  "id": 1407,
+  "en": "Typing is more fun with friends! You'll now implement multiplayer\nfunctionality, so that when you run cats_gui.py on your computer,\nit connects to the course server at\n{0}\nand looks for someone else to race against."
+ },
+ {
+  "id": 1408,
+  "en": "To race against a friend, 5 different programs will be running:"
+ },
+ {
+  "id": 1409,
+  "en": "Your GUI, which is a program that handles all the text coloring and display\n  in your web browser."
+ },
+ {
+  "id": 1410,
+  "en": "Your cats_gui.py, which is a web server that communicates with your GUI using\n  the code you wrote in cats.py."
+ },
+ {
+  "id": 1411,
+  "en": "Your opponent's cats_gui.py."
+ },
+ {
+  "id": 1412,
+  "en": "Your opponent's GUI."
+ },
+ {
+  "id": 1413,
+  "en": "The CS 61A multiplayer server, which matches players together and passes\n  messages around."
+ },
+ {
+  "id": 1414,
+  "en": "When you type, your GUI uploads what you have typed to your cats_gui.py server,\nwhich computes how much progress you have made and returns a progress update.\nThis server also uploads a progress update to the CS 61A multiplayer server, so that your\nopponent's GUI can also display your progress."
+ },
+ {
+  "id": 1415,
+  "en": "Meanwhile, your GUI display constantly tries to stay current by requesting\nyour opponent's progress updates from cats_gui.py, which, in turn, retrieves\nthat information from the multiplayer server."
+ },
+ {
+  "id": 1416,
+  "en": "Each player has an id number that is used by the server to track typing\nprogress."
+ },
+ {
+  "id": 1417,
+  "en": "Implement report_progress, which is called every time the user finishes\ntyping a word. It takes a list of the words entered so far, a list of the words in the source text, the user's user_id, and an upload function that is used to upload\na progress report to the multiplayer server. There will never be more words in\nentered than in source."
+ },
+ {
+  "id": 1418,
+  "en": "Your progress is a ratio of the words in the source that you have entered\ncorrectly, up to the first incorrect word, divided by the number of source\nwords. For instance, this example has a progress of 0.25:"
+ },
+ {
+  "id": 1419,
+  "en": "Your report_progress function should:"
+ },
+ {
+  "id": 1420,
+  "en": "Upload a message to the multiplayer server by calling the upload function with a dictionary containing two keys: &#x27;id&#x27; and &#x27;progress&#x27;. The &#x27;id&#x27; key should be set to the user's user_id, and the &#x27;progress&#x27; key should store the computed progress for the user, as defined above."
+ },
+ {
+  "id": 1421,
+  "en": "Return the user's computed progress."
+ },
+ {
+  "id": 1422,
+  "en": "Hint:\nSee the dictionary below for an example of a potential input to the upload\nfunction.\nThis dictionary represents a player with user_id 4 and progress 0.6."
+ },
+ {
+  "id": 1423,
+  "en": "{&#x27;id&#x27;: 4, &#x27;progress&#x27;: 0.6}"
+ },
+ {
+  "id": 1424,
+  "en": "Implement time_per_word, which takes in two arguments:"
+ },
+ {
+  "id": 1425,
+  "en": "words: a list of words that players are typing."
+ },
+ {
+  "id": 1426,
+  "en": "timestamps_per_player: a list of lists where each inner list contains the timestamps indicating\n  when each player finished typing each word in words."
+ },
+ {
+  "id": 1427,
+  "en": "The function should return a dictionary with the following structure:"
+ },
+ {
+  "id": 1428,
+  "en": "&#x27;words&#x27;: The list of words that the players are typing."
+ },
+ {
+  "id": 1429,
+  "en": "&#x27;times&#x27;: A list of lists times that stores the durations it took each player to type each word. Specifically, the value at times[i][j]should indicate\n  how long it took player i to type the word at words[j]. This would be the difference between when the player finished typing words[j] and when the player finished typing words[j&#x2d;1]. For words[0], this would be the difference between when the player finished typing words[0] and when the player started typing."
+ },
+ {
+  "id": 1430,
+  "en": "Timestamps found in the parameter timestamps_per_player are\ncumulative and always increasing, while the values in times are\ndifferences between consecutive timestamps for each player."
+ },
+ {
+  "id": 1431,
+  "en": "Here's an example:\nIf timestamps_per_player = [[1, 3, 5], [2, 5, 6]], then times would be [[2, 2], [3, 1]]."
+ },
+ {
+  "id": 1432,
+  "en": "This is because the first player finished typing each word at timestamps 1, 3, and 5, while the second player finished typing each word at timestamps 2, 5, and 6.\nSo the differences in timestamps are\n(3&#x2d;1), (5&#x2d;3) for the first player and\n(5&#x2d;2), (6&#x2d;5) for the second player.\nThe first value of each list within timestamps_per_player represents the\ninitial starting time for each player."
+ },
+ {
+  "id": 1433,
+  "en": "Implement fastest_words, which returns which words each player entered fastest.\nThis function is called once all players have finished typing.\nIt takes in a dictionary returned by time_per_word."
+ },
+ {
+  "id": 1434,
+  "en": "The fastest_words function returns a list of lists of words, one list for each\nplayer. The index of the nested list denotes the player. The list for each player contains the words they entered faster\nthan all the other players. In the case of a tie, the player with the smallest\nindex is considered to be the one who entered it the fastest."
+ },
+ {
+  "id": 1435,
+  "en": "For example, consider two players who typed Just have fun. Player 0 typed\n&#x27;fun&#x27; the fastest (3 seconds), Player 1 typed &#x27;Just&#x27; the fastest (4\nseconds), and they tied on the word &#x27;have&#x27; (both took 1 second). In this case,\nPlayer 0 is considered the fastest for &#x27;have&#x27; because their index is smaller."
+ },
+ {
+  "id": 1436,
+  "en": "Use the helper function get_time (provided) to get an individual time from times. It provides helpful error messages when you try to access a time that doesn't exist."
+ },
+ {
+  "id": 1437,
+  "en": "Important:\nMake sure your implementation does not mutate the given player input lists.\nFor the example above, calling fastest_words on [player_0, player_1]\nshould not mutate player_0 or player_1."
+ },
+ {
+  "id": 1438,
+  "en": "There might not always be two players, so generalize this function in a\nway that will allow it to handle an indeterminate number of players."
+ },
+ {
+  "id": 1439,
+  "en": "Congratulations! Now you can play against other students in the course. Set\nenable_multiplayer to True near the bottom of cats.py and type swiftly!"
+ },
+ {
+  "id": 1440,
+  "en": "Phase 4: Efficiency (Extra Challenge)"
+ },
+ {
+  "id": 1441,
+  "en": "(Optional) Problem EC"
+ },
+ {
+  "id": 1442,
+  "en": "Note:\nThis problem is optional and will not worth any points. It is meant to be a extra challenge for those who are interested in improving the efficiency of their code. Only attempt this problem if you have completed all other problems in the project."
+ },
+ {
+  "id": 1443,
+  "en": "Make sure you're familiar with the decorators and memoization. If you would like a refresher, open the dropdown boxes below for more information."
+ },
+ {
+  "id": 1444,
+  "en": "Decorators"
+ },
+ {
+  "id": 1445,
+  "en": "A Python decorator allows you to modify a pre-existing function without changing the function's structure."
+ },
+ {
+  "id": 1446,
+  "en": "Specifically, a decorator function is a higher-order function that..."
+ },
+ {
+  "id": 1447,
+  "en": "Takes the original function as an input"
+ },
+ {
+  "id": 1448,
+  "en": "Returns a new function with modified functionality"
+ },
+ {
+  "id": 1449,
+  "en": "This new function must contain the same arguments as the original function"
+ },
+ {
+  "id": 1450,
+  "en": "An example of a decorator that executes a one-input function twice is shown below:"
+ },
+ {
+  "id": 1451,
+  "en": "We can apply this function in multiple contexts:"
+ },
+ {
+  "id": 1452,
+  "en": "Additionally, note that we could also directly call the decorator function instead of using the @ notation (i.e. print_value = do_twice(print_value)).\nHowever, it's typically useful to place decorators directly above the function that we are modifying since they better describe how these functions\nare being changed in our code."
+ },
+ {
+  "id": 1453,
+  "en": "Memoization"
+ },
+ {
+  "id": 1454,
+  "en": "Notice that the diff functions we wrote in the previous questions are very inefficient: you will likely find that the computer will make the same recursive call multiple times. For a function with multiple arguments and three recursive calls, this can be harder to see. It can be easier to first see this with a function like fib that is defined in lecture."
+ },
+ {
+  "id": 1455,
+  "en": "Noticed how many redundant recursive calls there are in the above tree diagram. Our goal is to have our program store past results of evaluated recursive calls so that we can reuse them if the same recursive call comes up in the future. For example, the first branch of fib(5) calls fib(3), which has not yet been evaluated. So we must go through all of its subsequent recursive calls to find its return value. However when we encounter the call to fib(3) that is a branch of fib(4), we have already found its return value before! So if we have a way to store and retrieve that information in something called a cache, we can avoid needless computation. We no longer need to make any subsequent recursive calls to its branches fib(1) and fib(2). This\nis the concept of memoization: store the results of expensive computations in a cache, and retrieve information from the cache in the case we\nexecute a repeated action."
+ },
+ {
+  "id": 1456,
+  "en": "We will be working with two memoization decorators. memo is a general all-purpose decorator that memoizes the function it annotates. If memo encounters\nan input it has not seen, it will store the calculated result into its cache. If memo receives an input it has already seen, it will take the stored\nvalue in the cache and returns it directly without doing any extra computation. We have provided you with the full implementation of memo."
+ },
+ {
+  "id": 1457,
+  "en": "Your task is to implement memo_diff. memo_diff is a higher-order function that takes in a diff_function and returns another diff function called memoized that, like all diff functions, takes in entered, source, and limit. memoized should do the following:"
+ },
+ {
+  "id": 1458,
+  "en": "When memoized sees a (entered, source) pair for the first time, it should calculate the\n  difference using diff_function and cache that value along with the limit used as a (value, limit) tuple pair."
+ },
+ {
+  "id": 1459,
+  "en": "If memoized encounters the (entered, source) pair again, it should return the memoized\n  value if the provided limit is less than or equal to the cached limit. Otherwise, the\n  difference should be recalculated, recached, and returned."
+ },
+ {
+  "id": 1460,
+  "en": "Important: When implementing this function, make sure you store pairs of values in the cache\nwith a tuple, not a list. In dictionaries, keys must be immutable (that's why using a tuple\nis fine, but using a list is not).\nIf you're curious about why memo_diff is different than memo and is implemented in this way, reference the dropdown below:"
+ },
+ {
+  "id": 1461,
+  "en": "More Information"
+ },
+ {
+  "id": 1462,
+  "en": "How do memo and memo_diff differ? Although memo stores only the result of a function call, memo_diff takes into account an additional constraint, limit, that affects whether the cached result can be used or not. When the memo_diff function is called with a (entered, source) pair, it doesn’t just check if the pair has been seen before; it also checks if the limit is less than or equal to the cached limit. This is an additional check that memo does not perform."
+ },
+ {
+  "id": 1463,
+  "en": "Why is limit handled this way? We already know that the limit represents the maximum\ndifference that a diff function cares about—that is, differences above the limit might\nas well be the same. So diff functions will provide an accurate difference value when it is\nbelow the limit and an inaccurate one when it is above the limit. Therefore, we can trust a\ncached difference value if it was calculated with a higher limit, but we can't trust ones\ncalculated with a lower limit."
+ },
+ {
+  "id": 1464,
+  "en": "For example, the result of the first call below would allow us to predict the result of\nthe second call. The higher limit provides us with more information. However, the second\ncall would not allow us to predict the first one."
+ },
+ {
+  "id": 1465,
+  "en": "Once you've implemented memo_diff, finish by:"
+ },
+ {
+  "id": 1466,
+  "en": "Decorating autocorrect with memo."
+ },
+ {
+  "id": 1467,
+  "en": "Decorating minimum_mewtations with memo_diff."
+ },
+ {
+  "id": 1468,
+  "en": "Running autocorrect and minimum_mewtations should now be much faster!"
+ },
+ {
+  "id": 1469,
+  "en": "Note:\nIf you are failing the autograder tests involving call_count, it is likely that your minimum_mewtations implementation (from Q7) is not having the tightest base cases possible and still needs some optimization.\nThe tests from Q7 are not meant to be strict, so even if you passed the Q7 tests, your base cases might still not be the tightest.\nMake sure you are not making unnecessary recursive calls.\nWe are being strict about this here because having the tightest base cases is crucial for the efficiency of your code."
+ },
+ {
+  "id": 1470,
+  "en": "Important:\nTry it yourself first! Only consult the following common mistakes section if you have been stuck on one test case for a while. Otherwise, you might not learn as much from the project."
+ },
+ {
+  "id": 1471,
+  "en": "Common Mistakes"
+ },
+ {
+  "id": 1472,
+  "en": "Consider the case minimum_mewtations(entered = &quot;maooo&quot;, source = &quot;mao&quot;, limit = 0): since no transformations are allowed and the two words are not the same, how quick can your function figure out that the result is impossible?"
+ },
+ {
+  "id": 1473,
+  "en": "Consider the case minimum_mewtations(entered = &quot;habc&quot;, source = &quot;hmao&quot;, limit = some_limit_greater_than_zero): Given that both strings start with the same character h, what is the most effective approach in this situation? Should the function even attempt to \"add\" (resulting in habc and mao) or \"remove\" (resulting in abc and hmao)? Does your implementation take advantage of this optimization?"
+ },
+ {
+  "id": 1474,
+  "en": "Note: The autograder takes a bit of time to run, but it should not be longer than 10 seconds."
+ },
+ {
+  "id": 1475,
+  "en": "I know! I'll use my"
+ },
+ {
+  "id": 1476,
+  "en": "Higher-order functions to"
+ },
+ {
+  "id": 1477,
+  "en": "Order higher\nrolls."
+ },
+ {
+  "id": 1478,
+  "en": "Submit with Phase 1 complete by Wednesday 07/01, worth 1 pt."
+ },
+ {
+  "id": 1479,
+  "en": "Submit the complete project by Tuesday 07/07."
+ },
+ {
+  "id": 1480,
+  "en": "Try to attempt the problems in order, including running ok tests for each problem\nas you progress, since some later problems will depend on earlier problems in their implementation."
+ },
+ {
+  "id": 1481,
+  "en": "You may complete the project with a partner."
+ },
+ {
+  "id": 1482,
+  "en": "You can get 1 bonus point by submitting the entire project by Monday 07/06.\nYou can receive extensions on the project deadline and checkpoint\ndeadline, but not on the early deadline, unless you're a DSP student with an\naccommodation for assignment extensions."
+ },
+ {
+  "id": 1483,
+  "en": "In this project, you will develop a simulator and multiple strategies for the\ndice game Hog. You will need to use control statements and higher-order\nfunctions together, as described in Lectures 1-3 and Sections 1.2 through 1.6 of {0}, the online textbook."
+ },
+ {
+  "id": 1484,
+  "en": "When students in the past have tried to implement the functions without\nthoroughly reading the problem description, they’ve often run into issues.\n😱\nRead each description thoroughly before starting to code."
+ },
+ {
+  "id": 1485,
+  "en": "Rules"
+ },
+ {
+  "id": 1486,
+  "en": "In Hog, two players alternate turns trying to be the first to end a turn with\nat least GOAL total points, where GOAL is by default 100. On each turn, the current player chooses some number\nof dice to roll together, up to 10. That player's score for the turn is the sum of the\ndice outcomes. However, a player who rolls too many dice risks:"
+ },
+ {
+  "id": 1487,
+  "en": "In a normal game of Hog, those are all the rules. To spice up the game, we'll\ninclude some special rules:"
+ },
+ {
+  "id": 1488,
+  "en": "To get started, download all of the project code as a {0}.\nBelow is a list of all the files you will see in the archive once unzipped.\nFor the project, you'll only be making changes to hog.py."
+ },
+ {
+  "id": 1489,
+  "en": "hog.py: A starter implementation of Hog"
+ },
+ {
+  "id": 1490,
+  "en": "dice.py: Functions for making and rolling dice"
+ },
+ {
+  "id": 1491,
+  "en": "hog_gui.py: A graphical user interface (GUI) for Hog (updated)"
+ },
+ {
+  "id": 1492,
+  "en": "ucb.py: Utility functions for CS 61A"
+ },
+ {
+  "id": 1493,
+  "en": "hog_ui.py: A text-based user interface (UI) for Hog"
+ },
+ {
+  "id": 1494,
+  "en": "ok: CS 61A autograder"
+ },
+ {
+  "id": 1495,
+  "en": "gui_files: A directory of various things used by the web GUI"
+ },
+ {
+  "id": 1496,
+  "en": "You may notice some files other than the ones listed above too—those are needed for making the autograder and portions of the GUI work. Please do not modify any files other than hog.py."
+ },
+ {
+  "id": 1497,
+  "en": "hog.py"
+ },
+ {
+  "id": 1498,
+  "en": "Graphical User Interface"
+ },
+ {
+  "id": 1499,
+  "en": "A graphical user interface (GUI, for short) is provided for you. At the moment, it doesn't work because you haven't implemented the game logic. Once you complete the play function, you will be able to play a fully interactive version of Hog!"
+ }
+]

@@ -1,0 +1,1093 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+    
+    <link rel="stylesheet" href="../../assets/css/lab.css">
+
+
+    <title>实验 4：序列、树形递归、树 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 4：序列、树形递归、树
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab04.zip" class="label label-outline">lab04.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+
+
+
+
+
+
+
+<h2 id='starter-files'>起始文件</h2>
+
+<p>下载 <a href="lab04.zip">lab04.zip</a>。</p>
+
+
+
+
+
+
+
+
+    
+
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        序列<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+
+<h2 id="sequences" class="no-toc">序列</h2>
+
+
+<p>序列是有序的值的集合，支持按元素选取，并且有长度。我们已经学过列表，但 Python 中其他类型也是序列，包括字符串。</p>
+
+<p>下面通过一个例子来看看我们可以对字符串做哪些操作。</p>
+
+<pre><code>&gt;&gt;&gt; x = &#x27;Hello there Oski!&#x27;
+&gt;&gt;&gt; x
+&#x27;Hello there Oski!&#x27;
+&gt;&gt;&gt; len(x)
+17
+&gt;&gt;&gt; x[6:]
+&#x27;there Oski!&#x27;
+&gt;&gt;&gt; x[::&#x2d;1]
+&#x27;!iksO ereht olleH&#x27;</code></pre>
+
+<p>由于字符串是序列，我们可以对字符串做许多与列表相同的操作。我们甚至可以像遍历列表一样遍历字符串：</p>
+
+<pre><code>&gt;&gt;&gt; x = &#x27;I am not Oski.&#x27;
+&gt;&gt;&gt; vowel_count = 0
+&gt;&gt;&gt; for i in range(len(x)):
+...     if x[i] in &#x27;aeiou&#x27;:
+...         vowel_count += 1
+&gt;&gt;&gt; vowel_count
+5</code></pre>
+
+<p><code>for</code> 语句会为序列（例如列表或 range）中的每个元素执行代码。每次执行时，<code>for</code> 后面的名字都会绑定到序列中不同的元素。</p>
+
+<pre><code>for &lt;name&gt; in &lt;expression&gt;:
+    &lt;suite&gt;</code></pre>
+
+<p>首先，对 <code>&lt;expression&gt;</code> 求值，它必须求值出一个序列。然后，按顺序对序列中的每个元素：</p>
+
+<ol>
+  <li>把 <code>&lt;name&gt;</code> 绑定到该元素。</li>
+  <li>执行 <code>&lt;suite&gt;</code>。</li>
+</ol>
+
+<p>下面是一个例子：</p>
+
+<pre><code>for x in [&#x2d;1, 4, 2, 0, 5]:
+    print(&quot;Current elem:&quot;, x)</code></pre>
+
+<p>这段代码会输出以下内容：</p>
+
+<pre><code>Current elem: &#x2d;1
+Current elem: 4
+Current elem: 2
+Current elem: 0
+Current elem: 5</code></pre>
+
+<p>字典包含键值对，并允许通过方括号用键来查找对应的值。每个键必须是唯一的。</p>
+
+<pre><code>&gt;&gt;&gt; d = {2: 4, &#x27;two&#x27;: [&#x27;four&#x27;], (1, 1): 4}
+&gt;&gt;&gt; d[2]
+4
+&gt;&gt;&gt; d[&#x27;two&#x27;]
+[&#x27;four&#x27;]
+&gt;&gt;&gt; d[(1, 1)]
+4</code></pre>
+
+<p>键、值或键值对的序列可以分别通过 <code>.keys()</code>、<code>.values()</code> 或 <code>.items()</code> 来访问。</p>
+
+<pre><code>&gt;&gt;&gt; for k in d.keys():
+...     print(k)
+...
+2
+two
+(1, 1)
+&gt;&gt;&gt; for v in d.values():
+...     print(v)
+...
+4
+[&#x27;four&#x27;]
+4
+&gt;&gt;&gt; for k, v in d.items():
+...     print(k, v)
+...
+2 4
+two [&#x27;four&#x27;]
+(1, 1) 4</code></pre>
+
+<p>默认情况下，遍历字典就是遍历它的键。</p>
+
+<pre><code>&gt;&gt;&gt; for x in d:
+...     print(x)
+...
+2
+two
+(1, 1)</code></pre>
+
+<p>你可以使用 <code>in</code> 来检查字典中是否包含某个键：</p>
+
+<pre><code>&gt;&gt;&gt; &#x27;two&#x27; in d
+True
+&gt;&gt;&gt; 4 in d
+False</code></pre>
+
+<p>尝试访问字典中不存在的键会导致错误。你可以使用 <code>.get(&lt;key&gt;, &lt;default&gt;)</code>，它会返回字典中 <code>&lt;key&gt;</code> 对应的值；如果该键不存在，则返回 <code>&lt;default&gt;</code>。</p>
+
+<pre><code>&gt;&gt;&gt; d[3]
+KeyError: 3
+&gt;&gt;&gt; d.get(3, &quot;fun&quot;)
+&quot;fun&quot;
+&gt;&gt;&gt; d.get(2, &quot;fun&quot;)
+4</code></pre>
+
+<p>字典的内容可以使用 <code>=</code> 来修改：</p>
+
+<pre><code>&gt;&gt;&gt; d
+{2: 4, &#x27;two&#x27;: [&#x27;four&#x27;], (1, 1): 4}
+&gt;&gt;&gt; d[(1, 1)] = &quot;61a&quot;
+&gt;&gt;&gt; d[(1, 1)]
+&#x27;61a&#x27;</code></pre>
+
+<p>字典推导式是一种求值后得到新字典的表达式。</p>
+
+<pre><code>&gt;&gt;&gt; {3*x: 3*x + 1 for x in range(2, 5)}
+{6: 7, 9: 10, 12: 13}</code></pre>
+
+</div>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        树形递归<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+
+<h2 id="tree-recursion" class="no-toc">树形递归</h2>
+
+
+<p>树形递归函数是指会多次调用自身的递归函数，它会产生树状的调用序列。</p>
+
+<p>例如，这是<a href="https://en.wikipedia.org/wiki/Fibonacci_number">Virahanka-Fibonacci</a>数列：<code>0, 1, 1, 2, 3, 5, 8, 13, ...</code>。</p>
+
+<p>每一项都是前两项之和。这个树形递归函数计算第 <code>n</code> 个 Virahanka-Fibonacci 数。</p>
+
+<pre><code>def virfib(n):
+    if n == 0 or n == 1:
+        return n
+    return virfib(n &#x2d; 1) + virfib(n &#x2d; 2)</code></pre>
+
+<p>调用 <code>virfib(6)</code> 会得到一个类似倒置树的调用结构（其中 <code>f</code> 就是 <code>virfib</code>）：</p>
+
+<p><img class="img-responsive center-block" src="assets/f6-call-tree.png" alt="Virahanka-Fibonacci tree." title="Virahanka-Fibonacci Tree" width=" height="></p>
+
+<p>每次递归调用 <code>f(i)</code> 都会调用 <code>f(i&#x2d;1)</code> 和 <code>f(i&#x2d;2)</code>。每当我们到达 <code>f(0)</code> 或 <code>f(1)</code> 的调用时，就可以直接返回 <code>0</code> 或 <code>1</code>，不再进行更多递归调用。这些调用就是我们的基准情况。</p>
+
+<p>基准情况返回答案时不依赖其他调用的结果。一旦到达基准情况，我们就可以回过头去回答那些导致该基准情况的递归调用。</p>
+
+<p>正如我们将看到的，树形递归对于带有分支选择的问题往往很有效。在这类问题中，你会为每一个分支选择进行一次递归调用。</p>
+
+</div>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        数据抽象<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+
+<h2 id="data-abstraction" class="no-toc">数据抽象</h2>
+
+
+<p><em>数据抽象</em>是一组用于组合和分解复合值的函数。其中一个称为<em>构造函数</em>的函数把两个或多个部分组合成一个整体（例如有理数，也叫分数），而另一些称为<em>选择器</em>的函数则返回该整体的各个部分（例如分子或分母）。</p>
+
+<pre><code>def rational(n, d):
+    &quot;Return a fraction n / d for integers n and d.&quot;
+
+def numer(r):
+    &quot;Return the numerator of rational number r.&quot;
+
+def denom(r):
+    &quot;Return the denominator of rational number r.&quot;</code></pre>
+
+<p>关键在于，人们可以在不知道这些函数如何实现的情况下使用数据抽象。例如，我们（人类）只要知道 <code>rational</code>、<code>numer</code> 和 <code>denom</code> 的作用，就能验证 <code>mul_rationals</code> 实现得是否正确，而不必知道它们是如何实现的。</p>
+
+<pre><code>def mul_rationals(r1, r2):
+    &quot;Return the rational number r1 * r2.&quot;
+    return rational(numer(r1) * numer(r2), denom(r1) * denom(r2))</code></pre>
+
+<p>然而，Python 要运行程序，数据抽象就需要有实现。使用关于实现的知识就跨越了抽象屏障，抽象屏障把程序中依赖数据抽象实现的部分与不依赖它的部分分隔开来。一个编写良好的程序通常会尽量减少依赖实现的代码量，这样以后修改实现时就不需要重写太多代码。</p>
+
+<p>在使用别人提供的数据抽象时，要把程序写得即使该数据抽象的实现发生变化也仍然正确。</p>
+
+</div>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        树<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+
+<h2 id="tree" class="no-toc">树</h2>
+
+
+<p>树是一种表示信息层次结构的数据结构。文件系统就是树结构的一个很好的例子。例如，在你的 <code>cs61a</code> 文件夹里，有分别存放项目、实验和作业的文件夹。下一层是区分不同作业的文件夹，如 <code>hw01</code>、<code>lab01</code>、<code>hog</code> 等，再往里就是文件本身，包括起始文件和 <code>ok</code>。下面是你 <code>cs61a</code> 目录可能的样子的一张不完整示意图。</p>
+
+<p><img class="img-responsive center-block" src="assets/cs61a-tree.png" alt="cs61a_tree" width=" height="></p>
+
+<p>可以看到，与自然界中的树不同，树这种抽象数据类型的画法是根在顶部、叶在底部。</p>
+
+<p>对于树 <code>t</code>：</p>
+
+<ul>
+  <li>它的根标签可以是任意值，<code>label(t)</code> 会返回它。</li>
+  <li>它的分支也是树，<code>branches(t)</code> 会返回一个由分支组成的列表。</li>
+  <li>用 <code>tree(label(t), branches(t))</code> 可以构造出一棵完全相同的树。</li>
+  <li>你可以调用以树为参数的函数，例如 <code>is_leaf(t)</code>。</li>
+  <li>这就是操作树的方式。不要使用 <code>t == x</code>、<code>t[0]</code>、<code>x in t</code> 或 <code>list(t)</code> 等写法。</li>
+  <li>没有办法在不破坏抽象屏障的前提下修改一棵树。</li>
+</ul>
+
+<p>下面是一棵示例树 <code>t1</code>，它的分支 <code>branches(t1)[1]</code> 就是 <code>t2</code>。</p>
+
+<pre><code class="python">t2 = tree(5, [tree(6), tree(7)])
+t1 = tree(3, [tree(4), t2])</code></pre>
+
+
+
+<p><img class="img-responsive center-block" src="assets/example_tree_illustration.png" alt="Example Tree" width="100%" height="></p>
+
+<p><strong>路径</strong>是一系列树，其中每一棵都是下一棵的父节点。</p>
+
+<p>我们的树抽象数据类型由一个根节点和它的分支列表组成。要创建一棵树并访问其根的值和分支，请使用以下构造函数和选择器接口：</p>
+
+<ul>
+  <li><p>构造函数</p>
+
+  <ul>
+    <li><code>tree(label, branches=[])</code>：创建一个树对象，其根节点具有给定的 <code>label</code> 值，并带有给定的分支列表。注意这个构造函数的第二个参数 <code>branches</code> 是可选的——如果你想创建一棵没有分支的树，把这个参数留空即可。</li>
+  </ul></li>
+  <li><p>选择器</p>
+
+  <ul>
+    <li><code>label(tree)</code>：返回 <code>tree</code> 根节点中的值。</li>
+    <li><code>branches(tree)</code>：返回给定树的分支列表（其中每个分支也是一棵树）</li>
+  </ul></li>
+  <li><p>便捷函数</p>
+
+  <ul>
+    <li><code>is_leaf(tree)</code>：如果 <code>tree</code> 的分支列表为空，则返回 <code>True</code>，否则返回 <code>False</code>。</li>
+  </ul></li>
+</ul>
+
+<p>例如，由以下代码生成的树</p>
+
+<pre><code>number_tree = tree(1,
+         [tree(2),
+          tree(3,
+               [tree(4),
+                tree(5)]),
+          tree(6,
+               [tree(7)])])</code></pre>
+
+<p>看起来会是这样：</p>
+
+<pre><code>   1
+ / | \
+2  3  6
+  / \  \
+ 4   5  7</code></pre>
+
+<p>要从这棵树中取出数字 <code>3</code>（它是第二个分支的根节点的 label），我们会这样做：</p>
+
+<pre><code>label(branches(number_tree)[1])</code></pre>
+
+<p><code>print_tree</code> 函数以人类可读的形式打印一棵树。其确切形式遵循上面示例中的模式：根节点不缩进，而它的每个分支都再缩进一级。</p>
+
+<pre><code>def print_tree(t, indent=0):
+    &quot;&quot;&quot;Print a representation of this tree in which each node is
+    indented by two spaces times its depth from the root.
+
+    &gt;&gt;&gt; print_tree(tree(1))
+    1
+    &gt;&gt;&gt; print_tree(tree(1, [tree(2)]))
+    1
+      2
+    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    &gt;&gt;&gt; print_tree(numbers)
+    1
+      2
+      3
+        4
+        5
+      6
+        7
+    &quot;&quot;&quot;
+    print(&#x27;  &#x27; * indent + str(label(t)))
+    for b in branches(t):
+        print_tree(b, indent + 1)</code></pre>
+
+</div>
+
+<!-- <include topics/trees/adt/easy/wwpd.md> -->
+
+
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+<h2 id="sequences">序列</h2>
+
+
+<blockquote><p><strong>重要：</strong>对于所有「Python 会输出什么？」题目，如果你认为答案是 <code>&lt;function...&gt;</code>，请输入 <code>Function</code>；如果会报错，请输入 <code>Error</code>；如果什么也不显示，请输入 <code>Nothing</code>。</p></blockquote>
+
+<p>许多语言都提供针对序列的 <code>map</code>、<code>filter</code>、<code>reduce</code> 函数。Python 也提供这些函数（我们会在课程后面正式介绍它们），但为了帮助你更好地理解它们的工作原理，你将在下面几道题中自己实现这些函数。</p>
+
+<blockquote><p>在 Python 中，内置的 <code>map</code> 和 <code>filter</code> 的行为与我们这里定义的 <code>my_map</code> 和 <code>my_filter</code> 函数略有不同。</p></blockquote>
+
+
+<h3 id="q1-map">Q1：映射</h3>
+
+<p><code>my_map</code> 接收一个单参数函数 <code>fn</code> 和一个序列 <code>seq</code>，并返回一个列表，其中包含把 <code>fn</code> 应用到 <code>seq</code> 中每个元素的结果。</p>
+
+<p><strong>函数体只能使用一行。</strong>（提示：使用列表推导式。）</p>
+
+<solution>
+
+<pre><code>def my_map(fn, seq):
+    &quot;&quot;&quot;Applies fn onto each element in seq and returns a list.
+    &gt;&gt;&gt; my_map(lambda x: x*x, [1, 2, 3])
+    [1, 4, 9]
+    &gt;&gt;&gt; my_map(lambda x: abs(x), [1, &#x2d;1, 5, 3, 0])
+    [1, 1, 5, 3, 0]
+    &gt;&gt;&gt; my_map(lambda x: print(x), [&#x27;cs61a&#x27;, &#x27;summer&#x27;, &#x27;2023&#x27;])
+    cs61a
+    summer
+    2023
+    [None, None, None]
+    &quot;&quot;&quot;
+    return ______
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q my_map<button id="copy-code-python3ok-qmy_map" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmy_map").onclick = () => copyCode('python3 ok -q my_map', "copy-code-python3ok-qmy_map");
+        </script>
+        <br/>
+
+<p>用 ok 运行本地语法检查（它会检查函数体是否只用了一行）：</p>
+
+<pre><code>python3 ok &#x2d;q my_map_syntax_check</code></pre>
+
+
+
+
+<h3 id="q2-filter">Q2：过滤</h3>
+
+
+<p><code>my_filter</code> 接收一个谓词函数 <code>pred</code> 和一个序列 <code>seq</code>，并返回一个列表，其中包含 <code>seq</code> 中所有使 <code>pred</code> 返回 <code>True</code> 的元素。（谓词函数是指接收一个参数并返回 <code>True</code> 或 <code>False</code> 的函数。）</p>
+
+<p><strong>函数体只能使用一行。</strong>（提示：使用列表推导式。）</p>
+
+<solution>
+
+<pre><code>def my_filter(pred, seq):
+    &quot;&quot;&quot;Keeps elements in seq only if they satisfy pred.
+    &gt;&gt;&gt; my_filter(lambda x: x % 2 == 0, [1, 2, 3, 4])  # new list has only even&#x2d;valued elements
+    [2, 4]
+    &gt;&gt;&gt; my_filter(lambda x: (x + 5) % 3 == 0, [1, 2, 3, 4, 5])
+    [1, 4]
+    &gt;&gt;&gt; my_filter(lambda x: print(x), [1, 2, 3, 4, 5])
+    1
+    2
+    3
+    4
+    5
+    []
+    &gt;&gt;&gt; my_filter(lambda x: max(5, x) == 5, [1, 2, 3, 4, 5, 6, 7])
+    [1, 2, 3, 4, 5]
+    &quot;&quot;&quot;
+    return ______
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q my_filter<button id="copy-code-python3ok-qmy_filter" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmy_filter").onclick = () => copyCode('python3 ok -q my_filter', "copy-code-python3ok-qmy_filter");
+        </script>
+        <br/>
+
+<p>用 ok 运行本地语法检查（它会检查函数体是否只用了一行）：</p>
+
+<pre><code>python3 ok &#x2d;q my_filter_syntax_check</code></pre>
+
+
+
+
+<h3 id="q3-reduce">Q3：归约</h3>
+
+
+<p><code>my_reduce</code> 接收一个双参数函数 <code>combiner</code> 和一个非空序列 <code>seq</code>，并使用 <code>combiner</code> 把 <code>seq</code> 中的元素合并成一个值。</p>
+
+<solution>
+
+<pre><code>def my_reduce(combiner, seq):
+    &quot;&quot;&quot;Combines elements in seq using combiner.
+    seq will have at least one element.
+    &gt;&gt;&gt; my_reduce(lambda x, y: x + y, [1, 2, 3, 4])  # 1 + 2 + 3 + 4
+    10
+    &gt;&gt;&gt; my_reduce(lambda x, y: x * y, [1, 2, 3, 4])  # 1 * 2 * 3 * 4
+    24
+    &gt;&gt;&gt; my_reduce(lambda x, y: x * y, [4])
+    4
+    &gt;&gt;&gt; my_reduce(lambda x, y: x + 2 * y, [1, 2, 3]) # (1 + 2 * 2) + 2 * 3
+    11
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q my_reduce<button id="copy-code-python3ok-qmy_reduce" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmy_reduce").onclick = () => copyCode('python3 ok -q my_reduce', "copy-code-python3ok-qmy_reduce");
+        </script>
+        <br/>
+
+
+<h2 id="data-abstraction">数据抽象</h2>
+
+
+
+<h3 id="cities">城市</h3>
+
+
+<p>假设我们有一个表示城市的数据抽象。一个城市有名称、纬度坐标和经度坐标。</p>
+
+<p>我们的数据抽象有一个<strong>构造函数</strong>：</p>
+
+<ul>
+  <li><code>make_city(name, lat, lon)</code>：创建一个具有给定名称、纬度和经度的城市对象。</li>
+</ul>
+
+<p>我们还提供以下<strong>选择器</strong>，用来获取每个城市的信息：</p>
+
+<ul>
+  <li><code>get_name(city)</code>：返回城市的名称</li>
+  <li><code>get_lat(city)</code>：返回城市的纬度</li>
+  <li><code>get_lon(city)</code>：返回城市的经度</li>
+</ul>
+
+<p>下面是我们如何使用构造函数和选择器来创建城市并提取它们的信息：</p>
+
+<pre><code>&gt;&gt;&gt; berkeley = make_city(&#x27;Berkeley&#x27;, 122, 37)
+&gt;&gt;&gt; get_name(berkeley)
+&#x27;Berkeley&#x27;
+&gt;&gt;&gt; get_lat(berkeley)
+122
+&gt;&gt;&gt; new_york = make_city(&#x27;New York City&#x27;, 74, 40)
+&gt;&gt;&gt; get_lon(new_york)
+40</code></pre>
+
+<p>如果你好奇这些函数是如何实现的，所有的选择器和构造函数都可以在实验文件中找到。但数据抽象的意义在于，在编写关于城市的程序时，我们并不需要知道它的实现。</p>
+
+
+<h3 id="q4-distance">Q4：距离</h3>
+
+
+<p>现在我们来实现函数 <code>distance</code>，它计算两个城市对象之间的距离。回想一下，两对坐标 <code>(x1, y1)</code> 和 <code>(x2, y2)</code> 之间的距离可以通过计算 <code>(x1 &#x2d; x2)**2 + (y1 &#x2d; y2)**2</code> 的 <code>sqrt</code> 求得。为了方便，我们已经为你导入了 <code>sqrt</code>。请把城市的纬度和经度当作它的坐标；你需要使用选择器来获取这些信息！</p>
+
+<solution>
+
+<pre><code>from math import sqrt
+def distance(city_a, city_b):
+    &quot;&quot;&quot;
+    Returns the distance between city_a and city_b according to their
+    coordinates.
+
+    &gt;&gt;&gt; city_a = make_city(&#x27;city_a&#x27;, 0, 1)
+    &gt;&gt;&gt; city_b = make_city(&#x27;city_b&#x27;, 0, 2)
+    &gt;&gt;&gt; distance(city_a, city_b)
+    1.0
+    &gt;&gt;&gt; city_c = make_city(&#x27;city_c&#x27;, 6.5, 12)
+    &gt;&gt;&gt; city_d = make_city(&#x27;city_d&#x27;, 2.5, 15)
+    &gt;&gt;&gt; distance(city_c, city_d)
+    5.0
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q distance<button id="copy-code-python3ok-qdistance" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdistance").onclick = () => copyCode('python3 ok -q distance', "copy-code-python3ok-qdistance");
+        </script>
+        <br/>
+
+
+<h3 id="q5-closer-city">Q5：更近的城市</h3>
+
+
+<p>接下来实现 <code>closer_city</code>，这个函数接收一个纬度、一个经度和两个城市，并返回距离给定经纬度更近的那个城市的<em>名称</em>。</p>
+
+<p>本题你只能使用选择器 <code>get_name</code>、<code>get_lat</code>、<code>get_lon</code>，构造函数 <code>make_city</code>，以及你刚刚定义的 <code>distance</code> 函数。</p>
+
+<blockquote><p><strong>提示</strong>：如何用你的 <code>distance</code> 函数求出给定位置到每个给定城市的距离？</p></blockquote>
+
+<solution>
+
+<pre><code>def closer_city(lat, lon, city_a, city_b):
+    &quot;&quot;&quot;
+    Returns the name of either city_a or city_b, whichever is closest to
+    coordinate (lat, lon). If the two cities are the same distance away
+    from the coordinate, consider city_b to be the closer city.
+
+    &gt;&gt;&gt; berkeley = make_city(&#x27;Berkeley&#x27;, 37.87, 112.26)
+    &gt;&gt;&gt; stanford = make_city(&#x27;Stanford&#x27;, 34.05, 118.25)
+    &gt;&gt;&gt; closer_city(38.33, 121.44, berkeley, stanford)
+    &#x27;Stanford&#x27;
+    &gt;&gt;&gt; bucharest = make_city(&#x27;Bucharest&#x27;, 44.43, 26.10)
+    &gt;&gt;&gt; vienna = make_city(&#x27;Vienna&#x27;, 48.20, 16.37)
+    &gt;&gt;&gt; closer_city(41.29, 174.78, bucharest, vienna)
+    &#x27;Bucharest&#x27;
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q closer_city<button id="copy-code-python3ok-qcloser_city" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcloser_city").onclick = () => copyCode('python3 ok -q closer_city', "copy-code-python3ok-qcloser_city");
+        </script>
+        <br/>
+
+
+<h3 id="q6-don-t-violate-the-abstraction-barrier">Q6：不要违反抽象屏障！</h3>
+
+
+<blockquote><p>注意：这道题没有需要写代码的部分（前提是你正确实现了前两道题）。</p></blockquote>
+
+<p>在编写使用数据抽象的函数时，我们应尽可能使用构造函数和选择器，而不是假定数据抽象的实现方式。依赖数据抽象的底层实现被称为<em>违反抽象屏障</em>。</p>
+
+<p>即使你违反了抽象屏障，前几题的 doctest 也有可能通过。要检查你是否违反了，请运行以下命令：</p>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q check_city_abstraction<button id="copy-code-python3ok-qcheck_city_abstraction" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcheck_city_abstraction").onclick = () => copyCode('python3 ok -q check_city_abstraction', "copy-code-python3ok-qcheck_city_abstraction");
+        </script>
+        <br/>
+
+<p><code>check_city_abstraction</code> 函数只用于这个 doctest，它会把原来抽象的实现替换成别的东西，运行前两部分的测试，然后再恢复原来的抽象。</p>
+
+<p>抽象屏障的本质保证了：只要正确使用了构造函数和选择器，改变数据抽象的实现就不应影响任何使用该数据抽象的程序的功能。</p>
+
+<p>如果前几题的 Ok 测试通过了但这道题没有通过，修复起来很简单！只需把任何违反抽象屏障的代码替换为合适的构造函数或选择器即可。</p>
+
+<p>请确保你的函数在数据抽象的第一种和第二种实现下都能通过测试，并且在继续之前你理解为什么它们在两种实现下都应该有效。</p>
+
+
+<h2 id="trees">树</h2>
+
+
+
+<h3 id="q7-wwpd-trees">Q7：WWPD：树</h3>
+
+
+<blockquote><p>用 ok 回答下面的「Python 会输出什么？」（WWPD）题目：</p>
+
+<pre><code>python3 ok &#x2d;q wwpd &#x2d;u</code></pre>
+
+<p>如果代码报错请输入 Type <code>Error</code>，如果没有任何显示则输入 <code>Nothing</code>。如果卡住了，就把树画在黑板上或纸上！</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; from lab04 import *
+&gt;&gt;&gt; t = tree(1, tree(2))
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; t = tree(1, [tree(2)])
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x4e;&#x6f;&#x74;&#x68;&#x69;&#x6e;&#x67;</div>
+&gt;&gt;&gt; label(t)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;</div>
+&gt;&gt;&gt; label(branches(t)[0])
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x32;</div>
+&gt;&gt;&gt; x = branches(t)
+&gt;&gt;&gt; len(x)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;</div>
+&gt;&gt;&gt; is_leaf(x[0])
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; branch = x[0]
+&gt;&gt;&gt; label(t) + label(branch)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x33;</div>
+&gt;&gt;&gt; len(branches(branch))
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x30;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        显示答案<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; from lab04 import *
+&gt;&gt;&gt; b1 = tree(5, [tree(6), tree(7)])
+&gt;&gt;&gt; b2 = tree(8, [tree(9, [tree(10)])])
+&gt;&gt;&gt; t = tree(11, [b1, b2])
+&gt;&gt;&gt; for b in branches(t):
+...     print(label(b))
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x35;&#xa;&#x38;</div>
+&gt;&gt;&gt; for b in branches(t):
+...     print(is_leaf(branches(b)[0]))
+...
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x54;&#x72;&#x75;&#x65;&#xa;&#x46;&#x61;&#x6c;&#x73;&#x65;</div>
+&gt;&gt;&gt; [label(b) + 100 for b in branches(t)]
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x5b;&#x31;&#x30;&#x35;&#x2c;&#x20;&#x31;&#x30;&#x38;&#x5d;</div>
+&gt;&gt;&gt; [label(b) * label(branches(b)[0]) for b in branches(t)]
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x5b;&#x33;&#x30;&#x2c;&#x20;&#x37;&#x32;&#x5d;</div></code></pre>
+        <button id='prompt-2' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        显示答案<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        
+
+
+<h3 id="q8-perfectly-balanced">Q8：完美平衡</h3>
+
+
+<p>实现 <code>sum_tree</code>，它返回树 <code>t</code> 中所有 label 的和。</p>
+
+<solution>
+
+<pre><code>def sum_tree(t):
+    &quot;&quot;&quot;Add all elements in a tree.
+
+    &gt;&gt;&gt; t = tree(4, [tree(2, [tree(3)]), tree(6)])
+    &gt;&gt;&gt; sum_tree(t)
+    15
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q sum_tree<button id="copy-code-python3ok-qsum_tree" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsum_tree").onclick = () => copyCode('python3 ok -q sum_tree', "copy-code-python3ok-qsum_tree");
+        </script>
+        <br/>
+
+<p>然后实现 <code>balanced</code>，它返回 <code>t</code> 的每个分支的总和是否相同，以及这些分支本身是否也平衡。</p>
+
+<p><img class="img-responsive center-block" src="assets/just-balanced.JPG" alt="Example Tree" width="60%" height="></p>
+
+<ul>
+  <li>例如，上面的树是平衡的，因为每个分支的总和相同，而且每个分支本身也是平衡的。</li>
+</ul>
+
+<solution>
+
+<pre><code>def balanced(t):
+    &quot;&quot;&quot;Checks if each branch has same sum of all elements and
+    if each branch is balanced.
+
+    &gt;&gt;&gt; t = tree(1, [tree(3), tree(1, [tree(2)]), tree(1, [tree(1), tree(1)])])
+    &gt;&gt;&gt; balanced(t)
+    True
+    &gt;&gt;&gt; t = tree(1, [t, tree(1)])
+    &gt;&gt;&gt; balanced(t)
+    False
+    &gt;&gt;&gt; t = tree(1, [tree(4), tree(1, [tree(2), tree(1)]), tree(1, [tree(3)])])
+    &gt;&gt;&gt; balanced(t)
+    False
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q balanced<button id="copy-code-python3ok-qbalanced" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qbalanced").onclick = () => copyCode('python3 ok -q balanced', "copy-code-python3ok-qbalanced");
+        </script>
+        <br/>
+
+<blockquote><p><strong>挑战：</strong>这两部分都只用 1 行代码完成。</p></blockquote>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="optional-questions">选做题</h1>
+
+
+<blockquote><p>这些是选做题。即使不做，本次作业仍然可以拿到全部学分。不过它们是不错的练习，建议还是做一下！</p></blockquote>
+
+
+<h3 id="q9-number-of-trees">Q9：树的数目</h3>
+
+
+<p><strong>满二叉树</strong>是指每个节点要么有 2 个分支，要么有 0 个分支，但绝不会只有 1 个分支的树。</p>
+
+<p>编写一个函数，返回恰好有 n 个叶子的不同满二叉树结构的数量。关于 1 个、2 个和 3 个叶子时可能的满二叉树结构，请参见 doctest 中的图示。</p>
+
+<blockquote><p><strong>提示</strong>：一棵满二叉树可以通过把两棵较小的满二叉树连接到根节点上来构造。如果这两棵较小的满二叉树分别有 <code>a</code> 个和 <code>b</code> 个叶子，那么新的满二叉树就会有 <code>a + b</code> 个叶子。例如，如下面第一张图所示，一棵有 4 个叶子的满二叉树可以通过把一棵有三个叶子的满二叉树（黄色）与一棵有一个叶子的满二叉树（橙色）连接来构造。有 4 个叶子的满二叉树也可以通过连接两棵各有 2 个叶子的满二叉树来构造（第二张图）
+<img class="img-responsive center-block" src="assets/num_trees_ex1.png" alt="4-leaf Full Binary Tree 1" title="4-leaf Full Binary Tree 1" width=" height="></p>
+
+<p><img class="img-responsive center-block" src="assets/num_trees_ex2.png" alt="4-leaf Full Binary Tree 2" title="4-leaf Full Binary Tree 2" width=" height="></p></blockquote>
+
+<p>对组合数学感兴趣的同学，这道题其实有一个<a href="http://en.wikipedia.org/wiki/Catalan_number">闭式解</a>）：</p>
+
+<solution>
+
+<pre><code>def num_trees(n):
+    &quot;&quot;&quot;Returns the number of unique full binary trees with exactly n leaves. E.g.,
+
+    1   2        3       3    ...
+    *   *        *       *
+       / \      / \     / \
+      *   *    *   *   *   *
+              / \         / \
+             *   *       *   *
+
+    &gt;&gt;&gt; num_trees(1)
+    1
+    &gt;&gt;&gt; num_trees(2)
+    1
+    &gt;&gt;&gt; num_trees(3)
+    2
+    &gt;&gt;&gt; num_trees(8)
+    429
+
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q num_trees<button id="copy-code-python3ok-qnum_trees" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qnum_trees").onclick = () => copyCode('python3 ok -q num_trees', "copy-code-python3ok-qnum_trees");
+        </script>
+        <br/>
+
+
+<h3 id="q10-only-paths">Q10：仅有的路径</h3>
+
+
+<p>实现 <code>only_paths</code>，它接收一棵由数字构成的树 <code>t</code> 和一个数 <code>n</code>。它返回一棵新树，其中只包含 <code>t</code> 中位于从根到某个叶子的路径上的节点，且这些路径上的 label 之和为 <code>n</code>；如果没有路径之和等于 <code>n</code>，则返回 <code>None</code>。</p>
+
+<p>下面是涉及 <code>t</code> 的 doctest 示例的图示。</p>
+
+<p><img class="img-responsive center-block" src="assets/only_paths.png" alt="only_paths" width=" height="></p>
+
+<solution>
+
+<pre><code>def only_paths(t, n):
+    &quot;&quot;&quot;Return a tree with only the nodes of t along paths from the root to a leaf of t 
+    for which the node labels of the path sum to n. If no paths sum to n, return None.
+
+    &gt;&gt;&gt; print_tree(only_paths(tree(5, [tree(2), tree(1, [tree(2)]), tree(1, [tree(1)])]), 7))
+    5
+      2
+      1
+        1
+    &gt;&gt;&gt; t = tree(3, [tree(4), tree(1, [tree(3, [tree(2)]), tree(2, [tree(1)]), tree(5), tree(3)])])
+    &gt;&gt;&gt; print_tree(only_paths(t, 7))
+    3
+      4
+      1
+        2
+          1
+        3
+    &gt;&gt;&gt; print_tree(only_paths(t, 9))
+    3
+      1
+        3
+          2
+        5
+    &gt;&gt;&gt; print(only_paths(t, 3))
+    None
+    &quot;&quot;&quot;
+    if ____:
+        return t
+    new_branches = [____ for b in branches(t)]
+    if ____(new_branches):
+        return tree(label(t), [b for b in new_branches if ____])
+</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q only_paths<button id="copy-code-python3ok-qonly_paths" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qonly_paths").onclick = () => copyCode('python3 ok -q only_paths', "copy-code-python3ok-qonly_paths");
+        </script>
+        <br/>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#sequences">序列</a></li>
+    <ul>
+      <li><a href="#q1-map">Q1：映射</a></li>
+      <li><a href="#q2-filter">Q2：过滤</a></li>
+      <li><a href="#q3-reduce">Q3：归约</a></li>
+    </ul>
+    <li><a href="#data-abstraction">数据抽象</a></li>
+    <ul>
+      <li><a href="#cities">城市</a></li>
+      <li><a href="#q4-distance">Q4：距离</a></li>
+      <li><a href="#q5-closer-city">Q5：更近的城市</a></li>
+      <li><a href="#q6-don-t-violate-the-abstraction-barrier">Q6：不要违反抽象屏障！</a></li>
+    </ul>
+    <li><a href="#trees">树</a></li>
+    <ul>
+      <li><a href="#q7-wwpd-trees">Q7：WWPD：树</a></li>
+      <li><a href="#q8-perfectly-balanced">Q8：完美平衡</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#optional-questions">选做题</a></li>
+  <ul>
+    <li><a href="#q9-number-of-trees">Q9：树的数目</a></li>
+    <li><a href="#q10-only-paths">Q10：仅有的路径</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

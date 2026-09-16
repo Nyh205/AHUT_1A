@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/lab.css">
+
+
+    <title>实验 6 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 6 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab06.zip" class="label label-outline">lab06.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<h2 id="lab-checkoff-questions">概念自测</h2>
+
+
+<ul>
+  <li><strong>面向对象编程的主要目标是什么？</strong></li>
+  <li>类在数据的使用和实现之间建立抽象屏障。类是类型为该类的所有对象的模板，你可以创建多个存储不同数据的对象。</li>
+  <li><strong>实例变量和类变量有什么区别？</strong></li>
+  <li>实例变量是某个特定对象独有的，不同对象之间各不相同；而类变量则是属于整个类的。</li>
+  <li><strong>调用方法时，我们必须显式传入 “self” 吗？</strong></li>
+  <li>不需要。当调用对象的某个方法时，该对象会被隐式地作为 self 的实参传入。</li>
+</ul>
+
+    
+
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+<!-- > <strong>Note:</strong>
+
+<blockquote><p>If you are facing issues with <strong>types</strong> in your code, add the following line <strong>at the very top</strong> of your <code>lab06.py</code> file:</p>
+
+<pre><code class="python">from __future__ import annotations</code></pre>
+
+
+<p>Alternatively, you can <strong>redownload the lab06 folder</strong> from the course website to ensure you have the latest files. --></p></blockquote>
+
+
+<h2 id="object-oriented-programming">面向对象编程</h2>
+
+
+<p>这里是对面向对象编程的复习。你可以直接跳到题目部分，遇到困难时再回来查阅。</p>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        面向对象编程<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p><strong>面向对象编程</strong>（OOP）使用对象和类来组织程序。下面是一个类的例子：</p>
+
+<pre><code>class Car:
+    max_tires = 4
+
+    def __init__(self, color):
+        self.tires = Car.max_tires
+        self.color = color
+
+    def drive(self):
+        if self.tires &lt; Car.max_tires:
+            return self.color + &#x27; car cannot drive!&#x27;
+        return self.color + &#x27; car goes vroom!&#x27;
+
+    def pop_tire(self):
+        if self.tires &gt; 0:
+            self.tires &#x2d;= 1</code></pre>
+
+<p><strong>类（Class）</strong>：对象的类型。<code>Car</code> 类（如上所示）描述了所有 <code>Car</code> 对象的特征。</p>
+
+<p><strong>对象（Object）</strong>：类的一个实例。在 Python 中，通过调用类来创建新对象。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)</code></pre>
+
+<p>这里，<code>ferrari</code> 是一个绑定到 <code>Car</code> 对象的名字。</p>
+
+<p><strong>类属性</strong>：属于类的变量，通过点号访问。<code>Car</code> 类有一个 <code>max_tires</code> 属性。</p>
+
+<pre><code>&gt;&gt;&gt; Car.max_tires
+4</code></pre>
+
+<page-break>
+
+<p><strong>实例属性</strong>：属于某个具体对象的变量。每个 <code>Car</code> 对象都有一个 <code>tires</code> 属性和一个 <code>color</code> 属性。与类属性一样，实例属性也通过点号访问。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari.color
+&#x27;red&#x27;
+&gt;&gt;&gt; ferrari.tires
+4
+&gt;&gt;&gt; ferrari.color = &#x27;green&#x27;
+&gt;&gt;&gt; ferrari.color
+&#x27;green&#x27;</code></pre>
+
+<p><strong>方法</strong>：属于对象的函数，通过点号调用。按照约定，方法的第一个参数是 <code>self</code>。</p>
+
+<p>当调用对象的某个方法时，该对象会被隐式地作为 <code>self</code> 的参数传入。例如，<code>ferrari</code> 对象的 <code>drive</code> 方法是用空括号调用的，因为 <code>self</code> 被隐式地绑定到 <code>ferrari</code> 对象。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)
+&gt;&gt;&gt; ferrari.drive()
+&#x27;red car goes vroom!&#x27;</code></pre>
+
+<p>我们也可以调用最初的 <code>Car.drive</code> 函数。这个原始函数不属于任何特定的 <code>Car</code> 对象，所以我们必须显式地为 <code>self</code> 传入参数。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)
+&gt;&gt;&gt; Car.drive(ferrari)
+&#x27;red car goes vroom!&#x27;</code></pre>
+
+<p><strong>__init__</strong>：一种特殊函数，在创建类的新实例时会自动调用。</p>
+
+<p>注意 <code>drive</code> 方法接收 <code>self</code> 作为参数，但看起来我们并没有传入它！这是因为点号表示法<em>隐式地</em>帮我们把 <code>ferrari</code> 作为 <code>self</code> 传了进去。所以在这个例子里，<code>self</code> 绑定到全局帧中名为 <code>ferrari</code> 的那个对象。</p>
+
+<p>求值表达式 <code>Car(&#x27;red&#x27;)</code> 时，Python 会创建一个新的 <code>Car</code> 对象。然后，Python 调用 <code>Car</code> 类的 <code>__init__</code> 函数，把 <code>self</code> 绑定到新对象，把 <code>color</code> 绑定到 <code>&#x27;red&#x27;</code>。</p>
+
+</div>
+
+
+<h3 id="q1-bank-account">Q1：银行账户</h3>
+
+
+<p>扩展 <code>BankAccount</code> 类，为其添加一个 <code>transactions</code> 属性。该属性应为一个列表，记录账户上发生的每一笔交易。每当调用 <code>deposit</code> 或 <code>withdraw</code> 方法时，都应创建一个新的 <code>Transaction</code> 实例并加入该列表，<strong>即使该操作并未成功</strong>。</p>
+
+<p><code>Transaction</code> 类的实例应具有以下属性：</p>
+
+<ul>
+  <li><code>before</code>：交易前的账户余额。</li>
+  <li><code>after</code>：交易后的账户余额。</li>
+  <li><code>id</code>：交易 ID，即该账户此前已发生的交易（存款或取款）笔数。同一个 <code>BankAccount</code> 实例的交易 ID 必须唯一，但不同账户之间无需唯一。换句话说，你只需保证同一个 <code>BankAccount</code> 创建的两个 <code>Transaction</code> 对象的 <code>id</code> 不相同即可。</li>
+</ul>
+
+<p>此外，<code>Transaction</code> 类还应具有以下方法：</p>
+
+<ul>
+  <li><code>changed()</code>：如果余额发生了变化（即 <code>before</code> 与 <code>after</code> 不同）则返回 <code>True</code>，否则返回 <code>False</code>。</li>
+  <li><code>report()</code>：返回一个描述该交易的字符串。该字符串应以交易 ID 开头，并描述余额的变化。请查看 doctest 了解期望的输出。</li>
+</ul>
+
+<solution>
+
+<pre><code>class Transaction:
+    def __init__(self, id: int, before: int, after: int):
+        self.id = id
+        self.before = before
+        self.after = after
+
+    def changed(self) &#x2d;&gt; bool:
+        &quot;&quot;&quot;Return whether the transaction resulted in a changed balance.&quot;&quot;&quot;
+<div class="sol-highlight">        return self.before != self.after</div>
+    def report(self) &#x2d;&gt; str:
+        &quot;&quot;&quot;Return a string describing the transaction.
+
+        &gt;&gt;&gt; Transaction(3, 20, 10).report()
+        &#x27;3: decreased 20&#x2d;&gt;10&#x27;
+        &gt;&gt;&gt; Transaction(4, 20, 50).report()
+        &#x27;4: increased 20&#x2d;&gt;50&#x27;
+        &gt;&gt;&gt; Transaction(5, 50, 50).report()
+        &#x27;5: no change&#x27;
+        &quot;&quot;&quot;
+        msg: str = &#x27;no change&#x27;
+        if self.changed():
+<div class="sol-highlight">            if self.after &lt; self.before:
+                verb = &#x27;decreased&#x27;
+            else:
+                verb = &#x27;increased&#x27;
+            msg = verb + &#x27; &#x27; + str(self.before) + &#x27;&#x2d;&gt;&#x27; + str(self.after)</div>        return str(self.id) + &#x27;: &#x27; + msg
+
+class BankAccount:
+    &quot;&quot;&quot;A bank account that tracks its transaction history.
+
+    &gt;&gt;&gt; a = BankAccount(&#x27;Eric&#x27;)
+    &gt;&gt;&gt; a.deposit(100)    # Transaction 0 for a
+    100
+    &gt;&gt;&gt; b = BankAccount(&#x27;Erica&#x27;)
+    &gt;&gt;&gt; a.withdraw(30)    # Transaction 1 for a
+    70
+    &gt;&gt;&gt; a.deposit(10)     # Transaction 2 for a
+    80
+    &gt;&gt;&gt; b.deposit(50)     # Transaction 0 for b
+    50
+    &gt;&gt;&gt; b.withdraw(10)    # Transaction 1 for b
+    40
+    &gt;&gt;&gt; a.withdraw(100)   # Transaction 3 for a
+    &#x27;Insufficient funds&#x27;
+    &gt;&gt;&gt; len(a.transactions)
+    4
+    &gt;&gt;&gt; len([t for t in a.transactions if t.changed()])
+    3
+    &gt;&gt;&gt; for t in a.transactions:
+    ...     print(t.report())
+    0: increased 0&#x2d;&gt;100
+    1: decreased 100&#x2d;&gt;70
+    2: increased 70&#x2d;&gt;80
+    3: no change
+    &gt;&gt;&gt; b.withdraw(100)   # Transaction 2 for b
+    &#x27;Insufficient funds&#x27;
+    &gt;&gt;&gt; b.withdraw(30)    # Transaction 3 for b
+    10
+    &gt;&gt;&gt; for t in b.transactions:
+    ...     print(t.report())
+    0: increased 0&#x2d;&gt;50
+    1: decreased 50&#x2d;&gt;40
+    2: no change
+    3: decreased 40&#x2d;&gt;10
+    &quot;&quot;&quot;
+
+    # *** YOU NEED TO MAKE CHANGES IN SEVERAL PLACES IN THIS CLASS ***
+<div class="sol-highlight">    def next_id(self) &#x2d;&gt; int:
+        # There are many ways to implement this counter, such as using an instance
+        # attribute to track the next ID.
+        return len(self.transactions)</div>
+    def __init__(self, account_holder: str):
+        self.balance: int = 0
+        self.holder = account_holder
+<div class="sol-highlight">        self.transactions = []</div>
+    def deposit(self, amount: int) &#x2d;&gt; int:
+        &quot;&quot;&quot;Increase the account balance by amount, add the deposit
+        to the transaction history, and return the new balance.
+        &quot;&quot;&quot;
+<div class="sol-highlight">        self.transactions.append(Transaction(self.next_id(), self.balance, self.balance + amount))</div>        self.balance = self.balance + amount
+        return self.balance
+
+    def withdraw(self, amount: int) &#x2d;&gt; int | str:
+        &quot;&quot;&quot;Decrease the account balance by amount, add the withdraw
+        to the transaction history, and return the new balance.
+        &quot;&quot;&quot;
+        if amount &gt; self.balance:
+<div class="sol-highlight">            self.transactions.append(Transaction(self.next_id(), self.balance, self.balance))</div>            return &#x27;Insufficient funds&#x27;
+<div class="sol-highlight">        self.transactions.append(Transaction(self.next_id(), self.balance, self.balance &#x2d; amount))</div>        self.balance = self.balance &#x2d; amount
+        return self.balance</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q BankAccount<button id="copy-code-python3ok-qBankAccount" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qBankAccount").onclick = () => copyCode('python3 ok -q BankAccount', "copy-code-python3ok-qBankAccount");
+        </script>
+        <br/>
+
+
+<h3 id="q2-email">Q2：电子邮件</h3>
+
+
+<p>一个电子邮件系统包含三个类：<code>Email</code>、<code>Server</code> 和 <code>Client</code>。<code>Client</code> 可以撰写邮件，并将其发送给 <code>Server</code>。<code>Server</code> 随后把邮件投递到另一个 <code>Client</code> 的收件箱。为此，<code>Server</code> 有一个名为 <code>clients</code> 的字典，将 <code>Client</code> 的名字映射到对应的 <code>Client</code> 实例。</p>
+
+<p>假设一个 <code>Client</code> 不会更换它使用的 <code>Server</code>，并且只能使用该 <code>Server</code> 来撰写 <code>Email</code>。</p>
+
+<p>填写下面的定义以完成实现！<code>Email</code> 类已经为你写好了。</p>
+
+<blockquote><p><strong>重要提示</strong>：动手之前，请务必通读整段代码，理解各个类之间的关系，并注意方法的参数类型。思考在每个方法中你能访问哪些变量，以及如何利用它们访问其他类及其方法。</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>注意：</strong></p>
+
+<ul>
+  <li><code>Email</code> 类中 <code>__init__(self, msg, sender, recipient_name)</code> 方法的 <code>sender</code> 参数是一个 <code>Client</code> 实例。</li>
+  <li><code>Server</code> 类中 <code>register_client(self, client)</code> 方法的 <code>client</code> 参数是一个 <code>Client</code> 实例。</li>
+  <li><code>Server</code> 类中 <code>send(self, email)</code> 方法的 <code>email</code> 参数是一个 <code>Email</code> 实例。</li>
+</ul></blockquote>
+
+<solution>
+
+<pre><code>class Email:
+    &quot;&quot;&quot;An email has the following instance attributes:
+
+        msg (str): the contents of the message
+        sender (Client): the client that sent the email
+        recipient_name (str): the name of the recipient (another client)
+    &quot;&quot;&quot;
+    def __init__(self, msg: str, sender, recipient_name: str):
+        self.msg = msg
+        self.sender = sender
+        self.recipient_name = recipient_name
+
+class Server:
+    &quot;&quot;&quot;Each Server has one instance attribute called clients that is a
+    dictionary from client names to client objects.
+
+    &gt;&gt;&gt; s = Server()
+    &gt;&gt;&gt; # Dummy client class implementation for testing only
+    &gt;&gt;&gt; class Client:
+    ...     def __init__(self, server, name):
+    ...         self.inbox = []
+    ...         self.server = server
+    ...         self.name = name
+    &gt;&gt;&gt; a = Client(s, &#x27;Alice&#x27;)
+    &gt;&gt;&gt; b = Client(s, &#x27;Bob&#x27;)
+    &gt;&gt;&gt; s.register_client(a) 
+    &gt;&gt;&gt; s.register_client(b)
+    &gt;&gt;&gt; len(s.clients)  # we have registered 2 clients
+    2
+    &gt;&gt;&gt; all([type(c) == str for c in s.clients.keys()])  # The keys in self.clients should be strings
+    True
+    &gt;&gt;&gt; all([type(c) == Client for c in s.clients.values()])  # The values in self.clients should be Client instances
+    True
+    &gt;&gt;&gt; new_a = Client(s, &#x27;Alice&#x27;)  # a new client with the same name as an existing client
+    &gt;&gt;&gt; s.register_client(new_a)
+    &gt;&gt;&gt; len(s.clients)  # the key of a dictionary must be unique
+    2
+    &gt;&gt;&gt; s.clients[&#x27;Alice&#x27;] is new_a  # the value for key &#x27;Alice&#x27; should now be updated to the new client new_a
+    True
+    &gt;&gt;&gt; e = Email(&quot;I love 61A&quot;, b, &#x27;Alice&#x27;)
+    &gt;&gt;&gt; s.send(e)
+    &gt;&gt;&gt; len(new_a.inbox)  # one email has been sent to new Alice
+    1
+    &gt;&gt;&gt; type(new_a.inbox[0]) == Email  # a Client&#x27;s inbox is a list of Email instances
+    True
+    &quot;&quot;&quot;
+    def __init__(self):
+        self.clients = {}
+
+    def send(self, email: Email):
+        &quot;&quot;&quot;Append the email to the inbox of the client it is addressed to.
+            email is an instance of the Email class.
+        &quot;&quot;&quot;
+<div class="sol-highlight">        self.clients[email.recipient_name].inbox.append(email)</div>
+    def register_client(self, client):
+        &quot;&quot;&quot;Add a client to the clients mapping (which is a 
+        dictionary from client names to client instances).
+            client is an instance of the Client class.
+        &quot;&quot;&quot;
+<div class="sol-highlight">        self.clients[client.name] = client</div>
+class Client:
+    &quot;&quot;&quot;A client has a server, a name (str), and an inbox (list).
+
+    &gt;&gt;&gt; s = Server()
+    &gt;&gt;&gt; a = Client(s, &#x27;Alice&#x27;)
+    &gt;&gt;&gt; b = Client(s, &#x27;Bob&#x27;)
+    &gt;&gt;&gt; a.compose(&#x27;Hello, World!&#x27;, &#x27;Bob&#x27;)
+    &gt;&gt;&gt; b.inbox[0].msg
+    &#x27;Hello, World!&#x27;
+    &gt;&gt;&gt; a.compose(&#x27;CS 61A Rocks!&#x27;, &#x27;Bob&#x27;)
+    &gt;&gt;&gt; len(b.inbox)
+    2
+    &gt;&gt;&gt; b.inbox[1].msg
+    &#x27;CS 61A Rocks!&#x27;
+    &gt;&gt;&gt; b.inbox[1].sender.name
+    &#x27;Alice&#x27;
+    &quot;&quot;&quot;
+    def __init__(self, server: Server, name: str):
+        self.inbox: list = []
+        self.server = server
+        self.name = name
+<div class="sol-highlight">        server.register_client(self)</div>
+    def compose(self, message: str, recipient_name: str):
+        &quot;&quot;&quot;Send an email with the given message to the recipient.&quot;&quot;&quot;
+<div class="sol-highlight">        email = Email(message, self, recipient_name)</div>        self.server.send(email)</code></pre>
+
+</solution>
+
+<blockquote><p>本题有两个 <code>ok</code> 测试。两个测试都必须通过才能拿到满分，请按给出的顺序运行它们。<code>python3 ok &#x2d;q Server</code> 测试的是 <code>Server</code> 类的实现，不要求 <code>Client</code> 类实现正确。<code>python3 ok &#x2d;q Client</code> 测试会同时检验 <code>Server</code> 和 <code>Client</code> 类的实现。因此，请务必先测试你的 <code>Server</code> 类实现，再测试 <code>Client</code> 类。</p></blockquote>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q Server
+python3 ok -q Client<button id="copy-code-python3ok-qServerpython3ok-qClient" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qServerpython3ok-qClient").onclick = () => copyCode('python3 ok -q Server\npython3 ok -q Client', "copy-code-python3ok-qServerpython3ok-qClient");
+        </script>
+        <br/>
+
+
+<h2 id="inheritance">继承</h2>
+
+
+<p>两个类可能具有相似的属性，但其中一个表示另一个的特殊情形。例如，<code>Nickel</code> 是 <code>Coin</code> 的一种特殊情形。我们说 <code>Nickel</code> 是 <code>Coin</code> 的子类，而 <code>Coin</code> 是 <code>Nickel</code> 的基类（或超类）。在 Python 中，<code>class Nickel(Coin):</code> 这一行就建立了这种关系。</p>
+
+<pre><code>class Coin:
+    cents = None  # This will be provided by subclasses, but not by Coin itself
+
+    def __init__(self, year):
+        self.year = year
+
+class Nickel(Coin):
+    cents = 5</code></pre>
+
+
+
+<p><code>Coin</code> 的方法（例如 <code>__init__</code>）也是 <code>Nickel</code> 的方法。因此，每个 <code>Nickel</code> 实例都有 <code>year</code> 属性。但定义在 <code>Nickel</code> 类中的类属性或方法会优先被找到。</p>
+
+<pre><code>&gt;&gt;&gt; c = Nickel(1990)
+&gt;&gt;&gt; c.year
+1990
+&gt;&gt;&gt; c.cents
+5</code></pre>
+
+
+
+
+<h3 id="q3-mint">Q3：铸币厂</h3>
+
+
+<p>铸币厂（mint）是制造硬币的地方。本题中，你将实现一个 <code>Mint</code> 类，它能产出带有正确年份和面值的 <code>Coin</code>。</p>
+
+<ul>
+  <li>每个 <code>Mint</code> 实例都有一个年份印记。<code>update</code> 方法会把该实例的年份印记设置为 <code>Mint</code> <em>类</em>的 <code>present_year</code> 类属性。</li>
+  <li><code>create</code> 方法接收一个 <code>Coin</code> 的子类（<em>不</em>是实例！），然后创建并返回该类的一个实例，并印上该 <code>Mint</code> 的年份（如果 Mint 尚未更新，这个年份可能不同于 <code>Mint.present_year</code>）。</li>
+  <li><code>Coin</code> 的 <code>worth</code> 方法返回硬币的分值，再加上币龄超过 50 年后每多一年的一分钱。硬币的币龄可以通过 <code>Mint</code> 类的 <code>present_year</code> 类属性减去硬币的 year 得到。</li>
+</ul>
+
+<solution>
+
+<pre><code>class Mint:
+    &quot;&quot;&quot;A mint creates coins by stamping on years.
+
+    The update method sets the mint&#x27;s stamp to Mint.present_year.
+
+    &gt;&gt;&gt; mint = Mint()
+    &gt;&gt;&gt; mint.year
+    2025
+    &gt;&gt;&gt; dime = mint.create(Dime)
+    &gt;&gt;&gt; dime.year
+    2025
+    &gt;&gt;&gt; Mint.present_year = 2105  # Time passes
+    &gt;&gt;&gt; nickel = mint.create(Nickel)
+    &gt;&gt;&gt; nickel.year     # The mint has not updated its stamp yet
+    2025
+    &gt;&gt;&gt; nickel.worth()  # 5 cents + (80 &#x2d; 50 years)
+    35
+    &gt;&gt;&gt; mint.update()   # The mint&#x27;s year is updated to 2105
+    &gt;&gt;&gt; Mint.present_year = 2180     # More time passes
+    &gt;&gt;&gt; mint.create(Dime).worth()    # 10 cents + (75 &#x2d; 50 years)
+    35
+    &gt;&gt;&gt; Mint().create(Dime).worth()  # A new mint has the current year
+    10
+    &gt;&gt;&gt; dime.worth()     # 10 cents + (155 &#x2d; 50 years)
+    115
+    &gt;&gt;&gt; Dime.cents = 20  # Upgrade all dimes!
+    &gt;&gt;&gt; dime.worth()     # 20 cents + (155 &#x2d; 50 years)
+    125
+    &quot;&quot;&quot;
+    present_year = 2025
+
+    def __init__(self):
+        self.update()
+
+    def create(self, coin):
+<div class="sol-highlight">        return coin(self.year)</div>
+    def update(self) &#x2d;&gt; None:
+<div class="sol-highlight">        self.year = Mint.present_year</div>
+class Coin:
+    cents = None # will be provided by subclasses, but not by Coin itself
+
+    def __init__(self, year: int):
+        self.year = year
+
+    def worth(self) &#x2d;&gt; int:
+<div class="sol-highlight">        return self.cents + max(0, Mint.present_year &#x2d; self.year &#x2d; 50)</div>
+class Nickel(Coin):
+    cents = 5
+
+class Dime(Coin):
+    cents = 10</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q Mint<button id="copy-code-python3ok-qMint" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qMint").onclick = () => copyCode('python3 ok -q Mint', "copy-code-python3ok-qMint");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="optional-questions">选做题</h1>
+
+
+<blockquote><p>这些是选做题。即使不做，本次作业仍然可以拿到全部学分。不过它们是不错的练习，建议还是做一下！</p></blockquote>
+
+
+<h3 id="q4-next-virahanka-fibonacci-object">Q4：下一个 Virahanka Fibonacci 对象</h3>
+
+
+<p>实现 <code>VirFib</code> 类的 <code>next</code> 方法。对于该类，<code>value</code> 属性是一个 Fibonacci 数。<code>next</code> 方法返回一个 <code>VirFib</code> 实例，其 <code>value</code> 为下一个 Fibonacci 数。<code>next</code> 方法只能花费常数时间。</p>
+
+<p>注意，doctest 中不会打印任何内容。每次调用 <code>.next()</code> 都会返回一个 <code>VirFib</code> 实例，而每个 <code>VirFib</code> 实例的显示方式由其 <code>__repr__</code> 方法的返回值决定。</p>
+
+<blockquote><p><em>提示</em>：在 <code>next</code> 中设置一个新的实例属性来记录前一个数。你可以随时为对象创建新的实例属性，即使在 <code>__init__</code> 方法之外也可以。</p></blockquote>
+
+<solution>
+
+<pre><code>class VirFib():
+    &quot;&quot;&quot;A Virahanka Fibonacci number.
+
+    &gt;&gt;&gt; start = VirFib()
+    &gt;&gt;&gt; start
+    VirFib object, value 0
+    &gt;&gt;&gt; start.next()
+    VirFib object, value 1
+    &gt;&gt;&gt; start.next().next()
+    VirFib object, value 1
+    &gt;&gt;&gt; start.next().next().next()
+    VirFib object, value 2
+    &gt;&gt;&gt; start.next().next().next().next()
+    VirFib object, value 3
+    &gt;&gt;&gt; start.next().next().next().next().next()
+    VirFib object, value 5
+    &gt;&gt;&gt; start.next().next().next().next().next().next()
+    VirFib object, value 8
+    &gt;&gt;&gt; start.next().next().next().next().next().next() # Ensure start isn&#x27;t changed
+    VirFib object, value 8
+    &quot;&quot;&quot;
+
+    def __init__(self, value: int = 0):
+        self.value = value
+
+    def next(self):
+<div class="sol-highlight">        if self.value == 0:
+            result = VirFib(1)
+        else:
+            result = VirFib(self.value + self.previous)
+        result.previous = self.value
+        return result</div>
+    def __repr__(self) &#x2d;&gt; str:
+        return &quot;VirFib object, value &quot; + str(self.value)</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q VirFib<button id="copy-code-python3ok-qVirFib" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qVirFib").onclick = () => copyCode('python3 ok -q VirFib', "copy-code-python3ok-qVirFib");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>请记住，<code>next</code> 必须返回一个 <code>VirFib</code> 对象！考虑到这一点，我们的第一个目标是算出下一个 <code>VirFib</code> 对象并返回它。一种方法是先确定基准情况（<code>self.value == 0</code>），然后确定下一次调用 <code>next</code> 需要哪些信息。</p>
+
+<p>你可能还会注意到，保存当前值会让这个解法看起来与 <code>virfib</code> 问题的迭代版本非常相似。</p>
+
+</div>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#object-oriented-programming">面向对象编程</a></li>
+    <ul>
+      <li><a href="#q1-bank-account">Q1：银行账户</a></li>
+      <li><a href="#q2-email">Q2：电子邮件</a></li>
+    </ul>
+    <li><a href="#inheritance">继承</a></li>
+    <ul>
+      <li><a href="#q3-mint">Q3：铸币厂</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#optional-questions">选做题</a></li>
+  <ul>
+    <li><a href="#q4-next-virahanka-fibonacci-object">Q4：下一个 Virahanka Fibonacci 对象</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

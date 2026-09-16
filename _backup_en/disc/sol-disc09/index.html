@@ -1,0 +1,882 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>
+Discussion 9 | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Discussion 9: Scheme, Scheme Lists
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc09.pdf" class="label label-outline">disc09.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+<h1 id="attendance">Attendance</h1>
+
+
+<p>Your TA will come around during discussion to check you in.
+<!-- You can start on the worksheet before being checked in; you don't need to wait for your TA to get started. --></p>
+
+<p>If you miss discussion for a good reason (such as sickness or a scheduling conflict), email <a href="mailto:cs61a@berkeley.edu">cs61a@berkeley.edu</a> within one week to receive attendance credit.
+</p>
+
+<!-- # Getting Started
+
+Everybody say your name, and then figure out who most recently pet a dog.  (Feel
+free to share dog photos.  Even cat photos are acceptable.) -->
+
+
+<h1 id="scheme">Scheme</h1>
+
+
+<p>You can use <a href="https://scheme.cs61a.org">scheme.cs61a.org</a> to try things out.</p>
+
+<p>An <a href="../../articles/scheme-spec/index.html#if"><code>if</code></a> expression has 3 subexpressions:</p>
+
+<ul>
+  <li>The first one, called the <em>predicate</em>, is always evaluated to choose between the next two.</li>
+  <li>The second one, called the <em>consequent</em>, is evaluated if the <em>predicate</em>'s value is true.</li>
+  <li>The third one, called the <em>alternative</em>, is evaluated if the <em>predicate</em>'s value is false.</li>
+</ul>
+
+<p>The value of the second or third expression (whichever gets evaluated) is the value of the whole <code>if</code> expression.</p>
+
+<p>Only <code>#f</code> is a <a href="../../articles/scheme-spec/index.html#booleans">false value</a> in Scheme. All other values are true values, including <code>#t</code>.</p>
+
+<p>The logical special forms <a href="../../articles/scheme-spec/index.html#and"><code>and</code></a> and <a href="../../articles/scheme-spec/index.html#or"><code>or</code></a> can have any number of sub-expressions. Use <code>and</code> to check if all its sub-expressions are true values. Use <code>or</code> to check if any of them are.</p>
+
+<p>An Example:</p>
+
+<pre><code>scm&gt; (define y (+ 1 2))  ; y is now 3
+y
+scm&gt; (define z (or (&gt; y 4) (&gt; y 5) (&lt; y 5)))  ; z is true because y &lt; 5
+z
+scm&gt; (+ 7 (if (and (&gt; y 1) z) y 1))  ; the if expression evaluates to 3
+10</code></pre>
+
+
+
+<p>The <code>expect</code> form is built into <a href="https://scheme.cs61a.org">scheme.cs61a.org</a> and checks to see if its first sub expression evaluates to its second one. It is used for testing.</p>
+
+<div class="page-break"></div>
+
+
+<h3 id="q1-perfect-fit">Q1: Perfect Fit</h3>
+
+
+<p><strong>Definition</strong>: A perfect square is <code>k*k</code> for some integer <code>k</code>.</p>
+
+<p>Implement <code>fit</code>, which takes non-negative integers <code>total</code> and <code>n</code>. It returns
+whether there are <code>n</code> <strong>different</strong> positive perfect squares that sum to
+<code>total</code>.</p>
+
+<!-- **Important:** Don't use the Scheme interpreter to tell you whether you've
+implemented it correctly. Discuss! On the final exam, you won't have an
+interpreter. -->
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+Use the <code>(or _ _)</code> special form to combine two recursive calls: one that uses
+<code>k*k</code> in the sum and one that does not.
+</div>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="fit-input" style="height:450px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fit-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fit-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fit-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor(";;; Return whether there are n perfect squares with no repeats that sum to total\n;;;\n;;; scm&gt; (fit 10 2)\n;;; #t\n;;; scm&gt; (fit 9 2)\n;;; #f\n(define (fit total n)\n    (define (f total n k)\n        (if (and (= n 0) (= total 0))\n            #t\n        (if (&lt; total (* k k))\n            #f\n            'YOUR-CODE-HERE\n\n\n        )))\n    (f total n 1))\n\n(expect (fit 10 2) #t)  ; 1*1 + 3*3\n(expect (fit 9 1)  #t)  ; 3*3\n(expect (fit 9 2)  #f)  ;\n(expect (fit 9 3)  #f)  ; 1*1 + 2*2 + 2*2 doesn&#x27;t count because of repeated 2*2\n(expect (fit 25 1)  #t) ; 5*5\n(expect (fit 25 2)  #t) ; 3*3 + 4*4\n", "scheme", "fit-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>;;; Return whether there are n perfect squares with no repeats that sum to total
+;;;
+;;; scm&gt; (fit 10 2)
+;;; #t
+;;; scm&gt; (fit 9 2)
+;;; #f
+(define (fit total n)
+    (define (f total n k)
+        (if (and (= n 0) (= total 0))
+            #t
+        (if (&lt; total (* k k))
+            #f
+            (or (f total n (+ k 1)) (f (&#x2d; total (* k k)) (&#x2d; n 1) (+ k 1)))
+        )))
+    (f total n 1))
+
+(expect (fit 10 2) #t)  ; 1*1 + 3*3
+(expect (fit 9 1)  #t)  ; 3*3
+(expect (fit 9 2)  #f)  ;
+(expect (fit 9 3)  #f)  ; 1*1 + 2*2 + 2*2 doesn&#x27;t count because of repeated 2*2
+(expect (fit 25 1)  #t) ; 5*5
+(expect (fit 25 2)  #t) ; 3*3 + 4*4</code></pre>
+
+            </div>
+        
+
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        How to approach this problem<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+This is a tree recursion problem. Your implementation should try different ways of summing up <code>n</code> different perfect squares to see if the sum is <code>total</code>. For the example <code>(fit 10 2)</code>, the call to <code>(f 10 2 1)</code> returns whether there are 2 perfect squares that sum to 10 and are each <code>1*1</code> or greater. To figure that out, you'll need to make two recursive calls:
+
+<ul>
+  <li><code>(f 10 2 2)</code> which returns whether there are 2 perfect squares that sum to 10 and are each <code>2*2</code> or greater (nope)</li>
+  <li><code>(f 9 1 2)</code> which returns whether there is 1 perfect square that sums to 9 and is <code>2*2</code> or greater (yep: <code>3*3</code>)</li>
+</ul>
+
+<p>Once your implementation makes these two recursive calls, it needs to combine them into one result.
+</div>
+</p>
+
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Another Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+The first recursive call should subtract <code>k*k</code> from <code>total</code> and subtract 1 from <code>n</code>; the other recursive call should leaves <code>total</code> and <code>n</code>
+unchanged.
+</div>
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-greatest-common-divisor">Q2: Greatest Common Divisor</h3>
+
+
+<p>The Greatest Common Divisor (GCD) is the largest integer that evenly divides two positive integers.</p>
+
+<p>Write the procedure <code>gcd</code>, which computes the GCD of numbers <code>a</code> and <code>b</code> using
+Euclid's algorithm, which recursively uses the fact that the GCD of two values is either of
+the following:</p>
+
+<ul>
+  <li>the smaller value if it evenly divides the larger value, or</li>
+  <li>the greatest common divisor of the smaller value and the remainder of
+  the larger value divided by the smaller value</li>
+</ul>
+
+<p>In other words, if <code>a</code> is greater than <code>b</code> and <code>a</code> is not divisible by
+<code>b</code>, then</p>
+
+<pre><code>gcd(a, b) = gcd(b, a % b)  # please note that this is Python syntax</code></pre>
+
+<p>You may find the provided procedures <code>min</code> and <code>max</code> helpful. You can also use
+the built-in <code>modulo</code> and <code>zero?</code> procedures.</p>
+
+<pre><code class="scheme">&gt;scm&gt; (modulo 10 4)
+&gt;2
+&gt;scm&gt; (zero? (&#x2d; 3 3))
+&gt;#t
+&gt;scm&gt; (zero? 3)
+&gt;#f</code></pre>
+
+
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="gcd-input" style="height:306px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-gcd-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-gcd-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-gcd-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor("(define (max a b) (if (> a b) a b))\n  (define (min a b) (if (> a b) b a))\n  (define (gcd a b)\n\n'YOUR-CODE-HERE\n\n\n\n\n\n\n<p>)</p>\n\n<p>(expect (gcd 0 4) 4)\n  (expect (gcd 10 0) 10)\n  (expect (gcd 30 5) 5)\n  (expect (gcd 24 60) 12)\n  (expect (gcd 1071 462) 21)", "scheme", "gcd-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                  (define (max a b) (if (> a b) a b))
+  (define (min a b) (if (> a b) b a))
+  (define (gcd a b)
+
+<pre><code>(cond ((zero? a) b)
+      ((zero? b) a)
+      ((= (modulo (max a b) (min a b)) 0) (min a b))
+      (else (gcd (min a b) (modulo (max a b) (min a b)))))
+</code></pre>
+
+<p>)</p>
+
+<p>(expect (gcd 0 4) 4)
+  (expect (gcd 10 0) 10)
+  (expect (gcd 30 5) 5)
+  (expect (gcd 24 60) 12)
+  (expect (gcd 1071 462) 21)
+            </div>
+        
+<!--
+**Discussion Time:** As a group, come up with one sentence describing how your implementation makes sure that all <code>n</code> positive perfect squares are **different** (no repeats).  If you're not sure why, talk to a TA! --></p>
+
+<div class="page-break"></div>
+
+
+<h1 id="scheme-lists-amp-quotation">Scheme Lists &amp; Quotation</h1>
+
+
+<p>Scheme lists are linked lists. Lightning review:</p>
+
+<ul>
+  <li><code>nil</code> and <code>()</code> are the same thing: the empty list.</li>
+  <li><code>(cons first rest)</code> constructs a linked list with <code>first</code> as its first element.
+  and <code>rest</code> as the rest of the list, which should always be a list.</li>
+  <li><code>(car s)</code> returns the first element of the list <code>s</code>.</li>
+  <li><code>(cdr s)</code> returns the rest of the list <code>s</code>.</li>
+  <li><code>(list ...)</code> takes n arguments and returns a list of length n with those arguments as elements.</li>
+  <li><code>(append ...)</code> takes n lists as arguments and returns a list of all of the elements of those lists.</li>
+  <li><code>(draw s)</code> draws the linked list structure of a list <code>s</code>. It only works on
+  <a href="https://code.cs61a.org/scheme">code.cs61a.org/scheme</a>. <strong>Try it now with something like <code>(draw (cons 1 nil))</code></strong>.</li>
+</ul>
+
+<p>Quoting an expression leaves it unevaluated. Examples:</p>
+
+<ul>
+  <li><code>&#x27;four</code> and <code>(quote four)</code> both evaluate to the symbol <code>four</code>.</li>
+  <li><code>&#x27;(2 3 4)</code> and <code>(quote (2 3 4))</code> both evaluate to a list containing three elements: 2, 3, and 4.</li>
+  <li><code>&#x27;(2 3 four)</code> and <code>(quote (2 3 four))</code> evaluate to a list containing 2, 3, and the symbol <code>four</code>.</li>
+</ul>
+
+<p>Here's an important difference between <code>list</code> and quotation:</p>
+
+<pre><code>scm&gt; (list 2 (+ 3 4))
+(2 7)
+scm&gt; &#x27;(2 (+ 3 4))
+(2 (+ 3 4))</code></pre>
+
+
+
+<!-- <div class="page-break"></div> -->
+
+
+<h3 id="q3-remove">Q3: Remove</h3>
+
+
+<p>Implement a procedure <code>remove</code> that takes in a list of numbers <code>s</code> and a number
+<code>x</code>. It returns a list with all instances of <code>x</code> removed from <code>s</code>. You may
+assume that <code>s</code> only contains of numbers and will not have nested lists.</p>
+
+<!-- > <em>Hint</em>: You might find the built-in <code>filter</code> procedure useful
+
+<blockquote><p>(though it is definitely possible to complete this question without it).</p>
+
+<p>You can find information about how to use <code>filter</code> in
+<a href="../../articles/scheme-builtins/index.html#pair-and-list-manipulation">the 61A Scheme builtin specification</a>! --></p></blockquote>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="remove-input" style="height:270px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-remove-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-remove-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-remove-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor(';;; Return a list with all numbers equal to x removed\n;;;\n;;; scm&gt; (remove &#x27;(3 4 3 4 4 3) 3)\n;;; (4 4 4)\n;;; scm&gt; (remove &#x27;(3 4 3 4 4 3) 4)\n;;; (3 3 3)\n(define (remove s x)\n  (if (null? s) nil\n    (if (equal? x ____) ____ ____)\n))\n\n(expect (remove &#x27;(3 4 3 4 4 3) 3) (4 4 4))\n(expect (remove &#x27;(3 4 3 4 4 3) 4) (3 3 3))\n', "scheme", "remove-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>;;; Return a list with all numbers equal to x removed
+;;;
+;;; scm&gt; (remove &#x27;(3 4 3 4 4 3) 3)
+;;; (4 4 4)
+;;; scm&gt; (remove &#x27;(3 4 3 4 4 3) 4)
+;;; (3 3 3)
+(define (remove s x)
+  (if (null? s) nil
+    (if (equal? x (car s)) (remove (cdr s) x) (cons (car s) (remove (cdr s) x)))
+
+))
+
+(expect (remove &#x27;(3 4 3 4 4 3) 3) (4 4 4))
+(expect (remove &#x27;(3 4 3 4 4 3) 4) (3 3 3))</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h3 id="q4-pair-up">Q4: Pair Up</h3>
+
+
+<p>Implement <code>pair&#x2d;up</code>, which takes a list <code>s</code>. It returns a list of lists that
+together contain all of the elements of <code>s</code> in order. Each list in the result
+should have 2 elements. The last one can have up to 3.</p>
+
+<p>Look at the examples to make sure you understand what this procedure does.
+<!-- Look at the examples together to make sure everyone understands what this procedure does. --></p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="pair-up-input" style="height:306px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-pair-up-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-pair-up-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-pair-up-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor(";;; Return a list of pairs containing the elements of s.\n;;;\n;;; scm&gt; (pair&#x2d;up &#x27;(3 4 5 6 7 8))\n;;; ((3 4) (5 6) (7 8))\n;;; scm&gt; (pair&#x2d;up &#x27;(3 4 5 6 7 8 9))\n;;; ((3 4) (5 6) (7 8 9))\n(define (pair&#x2d;up s)\n    (if (&lt;= (length s) 3)\n        'YOUR-CODE-HERE\n\n\n\n    ))\n\n(expect (pair&#x2d;up &#x27;(3 4 5 6 7 8)) ((3 4) (5 6) (7 8)) )\n(expect (pair&#x2d;up &#x27;(3 4 5 6 7 8 9)) ((3 4) (5 6) (7 8 9)) )\n", "scheme", "pair-up-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>;;; Return a list of pairs containing the elements of s.
+;;;
+;;; scm&gt; (pair&#x2d;up &#x27;(3 4 5 6 7 8))
+;;; ((3 4) (5 6) (7 8))
+;;; scm&gt; (pair&#x2d;up &#x27;(3 4 5 6 7 8 9))
+;;; ((3 4) (5 6) (7 8 9))
+(define (pair&#x2d;up s)
+    (if (&lt;= (length s) 3)
+        (list s)
+        (cons (list (car s) (car (cdr s))) (pair&#x2d;up (cdr (cdr s))))
+    ))
+
+(expect (pair&#x2d;up &#x27;(3 4 5 6 7 8)) ((3 4) (5 6) (7 8)) )
+(expect (pair&#x2d;up &#x27;(3 4 5 6 7 8 9)) ((3 4) (5 6) (7 8 9)) )</code></pre>
+
+            </div>
+        
+
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Base Case<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<p><code>pair&#x2d;up</code> takes a list (of numbers) and returns a list of lists, so when
+<code>(length s)</code> is less than or equal to 3, return a list containing the list <code>s</code>.
+For example, <code>(pair&#x2d;up (list 2 3 4))</code> should return <code>((2 3 4))</code>.</p>
+
+</div>
+
+
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Recursive Case<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<p>Use <code>(cons _ (pair&#x2d;up _))</code> to create the result, where the first argument to
+<code>cons</code> is a list with two elements: the <code>(car s)</code> and the <code>(car (cdr s))</code>. The
+argument to <code>pair&#x2d;up</code> is everything after the first two elements.</p>
+
+</div>
+
+
+<!-- <div class="page-break"></div> -->
+
+
+<h3 id="q5-list-insert">Q5: List Insert</h3>
+
+
+<p>Write a Scheme function that, when given an element, a list, and an
+index, inserts the element into the list at that index. You can assume that the index is in bounds for the list.</p>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q list-insert -u
+python3 ok -q list-insert<button id="copy-code-python3ok-qlist-insert-upython3ok-qlist-insert" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlist-insert-upython3ok-qlist-insert").onclick = () => copyCode('python3 ok -q list-insert -u\npython3 ok -q list-insert', "copy-code-python3ok-qlist-insert-upython3ok-qlist-insert");
+        </script>
+        <br/>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="scheme-list-insert-input" style="height:216px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-scheme-list-insert-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-scheme-list-insert-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-scheme-list-insert-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor("(define (insert element lst index)\n        'YOUR-CODE-HERE\n\n\n\n\n    )\n\n    (expect (insert 2 &#x27;(1 7 9) 2) (1 7 2 9))\n\n    (expect (insert &#x27;a &#x27;(b c) 0) (a b c))\n", "scheme", "scheme-list-insert-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>    (define (insert element lst index)
+        (if (= index 0)
+            (cons element lst)
+            (cons (car lst) (insert element (cdr lst) (&#x2d; index 1))))
+    )
+
+    (expect (insert 2 &#x27;(1 7 9) 2) (1 7 2 9))
+
+    (expect (insert &#x27;a &#x27;(b c) 0) (a b c))</code></pre>
+
+            </div>
+        
+
+<!-- **Discussion**: What's the most number of elements <code>s</code> can have if
+<code>(pair&#x2d;up (pair&#x2d;up s))</code> returns a list with only one element?
+(Don't just guess and check; discuss!)
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Answer<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+
+<ol>
+  <li>For example, <code>(pair&#x2d;up &#x27;(1 2 3 4 5 6 7))</code> evaluates to <code>(((1 2) (3 4) (5 6 7)))</code>, which is a list with one element. In general, <code>(pair&#x2d;up s)</code> can have up to 3 elements. If <code>s</code> has 8 or more elements, then <code>(pair&#x2d;up s)</code> will have at least 4 elements, which is too many.
+  </div> --></li>
+</ol>
+
+<div class="page-break"></div>
+
+<!-- # Optional Question -->
+
+
+<h3 id="q6-increasing-rope">Q6: Increasing Rope</h3>
+
+
+<p><strong>Definition:</strong> A <em>rope</em> in Scheme is a non-empty list containing only numbers
+except for the last element, which may either be a number or a rope.</p>
+
+<p>Implement <code>up</code>, a Scheme procedure that takes a positive integer <code>n</code>. It returns
+a rope containing the digits of <code>n</code> that is the shortest rope in which each pair
+of adjacent numbers in the same list are in increasing order.</p>
+
+<p><strong>Reminder</strong>: the <code>quotient</code> procedure performs floor division, like <code>//</code> in
+Python. The <code>remainder</code> procedure is like <code>%</code> in Python.</p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="up-input" style="height:360px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-up-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-up-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-up-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor("(define (up n)\n    (define (helper n result)\n        (define first (remainder n 10))  ; Using first will shorten your code\n        (if (zero? n) result\n            (helper\n                (quotient n 10)\n                'YOUR-CODE-HERE\n\n\n\n\n                )))\n    (helper\n      (quotient n 10)\n      'YOUR-CODE-HERE\n\n\n    ))\n\n(expect (up 314152667899) (3 (1 4 (1 5 (2 6 (6 7 8 9 (9)))))))\n", "scheme", "up-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>(define (up n)
+    (define (helper n result)
+        (define first (remainder n 10))  ; Using first will shorten your code
+        (if (zero? n) result
+            (helper
+                (quotient n 10)
+                (if (&lt; first (car result))
+                    (cons first result)
+                    (list first result))
+                )))
+    (helper
+      (quotient n 10)
+      (list (remainder n 10))
+    ))
+
+(expect (up 314152667899) (3 (1 4 (1 5 (2 6 (6 7 8 9 (9)))))))</code></pre>
+
+            </div>
+        
+
+
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: defining helper<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-7">
+Compare <code>first</code> to <code>(car result)</code> to decide whether to <code>cons</code> the value <code>first</code> onto the <code>result</code> or whether to form a new list that contains <code>first</code> and <code>result</code> as elements.
+</div>
+
+
+        <button id='toggle-8' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: calling helper<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-8">
+To correctly call <code>helper</code> from within <code>up</code>, build a rope that only contains the last digit of <code>n</code>: <code>(remainder n 10)</code>.
+</div>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#attendance">Attendance</a></li>
+  <li><a href="#scheme">Scheme</a></li>
+  <ul>
+    <li><a href="#q1-perfect-fit">Q1: Perfect Fit</a></li>
+    <li><a href="#q2-greatest-common-divisor">Q2: Greatest Common Divisor</a></li>
+  </ul>
+  <li><a href="#scheme-lists-amp-quotation">Scheme Lists &amp; Quotation</a></li>
+  <ul>
+    <li><a href="#q3-remove">Q3: Remove</a></li>
+    <li><a href="#q4-pair-up">Q4: Pair Up</a></li>
+    <li><a href="#q5-list-insert">Q5: List Insert</a></li>
+    <li><a href="#q6-increasing-rope">Q6: Increasing Rope</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

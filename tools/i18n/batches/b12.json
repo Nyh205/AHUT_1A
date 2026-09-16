@@ -1,0 +1,310 @@
+[
+ {
+  "id": 1800,
+  "en": "See the {0} for\ndescriptions of the behavior of all built-in Scheme procedures."
+ },
+ {
+  "id": 1801,
+  "en": "To help you write Scheme, you can use the {0} or\nrun python3 editor to open a window in your\nbrowser and use a web-based Scheme editor created by former student Rahul Arya. If a browser window doesn't open automatically, navigate to {1}."
+ },
+ {
+  "id": 1802,
+  "en": "Make sure to run python3 ok in a separate tab or window so that the editor\nkeeps running."
+ },
+ {
+  "id": 1803,
+  "en": "If you want to use cond for Problems 13, 14, or 15, you must implement Problem EC1 for your tests to run."
+ },
+ {
+  "id": 1804,
+  "en": "Problem 14"
+ },
+ {
+  "id": 1805,
+  "en": "Implement the (enumerate s) procedure, which takes in a list of values s and\nreturns a list of two-element lists, where the first element is the index of the\nvalue, and the second element is the value itself. Set the first index to 0."
+ },
+ {
+  "id": 1806,
+  "en": "Problem 15"
+ },
+ {
+  "id": 1807,
+  "en": "A dictionary list is a Scheme list of pairs ((key value) (key value) ... (key value)) where each key is a unique symbol."
+ },
+ {
+  "id": 1808,
+  "en": "Implement (get dict key), a scheme procedure that takes a dictionary list dict and a value key that appears as the first element in some pair within dict. The get procedure returns the value paired with key. If key is not the first value in a pair within dict, return #f."
+ },
+ {
+  "id": 1809,
+  "en": "Then, implement (set dict key value), a scheme procedure that takes a dictionary list dict and key and value values. If key is a key in dict, then it returns a new dictionary-list that is the same length as dict but has value as the value paired with key. If key is not a key in dict, then it returns a dictionary list with all of the key-value pairs in dict as well as a new pair at the end containing (key value). Assume that no key appears more than once in dict."
+ },
+ {
+  "id": 1810,
+  "en": "Problem 16"
+ },
+ {
+  "id": 1811,
+  "en": "In Schémémon, before taking an action, you have the option to solve a Scheme\nprogramming problem. Correctly answering the problem will double the damage you\ndeal during your turn and prevent you from missing! The programming problems all\nconsist of a description followed by a define form with a blank.\nFor example,"
+ },
+ {
+  "id": 1812,
+  "en": "Implement solution&#x2d;code, a scheme procedure that takes in a Scheme list problem that contains a Scheme expression with a blank, as well as a Scheme expression solution. It returns the result of replacing the five-underscore blank _____ with the solution. If there are multiple blanks, they should each be replaced by the same solution expression."
+ },
+ {
+  "id": 1813,
+  "en": "Play Schémémon"
+ },
+ {
+  "id": 1814,
+  "en": "Once you complete your Scheme interpreter and implement solution&#x2d;code, you can run Schémémon on your own computer with python3 schememon.py. It will use your interpreter to check whether double-damage Scheme problems are answered correctly."
+ },
+ {
+  "id": 1815,
+  "en": "Conclusion"
+ },
+ {
+  "id": 1816,
+  "en": "Congratulations, you have reached the end of your last CS 61A project!\nYou have just implemented an interpreter for an entire language!\nIf you enjoyed this project and want to extend it further, you may be\ninterested in looking at more advanced features, like {0},\n{1}, {2}, and {3}."
+ },
+ {
+  "id": 1817,
+  "en": "Extra Challenge"
+ },
+ {
+  "id": 1818,
+  "en": "Problem EC 1 (0 pts)"
+ },
+ {
+  "id": 1819,
+  "en": "The let special form ({0}) binds symbols to values locally,\ngiving them their initial values. For example:"
+ },
+ {
+  "id": 1820,
+  "en": "Implement make_let_frame in scheme_forms.py, which returns a child\nframe of env that binds the symbol in each element of bindings to the\nvalue of its corresponding expression. The bindings Scheme list contains\npairs that each contain a symbol and a corresponding expression."
+ },
+ {
+  "id": 1821,
+  "en": "You may find the following functions and methods useful:"
+ },
+ {
+  "id": 1822,
+  "en": "validate_form: this function can be used to validate the structure of each\n  binding. It takes in a Scheme list expr of expressions and a min and max\n  length. If expr is not a list with length between min and max inclusive,\n  it raises an error. If no max is passed in, the default is infinity."
+ },
+ {
+  "id": 1823,
+  "en": "validate_formals: this function validates that its argument is a\n  Scheme list of symbols for which each symbol is distinct."
+ },
+ {
+  "id": 1824,
+  "en": "Hint: When building new linked lists iteratively, it may be easier to build it from right to left (or end to start)."
+ },
+ {
+  "id": 1825,
+  "en": "Remember to refer to the {0} if you don't understand any of the test cases!"
+ },
+ {
+  "id": 1826,
+  "en": "In the next challenge, you will implement tail-call optimization, an essential feature of the\nScheme language. Watch this {0} to learn about tail calls."
+ },
+ {
+  "id": 1827,
+  "en": "We will implement tail-call optimization in Scheme by using a technique called \"trampolining\"\nto tail-call optimize our scheme_eval function in Python."
+ },
+ {
+  "id": 1828,
+  "en": "First, let's begin with why optimizing the scheme_eval function will optimize the Scheme interpreter."
+ },
+ {
+  "id": 1829,
+  "en": "Why optimize scheme_eval?"
+ },
+ {
+  "id": 1830,
+  "en": "At the heart of our interpreter is scheme_eval, a tree recursive function. Therefore, when we\nmake an initial call to scheme_eval, a very large of recursive calls to scheme_eval are subsequently made."
+ },
+ {
+  "id": 1831,
+  "en": "For example, consider the simple procedure:"
+ },
+ {
+  "id": 1832,
+  "en": "Evaluating (foo 4) in our Scheme interpreter results in scheme_eval being called 52 times."
+ },
+ {
+  "id": 1833,
+  "en": "If we visualize the call of scheme_eval on the expression (foo 4), we see an interesting pattern:"
+ },
+ {
+  "id": 1834,
+  "en": "The structure of recursive calls made by scheme_eval closely mirrors the structure of recursive calls made by foo:"
+ },
+ {
+  "id": 1835,
+  "en": "The call to scheme_eval that calculates (foo 4) eventually makes a recursive call to scheme_eval that\n  calculates (foo 3). The call to scheme_eval that calculates (foo 3) eventually makes a recursive call\n  to scheme_eval that calculates (foo 2), and so on."
+ },
+ {
+  "id": 1836,
+  "en": "In the foo function in Scheme, the very last action in the call to (foo 4) is a recursive call to (foo 3). Similarly, in Python, the very last action in the scheme_eval call for (foo 4) is a recursive call to scheme_eval for (foo 3).\n  In other words, these scheme_eval calls are tail calls!"
+ },
+ {
+  "id": 1837,
+  "en": "In Python, a large number of scheme_eval frames are opened and kept. Each of these scheme_eval frames holds a\nreference to a foo frame from the previous call (represented by an instance of the Frame class) through the env parameter. Because our current interpreter implementation keeps the scheme_eval frames open to return to once everything is evaluated, it also keeps all these unnecessary foo frames open."
+ },
+ {
+  "id": 1838,
+  "en": "However, because some of the scheme_eval calls are tail calls, we actually don't need to keep all of those scheme_eval frames that are being\ncreated in Python. By tail-call optimizing scheme_eval, we can eliminate these unnecessary frames. And since the Scheme frames are\nstored within the scheme_eval call frames, tail-call optimizing scheme_eval in Python will automatically tail-call optimize the entire\ninterpreter in Scheme (yay!)."
+ },
+ {
+  "id": 1839,
+  "en": "As it turns out, tail-call optimizing scheme_eval has other effects in addition to tail-call optimizing Scheme.\nFor example, expressions like (or #f (or #f (or #f f ))) also become much more efficient to run (which we will explores in one of the subparts)."
+ },
+ {
+  "id": 1840,
+  "en": "Here is a simple recursive procedure, foo, that doesn't do very much."
+ },
+ {
+  "id": 1841,
+  "en": "In your non-tail-call optimized version of Scheme, here's what happens when call we foo(4):"
+ },
+ {
+  "id": 1842,
+  "en": "In order to calculate (foo 4), we need to call (foo 3). In order to calculate (foo 3),\nwe need to call (foo 2). In order to calculate (foo 2), we need to call (foo 1). In order\nto calculate (foo 1), we need to call (foo 0), which returns 0."
+ },
+ {
+  "id": 1843,
+  "en": "While all of these recursive calls are happening, each call waits on the result of the next recursive\ncall, and its frame remains open during that time. This is manageable for small inputs, but for (foo 1000000),\nover 1 million frames will be simultaneously open at some point! That could crash your computer."
+ },
+ {
+  "id": 1844,
+  "en": "In most circumstances, this practice of keeping these frames active during subsequent procedure calls is important.\nFor example, in the below code, the procedure f calls g. The frame of f needs to remain active while the call\nto g is ongoing, so that we can eventually return to f and complete its execution using the result from g."
+ },
+ {
+  "id": 1845,
+  "en": "However, some procedures, such as foo, make their procedure calls only at the very very end.\nBecause the very last thing (foo 4) does is make a call to (foo 3), there will be nothing left to do\nin the (foo 4) call after (foo 3) returns."
+ },
+ {
+  "id": 1846,
+  "en": "Therefore, we do not need to actually keep around the (foo 4) frame once we have made the recursive call to (foo 3).\nOur interpreter is currently saving these frames, even though they are redundant. If we could get rid of these frames\nwhen we are done with them, we would solve the issue of large inputs to foo crashing and dramatically improve the efficiency\nof our program."
+ },
+ {
+  "id": 1847,
+  "en": "In the situation where a call is the last thing a procedure evaluates before it returns, that call is said to\nbe in a tail context. Full implementations of Scheme all implement tail-call optimization, which involves\ndiscarding unnecessary frames so that tail calls run more efficiently."
+ },
+ {
+  "id": 1848,
+  "en": "Trampolining"
+ },
+ {
+  "id": 1849,
+  "en": "Trampolining is a method of implementing tail-call optimization in a language that does not normally\nsupport it (e.g. Python) by storing function calls that are in a tail context as unevaluated calls (Thunks),\nthen evaluating and unwrapping them only as needed (Trampolining)."
+ },
+ {
+  "id": 1850,
+  "en": "The basic unit of this method is the Thunk, which represents an unevaluated operation. The easiest way to create\na Thunk and simulate an unevaluated operation is by wrapping the operation in a zero-argument function and saving it\nfor later evaluation."
+ },
+ {
+  "id": 1851,
+  "en": "In the first Thunk, we wrap the operation sqrt(16384) + 22 in a zero-argument lambda function and save it to the variable my_thunk1.\nIn the second Thunk, we wrap some_costly_operation(1000) in a zero-argument lambda function and save it to the variable my_thunk2."
+ },
+ {
+  "id": 1852,
+  "en": "These Thunks can be \"unwrapped\" later by calling the variable where the zero-argument function was saved, which will then evaluate the operation\ninside."
+ },
+ {
+  "id": 1853,
+  "en": "Thunks can be nested as well, which will require multiple calls to unwrap:"
+ },
+ {
+  "id": 1854,
+  "en": "This \"unwrapping\" of a nested thunk can be done automatically by repeatedly calling the thunk until it finally returns a value.\nThis is the process we call trampolining."
+ },
+ {
+  "id": 1855,
+  "en": "Why is this useful? Consider our Python tail-call-optimized factorial:"
+ },
+ {
+  "id": 1856,
+  "en": "While the Scheme version of tail_factorial would be tail-call-optimized, recall that Python does not optimize tail calls.\nIn this Python version of tail_factorial, a frame is opened at each recursive call and only closed at the very end, causing\nthis to be as inefficient as the original factorial implementation in Python without tail calls! Visualizing this as a call stack:"
+ },
+ {
+  "id": 1857,
+  "en": "Observe that by the time we get to the base case, every single tail_factorial frame is still open.\nTo fix this, we can apply thunking!"
+ },
+ {
+  "id": 1858,
+  "en": "The implementation looks like this:"
+ },
+ {
+  "id": 1859,
+  "en": "Thunking keeps only one thunk_factorial frame open by having each call evaluate exactly one step of the factorial. Instead of making and returning another nested call (like in tail_factorial with return tail_factorial(n &#x2d; 1, so_far * n)), thunk_factorial returns an unevaluated thunk. Think about how the mutual recursion in thunk_factorial achieves this!"
+ },
+ {
+  "id": 1860,
+  "en": "Now, with factorial, we apply trampolining and unravel thunk_factorial until we get the final answer."
+ },
+ {
+  "id": 1861,
+  "en": "With these 2 functions, we no longer keep every frame at each recursive call open!"
+ },
+ {
+  "id": 1862,
+  "en": "To visualize the benefit, consider the new diagram of the function calls,\nand compare to the original tail recursive version:"
+ },
+ {
+  "id": 1863,
+  "en": "While the thunked version may initially seem more complicated, notice that there are always at most\none thunk_factorial and thunk calls active at a time. This is true no matter how large n gets!\nAt each step, calling the current thunk calculates exactly one step of the factorial, then returns\na new thunk for the next step so that the process can continue in the next loop."
+ },
+ {
+  "id": 1864,
+  "en": "You can also take a closer look by observing this step-by-step diagram that walks through\nevaluating the first part of factorial(3):"
+ },
+ {
+  "id": 1865,
+  "en": "Notice that by returning an unevaluated thunk from thunk_factorial instead of making a recursive call,\ncompleted frames can close rather than stay open waiting for the recursive call they made to return. This way,\nonly the necessary frames remain open at any given time."
+ },
+ {
+  "id": 1866,
+  "en": "For our Scheme interpreter, an Unevaluated instance is a thunk of scheme_eval, the function we want to optimize.\nWe repeatedly evaluate this thunk by calling scheme_eval on the stored arguments, until we get a value\n(which we return)."
+ },
+ {
+  "id": 1867,
+  "en": "Problem EC 2 (0 pts)"
+ },
+ {
+  "id": 1868,
+  "en": "Preface: This question is challenging and requires you to modify multiple areas in the interpreter without specifying where.\nWe recommend taking the time to thoroughly understand all the concepts and develop a clear strategy before beginning to code."
+ },
+ {
+  "id": 1869,
+  "en": "Important: While working, continuously ensure that the code you write for this question does not cause other parts of the project to fail.\nIf you find yourself losing track of your edits, it might be a good idea to save a copy of your original code for reference."
+ },
+ {
+  "id": 1870,
+  "en": "Complete the function optimize_tail_calls in scheme_eval_apply.py. It returns an\nalternative to scheme_eval that is tail-call optimized in Python. That is, it will\nallow an unbounded number of active tail calls to scheme_eval in constant\nspace. It has a third argument tail that indicates whether the call to scheme_eval is\na tail call or not."
+ },
+ {
+  "id": 1871,
+  "en": "The Unevaluated class represents an expression that needs to be evaluated in a specific environment.\nWhen optimized_eval receives a non-atomic expression in a tail context, it returns an instance of Unevaluated.\nOtherwise, optimized_eval should keep calling unoptimized_scheme_eval on the current expr and env until the\nresult is a final value, rather than an Unevaluated instance."
+ },
+ {
+  "id": 1872,
+  "en": "After you are done implementing optimize_tail_calls, uncomment the following line in scheme_eval_apply.py\nto reassign the original scheme_eval to the optimized implementation:"
+ },
+ {
+  "id": 1873,
+  "en": "Finally, identify which calls to scheme_eval in your interpreter are tail calls. Modify those scheme_eval tail calls to pass in True\nas the third argument (the tail parameter) whenever applicable."
+ },
+ {
+  "id": 1874,
+  "en": "Note: A successful implementation will require changes to several other functions, including some functions that we provided for you."
+ },
+ {
+  "id": 1875,
+  "en": "A call to scheme_eval is a tail call if it is the last thing to be done in a function\nbefore it returns."
+ },
+ {
+  "id": 1876,
+  "en": "Even within a function, not every call to scheme_eval will benefit from tail-call optimization. Consider which specific calls will\nbenefit and pass True for the tail argument accordingly."
+ }
+]

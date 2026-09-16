@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 7 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 7：可变树
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc07.pdf" class="label label-outline">disc07.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+
+
+
+
+<!-- # Getting Started
+
+Say your name and something you've practiced for a while, such as playing an instrument, juggling, or martial arts.  Did you discover any common interests among your group members?  -->
+
+
+<h2 id="mutable-trees">可变的树</h2>
+
+
+<!-- A productive approach to defining new classes is to determine what instance
+attributes each object should have and what class attributes each class should
+have. First, describe the type of each attribute and how it will be used, then
+try to implement the class's methods in terms of those attributes.
+
+**Discussion Time**: Describe how new letters are added to
+<code>typed</code> each time a <code>Button</code> in <code>keys</code> is pressed. Instead of just reading
+your code, say what it does (e.g., "When the button of a keyboard is pressed ...").
+One short sentence is enough to describe how new letters are added to <code>typed</code>.
+
+<img class="img-responsive center-block" src="https://i.postimg.cc/7YGFH5yb/pretty.png" alt=" width="10%" height="> -->
+
+<p><code>Tree</code> 实例有两个实例属性：</p>
+
+<ul>
+  <li><code>label</code> 是存储在树根处的值。</li>
+  <li><code>branches</code> 是一个由 <code>Tree</code> 实例组成的列表，保存了树中其余部分的标签。</li>
+</ul>
+
+<p><code>Tree</code> 类（省略了 <code>__repr__</code> 和 <code>__str__</code> 方法）的定义如下：</p>
+
+<pre><code>class Tree:
+    &quot;&quot;&quot;A tree has a label and a list of branches.
+
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; t.label
+    3
+    &gt;&gt;&gt; t.branches[0].label
+    2
+    &gt;&gt;&gt; t.branches[1].is_leaf()
+    True
+    &quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        self.label = label
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches</code></pre>
+
+<p>要用标签 <code>x</code>（任意值）和分支列表 <code>bs</code>（由 <code>Tree</code> 实例组成的列表）构造一个 <code>Tree</code> 实例并把它命名为 <code>t</code>，可以写 <code>t = Tree(x, bs)</code>。</p>
+
+<p>对于树 <code>t</code>：</p>
+
+<ul>
+  <li>它的根标签可以是任意值，<code>t.label</code> 求值的结果就是它。</li>
+  <li>它的分支总是 <code>Tree</code> 实例，<code>t.branches</code> 求值的结果是它的分支<strong>列表</strong>。</li>
+  <li>如果 <code>t.branches</code> 为空，<code>t.is_leaf()</code> 返回 <code>True</code>，否则返回 <code>False</code>。</li>
+  <li>要构造一个标签为 <code>x</code> 的叶子，写 <code>Tree(x)</code>。</li>
+</ul>
+
+<div class="page-break"></div>
+
+<p>显示一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>repr(t)</code> 返回一个 Python 表达式，对它求值会得到一棵等价的树。</li>
+  <li><code>str(t)</code> 为每个标签输出一行，其缩进比它的父节点多一级，子节点显示在父节点下方。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t = Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; t         # displays the contents of repr(t)
+Tree(3, [Tree(1, [Tree(4), Tree(1)]), Tree(5, [Tree(9)])])
+
+&gt;&gt;&gt; print(t)  # displays the contents of str(t)
+3
+  1
+    4
+    1
+  5
+    9</code></pre>
+
+
+
+<p>修改（也就是 mutate）一棵树 <code>t</code>：</p>
+
+<ul>
+  <li><code>t.label = y</code> 把 <code>t</code> 的根标签改为 <code>y</code>（任意值）。</li>
+  <li><code>t.branches = ns</code> 把 <code>t</code> 的分支改为 <code>ns</code>（由 <code>Tree</code> 实例组成的列表）。</li>
+  <li>修改 <code>t.branches</code> 会改变 <code>t</code>。例如，<code>t.branches.append(Tree(y))</code> 会把一个标签为 <code>y</code> 的叶子添加为最右边的分支。</li>
+  <li>修改 <code>t</code> 中任意一个分支都会改变 <code>t</code>。例如，<code>t.branches[0].label = y</code> 会把最左边分支的根标签改为 <code>y</code>。</li>
+</ul>
+
+<pre><code>&gt;&gt;&gt; t.label = 3.0
+&gt;&gt;&gt; t.branches[1].label = 5.0
+&gt;&gt;&gt; t.branches.append(Tree(2, [Tree(6)]))
+&gt;&gt;&gt; print(t)
+3.0
+  1
+    4
+    1
+  5.0
+    9
+  2
+    6</code></pre>
+
+
+
+<div class="page-break"></div>
+
+<p>下面总结了以函数式抽象实现的树数据抽象与以类实现的树数据抽象之间的区别：</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>-</th>
+    <th>树的构造函数与选择函数</th>
+    <th>Tree 类</th>
+  </tr>
+  <tr>
+    <td>构造树</td>
+    <td>给定一个标签和一个分支列表来构造一棵树时，我们调用 <code>tree(label, branches)</code></td>
+    <td>给定一个标签和一个分支列表来构造一个树对象时，我们调用 <code>Tree(label, branches)</code>（它会调用 <code>Tree.__init__</code> 方法）。</td>
+  </tr>
+  <tr>
+    <td>根标签与分支</td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别调用 <code>label(t)</code> 或 <code>branches(t)</code></td>
+    <td>要获取树 <code>t</code> 的标签或分支，我们分别访问实例属性 <code>t.label</code> 或 <code>t.branches</code>。</td>
+  </tr>
+  <tr>
+    <td>可变性</td>
+    <td>函数式的树数据抽象是不可变的（在遵守其抽象屏障的前提下），因为我们无法给调用表达式赋值</td>
+    <td><code>Tree</code> 实例的 <code>label</code> 和 <code>branches</code> 属性可以被重新赋值，从而修改这棵树。</td>
+  </tr>
+  <tr>
+    <td>判断树是否为叶子</td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用函数 <code>is_leaf(t)</code></td>
+    <td>要判断树 <code>t</code> 是否为叶子，我们调用方法 <code>t.is_leaf()</code>。这个方法只能在 <code>Tree</code> 对象上调用。</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q1-wwpd-trees">第 1 题：「Python 会输出什么？」：树</h3>
+
+
+<p>Python 会输出什么？</p>
+
+<pre><code>&gt;&gt;&gt; t = Tree(1, Tree(2))</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t = Tree(1, [Tree(2)])
+&gt;&gt;&gt; t.label</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.label *= 4
+&gt;&gt;&gt; t</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.branches[0]</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.branches[0].label</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.label = t.branches[0].label
+&gt;&gt;&gt; t</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-1-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.branches.append(Tree(4, [Tree(8)]))
+&gt;&gt;&gt; len(t.branches)</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-1-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.branches[0]</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-1-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<pre><code>&gt;&gt;&gt; t.branches[1]</code></pre>
+
+
+
+
+            你的答案：
+            <input class="form-control storable" id="iter-wwpd-1-input" type="text">
+            <div class="storable-status"></div>
+        
+
+
+<div class="page-break"></div>
+
+
+<h2 id="working-with-the-tree-class">使用 Tree 类</h2>
+
+
+
+<h3 id="q2-widest-level">第 2 题：最宽的一层</h3>
+
+
+<p>写一个函数，接收一个 <code>Tree</code> 对象，返回元素个数最多的那一层的所有元素。如果两层的元素个数相同，则选择较浅的那一层。</p>
+
+<p>在这个问题中，你可能会发现使用 <code>sum</code> 的第二个可选参数很有帮助，它提供一个起始值。被求和序列中的所有项都会拼接到这个起始值上。默认情况下，start 为 0，这让你能对一串数字求和。我们给出一个以列表为起始值的 sum 示例，它可以把列表中的项拼接起来。</p>
+
+
+            <div class="monaco-storable" id="widest-level-input" style="height:324px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-widest-level-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-widest-level-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-widest-level-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def widest_level(t):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; sum([[1], [2]], [])\n    [1, 2]\n    &gt;&gt;&gt; t = Tree(3, [Tree(1, [Tree(1), Tree(5)]),\n    ...              Tree(4, [Tree(9, [Tree(2)])])])\n    &gt;&gt;&gt; widest_level(t)\n    [1, 5, 9]\n    &quot;&quot;&quot;\n    labels = []\n    curr_level = [t]\n    while _____________:\n         _____________\n         __________ = sum(_______________________________, [])\n    return max(levels, key=_________________________________)\n\n', "python", "widest-level-input"));
+            </script>
+        
+
+<!-- 
+
+-->
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-long-paths">第 3 题：长路径</h3>
+
+
+<p>实现 <code>long_paths</code>，它返回一棵树中所有长度至少为 <code>n</code> 的<em>路径</em>组成的列表。树中的一条路径是一个节点标签组成的列表，从根开始，到叶子结束。后面的每个元素必须来自前一个值对应节点的某个分支的标签。路径的<em>长度</em>是路径中边的条数（即路径中节点数减一）。输出列表中路径的顺序按照它们在树中从左到右的顺序。示例见 doctest。</p>
+
+
+            <div class="monaco-storable" id="long-paths-list-disc-input" style="height:648px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-long-paths-list-disc-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-long-paths-list-disc-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-long-paths-list-disc-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def long_paths(t, n):\n    &quot;&quot;&quot;Return a list of all paths in t with length at least n.\n\n    &gt;&gt;&gt; long_paths(Tree(1), 0)\n    [[1]]\n    &gt;&gt;&gt; long_paths(Tree(1), 1)\n    []\n    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(3), Tree(4)]), Tree(5), Tree(6, [Tree(7, [Tree(8)])])])\n    &gt;&gt;&gt; print(t)\n    1\n      2\n        3\n        4\n      5\n      6\n        7\n          8\n    &gt;&gt;&gt; for path in long_paths(t, 2):\n    ...     print(path)\n    ...\n    [1, 2, 3]\n    [1, 2, 4]\n    [1, 6, 7, 8]\n    &gt;&gt;&gt; long_paths(t, 3)\n    [[1, 6, 7, 8]]\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n', "python", "long-paths-list-disc-input"));
+            </script>
+        
+
+<div class="page-break"></div>
+
+
+<h2 id="mutating-trees">修改树</h2>
+
+
+
+<h3 id="q4-level-mutation">第 4 题：按层修改</h3>
+
+
+<p>提醒一下，节点的深度是指该节点离根有多远。我们把它定义为根与该节点之间的边数。由于根和它自己之间没有边，所以根的深度为 0。</p>
+
+<p>给定一棵树 <code>t</code> 和一个由单参数函数组成的列表 <code>funcs</code>，写一个函数，用 <code>funcs</code> 中对应深度的函数来修改 <code>t</code> 的标签。例如，根节点（深度为 0）的标签会用索引 0 处的函数，也就是 <code>funcs[0]</code> 来修改。假设 <code>funcs</code> 中的所有函数都能接收一个标签值并返回一个合法的标签值。</p>
+
+<p>如果 <code>t</code> 是叶子，而 <code>funcs</code> 中有多于 1 个函数，则应按顺序把剩余的所有函数都作用到 <code>t</code> 的标签上。（示例见 doctest。）如果 <code>funcs</code> 为空，树应保持不变。</p>
+
+
+            <div class="monaco-storable" id="level_mutation-input" style="height:522px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-level_mutation-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-level_mutation-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-level_mutation-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def level_mutation(t, funcs):\n    &quot;&quot;&quot;Mutates t using the functions in the list funcs.\n\n    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(3)])])\n    &gt;&gt;&gt; funcs = [lambda x: x + 1, lambda y: y * 5, lambda z: z ** 2]\n    &gt;&gt;&gt; level_mutation(t, funcs)\n    &gt;&gt;&gt; t                               # funcs[0] was applied to the label 1, funcs[1] to the label 2, etc.\n    Tree(2, [Tree(10, [Tree(9)])])\n    &gt;&gt;&gt; t2 = Tree(1, [Tree(2), Tree(3, [Tree(4)])])\n    &gt;&gt;&gt; level_mutation(t2, funcs)\n    &gt;&gt;&gt; t2                              # (2 * 5) ** 2 = 100\n    Tree(2, [Tree(100), Tree(15, [Tree(16)])])\n    &gt;&gt;&gt; t3 = Tree(1, [Tree(2)])\n    &gt;&gt;&gt; level_mutation(t3, funcs)\n    &gt;&gt;&gt; t3\n    Tree(2, [Tree(100)])\n    &quot;&quot;&quot;\n    if _____________________:\n        return\n    t.label = _____________________\n    remaining = _____________________\n    if __________________ and remaining:\n        for _____________________:\n            _____________________\n    for b in t.branches:\n        _____________________\n\n', "python", "level_mutation-input"));
+            </script>
+        
+
+<div class="page-break"></div>
+
+
+<h3 id="q5-delete">第 5 题：删除</h3>
+
+
+<p>实现 <code>delete</code>，它接收一棵树 <code>t</code>，并删除所有标签为 <code>x</code> 的非根节点。每个剩余节点的父节点是它最近的、未被删除的祖先。换句话说，当一个非叶子节点被删除时，被删除节点的孩子会成为它父节点的孩子。根节点永远不会被删除，即使它的标签是 <code>x</code>。</p>
+
+
+            <div class="monaco-storable" id="delete-input" style="height:540px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-delete-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-delete-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-delete-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def delete(t, x):\n    &quot;&quot;&quot;Remove all nodes labeled x below the root within Tree t. When a non&#x2d;leaf\n    node is deleted, the deleted node&#x27;s children become children of its parent.\n\n    The root node will never be removed.\n\n    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(2), Tree(2)]), Tree(2), Tree(2, [Tree(2, [Tree(2), Tree(2)])])])\n    &gt;&gt;&gt; delete(t, 2)\n    &gt;&gt;&gt; t\n    Tree(3)\n    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(4, [Tree(2)]), Tree(5)]), Tree(3, [Tree(6), Tree(2)]), Tree(4)])\n    &gt;&gt;&gt; delete(t, 2)\n    &gt;&gt;&gt; t\n    Tree(1, [Tree(4), Tree(5), Tree(3, [Tree(6)]), Tree(4)])\n    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(4), Tree(5)]), Tree(3, [Tree(6), Tree(2)]), Tree(2, [Tree(6),  Tree(2), Tree(7), Tree(8)]), Tree(4)])\n    &gt;&gt;&gt; delete(t, 2)\n    &gt;&gt;&gt; t\n    Tree(1, [Tree(4), Tree(5), Tree(3, [Tree(6)]), Tree(6), Tree(7), Tree(8), Tree(4)])\n    &quot;&quot;&quot;\n    new_branches = []\n    for _________ in ________________:\n        _______________________\n        if b.label == x:\n            __________________________________\n        else:\n            __________________________________\n    t.branches = ___________________\n\n', "python", "delete-input"));
+            </script>
+        
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <ul>
+    <li><a href="#mutable-trees">可变的树</a></li>
+    <ul>
+      <li><a href="#q1-wwpd-trees">第 1 题：「Python 会输出什么？」：树</a></li>
+    </ul>
+    <li><a href="#working-with-the-tree-class">使用 Tree 类</a></li>
+    <ul>
+      <li><a href="#q2-widest-level">第 2 题：最宽的一层</a></li>
+      <li><a href="#q3-long-paths">第 3 题：长路径</a></li>
+    </ul>
+    <li><a href="#mutating-trees">修改树</a></li>
+    <ul>
+      <li><a href="#q4-level-mutation">第 4 题：按层修改</a></li>
+      <li><a href="#q5-delete">第 5 题：删除</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

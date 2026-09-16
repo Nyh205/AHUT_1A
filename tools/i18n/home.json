@@ -1,0 +1,330 @@
+{
+ "1. Welcome, Coding Environment, Functions, and Exceptions I": {
+  "mode": "exact",
+  "zh": "1. 欢迎、编码环境、函数与异常 I"
+ },
+ "10. Iterators and Generators": {
+  "mode": "exact",
+  "zh": "10. 迭代器与生成器"
+ },
+ "11. Exceptions II": {
+  "mode": "exact",
+  "zh": "11. 异常 II"
+ },
+ "12. Midterm Review": {
+  "mode": "exact",
+  "zh": "12. 期中复习"
+ },
+ "13. Objects and Attributes": {
+  "mode": "exact",
+  "zh": "13. 对象与属性"
+ },
+ "14. Inheritance and String Representation": {
+  "mode": "exact",
+  "zh": "14. 继承与字符串表示"
+ },
+ "15. Mutable Trees": {
+  "mode": "exact",
+  "zh": "15. 可变树"
+ },
+ "16. Linked Lists": {
+  "mode": "exact",
+  "zh": "16. 链表"
+ },
+ "17. Efficiency": {
+  "mode": "exact",
+  "zh": "17. 效率"
+ },
+ "18. Scheme": {
+  "mode": "exact",
+  "zh": "18. Scheme"
+ },
+ "19. Scheme Lists": {
+  "mode": "exact",
+  "zh": "19. Scheme 列表"
+ },
+ "2. Control": {
+  "mode": "exact",
+  "zh": "2. 控制"
+ },
+ "20. Interpreters": {
+  "mode": "exact",
+  "zh": "20. 解释器"
+ },
+ "21. Tail Calls and Macros": {
+  "mode": "exact",
+  "zh": "21. 尾调用与宏"
+ },
+ "22. SQL and Tables": {
+  "mode": "exact",
+  "zh": "22. SQL 与表"
+ },
+ "23. Aggregation and Databases": {
+  "mode": "exact",
+  "zh": "23. 聚合与数据库"
+ },
+ "24. AI Coding Tools": {
+  "mode": "exact",
+  "zh": "24. AI 编程工具"
+ },
+ "25. Web Applications": {
+  "mode": "exact",
+  "zh": "25. Web 应用"
+ },
+ "26. Computer Security": {
+  "mode": "exact",
+  "zh": "26. 计算机安全"
+ },
+ "27. Final Review": {
+  "mode": "exact",
+  "zh": "27. 期末复习"
+ },
+ "28. Conclusion and Ask Me Anything": {
+  "mode": "exact",
+  "zh": "28. 总结与自由问答"
+ },
+ "3. Higher-Order Functions": {
+  "mode": "exact",
+  "zh": "3. 高阶函数"
+ },
+ "4. Environments": {
+  "mode": "exact",
+  "zh": "4. 环境"
+ },
+ "5. Recursion": {
+  "mode": "exact",
+  "zh": "5. 递归"
+ },
+ "6. Tree Recursion": {
+  "mode": "exact",
+  "zh": "6. 树形递归"
+ },
+ "7. Sequences and Containers": {
+  "mode": "exact",
+  "zh": "7. 序列与容器"
+ },
+ "8. Mutability and Data Abstraction": {
+  "mode": "exact",
+  "zh": "8. 可变性与数据抽象"
+ },
+ "9. Trees": {
+  "mode": "exact",
+  "zh": "9. 树"
+ },
+ "CS 61A: Structure and Interpretation of Computer Programs": {
+  "mode": "exact",
+  "zh": "CS 61A：计算机程序的构造与解释"
+ },
+ "Date": {
+  "mode": "exact",
+  "zh": "日期"
+ },
+ "Disc 00: Getting Started": {
+  "mode": "exact",
+  "zh": "讨论课 0：入门"
+ },
+ "Disc 01: Functions, Control": {
+  "mode": "exact",
+  "zh": "讨论课 1：函数、控制"
+ },
+ "Disc 02: Higher-Order Functions, Environment Diagrams": {
+  "mode": "exact",
+  "zh": "讨论课 2：高阶函数、环境图"
+ },
+ "Disc 03: Recursion, Tree Recursion": {
+  "mode": "exact",
+  "zh": "讨论课 3：递归、树形递归"
+ },
+ "Disc 04: Sequences, Trees": {
+  "mode": "exact",
+  "zh": "讨论课 4：序列、树"
+ },
+ "Disc 05: Mutability, Iterators, Generators": {
+  "mode": "exact",
+  "zh": "讨论课 5：可变性、迭代器、生成器"
+ },
+ "Disc 06: OOP, Inheritance, String Representation": {
+  "mode": "exact",
+  "zh": "讨论课 6：面向对象编程、继承、字符串表示"
+ },
+ "Disc 07: Mutable Trees": {
+  "mode": "exact",
+  "zh": "讨论课 7：可变树"
+ },
+ "Disc 08: Linked Lists, Efficiency": {
+  "mode": "exact",
+  "zh": "讨论课 8：链表、效率"
+ },
+ "Disc 09: Scheme, Scheme Lists": {
+  "mode": "exact",
+  "zh": "讨论课 9：Scheme、Scheme 列表"
+ },
+ "Disc 10: Interpreters, Macros, Tail Calls": {
+  "mode": "exact",
+  "zh": "讨论课 10：解释器、宏、尾调用"
+ },
+ "Disc 11: SQL": {
+  "mode": "exact",
+  "zh": "讨论课 11：SQL"
+ },
+ "Disc 12: Final Review": {
+  "mode": "exact",
+  "zh": "讨论课 12：期末复习"
+ },
+ "Final (7-10 pm)": {
+  "mode": "exact",
+  "zh": "期末考试（19:00–22:00）"
+ },
+ "HW 01: Functions, Control, Higher-Order Functions": {
+  "mode": "exact",
+  "zh": "作业 1：函数、控制、高阶函数"
+ },
+ "HW 02: Recursion, Tree Recursion, Sequences, Python Lists": {
+  "mode": "exact",
+  "zh": "作业 2：递归、树形递归、序列、Python 列表"
+ },
+ "HW 03: Mutability, Trees, Iterators, Generators": {
+  "mode": "exact",
+  "zh": "作业 3：可变性、树、迭代器、生成器"
+ },
+ "HW 04: Object-Oriented Programming, Inheritance, Mutable Trees": {
+  "mode": "exact",
+  "zh": "作业 4：面向对象编程、继承、可变树"
+ },
+ "HW 05: Linked Lists, Efficiency, Scheme": {
+  "mode": "exact",
+  "zh": "作业 5：链表、效率、Scheme"
+ },
+ "HW 06: SQL": {
+  "mode": "exact",
+  "zh": "作业 6：SQL"
+ },
+ "HW 07: Finale": {
+  "mode": "exact",
+  "zh": "作业 7：终章"
+ },
+ "Homework & Project": {
+  "mode": "exact",
+  "zh": "作业与项目"
+ },
+ "Lab & Discussion": {
+  "mode": "exact",
+  "zh": "实验与讨论"
+ },
+ "Lab 00: Getting Started": {
+  "mode": "exact",
+  "zh": "实验 0：入门"
+ },
+ "Lab 01: Functions, Control": {
+  "mode": "exact",
+  "zh": "实验 1：函数、控制"
+ },
+ "Lab 02: Higher-Order Functions, Lambda Expressions": {
+  "mode": "exact",
+  "zh": "实验 2：高阶函数、Lambda 表达式"
+ },
+ "Lab 03: Sequences, Recursion": {
+  "mode": "exact",
+  "zh": "实验 3：序列、递归"
+ },
+ "Lab 04: Sequences, Tree Recursion, Trees": {
+  "mode": "exact",
+  "zh": "实验 4：序列、树形递归、树"
+ },
+ "Lab 05: Mutability, Iterators, Generators": {
+  "mode": "exact",
+  "zh": "实验 5：可变性、迭代器、生成器"
+ },
+ "Lab 06: Object-Oriented Programming, Inheritance": {
+  "mode": "exact",
+  "zh": "实验 6：面向对象编程、继承"
+ },
+ "Lab 07: Mutable Trees": {
+  "mode": "exact",
+  "zh": "实验 7：可变树"
+ },
+ "Lab 08: Linked Lists": {
+  "mode": "exact",
+  "zh": "实验 8：链表"
+ },
+ "Lab 09: Scheme, Scheme Lists": {
+  "mode": "exact",
+  "zh": "实验 9：Scheme、Scheme 列表"
+ },
+ "Lecture & Exam": {
+  "mode": "exact",
+  "zh": "讲座与考试"
+ },
+ "Midterm (7-9 pm)": {
+  "mode": "exact",
+  "zh": "期中考试（19:00–21:00）"
+ },
+ "Mon, Tue, Wed, Thu 5-6:30 p.m. in Li Ka Shing 245": {
+  "mode": "exact",
+  "zh": "周一至周四 17:00–18:30"
+ },
+ "Orientation Quiz (Optional)": {
+  "mode": "exact",
+  "zh": "入学导引小测（选做）"
+ },
+ "Quiz": {
+  "mode": "exact",
+  "zh": "小测"
+ },
+ "Quiz 1": {
+  "mode": "exact",
+  "zh": "小测 1"
+ },
+ "Quiz 2": {
+  "mode": "exact",
+  "zh": "小测 2"
+ },
+ "Quiz 3": {
+  "mode": "exact",
+  "zh": "小测 3"
+ },
+ "Quiz 4": {
+  "mode": "exact",
+  "zh": "小测 4"
+ },
+ "Quiz 5": {
+  "mode": "exact",
+  "zh": "小测 5"
+ },
+ "Reading": {
+  "mode": "exact",
+  "zh": "阅读"
+ },
+ "Summer 2026:": {
+  "mode": "exact",
+  "zh": "2026 年暑期："
+ },
+ "Summer 2026: Mon, Tue, Wed, Thu 5-6:30 p.m. in Li Ka Shing 245": {
+  "mode": "exact",
+  "zh": "2026 年暑期：周一至周四 17:00–18:30"
+ },
+ "Week": {
+  "mode": "exact",
+  "zh": "周次"
+ },
+ "{0}Fri": {
+  "mode": "exact",
+  "zh": "{0}周五"
+ },
+ "{0}Mon": {
+  "mode": "exact",
+  "zh": "{0}周一"
+ },
+ "{0}Thu": {
+  "mode": "exact",
+  "zh": "{0}周四"
+ },
+ "{0}Tue": {
+  "mode": "exact",
+  "zh": "{0}周二"
+ },
+ "{0}Wed": {
+  "mode": "exact",
+  "zh": "{0}周三"
+ }
+}

@@ -1,0 +1,478 @@
+[
+ {
+  "id": 480,
+  "en": "Raise the pen, so that the turtle does not draw."
+ },
+ {
+  "id": 481,
+  "en": "Lower the pen, so that the turtle starts drawing."
+ },
+ {
+  "id": 482,
+  "en": "Make turtle visible."
+ },
+ {
+  "id": 483,
+  "en": "Clear the drawing, leaving the turtle unchanged."
+ },
+ {
+  "id": 484,
+  "en": "Set the color to C, a string such as '\"red\"' or '\"#ffc0c0\"' (representing hexadecimal red, green, and blue values."
+ },
+ {
+  "id": 485,
+  "en": "Return a color from RED, GREEN, and BLUE values from 0 to 1."
+ },
+ {
+  "id": 486,
+  "en": "Start a sequence of moves that outline a shape to be filled."
+ },
+ {
+  "id": 487,
+  "en": "Fill in shape drawn since last begin_fill."
+ },
+ {
+  "id": 488,
+  "en": "Set the turtle's animation speed as indicated by S (an integer in 0-10, with 0 indicating no animation (lines draw instantly), and 1-10 indicating faster and faster movement."
+ },
+ {
+  "id": 489,
+  "en": "Draw a filled box of pixels (default 1 pixel) at (X, Y) in color C."
+ },
+ {
+  "id": 490,
+  "en": "Change pixel size to SIZE."
+ },
+ {
+  "id": 491,
+  "en": "Screen width in pixels of the current size (default 1)."
+ },
+ {
+  "id": 492,
+  "en": "Screen height in pixels of the current size (default 1)."
+ },
+ {
+  "id": 493,
+  "en": "Enter bindings in FUNCS_AND_NAMES into FRAME, an environment frame, as built-in procedures. Each item in FUNCS_AND_NAMES has the form (NAME, PYTHON-FUNCTION, INTERNAL-NAME)."
+ },
+ {
+  "id": 494,
+  "en": "Create a global frame populated by builtins (including eval and apply)."
+ },
+ {
+  "id": 495,
+  "en": "Add eval and apply to the global frame Import here to avoid circular dependency"
+ },
+ {
+  "id": 496,
+  "en": "Exception indicating an error in a Scheme program."
+ },
+ {
+  "id": 497,
+  "en": "Environments #"
+ },
+ {
+  "id": 498,
+  "en": "An environment frame binds Scheme symbols to Scheme values."
+ },
+ {
+  "id": 499,
+  "en": "An empty frame with parent frame PARENT (which may be None)."
+ },
+ {
+  "id": 500,
+  "en": "Define Scheme SYMBOL to have VALUE."
+ },
+ {
+  "id": 501,
+  "en": "Return the value bound to SYMBOL. Errors if SYMBOL is not found."
+ },
+ {
+  "id": 502,
+  "en": "Return a new local frame whose parent is SELF, in which the symbols in a Scheme list of formal parameters FORMALS are bound to the Scheme values in the Scheme list VALS. Both FORMALS and VALS are represented as Links. Raise an error if too many or too few vals are given."
+ },
+ {
+  "id": 503,
+  "en": "Procedures #"
+ },
+ {
+  "id": 504,
+  "en": "The the base class for all Procedure classes."
+ },
+ {
+  "id": 505,
+  "en": "A Scheme procedure defined as a Python function."
+ },
+ {
+  "id": 506,
+  "en": "A procedure defined by a lambda expression or a define form."
+ },
+ {
+  "id": 507,
+  "en": "A procedure with formal parameter list FORMALS (a Scheme list), whose body is the Scheme list BODY, and whose parent environment starts with Frame ENV."
+ },
+ {
+  "id": 508,
+  "en": "A procedure defined by a mu expression, which has dynamic scope."
+ },
+ {
+  "id": 509,
+  "en": "< Scheme is cool! > ----------------- \\   ^__^"
+ },
+ {
+  "id": 510,
+  "en": "(__)\\       )\\/\\ ||----w | ||     ||"
+ },
+ {
+  "id": 511,
+  "en": "A procedure with formal parameter list FORMALS (a Scheme list) and Scheme list BODY as its definition."
+ },
+ {
+  "id": 512,
+  "en": "Eval/Apply #"
+ },
+ {
+  "id": 513,
+  "en": "Optional third argument is ignored"
+ },
+ {
+  "id": 514,
+  "en": "Evaluate Scheme expression EXPR in Frame ENV."
+ },
+ {
+  "id": 515,
+  "en": "Evaluate atoms"
+ },
+ {
+  "id": 516,
+  "en": "All non-atomic expressions are lists (combinations)"
+ },
+ {
+  "id": 517,
+  "en": "Import here to avoid a cycle when modules are loaded"
+ },
+ {
+  "id": 518,
+  "en": "Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in Frame ENV, the current environment."
+ },
+ {
+  "id": 519,
+  "en": "Evaluate each expression in the Scheme list EXPRESSIONS in Frame ENV (the current environment) and return the value of the last."
+ },
+ {
+  "id": 520,
+  "en": "replace this with lines of your own code"
+ },
+ {
+  "id": 521,
+  "en": "Extra Challenge: Tail Recursion #"
+ },
+ {
+  "id": 522,
+  "en": "An expression and an environment in which it is to be evaluated."
+ },
+ {
+  "id": 523,
+  "en": "Expression EXPR to be evaluated in Frame ENV."
+ },
+ {
+  "id": 524,
+  "en": "Apply procedure to args in env; ensure the result is not an Unevaluated."
+ },
+ {
+  "id": 525,
+  "en": "Return a properly tail recursive version of an eval function."
+ },
+ {
+  "id": 526,
+  "en": "Evaluate Scheme expression EXPR in Frame ENV. If TAIL, return an Unevaluated containing an expression for further evaluation."
+ },
+ {
+  "id": 527,
+  "en": "Uncomment the following line to apply tail call optimization #"
+ },
+ {
+  "id": 528,
+  "en": "scheme_eval = optimize_tail_calls(scheme_eval)"
+ },
+ {
+  "id": 529,
+  "en": "Special Forms #"
+ },
+ {
+  "id": 530,
+  "en": "Each of the following do_xxx_form functions takes the cdr of a special form as its first argument---a Scheme list representing a special form without the initial identifying symbol (if, lambda, quote, ...). Its second argument is the environment in which the form is to be evaluated."
+ },
+ {
+  "id": 531,
+  "en": "Evaluate a define form."
+ },
+ {
+  "id": 532,
+  "en": "Checks that expressions is a list of length at least 2"
+ },
+ {
+  "id": 533,
+  "en": "assigning a name to a value e.g. (define x (+ 1 2))"
+ },
+ {
+  "id": 534,
+  "en": "Checks that expressions is a list of length exactly 2"
+ },
+ {
+  "id": 535,
+  "en": "defining a named procedure e.g. (define (f x y) (+ x y))"
+ },
+ {
+  "id": 536,
+  "en": "Evaluate a quote form."
+ },
+ {
+  "id": 537,
+  "en": "Evaluate a begin form."
+ },
+ {
+  "id": 538,
+  "en": "Evaluate a lambda form."
+ },
+ {
+  "id": 539,
+  "en": "Evaluate an if form."
+ },
+ {
+  "id": 540,
+  "en": "Evaluate a (short-circuited) and form."
+ },
+ {
+  "id": 541,
+  "en": "Evaluate a (short-circuited) or form."
+ },
+ {
+  "id": 542,
+  "en": "Evaluate a cond form."
+ },
+ {
+  "id": 543,
+  "en": "Evaluate a let form."
+ },
+ {
+  "id": 544,
+  "en": "Create a child frame of Frame ENV that contains the definitions given in BINDINGS. The Scheme list BINDINGS must have the form of a proper bindings list in a let expression: each item must be a list containing a symbol and a Scheme expression."
+ },
+ {
+  "id": 545,
+  "en": "Evaluate a quasiquote form with parameters EXPRESSIONS in Frame ENV."
+ },
+ {
+  "id": 546,
+  "en": "Evaluate Scheme expression VAL that is nested at depth LEVEL in a quasiquote form in Frame ENV."
+ },
+ {
+  "id": 547,
+  "en": "Dynamic Scope #"
+ },
+ {
+  "id": 548,
+  "en": "Evaluate a mu form."
+ },
+ {
+  "id": 549,
+  "en": "This module implements the built-in data types of the Scheme language, along with a parser for Scheme expressions."
+ },
+ {
+  "id": 550,
+  "en": "In addition to the types defined in this file, some data types in Scheme are represented by their corresponding type in Python: number:       int or float symbol:       string boolean:      bool unspecified:  None"
+ },
+ {
+  "id": 551,
+  "en": "The __repr__ method of a Scheme value will return a Python expression that would be evaluated to the value, where possible."
+ },
+ {
+  "id": 552,
+  "en": "The __str__ method of a Scheme value will return a Scheme expression that would be read to the value, where possible."
+ },
+ {
+  "id": 553,
+  "en": "Quotation markers (only used in staff sol)"
+ },
+ {
+  "id": 554,
+  "en": "Scheme list parser"
+ },
+ {
+  "id": 555,
+  "en": "Read the next expression from SRC, a Buffer of tokens."
+ },
+ {
+  "id": 556,
+  "en": "Get and remove the first token"
+ },
+ {
+  "id": 557,
+  "en": "second argument shouldn't be in student solution"
+ },
+ {
+  "id": 558,
+  "en": "Return the remainder of a list in SRC, starting before an element or )."
+ },
+ {
+  "id": 559,
+  "en": "Convenience methods"
+ },
+ {
+  "id": 560,
+  "en": "Return a Buffer instance containing interactive input."
+ },
+ {
+  "id": 561,
+  "en": "Return a Buffer instance iterating through LINES."
+ },
+ {
+  "id": 562,
+  "en": "Read a single string LINE as a Scheme expression."
+ },
+ {
+  "id": 563,
+  "en": "Interactive loop"
+ },
+ {
+  "id": 564,
+  "en": "Run a read-print loop for Scheme expressions."
+ },
+ {
+  "id": 565,
+  "en": "The scheme_tokens module provides functions tokenize_line and tokenize_lines for converting (iterators producing) strings into (iterators producing) lists of tokens.  A token may be:"
+ },
+ {
+  "id": 566,
+  "en": "* A number (represented as an int or float) * A boolean (represented as a bool) * A symbol (represented as a string) * A delimiter, including parentheses, dots, and single quotes"
+ },
+ {
+  "id": 567,
+  "en": "This file also includes some features of Scheme that have not been addressed in the course, such as Scheme strings."
+ },
+ {
+  "id": 568,
+  "en": "Returns whether s is a well-formed symbol."
+ },
+ {
+  "id": 569,
+  "en": "A tuple (tok, k'), where tok is the next substring of line at or after position k that could be a token (assuming it passes a validity check), and k' is the position in line following that token.  Returns (None, len(line)) when there are no more tokens."
+ },
+ {
+  "id": 570,
+  "en": "Boolean values #t and #f"
+ },
+ {
+  "id": 571,
+  "en": "Unquote; check for @"
+ },
+ {
+  "id": 572,
+  "en": "No triple quotes in Scheme"
+ },
+ {
+  "id": 573,
+  "en": "The list of Scheme tokens on line.  Excludes comments and whitespace."
+ },
+ {
+  "id": 574,
+  "en": "An iterator over lists of tokens, one for each line of the iterable input sequence inp."
+ },
+ {
+  "id": 575,
+  "en": "Count the number of non-delimiter tokens in inp."
+ },
+ {
+  "id": 576,
+  "en": "Type Checking #"
+ },
+ {
+  "id": 577,
+  "en": "Return whether x is a well-formed list. Assumes no cycles."
+ },
+ {
+  "id": 578,
+  "en": "All values in Scheme are true except False."
+ },
+ {
+  "id": 579,
+  "en": "Only False is false in scheme_reader."
+ },
+ {
+  "id": 580,
+  "en": "Return whether EXPR evaluates to itself."
+ },
+ {
+  "id": 581,
+  "en": "Argument Validation #"
+ },
+ {
+  "id": 582,
+  "en": "Returns VAL.  Raises a SchemeError if not PREDICATE(VAL) using \"argument K of NAME\" to describe the offending value."
+ },
+ {
+  "id": 583,
+  "en": "Check that PROCEDURE is a valid Scheme procedure."
+ },
+ {
+  "id": 584,
+  "en": "Check EXPR is a proper list whose length is at least MIN and no more than MAX (default: no maximum). Raises a SchemeError if this is not the case."
+ },
+ {
+  "id": 585,
+  "en": "Check that FORMALS is a valid parameter list, a Scheme list of symbols in which each symbol is distinct. Raise a SchemeError if the list of formals is not a list of symbols or if any symbol is repeated."
+ },
+ {
+  "id": 586,
+  "en": "Web server for the schememon GUI."
+ },
+ {
+  "id": 587,
+  "en": "Import scheme modules directly from student's project"
+ },
+ {
+  "id": 588,
+  "en": "A python class that uses the interpreter built in the scheme interpreter project to evaluate scheme expressions"
+ },
+ {
+  "id": 589,
+  "en": "- __init__() creates a new SchemeEvaluator instance - evaluate() evaluates some scheme code along with a list of files containing scheme code"
+ },
+ {
+  "id": 590,
+  "en": "Instantiates a new Scheme Evaluator Initalizes a Scheme environment Creates a global frame"
+ },
+ {
+  "id": 591,
+  "en": "Evaluates scheme code using the python interpreter built from the scheme project. Returns the evaluation of the last line of the scheme code."
+ },
+ {
+  "id": 592,
+  "en": "- filename: the file that contains all of the base code - code: the code that is used to expand off of base code"
+ },
+ {
+  "id": 593,
+  "en": "Example file (example.scm): =========================== (define (square n) (* n n) )"
+ },
+ {
+  "id": 594,
+  "en": "(define (sum x y) (+ x y) )"
+ },
+ {
+  "id": 595,
+  "en": "Then, SchemeEvaluator().evaluate(\"./example.scm\", \"(square 7)\") would return 49."
+ },
+ {
+  "id": 596,
+  "en": "Verifies whether your given solution code for a scheme statement question is correct."
+ },
+ {
+  "id": 597,
+  "en": "For every test case, the API will use SchemeEvaluator to evaluate the statement. If any testcase does not pass, then the API will set correct to False, and True otherwise."
+ },
+ {
+  "id": 598,
+  "en": "SPECIAL COMMENT: Python uses \"True\" and \"False\", but Scheme uses \"#t\" and \"#f\" This takes care of the \"in\" procedure case"
+ }
+]

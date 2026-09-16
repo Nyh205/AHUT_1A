@@ -1,0 +1,602 @@
+[
+ {
+  "id": 0,
+  "en": "Download {0}."
+ },
+ {
+  "id": 1,
+  "en": "To get started, visit {0} and hit Start SQL interpreter on the launch screen."
+ },
+ {
+  "id": 2,
+  "en": "Applying an {0}\nsuch as MAX(column) combines the values from multiple rows into an output row."
+ },
+ {
+  "id": 3,
+  "en": "Using Ok: If you have any questions about using Ok, please\nrefer to {0}"
+ },
+ {
+  "id": 4,
+  "en": "You can find the solutions in {0}."
+ },
+ {
+  "id": 5,
+  "en": "Consult this section if you need a refresher on the material for this lab. It's\nokay to skip directly to {0} and refer back\nhere should you get stuck."
+ },
+ {
+  "id": 6,
+  "en": "If you would like some support with visualizing trees, please navigate\nto {0}, select Start Python Interpreter, and call autodraw()."
+ },
+ {
+  "id": 7,
+  "en": "👩🏽‍💻👨🏿‍💻 {0}\nRemember to alternate between driver and navigator roles.\nThe driver controls the keyboard;\nthe navigator watches, asks questions, and suggests ideas."
+ },
+ {
+  "id": 8,
+  "en": "Download {0}. Inside the archive, you will find a file called\n{1}, along with a copy of the ok autograder."
+ },
+ {
+  "id": 9,
+  "en": "Learning to use if and while is an essential skill. During this discussion,\nfocus on what we've studied in the first three lectures: if, while,\nassignment (=), comparison (&lt;, &gt;, ==), and arithmetic. Please don't\nuse features of Python that we haven't discussed in class yet, such as for,\nrange, and lists. We'll have plenty of time for those later in the course, but\nnow is the time to practice the use of if (textbook section\n{0})\nand while (textbook section\n{1})."
+ },
+ {
+  "id": 10,
+  "en": "Implement the classic {0}. The fizzbuzz function\ntakes a positive integer n and prints out a single line for each integer\nfrom 1 to n. For each i:"
+ },
+ {
+  "id": 11,
+  "en": "Recall the hailstone function from {0}."
+ },
+ {
+  "id": 12,
+  "en": "The Game of Sevens: Players in a circle count up from 1 in the clockwise\ndirection. (The starting player says 1, the player to their left says 2, etc.) If a\nnumber is divisible by 7 or contains a 7 (or both), switch directions. Numbers\nmust be said on the beat at {0}. If someone says a number\nwhen it's not their turn or someone misses the beat on their turn, the game\nends."
+ },
+ {
+  "id": 13,
+  "en": "This generator function yields all of the {0} numbers."
+ },
+ {
+  "id": 14,
+  "en": "Talk with each other about what built-in functions might be helpful, such as {0}, {1}, {2}, {3}, {4}, etc."
+ },
+ {
+  "id": 15,
+  "en": "Reminder: For the partitions function we studied in lecture\n({0}), the recursive decomposition was to\nenumerate all ways of partitioning n using at least one m and then to\nenumerate all ways with no m (only m&#x2d;1 and lower)."
+ },
+ {
+  "id": 16,
+  "en": "Implement church_generator, a generator function that takes in a function f\nas an argument. church_generator yields functions that apply f to their\nargument one more time than the previously generated function. (The yielded\nfunctions are known as {0}.)"
+ },
+ {
+  "id": 17,
+  "en": "The is_palindrome question was reformatted from question 6(d) on fall 2019's\n{0}."
+ },
+ {
+  "id": 18,
+  "en": "You can use {0} to try things out."
+ },
+ {
+  "id": 19,
+  "en": "An {0} expression has 3 subexpressions:"
+ },
+ {
+  "id": 20,
+  "en": "Only #f is a {0} in Scheme. All other values are true values, including #t."
+ },
+ {
+  "id": 21,
+  "en": "The logical special forms {0} and {1} can have any number of sub-expressions. Use and to check if all its sub-expressions are true values. Use or to check if any of them are."
+ },
+ {
+  "id": 22,
+  "en": "The expect form is built into {0} and checks to see if its first sub expression evaluates to its second one. It is used for testing."
+ },
+ {
+  "id": 23,
+  "en": "(draw s) draws the linked list structure of a list s. It only works on\n  {0}. Try it now with something like (draw (cons 1 nil))."
+ },
+ {
+  "id": 24,
+  "en": "The Link class and nil object are defined in {0} of the {1}."
+ },
+ {
+  "id": 25,
+  "en": "In 2019, there was a major {0} in understanding how the hailstone conjecture works for most numbers!"
+ },
+ {
+  "id": 26,
+  "en": "Hint:\nRefer to the {0} of count_partitions for an example\nof how to count the ways to sum up to a final value with smaller parts.\nIf you need to keep track of more than one value across recursive calls,\nconsider writing a helper function."
+ },
+ {
+  "id": 27,
+  "en": "Fall 2017 MT1 Q4a: {0}"
+ },
+ {
+  "id": 28,
+  "en": "Fall 2019 Final Q6b: {0}"
+ },
+ {
+  "id": 29,
+  "en": "Summer 2019 MT Q3: {0}"
+ },
+ {
+  "id": 30,
+  "en": "Fall 2021 MT2 Q3bc: {0}"
+ },
+ {
+  "id": 31,
+  "en": "Fall 2023 Final Q2: {0}"
+ },
+ {
+  "id": 32,
+  "en": "In this question you'll create a {0} that sells a single product and provides change when needed."
+ },
+ {
+  "id": 33,
+  "en": "You may find Python's formatted string literals, or {0} useful.\nA quick example:"
+ },
+ {
+  "id": 34,
+  "en": "Spring 2022 MT2 Q8: {0}"
+ },
+ {
+  "id": 35,
+  "en": "Spring 2024 Final Q5: {0}"
+ },
+ {
+  "id": 36,
+  "en": "Spring 2026 MT Q5: {0}"
+ },
+ {
+  "id": 37,
+  "en": "We recommend that you install the {0}\nextension so that parentheses are highlighted."
+ },
+ {
+  "id": 38,
+  "en": "In addition, the 61a-bot ({0}) VS Code extension is available for Scheme homeworks. The bot is also integrated into ok."
+ },
+ {
+  "id": 39,
+  "en": "Fall 2019 Final Q7b: {0}"
+ },
+ {
+  "id": 40,
+  "en": "Spring 2018 Midterm 2 Q4(a): {0}"
+ },
+ {
+  "id": 41,
+  "en": "In CS 61A, we use a program called Ok for autograding labs, homeworks, and\nprojects."
+ },
+ {
+  "id": 42,
+  "en": "To use Ok to test a function, run the following command (replacing FUNCTION with the name of the function):"
+ },
+ {
+  "id": 43,
+  "en": "If your function contains a call to print that starts with &quot;DEBUG:&quot;, then this line will be ignored by OK. (Otherwise, including extra print calls can cause tests to fail because of the additional output displayed.)"
+ },
+ {
+  "id": 44,
+  "en": "There are more features described on the {0}.\nYou can quickly generate most ok commands at {1}."
+ },
+ {
+  "id": 45,
+  "en": "Division, Floor Div, and Modulo"
+ },
+ {
+  "id": 46,
+  "en": "Here are examples of the division-related operators in Python 3:"
+ },
+ {
+  "id": 47,
+  "en": "True Division: /"
+ },
+ {
+  "id": 48,
+  "en": "(decimal division)"
+ },
+ {
+  "id": 49,
+  "en": "Floor Division: //"
+ },
+ {
+  "id": 50,
+  "en": "(integer division)"
+ },
+ {
+  "id": 51,
+  "en": "Modulo: %"
+ },
+ {
+  "id": 52,
+  "en": "(remainder)"
+ },
+ {
+  "id": 53,
+  "en": "A ZeroDivisionError occurs when dividing by 0."
+ },
+ {
+  "id": 54,
+  "en": "One useful technique involving the % operator is to check\nwhether a number x is divisible by another number y:"
+ },
+ {
+  "id": 55,
+  "en": "For example, in order to check if x is an even number: x % 2 == 0"
+ },
+ {
+  "id": 56,
+  "en": "Return and Print"
+ },
+ {
+  "id": 57,
+  "en": "Most functions that you define will contain a return statement that provides\nthe value of the call expression used to call the function."
+ },
+ {
+  "id": 58,
+  "en": "When Python executes a return statement, the function call terminates\nimmediately.  If Python reaches the end of the function body without executing\na return statement, the function returns None."
+ },
+ {
+  "id": 59,
+  "en": "In contrast, the print function is used to display values.\nUnlike a return statement, when Python evaluates a call to print, the\nfunction does not terminate immediately."
+ },
+ {
+  "id": 60,
+  "en": "Notice also that print will display text without the quotes, but\nreturn will preserve the quotes."
+ },
+ {
+  "id": 61,
+  "en": "What Would Python Display? (WWPD)"
+ },
+ {
+  "id": 62,
+  "en": "Q1: Return and Print"
+ },
+ {
+  "id": 63,
+  "en": "Q2: WWPD: What If?"
+ },
+ {
+  "id": 64,
+  "en": "Hint: print (unlike return) does not cause the function to exit."
+ },
+ {
+  "id": 65,
+  "en": "Write Code"
+ },
+ {
+  "id": 66,
+  "en": "Q3: Debugging Quiz"
+ },
+ {
+  "id": 67,
+  "en": "The following is a quick quiz on different debugging techniques that will be\nhelpful for you to use in this class. You can refer to the\n{0} to answer the questions."
+ },
+ {
+  "id": 68,
+  "en": "Q4: Falling Factorial"
+ },
+ {
+  "id": 69,
+  "en": "Let's write a function falling, which is a \"falling\" factorial\nthat takes two arguments, n and k, and returns the product of k\nconsecutive numbers, starting from n and working downwards.\nWhen k is 0, the function should return 1."
+ },
+ {
+  "id": 70,
+  "en": "Q5: Divisible By k"
+ },
+ {
+  "id": 71,
+  "en": "Write a function divisible_by_k that takes positive integers n and k. It prints all positive integers less than or equal to n that are divisible by k from smallest to largest. Then, it returns how many numbers were printed."
+ },
+ {
+  "id": 72,
+  "en": "Q6: Double Eights"
+ },
+ {
+  "id": 73,
+  "en": "Write a function that takes in a number and determines if the digits contain two\nadjacent 8s."
+ },
+ {
+  "id": 74,
+  "en": "Syllabus Quiz"
+ },
+ {
+  "id": 75,
+  "en": "Q7: Syllabus Quiz"
+ },
+ {
+  "id": 76,
+  "en": "Please fill out the {0}, which confirms your understanding of the policies on the syllabus page."
+ },
+ {
+  "id": 77,
+  "en": "Q8: Pick a Digit"
+ },
+ {
+  "id": 78,
+  "en": "Implement digit, which takes positive integers n and k and has only a\nsingle return statement as its body. It returns the digit of n that is k\npositions to the left of the rightmost digit (the one's digit). If k is 0,\nreturn the rightmost digit. If there is no digit of n that is k positions to\nthe left of the rightmost digit, return 0."
+ },
+ {
+  "id": 79,
+  "en": "Hint: Use // and % and the built-in pow function to isolate a\nparticular digit of n."
+ },
+ {
+  "id": 80,
+  "en": "Q9: Middle Number"
+ },
+ {
+  "id": 81,
+  "en": "Implement middle by writing a single return expression that evaluates to the\nvalue that is neither the largest or smallest among three different integers\na, b, and c."
+ },
+ {
+  "id": 82,
+  "en": "Hint: Try combining all the numbers and then taking away the ones you don't\nwant to return by using the built-in min and max functions."
+ },
+ {
+  "id": 83,
+  "en": "Q10: Sum Digits"
+ },
+ {
+  "id": 84,
+  "en": "Write a function that takes in a nonnegative integer and sums its digits. (Using\nfloor division and modulo might be helpful here!)"
+ },
+ {
+  "id": 85,
+  "en": "What do you think will happen if we type the following into Python?"
+ },
+ {
+  "id": 86,
+  "en": "Try it out in Python! You should see a ZeroDivisionError. But what about this expression?"
+ },
+ {
+  "id": 87,
+  "en": "It evaluates to True because Python's and and or operators short-circuit. That is, they don't necessarily evaluate every operand."
+ },
+ {
+  "id": 88,
+  "en": "Operator"
+ },
+ {
+  "id": 89,
+  "en": "Checks if:"
+ },
+ {
+  "id": 90,
+  "en": "Evaluates from left to right up to:"
+ },
+ {
+  "id": 91,
+  "en": "AND"
+ },
+ {
+  "id": 92,
+  "en": "All values are true"
+ },
+ {
+  "id": 93,
+  "en": "The first false value"
+ },
+ {
+  "id": 94,
+  "en": "False and 1 / 0 evaluates to False"
+ },
+ {
+  "id": 95,
+  "en": "At least one value is true"
+ },
+ {
+  "id": 96,
+  "en": "The first true value"
+ },
+ {
+  "id": 97,
+  "en": "True or 1 / 0 evaluates to True"
+ },
+ {
+  "id": 98,
+  "en": "Short-circuiting happens when the operator reaches an operand that allows them to make a conclusion about the expression. For example, and will short-circuit as soon as it reaches the first false value because it then knows that not all the values are true."
+ },
+ {
+  "id": 99,
+  "en": "If and and or do not short-circuit, they just return the last\nvalue; another way to remember this is that and and or always return the last\nthing they evaluate, whether they short circuit or not. Keep in mind that and and or\ndon't always return booleans when using values other than True and False."
+ },
+ {
+  "id": 100,
+  "en": "Variables are names bound to values, which can be primitives like 3 or\n&#x27;Hello World&#x27;, but they can also be functions. And since functions can take\narguments of any value, other functions can be passed in as arguments. This is\nthe basis for higher-order functions."
+ },
+ {
+  "id": 101,
+  "en": "A higher order function is a function that manipulates other functions by\ntaking in functions as arguments, returning a function, or both. We will\nintroduce the basics of higher order functions in this lab and will be\nexploring many applications of higher order functions in our next lab."
+ },
+ {
+  "id": 102,
+  "en": "Functions as arguments"
+ },
+ {
+  "id": 103,
+  "en": "In Python, function objects are values that can be passed around. We know that one\nway to create functions is by using a def statement:"
+ },
+ {
+  "id": 104,
+  "en": "The above statement created a function object with the intrinsic name square as\nwell as binded it to the name square in the current environment. Now let's try\npassing it as an argument."
+ },
+ {
+  "id": 105,
+  "en": "First, let's write a function that takes in another function as an argument:"
+ },
+ {
+  "id": 106,
+  "en": "We can now call scale on square and some other arguments:"
+ },
+ {
+  "id": 107,
+  "en": "Note that in the body of the call to scale, the function object with the intrinsic\nname square is bound to the parameter f. Then, we call square in the body of\nscale by calling f(x)."
+ },
+ {
+  "id": 108,
+  "en": "As we saw in the above section on lambda expressions, we can also pass\nlambda expressions into call expressions!"
+ },
+ {
+  "id": 109,
+  "en": "In the frame for this call expression, the name f is bound to the function\ncreated by the lambda expression lambda x: x + 10."
+ },
+ {
+  "id": 110,
+  "en": "Functions that return functions"
+ },
+ {
+  "id": 111,
+  "en": "Because functions are values, they are valid as return values! Here's an example:"
+ },
+ {
+  "id": 112,
+  "en": "In this particular case, we defined the function multiply within the body of multiply_by\nand then returned it. Let's see it in action:"
+ },
+ {
+  "id": 113,
+  "en": "A call to multiply_by returns a function, as expected. However, calling\nmultiply errors, even though that's the name we gave the inner function. This\nis because the name multiply only exists within the frame where we evaluate\nthe body of multiply_by."
+ },
+ {
+  "id": 114,
+  "en": "So how do we actually use the inner function? Here are two ways:"
+ },
+ {
+  "id": 115,
+  "en": "The point is, because multiply_by returns a function, you can use its return\nvalue just like you would use any other function."
+ },
+ {
+  "id": 116,
+  "en": "Lambda expressions are expressions that evaluate to functions by specifying two\nthings: the parameters and a return expression."
+ },
+ {
+  "id": 117,
+  "en": "While both lambda expressions and def statements create function objects,\nthere are some notable differences. lambda expressions work like other\nexpressions; much like a mathematical expression just evaluates to a number and\ndoes not alter the current environment, a lambda expression\nevaluates to a function without changing the current environment. Let's take a\ncloser look."
+ },
+ {
+  "id": 118,
+  "en": "lambda"
+ },
+ {
+  "id": 119,
+  "en": "def"
+ },
+ {
+  "id": 120,
+  "en": "Type"
+ },
+ {
+  "id": 121,
+  "en": "Expression that evaluates to a value."
+ },
+ {
+  "id": 122,
+  "en": "Statement that alters the environment."
+ },
+ {
+  "id": 123,
+  "en": "Result of execution"
+ },
+ {
+  "id": 124,
+  "en": "Creates an anonymous lambda function with no intrinsic name."
+ },
+ {
+  "id": 125,
+  "en": "Creates a function with an intrinsic name and binds it to that\n          name in the current environment."
+ },
+ {
+  "id": 126,
+  "en": "Effect on the environment"
+ },
+ {
+  "id": 127,
+  "en": "Evaluating a lambda expression does not create or\n          modify any variables."
+ },
+ {
+  "id": 128,
+  "en": "Executing a def statement both creates a new function\n          object and binds it to a name in the current environment."
+ },
+ {
+  "id": 129,
+  "en": "A lambda expression can be used anywhere that\n          expects an expression, such as in an assignment statement or as the\n          operator or operand to a call expression."
+ },
+ {
+  "id": 130,
+  "en": "After executing a def statement, the created\n          function is bound to a name. You should use this name to refer to the\n          function anywhere that expects an expression."
+ },
+ {
+  "id": 131,
+  "en": "What Would Python Display?"
+ },
+ {
+  "id": 132,
+  "en": "Q1: WWPD: The Truth Will Prevail"
+ },
+ {
+  "id": 133,
+  "en": "Q2: WWPD: Higher-Order Functions"
+ },
+ {
+  "id": 134,
+  "en": "Q3: WWPD: Lambda"
+ },
+ {
+  "id": 135,
+  "en": "As a reminder, the following two lines of code will not display any output in the\ninteractive Python interpreter when executed:"
+ },
+ {
+  "id": 136,
+  "en": "Coding Practice"
+ },
+ {
+  "id": 137,
+  "en": "Q4: Composite Identity Function"
+ },
+ {
+  "id": 138,
+  "en": "Write a function that takes in two single-argument functions, f and g, and\nreturns another function that has a single parameter x. The returned\nfunction should return True if f(g(x)) is equal to g(f(x)) and False\notherwise. You can assume the output of g(x) is a valid input for f and vice\nversa."
+ },
+ {
+  "id": 139,
+  "en": "Q5: Count Cond"
+ },
+ {
+  "id": 140,
+  "en": "Consider the following implementations of count_fives and count_primes which\nuse the sum_digits and is_prime functions, which are implemented below:"
+ },
+ {
+  "id": 141,
+  "en": "The implementations look quite similar! Generalize this logic by writing a\nfunction count_cond, which takes in a two-argument predicate function\ncondition(n, i). count_cond returns a one-argument function that takes\nin n, which counts all the numbers from 1 to n that satisfy condition\nwhen called."
+ },
+ {
+  "id": 142,
+  "en": "Note:\nWhen we say condition is a predicate function, we mean that it is\na function that will return True or False."
+ },
+ {
+  "id": 143,
+  "en": "Q6: String Transformer"
+ },
+ {
+  "id": 144,
+  "en": "Using a lambda expression, complete the following function. Your function\nshould only contain a return statement."
+ },
+ {
+  "id": 145,
+  "en": "Q7: Palindrome"
+ },
+ {
+  "id": 146,
+  "en": "A number is considered a palindrome if it reads the same forwards\nand backwards. Fill in the blanks '_' to help determine if\na number is a palindrome. In the spirit of exam style questions, please\ndo not edit any parts of the function other than the blanks."
+ },
+ {
+  "id": 147,
+  "en": "A list is a data structure that can hold an ordered collection of items.\nThese items, known as elements, can be of any data type, including numbers, strings, or even other lists.\nA comma-separated list of expressions in square brackets creates a list:"
+ },
+ {
+  "id": 148,
+  "en": "Each position in a list has an index, with the left-most element indexed 0."
+ },
+ {
+  "id": 149,
+  "en": "A negative index counts from the end, with the right-most element indexed &#x2d;1."
+ }
+]

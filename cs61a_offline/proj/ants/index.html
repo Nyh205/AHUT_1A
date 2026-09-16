@@ -1,0 +1,1650 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link href="../../assets/css/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>Ants Vs. SomeBees | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Ants Vs. SomeBees
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="ants.zip" class="label label-outline">ants.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <p><img class="img-responsive center-block" src="static/assets/splash.png" alt="Ants vs. Somebees" width=" height="></p>
+
+<blockquote><cite>
+  蜜蜂来了！<br>
+  打造更好的士兵<br>
+  借助 inherit-ants（继承蚁）。
+</cite></blockquote>
+</div>
+
+    
+
+<h2 id="introduction">引言</h2>
+
+
+<!-- add after line 9 for normal sem -->
+<!-- > -   Submit with Phase 1 complete by <strong></strong> (worth  pt). -->
+
+
+<!-- pt).  -->
+
+<blockquote><p><strong>要获得全部学分：</strong></p>
+
+<ul>
+  <li>在<strong>周四 07/23</strong> 之前提交，并完成第 1 阶段和第 2 阶段。</li>
+  <li>在<strong>周二 07/28</strong> 之前提交，并完成所有阶段。</li>
+</ul>
+
+<p>按顺序解题，因为后面的一些题目依赖前面的题目。</p>
+
+<p>整个项目可以两人合作完成。</p>
+
+<p>在<strong>周一 07/27</strong> 之前提交整个项目，可以获得 1 分加分。</p></blockquote>
+
+<p>在这个项目中，你将创建一款名为 Ants Vs. SomeBees 的 <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Tower_defense">塔防</a> 游戏。你要用能召集到的最勇敢的蚂蚁来充实你的蚁群。你的蚂蚁必须保护蚁后，抵御入侵你领地的邪恶蜜蜂。向蜜蜂扔足够的叶子来激怒它们，它们就会被消灭。如果你没能充分骚扰这些空中入侵者，你的蚁后就会在蜜蜂的怒火中丧命。这款游戏的灵感来自 PopCap Games 的 <a href="https://www.ea.com/studios/popcap/plants-vs-zombies">植物大战僵尸</a>。</p>
+
+<p>本项目采用面向对象编程范式，重点关注 Composing Programs <a href="https://www.composingprograms.com/pages/25-object-oriented-programming.html">第 2.5 章</a> 中的内容。项目还涉及对一个大型程序的理解、扩展和测试。</p>
+
+
+<h2 id="download-starter-files">下载起始文件</h2>
+
+
+<p><a href="ants.zip">ants.zip</a> 压缩包中包含若干文件，但你所有的修改都将在 <code>ants.py</code> 中进行。</p>
+
+<ul>
+  <li><code>ants.py</code>：Ants Vs. SomeBees 的游戏逻辑</li>
+  <li><code>ants_plans.py</code>：每个难度级别的详细设置</li>
+  <li><code>ucb.py</code>：实用工具函数</li>
+  <li>gui.py：Ants Vs. SomeBees 的图形用户界面（GUI）。</li>
+  <li><code>ok</code>：自动评分程序</li>
+  <li><code>proj3.ok</code>：<code>ok</code> 配置文件</li>
+  <li><code>tests</code>：<code>ok</code> 使用的测试目录</li>
+  <li><code>libs</code>：<code>gui.py</code> 使用的库目录</li>
+  <li><code>static</code>：<code>gui.py</code> 使用的图像和文件目录</li>
+  <li><code>templates</code>：存放 <code>gui.py</code> 所使用的 HTML 模板的目录</li>
+</ul>
+
+<!-- <include text/oral-exams.md> -->
+
+
+
+
+<h2 id="logistics">事务安排</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>你需要提交以下文件：</p>
+
+<ul>
+  <li><code>ants.py</code></li>
+</ul>
+
+
+
+
+
+<p>对于我们要求你完成的函数，我们可能会提供一些初始代码。如果你不想使用这些代码，可以删掉它们，从零开始写。你也可以按自己的需要添加新的函数定义。</p>
+
+<p><b>但是，请不要修改任何其他函数，也不要编辑上面未列出的文件</b>，否则你的代码可能无法通过自动评分程序的测试。另外，请不要改动任何函数签名（名称、参数顺序或参数个数）。</p>
+
+
+
+<p>在整个项目中，你都应该测试代码的正确性。经常测试是个好习惯，这样容易定位问题。但也不要测试得<i>过于</i>频繁，要留出时间把问题想清楚。</p>
+
+<p>我们提供了一个名为 <code>ok</code> 的<b>自动评分程序</b>，帮助你测试代码并跟踪进度。第一次运行时，它会要求你<b>通过网页浏览器登录 Ok 账号</b>，请照做。每次运行 <code>ok</code>，它都会把你的工作和进度备份到我们的服务器上。</p>
+
+<p><code>ok</code> 的主要用途是测试你的实现。</p>
+
+<!-- <p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code>python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>
+=====================================================================
+Assignment: Ants Vs. SomeBees
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>  -->
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<!-- <p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue. <b>If you forget to submit, your last backup will be automatically converted to a submission. </b></p>
+-->
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<!--- <p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="ants.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p> -->
+
+<!---
+<p>If you do not want us to record a backup of your work or information about
+your progress, you can run
+
+<pre>python3 ok --local</pre>
+
+
+With this option, no information will be sent to our course
+servers.
+
+-->
+
+<p>如果你想交互式地测试代码，可以运行
+
+<pre> python3 ok -q [question number] -i </pre>
+
+并填入对应的题目编号（例如 <code>01</code>）。它会运行该题目的测试，直到你第一个失败的测试为止，然后让你有机会交互式地测试自己写的函数。</p>
+
+<p>你也可以使用 OK 的调试打印功能，只要在 print 语句前加上 "DEBUG:"。例如，如果你想查看变量 <code>x</code> 的值，可以这样写：
+
+<pre> print(f"DEBUG: x is {x}") </pre>
+
+这样终端就会输出内容，而不会因为多出来的输出导致 OK 测试失败。
+
+<h2 id="the-game">游戏</h2>
+
+
+<p>一局 Ants Vs. SomeBees 由一系列回合组成。每个回合中，可能会有新的蜜蜂进入蚂蚁领地。接着，新蚂蚁会被放置下来保卫领地。最后，所有昆虫（先蚂蚁，后蜜蜂）依次执行各自的动作。蜜蜂要么尝试向隧道尽头移动，要么蛰刺挡在路上的蚂蚁。蚂蚁则根据类型执行不同的动作，比如采集更多食物，或者向蜜蜂投掷树叶。当某只蜜蜂到达隧道尽头（蚂蚁失败）、蜜蜂摧毁了 <code>QueenAnt</code>（如果存在，蚂蚁失败），或者整支蜜蜂舰队被消灭（蚂蚁获胜）时，游戏结束。</p>
+
+<img class="img-responsive center-block" src="static/assets/screenshot.gif" />
+
+
+<h3 id="core-concepts">核心概念</h3>
+
+
+<p><strong>领地</strong>。这里是游戏发生的地方。领地由若干个 <code>Place</code> 链接而成，形成蜜蜂穿行的隧道。领地还拥有一定数量的食物，放置蚂蚁到隧道中需要消耗这些食物。</p>
+
+<p><strong>地点</strong>。一个地点与另一个地点相连，构成隧道。玩家可以在每个地点中放入一只蚂蚁。不过，同一个地点里可以有多只蜜蜂。</p>
+
+<p><strong>蜂巢</strong>。这里是蜜蜂诞生的地方。蜜蜂离开蜂巢，进入蚂蚁领地。</p>
+
+<p><strong>蚂蚁</strong>。玩家通过从屏幕顶部的可用蚂蚁类型中进行选择，把蚂蚁放入领地。
+每种蚂蚁执行不同的动作，放置时所需的领地食物也不同。两种最基础的蚂蚁是 <code>HarvesterAnt</code> 和 <code>ThrowerAnt</code>：前者每个回合为领地增加一点食物，后者每个回合向一只蜜蜂投掷树叶。你还要实现更多种类的蚂蚁！</p>
+
+<p><strong>蜜蜂</strong>。每个回合，如果前方没有蚂蚁挡路，蜜蜂就前进到隧道中的下一个地点；否则它就蛰刺挡路的蚂蚁。只要有至少一只蜜蜂到达隧道尽头，蜜蜂就获胜。除了橙色的蜜蜂之外，还有造成双倍伤害的黄色黄蜂，以及相当难以消灭的绿色 boss 蜂。</p>
+
+
+<h3 id="core-classes">核心类</h3>
+
+
+<p>上面描述的每个概念都有一个对应的类来封装该概念的逻辑。下面是本游戏中涉及的主要类的概要：</p>
+
+<ul>
+  <li><strong><code>GameState</code></strong>：表示领地以及游戏的一些状态信息，包括当前有多少食物可用、已经过去多少时间、<code>AntHomeBase</code> 在哪里，以及游戏中的所有 <code>Place</code>。</li>
+  <li><strong><code>Place</code></strong>：表示一个容纳昆虫的地点。同一个地点中最多只能有一只 <code>Ant</code>，但可以有很多只 <code>Bee</code>。<code>Place</code> 对象的左侧有 <code>exit</code>，右侧有 <code>entrance</code>，它们本身也是 place。
+  蜜蜂通过移动到每个 <code>Place</code> 的 <code>exit</code> 来穿过隧道，从而抵达下一个 <code>Place</code>。</li>
+  <li><strong><code>Hive</code></strong>：表示 <code>Bee</code> 出发的地点（位于隧道的右侧）。</li>
+  <li><strong><code>AntHomeBase</code></strong>：表示 <code>Ant</code> 所保卫的地点（位于隧道的左侧）。如果 <code>Bee</code> 到达这里，它们就赢了 :(</li>
+  <li><strong><code>Insect</code></strong>：<code>Ant</code> 和 <code>Bee</code> 的基类。每只昆虫都有一个 <code>health</code> 属性，表示其剩余生命值，还有一个 <code>place</code> 属性，表示它当前所在的 <code>Place</code>。每个回合中，游戏中每只存活的 <code>Insect</code> 都会执行自己的动作。</li>
+  <li><strong><code>Ant</code></strong>：表示蚂蚁。每个 <code>Ant</code> 子类都有特殊的属性或特殊的动作，使它区别于其他 <code>Ant</code> 类型。例如，<code>HarvesterAnt</code> 为领地获取食物，而 <code>ThrowerAnt</code> 攻击 <code>Bee</code>。
+  每种蚂蚁类型还有一个 <code>food_cost</code> 属性，表示部署一只该类型的蚂蚁需要多少花费。</li>
+  <li><strong><code>Bee</code></strong>：表示蜜蜂。每个回合，如果 Bee 当前所在的 <code>Place</code> 没有被蚂蚁阻挡，它就移动到该 <code>Place</code> 的 <code>exit</code>；否则，它蛰刺占据其当前 <code>Place</code> 的蚂蚁。</li>
+</ul>
+
+
+<h3 id="game-layout">游戏布局</h3>
+
+
+<p>下面是 GameState 的可视化图示。</p>
+
+<img class="img-responsive center-block" src="static/assets/colony-drawing.png" />
+
+<p>为了帮助你可视化所有这些类是如何组合在一起的，<a href="diagram/ants_diagram.pdf">here</a> 是一张包含所有类及其继承关系的示意图。</p>
+
+
+
+
+<h2 id="phase-1-basic-gameplay">第一阶段：基础玩法</h2>
+
+
+<p>在第一阶段，你将完成相应的实现，使游戏能够用两种基础蚂蚁进行基础玩法：<code>HarvesterAnt</code> 和 <code>ThrowerAnt</code>。</p>
+
+
+<h3 id="problem-0">问题 0</h3>
+
+<!-- ### Problem 0 ( pt) -->
+
+<p>读完<em>整份</em> <code>ants.py</code> 文件之后，运行下面这条 <code>ok</code> 命令来回答一组概念性问题：</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 00 -u<button id="copy-code-python3ok-q00-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q00-u").onclick = () => copyCode('python3 ok -q 00 -u', "copy-code-python3ok-q00-u");
+        </script>
+        <br/>
+
+<p>如果在回答这些问题时卡住了，你可以再读一遍 <code>ants.py</code>，或者在 Ed 上提问。</p>
+
+<blockquote><p><strong>关于解锁测试的说明</strong>：
+如果你想在完成解锁测试之后回顾解锁题目，
+可以前往 <code>tests</code> 文件夹（位于 <code>ants</code> 文件夹内）。
+例如，解锁 Problem 0 之后，
+你可以在 <code>tests/00.py</code> 中回顾该解锁测试。</p></blockquote>
+
+
+<h3 id="problem-1">题目 1</h3>
+
+<!-- ### Problem 1 (0.5 pt) -->
+
+<p><strong>Part A</strong>：目前，放置任何类型的 <code>Ant</code> 都没有花费，因此游戏毫无挑战性。基类 <code>Ant</code> 的 <code>food_cost</code> 为零。请按照下表中“Food Cost”一列的值，为 <code>HarvesterAnt</code> 和 <code>ThrowerAnt</code> 覆盖这个类属性。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Harvester.gif" /> <br> <code>HarvesterAnt</code></td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Thrower.gif" /> <br> <code>ThrowerAnt</code></td>
+    <td>3</td>
+    <td>1</td>
+  </td>
+</table>
+
+<p><strong>Part B</strong>：既然放置 <code>Ant</code> 需要花费食物，我们就得能够收集更多食物！为了解决这个问题，请实现 <code>HarvesterAnt</code> 类。<code>HarvesterAnt</code> 是一种 <code>Ant</code>，它的动作是把 <code>gamestate.food</code> 增加 1。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01 -u<button id="copy-code-python3ok-q01-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01-u").onclick = () => copyCode('python3 ok -q 01 -u', "copy-code-python3ok-q01-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01<button id="copy-code-python3ok-q01" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01").onclick = () => copyCode('python3 ok -q 01', "copy-code-python3ok-q01");
+        </script>
+        <br/>
+
+<!--
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+<br>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/eypJ2SgZrhw"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-problem1"
+                allowfullscreen></iframe><p><a href='https://youtu.be/eypJ2SgZrhw'> YouTube link </a></p>
+</div>
+-->
+
+
+<h3 id="problem-2">题目 2</h3>
+
+<!-- ### Problem 2 (0.5 pt) -->
+
+<p>在这个问题中，你将通过添加记录 <code>entrance</code> 的代码来完成 <code>Place.__init__</code>。目前，一个 <code>Place</code> 只记录自己的 <code>exit</code>。我们希望 <code>Place</code> 也能记录自己的 <code>entrance</code>。一个 <code>Place</code> 只需记录一个 entrance。
+当 <code>Ant</code> 需要查看隧道中位于它前方的 <code>Bee</code> 时，记录 entrance 会很有用。</p>
+
+<p>然而，直接把 <code>entrance</code> 传给 <code>Place</code> 的构造函数会带来麻烦：我们必须在创建 <code>Place</code> 之前就同时拥有 <code>exit</code> 和 entrance！（这是一个 <a href="https://en.wikipedia.org/wiki/Chicken_or_the_egg">先有鸡还是先有蛋</a> 问题。）为了绕开这个问题，我们改用下面的方式来记录 entrance。<code>Place.__init__</code> 应遵循以下逻辑：</p>
+
+<ul>
+  <li>新建的 <code>Place</code> 一开始总是把它的 <code>entrance</code> 设为 <code>None</code>。</li>
+  <li>如果该 <code>Place</code> 有 <code>exit</code>，那么把 <code>exit</code> 的 <code>entrance</code> 设为该 <code>Place</code>。</li>
+</ul>
+
+<blockquote><p><strong>提示：</strong>记住，调用 <code>__init__</code> 方法时，第一个参数 <code>self</code> 绑定的是新创建的对象。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>如果觉得混乱，试着画两个并排的 <code>Place</code>。在 GUI 中，一个 place 的 <code>entrance</code> 在它右侧，而 <code>exit</code> 在它左侧。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>记住 <code>Place</code> 并不存放在列表里，所以你不能通过索引来访问它们。这意味着你<strong>不能</strong>用类似 <code>colony[index + 1]</code> 的写法来访问相邻的 <code>Place</code>。那么，你<em>怎样才能</em>从一个 place 移动到另一个 place 呢？</p></blockquote>
+
+<img class="img-responsive center-block" src="static/assets/colony-drawing.png" />
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02 -u<button id="copy-code-python3ok-q02-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02-u").onclick = () => copyCode('python3 ok -q 02 -u', "copy-code-python3ok-q02-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02<button id="copy-code-python3ok-q02" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02").onclick = () => copyCode('python3 ok -q 02', "copy-code-python3ok-q02");
+        </script>
+        <br/>
+
+<!--
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+<br>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/VO_oTlLtJFk"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-problem2"
+                allowfullscreen></iframe><p><a href='https://youtu.be/VO_oTlLtJFk'> YouTube link </a></p>
+</div>
+-->
+
+
+<h3 id="problem-3">题目 3</h3>
+
+<!-- ### Problem 3 (1 pt) -->
+
+<p>为了让 <code>ThrowerAnt</code> 能够投掷树叶，它必须知道该击中哪只 <code>Bee</code>。<code>ThrowerAnt</code> 类中已提供的 <code>nearest_bee</code> 方法实现只允许 <code>ThrowerAnt</code> 击中同一个 <code>Place</code> 中的 <code>Bee</code>。你的任务是修复它，使得 <code>ThrowerAnt</code> 会对位于它前方、<strong>且仍不在 <code>Hive</code> 中的</strong>最近的 <code>Bee</code> 执行 <code>throw_at</code>。这包括与 <code>ThrowerAnt</code> 处于同一个 <code>Place</code> 的 <code>Bee</code>。</p>
+
+<blockquote><p><strong>提示：</strong>所有 <code>Place</code> 都有一个 <code>is_hive</code> 属性，当该 place 是 <code>Hive</code> 时它被设为 <code>True</code>，否则为 <code>False</code>。</p></blockquote>
+
+<p>修改 <code>nearest_bee</code>，使它从最近的、含有 <code>Bee</code> 的 <code>Place</code> 中随机返回一只 <code>Bee</code>。你的实现应遵循以下逻辑：</p>
+
+<ul>
+  <li>从 <code>ThrowerAnt</code> 当前所在的 <code>Place</code> 开始。</li>
+  <li>如果该 <code>Place</code> 含有一只或多只 <code>Bee</code>，就随机返回其中一只。否则，检查位于它前方的下一个 <code>Place</code>（存储为当前 <code>Place</code> 的 entrance）。</li>
+  <li>重复这个过程，直到找到并返回一只 <code>Bee</code>。如果没有可供攻击的 <code>Bee</code>，就返回 <code>None</code>。</li>
+  <li>确保 <code>nearest_bee</code> 永远不会返回 <code>Hive</code> 中的 <code>Bee</code>。</li>
+</ul>
+
+<blockquote><p><strong>提示：</strong><code>ants.py</code> 中提供的 <code>random_bee</code> 函数会从 <code>Bee</code> 列表中随机返回一只 <code>Bee</code>，如果列表为空则返回 <code>None</code>。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>提醒一下，如果某个 <code>Place</code> 中没有 <code>Bee</code>，那么该 <code>Place</code> 实例的 <code>bees</code> 属性会是一个空列表。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>觉得测试用例不好想象？
+试着把它们画在纸上！
+<a href="#game-layout">游戏布局</a> 中提供的示例图展示了这个问题的第一个测试用例。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03 -u<button id="copy-code-python3ok-q03-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03-u").onclick = () => copyCode('python3 ok -q 03 -u', "copy-code-python3ok-q03-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03<button id="copy-code-python3ok-q03" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03").onclick = () => copyCode('python3 ok -q 03', "copy-code-python3ok-q03");
+        </script>
+        <br/>
+
+<!--
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+<br>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/8eRQC-devOQ"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-problem3"
+                allowfullscreen></iframe><p><a href='https://youtu.be/8eRQC-devOQ'> YouTube link </a></p>
+</div>
+-->
+
+
+<h3 id="playing-the-game">运行游戏</h3>
+
+
+<p>实现 <code>nearest_bee</code> 之后，<code>ThrowerAnt</code> 应该能够对位于它前方、且仍不在 <code>Hive</code> 中的 <code>Bee</code> 执行 <code>throw_at</code>。</p>
+
+<p>现在你可以试试自己写好的东西了。要启动图形界面游戏，请运行：</p>
+
+<pre><code>python3 gui.py</code></pre>
+
+<p>启动图形界面版本之后，游戏（通常）可以通过 http://127.0.0.1:31415/ 访问。</p>
+
+<p>这个游戏有几个选项，你在整个项目中都会用到，可以用 <code>python3 gui.py &#x2d;&#x2d;help</code> 查看。</p>
+
+<pre><code>usage: gui.py [&#x2d;h] [&#x2d;d DIFFICULTY] [&#x2d;w] [&#x2d;&#x2d;food FOOD]
+
+Play Ants vs. SomeBees
+
+optional arguments:
+  &#x2d;h, &#x2d;&#x2d;help     show this help message and exit
+  &#x2d;d DIFFICULTY  sets difficulty of game (test/easy/normal/hard/extra&#x2d;hard)
+  &#x2d;w, &#x2d;&#x2d;water    loads a full layout with water
+  &#x2d;&#x2d;food FOOD    number of food to start with when testing</code></pre>
+
+<p>你可以刷新网页来重新开始游戏，但如果你修改了代码，就需要终止 <code>gui.py</code> 并重新运行它。要终止 <code>gui.py</code>，可以在终端中按 <code>Ctrl + C</code>。</p>
+
+<p>你不能同时打开多个同一 Ants GUI 的标签页，否则它们都会报错。
+</p>
+
+
+<h2 id="phase-2-more-ants">第二阶段：更多蚂蚁！</h2>
+
+
+<p>既然你已经用两种 <code>Ant</code> 实现了基础玩法，下面我们来给蚂蚁攻击蜜蜂的方式增添一些花样。从这个问题开始，你将实现若干种具有不同攻击策略的 <code>Ant</code>。</p>
+
+<p><strong>在这些小节中每实现完一个 <code>Ant</code> 子类后，你都需要把它的 <code>implemented</code> 类属性设为 <code>True</code></strong>，这样该类型的 ant 才会出现在 GUI 中。你可以随意用每种新蚂蚁试玩一下游戏，检验功能！</p>
+
+<p>从现在起，使用后续所有蚂蚁时，都可以试试 <code>python3 gui.py</code>，在多隧道布局中对抗一大群蜜蜂；如果你想要真正的挑战，可以试试 <code>&#x2d;d hard</code> 或 <code>&#x2d;d extra&#x2d;hard</code>！如果蜜蜂多得消灭不完，你可能需要创造一些新的蚂蚁。</p>
+
+<!-- ### Phase 2 Hint Videos
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/Do5iMHk1avU"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-phase2"
+                allowfullscreen></iframe><p><a href='https://youtu.be/Do5iMHk1avU'> YouTube link </a></p>
+</div> -->
+
+
+<h3 id="problem-4">题目 4</h3>
+
+<!-- ### Problem 4 (1 pt) -->
+
+<p><code>ThrowerAnt</code> 对蜜蜂来说是强有力的威胁，但它的 <code>food_cost</code> 很高。在这个问题中，你将实现 <code>ThrowerAnt</code> 的两个子类，它们花费更低，但在投掷距离上有所限制：</p>
+
+<ul>
+  <li><code>LongThrower</code> 只能对经过至少 5 次 <code>entrance</code> 转换之后找到的 <code>Bee</code> 执行 <code>throw_at</code>。换句话说，它无法击中与它处于同一个 <code>Place</code> 的 <code>Bee</code>，也无法击中它前方前 4 个 <code>Place</code> 中的 <code>Bee</code>。如果存在两只 <code>Bee</code>，一只离 <code>LongThrower</code> 太近，另一只在它的射程之内，那么 <code>LongThrower</code> 应该只对较远、且在它射程之内的那只 <code>Bee</code> 投掷，而不是试图击中较近的那只。</li>
+  <li><code>ShortThrower</code> 只能对经过至多 3 次 <code>entrance</code> 转换之后找到的 <code>Bee</code> 执行 <code>throw_at</code>。换句话说，它不能对位于它前方超过 3 个 <code>Place</code> 之外的任何 <code>Bee</code> 投掷。</li>
+</ul>
+
+<p>这两种特殊的投掷者都无法对恰好相距 4 个 <code>Place</code> 的 <code>Bee</code> 执行 <code>throw_at</code>。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Short.gif" /> <br>
+      <code>ShortThrower</code></td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Long.gif" /> <br> <code>LongThrower</code></td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p>要实现这些新的投掷型蚂蚁，你的 <code>ShortThrower</code> 和 <code>LongThrower</code> 类应该继承基类 <code>ThrowerAnt</code> 中的 <code>nearest_bee</code> 方法。</p>
+
+<p>接下来，修改 <code>ThrowerAnt</code> 中的 <code>nearest_bee</code> 方法，让它引用 <code>lower_bound</code> 和 <code>upper_bound</code> 属性，并且只有当某个 <code>Place</code> 处于所给边界的范围之内时，才从该 <code>Place</code> 返回 <code>Bee</code>。这是必要的，因为 <code>ShortThrower</code> 和 <code>LongThrower</code> 蚂蚁能够对 <code>Bee</code> 执行 <code>throw_at</code> 的 <code>Place</code> 范围，分别受 <code>upper_bound</code> 和 <code>lower_bound</code> 的限制。</p>
+
+<p>请确保在 <code>ThrowerAnt</code> 类中给 <code>lower_bound</code> 和 <code>upper_bound</code> 属性设置合适的值，使 <code>ThrowerAnt</code> 的行为保持不变。然后实现子类 <code>LongThrower</code> 和 <code>ShortThrower</code>，并给它们设置适当受限的范围。</p>
+
+<p>你<strong>不应该</strong>在 <code>ThrowerAnt</code>、<code>ShortThrower</code> 和 <code>LongThrower</code> 之间重复任何代码。</p>
+
+<blockquote><p><strong>重要：</strong>
+请确保你的类属性名为 <code>upper_bound</code> 和 <code>lower_bound</code>。
+测试会直接引用这些属性名，如果你给这些属性用了别的名字，就会报错。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong><code>float(&#x27;inf&#x27;)</code> 返回一个表示为 float 的无穷大正值，它可以与其他数字进行比较。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong><code>lower_bound</code> 和 <code>upper_bound</code> 应表示一个闭区间。</p></blockquote>
+
+<p>别忘了把 <code>LongThrower</code> 和 <code>ShortThrower</code> 的 <code>implemented</code> 类属性设为 <code>True</code>。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04 -u<button id="copy-code-python3ok-q04-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04-u").onclick = () => copyCode('python3 ok -q 04 -u', "copy-code-python3ok-q04-u");
+        </script>
+        <br/>
+
+<p>写完代码后，测试你的实现（重新运行 03 的测试，确保它们仍然通过）：</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03
+python3 ok -q 04<button id="copy-code-python3ok-q03python3ok-q04" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03python3ok-q04").onclick = () => copyCode('python3 ok -q 03\npython3 ok -q 04', "copy-code-python3ok-q03python3ok-q04");
+        </script>
+        <br/>
+
+<!--
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+<br>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/MmnodaJn8wQ"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-problem4"
+                allowfullscreen></iframe><p><a href='https://youtu.be/MmnodaJn8wQ'> YouTube link </a></p>
+</div>
+-->
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+记得在 driver 和 navigator 两个角色之间轮换。
+driver 负责操作键盘；
+navigator 负责观察、提问并提出想法。</p>
+
+
+<h3 id="problem-5">题目 5</h3>
+
+<!-- ### Problem 5 (1.5 pt) -->
+
+<p>实现 <code>FireAnt</code>，它在受到伤害时会造成伤害。具体来说，如果它受到 <code>damage_taken</code> 点生命值的伤害，它就对所在 place 中的所有 <code>Bee</code> 造成 <code>damage_taken</code> 点伤害（这称为<em>反射伤害</em>）。如果它死亡，还会额外造成一份由其 <code>damage</code> 属性指定数值的伤害，作用于所在 place 中的所有 <code>Bee</code>。<code>FireAnt</code> 类中 <code>damage</code> 属性的默认值为 <code>3</code>。</p>
+
+<p>为此，请覆盖 <code>FireAnt</code> 的 <code>reduce_health</code> 方法。
+你覆盖的方法应调用从超类（<code>Ant</code>）继承来的 <code>reduce_health</code> 方法<em>（Ant 又从它的超类 <code>Insect</code> 继承该方法）</em>，以减少当前 <code>FireAnt</code> 实例的生命值。
+对 <code>FireAnt</code> 实例调用<em>继承来的</em> <code>reduce_health</code> 方法，会把这只昆虫的生命值减少给定的 <code>damage_taken</code>，并在其生命值降到 0 或以下时把它从所在 place 中移除。</p>
+
+<blockquote><p><strong>提示：</strong>
+<em>不要</em>调用 <code>self.reduce_health</code>，
+否则你会陷入递归循环。（你能看出为什么吗？）</p></blockquote>
+
+<p>不过，你的方法还需要包含<em>反射伤害</em>的逻辑：</p>
+
+<ul>
+  <li>确定<em>反射伤害</em>的数值：
+  从施加在 <code>FireAnt</code> 身上的 <code>damage_taken</code> 开始，
+  如果该蚂蚁的生命值已降到 0 或以下，再加上 <code>damage</code>。</li>
+  <li>对于该 place 中的每只 <code>Bee</code>，调用其相应的 <code>reduce_health</code> 方法，用<em>反射伤害</em>的总量对它们造成伤害。</li>
+</ul>
+
+<blockquote><p><strong>重要：</strong>
+记住，任何 <code>Ant</code> 一旦失去全部生命值，就会被从它的 <code>Place</code> 中移除，
+所以要特别留意 <code>reduce_health</code> 中逻辑的先后顺序。</p></blockquote>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Fire.gif" /> <br> <code>FireAnt</code></td>
+    <td>5</td>
+    <td>3</td>
+  </td>
+</table>
+
+<blockquote><p><strong>重要</strong>：对蜜蜂造成伤害可能会导致它被从所在 place 中移除；当一只昆虫死亡时，它会被移出当前所在的 place。如果你遍历一个列表，却同时改变该列表的内容，你 <a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">可能无法访问到所有元素</a>。
+可以通过复制一份列表来避免这种情况。
+你可以使用列表切片，或者使用内置的 <code>list</code> 函数，以确保原列表不受影响。</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; s = [1,2,3,4]
+&gt;&gt;&gt; s[:]
+[1, 2, 3, 4]
+&gt;&gt;&gt; list(s)
+[1, 2, 3, 4]
+&gt;&gt;&gt; (s[:] is not s) and (list(s) is not s)
+True</code></pre>
+
+<p>实现完 <code>FireAnt</code> 之后，给它一个值为 <code>True</code> 的 <code>implemented</code> 类属性。</p>
+
+<blockquote><p><strong>注意：</strong>
+即使你覆盖了超类的 <code>reduce_health</code> 函数
+（<code>Ant.reduce_health</code>），
+你仍然可以在实现中通过调用它来使用这个方法。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05 -u<button id="copy-code-python3ok-q05-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05-u").onclick = () => copyCode('python3 ok -q 05 -u', "copy-code-python3ok-q05-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05<button id="copy-code-python3ok-q05" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05").onclick = () => copyCode('python3 ok -q 05', "copy-code-python3ok-q05");
+        </script>
+        <br/>
+
+<!--
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+<br>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/JgnWW7m-TW4"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-problem5"
+                allowfullscreen></iframe><p><a href='https://youtu.be/JgnWW7m-TW4'> YouTube link </a></p>
+</div>
+-->
+
+<p>你也可以通过玩一两局游戏来测试你的程序！<code>FireAnt</code> 被蛰时，应该消灭所有与它同处一地的 <code>Bee</code>。要以十点食物开始一局游戏（便于测试）：</p>
+
+<pre><code>python3 gui.py &#x2d;&#x2d;food 10</code></pre>
+
+
+<h3 id="problem-6">题目 6</h3>
+
+<!-- ### Problem 6 (0.5 pt) -->
+
+<p>我们要通过实现 <code>WallAnt</code> 来为我们光荣的大本营增添一些保护，这种蚂蚁每个回合什么都不做。<code>WallAnt</code> 很有用，因为它有很高的生命值。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Wall.gif" /> <br> <code>WallAnt</code></td>
+    <td>4</td>
+    <td>4</td>
+  </td>
+</table>
+
+<p>与之前的蚂蚁不同，我们没有为你提供 class 语句。
+请从零开始实现 <code>WallAnt</code> 类。给它一个值为 <code>&#x27;Wall&#x27;</code> 的 <code>name</code> 类属性
+（以便图形界面正常工作）和一个值为 <code>True</code> 的 <code>implemented</code> 类属性
+（以便你可以在游戏中使用它）。</p>
+
+<blockquote><p><strong>提示：</strong>请确保你也实现了 <code>__init__</code> 方法，
+让 <code>WallAnt</code> 一开始就具有合适的生命值！</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06 -u<button id="copy-code-python3ok-q06-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06-u").onclick = () => copyCode('python3 ok -q 06 -u', "copy-code-python3ok-q06-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06<button id="copy-code-python3ok-q06" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06").onclick = () => copyCode('python3 ok -q 06', "copy-code-python3ok-q06");
+        </script>
+        <br/>
+
+
+<h3 id="problem-7">题目 7</h3>
+
+<!-- ### Problem 7 (1.5 pt) -->
+
+<p>实现 <code>HungryAnt</code>，它会从所在 <code>Place</code> 中随机选择一只 <code>Bee</code>，对这只 <code>Bee</code> 造成等于其生命值的伤害，把它整个吃掉。吃掉一只 <code>Bee</code> 之后，<code>HungryAnt</code> 必须花 3 个回合咀嚼，之后才能再次进食。在 <code>HungryAnt</code> 咀嚼期间，它无法吃掉（对任何 <code>Bee</code> 造成伤害）。如果它所在的 place 中没有可供吃掉的 <code>Bee</code>，<code>HungryAnt</code> 就什么都不做。</p>
+
+<p>我们没有为你提供类声明头。
+请从零开始实现 <code>HungryAnt</code> 类。给它一个值为 <code>&#x27;Hungry&#x27;</code> 的 <code>name</code> 类属性
+（以便图形界面正常工作）和一个值为 <code>True</code> 的 <code>implemented</code> 类属性
+（以便你可以在游戏中使用它）。</p>
+
+<blockquote><p><strong>提示：</strong>
+当一只 <code>Bee</code> 被吃掉时，应把它的生命值减少相当于它当前生命值的数量。</p></blockquote>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Hungry.gif" /> <br> <code>HungryAnt</code></td>
+    <td>4</td>
+    <td>1</td>
+  </td>
+</table>
+
+<p>给 <code>HungryAnt</code> 一个 <code>chew_cooldown</code> <strong>类</strong>属性，用来存储 <code>HungryAnt</code> 咀嚼所需的回合数（设为 3）。同时，给每个 <code>HungryAnt</code> 一个<strong>实例</strong>属性 <code>cooldown</code>，用来计数它还剩多少个回合要咀嚼，初始化为 0，因为一开始它还没吃任何东西。你也可以把 <code>cooldown</code> 理解为距离 <code>HungryAnt</code> 能再吃一只 <code>Bee</code> 还有多少个回合。</p>
+
+<p>实现 <code>HungryAnt</code> 的 <code>action</code> 方法：首先检查它是否正在咀嚼；如果是，就递减它的 <code>cooldown</code>。否则，吃掉它所在 <code>Place</code> 中随机的一只 <code>Bee</code>，把该 <code>Bee</code> 的生命值减到 0。吃掉 <code>Bee</code> 时一定要设置 <code>cooldown</code>！</p>
+
+<blockquote><p><strong>提示：</strong>除了 <code>action</code> 方法之外，也请确保实现 <code>__init__</code> 方法，以定义所需的实例变量，并让 <code>HungryAnt</code> 一开始就具有合适的生命值！</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07 -u<button id="copy-code-python3ok-q07-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07-u").onclick = () => copyCode('python3 ok -q 07 -u', "copy-code-python3ok-q07-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07<button id="copy-code-python3ok-q07" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07").onclick = () => copyCode('python3 ok -q 07', "copy-code-python3ok-q07");
+        </script>
+        <br/>
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+现在是交换角色的好时机。交换角色能确保你们双方都能从各自角色的学习体验中获益。</p>
+
+
+<h3 id="problem-8">题目 8</h3>
+
+<!-- ### Problem 8 (1.5 pt) -->
+
+<p>目前，我们的蚂蚁相当脆弱。我们想提供一种办法，帮助它们在蜜蜂的猛攻下坚持得更久。有请 <code>ProtectorAnt</code>。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Protector.gif" /> <br> <code>ProtectorAnt</code></td>
+    <td>4</td>
+    <td>2</td>
+  </tr>
+</table>
+
+<p>为了更容易地实现 <code>ProtectorAnt</code>，我们会把这个问题拆成 3 个小部分。
+在每一部分中，我们将分别修改 <code>ContainerAnt</code> 类、<code>Ant</code> 类或 <code>ProtectorAnt</code> 类。</p>
+
+<blockquote><p><strong>注意：</strong>
+我们把 Question 8 分成了三个不同的小部分。我们建议在写任何代码之前，先做完每个小部分的解锁测试。
+每个小部分都会单独测验，各占 1 分，整道题共 3 分。</p></blockquote>
+
+
+<h4 id="problem-8a">问题 8a</h4>
+
+<p>首先，我们会定义并使用一个 <code>ContainerAnt</code> 父类，稍后用它来实现 <code>ProtectorAnt</code>。</p>
+
+<p><code>ProtectorAnt</code> 与普通蚂蚁的不同之处在于它是一个 <code>ContainerAnt</code>；它可以在同一个 <code>Place</code> 里容纳并保护另一只蚂蚁。当一只 <code>Bee</code> 蛰刺某个 <code>Place</code> 中的蚂蚁，而该 Place 里有一只蚂蚁容纳着另一只蚂蚁时，只有外层容器会受到伤害。容器内的蚂蚁仍然可以执行它原本的动作。如果容器死亡，被容纳的蚂蚁仍然留在该 place 中（之后就可以被伤害了）。</p>
+
+<p>每个 <code>ContainerAnt</code> 都有一个实例属性 <code>ant_contained</code>，用来存储它所容纳的蚂蚁。这只蚂蚁 <code>ant_contained</code> 初始为 <code>None</code>，表示目前还没有存储任何蚂蚁。请实现 <code>store_ant</code> 方法，把 <code>ContainerAnt</code> 的 <code>ant_contained</code> 实例属性设为传入的 <code>ant</code> 参数。然后实现 <code>ContainerAnt</code> 的 <code>action</code> 方法。该方法要确保：如果我们当前的 <code>ContainerAnt</code> 容纳着一只蚂蚁，就执行 <code>ant_contained</code> 的动作。</p>
+
+<p>此外，为了确保一个容器和它容纳的蚂蚁可以同时占据同一个 <code>Place</code>（每个 <code>Place</code> 最多两只蚂蚁），但前提是其中恰好只有一只是容器，我们可以创建一个 <code>can_contain</code> 方法。</p>
+
+<p>Ant 类中已经有一个 <code>can_contain</code> 方法，但它总是返回 <code>False</code>。
+请在 <code>ContainerAnt</code> 中<strong>覆盖</strong> can_contain 方法，让它接受一只蚂蚁 <code>other</code> 作为参数，并在以下情况下返回 <code>True</code>：</p>
+
+<ul>
+  <li>这个 <code>ContainerAnt</code> 尚未容纳另一只蚂蚁。</li>
+  <li>另一只蚂蚁不是容器。</li>
+</ul>
+
+<blockquote><p><strong>提示：</strong>
+你可能会发现，每只 <code>Ant</code> 都有的 <code>is_container</code> 属性对于检查某只 <code>Ant</code> 是否为容器很有用。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08a -u<button id="copy-code-python3ok-q08a-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08a-u").onclick = () => copyCode('python3 ok -q 08a -u', "copy-code-python3ok-q08a-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08a<button id="copy-code-python3ok-q08a" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08a").onclick = () => copyCode('python3 ok -q 08a', "copy-code-python3ok-q08a");
+        </script>
+        <br/>
+
+
+<h4 id="problem-8b">问题 8b</h4>
+
+<p>接下来，我们将在 <code>Ant</code> 类中进行修改。</p>
+
+<p>修改 <code>Ant.add_to</code>，按照以下规则允许一个容器和它容纳的蚂蚁占据同一个 place：</p>
+
+<ul>
+  <li>如果原本占据某个 place 的 <code>Ant</code> 能 <code>can_contain</code> 正在被添加的 <code>Ant</code>，
+  那么两只 <code>Ant</code> 都占据该 place，并且原来的 <code>Ant</code> 容纳正在被添加的 <code>Ant</code>。</li>
+  <li>如果正在被添加的 <code>Ant</code> 能 <code>can_contain</code> 原本位于该位置的 <code>Ant</code>，那么两只 <code>Ant</code> 都占据该 place，并且正在被添加的 <code>Ant</code> 容纳原来的 <code>Ant</code>。</li>
+  <li>如果两只 <code>Ant</code> 都无法 <code>can_contain</code> 对方，就抛出与之前相同的
+  <code>AssertionError</code>（即起始代码中已有的那个）。</li>
+</ul>
+
+<blockquote><p><strong>重要：</strong>如果某个 <code>Place</code> 中有两只 <code>Ant</code>，
+那么该 <code>Place</code> 实例的 <code>ant</code> 属性应<strong>指向容器蚂蚁</strong>，
+并且容器蚂蚁应容纳那只非容器蚂蚁。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>
+你还应该利用你写的 <code>can_contain</code> 方法，
+避免重复代码。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>注意：</strong>
+如果你通过 VSCode 的 Pylance 扩展为 <code>Ant.add_to</code> 收到“unreachable code”警告，
+可以放心地忽略这个特定的警告，
+因为这段代码实际上会被执行
+（<em>这种情况下</em>该警告并不准确）。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08b -u<button id="copy-code-python3ok-q08b-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08b-u").onclick = () => copyCode('python3 ok -q 08b -u', "copy-code-python3ok-q08b-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08b<button id="copy-code-python3ok-q08b" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08b").onclick = () => copyCode('python3 ok -q 08b', "copy-code-python3ok-q08b");
+        </script>
+        <br/>
+
+
+<h4 id="problem-8c">问题 8c</h4>
+
+<p>最后，我们可以着手实现 <code>ProtectorAnt</code> 类了。</p>
+
+<p>添加一个 <code>ProtectorAnt.__init__</code>，用来设置 <code>ProtectorAnt</code> 的初始生命值。
+我们不需要在这里创建 <code>action</code> 方法，因为 <code>ProtectorAnt</code> 类从 <code>ContainerAnt</code> 类继承了它。
+另请注意，<code>ProtectorAnt</code> 不造成任何伤害。</p>
+
+<p>实现完 <code>ProtectorAnt</code> 之后，
+给它一个值为 <code>True</code> 的 <code>implemented</code> 类属性。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08c -u<button id="copy-code-python3ok-q08c-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08c-u").onclick = () => copyCode('python3 ok -q 08c -u', "copy-code-python3ok-q08c-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08c<button id="copy-code-python3ok-q08c" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08c").onclick = () => copyCode('python3 ok -q 08c', "copy-code-python3ok-q08c");
+        </script>
+        <br/>
+
+
+<h3 id="problem-9">题目 9</h3>
+
+<!-- ### Problem 9 (1 pt) -->
+
+<p><code>ProtectorAnt</code> 提供了很好的防御，不过人们说最好的防守就是进攻。<code>TankAnt</code> 是一种 <code>ContainerAnt</code>，它保护所在 place 中的一只蚂蚁，并且每个回合对它所在 <code>Place</code> 中的所有 <code>Bee</code> 造成 1 点伤害。像任何 <code>ContainerAnt</code> 一样，<code>TankAnt</code> 允许它所容纳的蚂蚁每个回合执行自己的动作。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Tank.gif" /> <br> <code>TankAnt</code></td>
+    <td>6</td>
+    <td>2</td>
+  </tr>
+</table>
+
+<p>我们没有为你提供类声明头。
+请从零开始实现 <code>TankAnt</code> 类。给它一个值为 <code>&#x27;Tank&#x27;</code> 的 <code>name</code> 类属性
+（以便图形界面正常工作）和一个值为 <code>True</code> 的 <code>implemented</code> 类属性
+（以便你可以在游戏中使用它）。</p>
+
+<p>你不需要修改 <code>TankAnt</code> 类之外的任何代码。如果你发现自己需要在别处做改动，那就想想怎样把上一题的代码写得不仅适用于 <code>ProtectorAnt</code> 和 <code>TankAnt</code> 对象，也适用于一般的 <code>ContainerAnt</code>。</p>
+
+<blockquote><p><strong>提示：</strong>你需要从 <code>TankAnt</code> 的父类覆盖的方法只有 <code>__init__</code> 和 <code>action</code>。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>和 <code>FireAnt</code> 一样，对蜜蜂造成伤害可能会导致它被从所在 place 中移除。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09 -u<button id="copy-code-python3ok-q09-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09-u").onclick = () => copyCode('python3 ok -q 09 -u', "copy-code-python3ok-q09-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09<button id="copy-code-python3ok-q09" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09").onclick = () => copyCode('python3 ok -q 09', "copy-code-python3ok-q09");
+        </script>
+        <br/>
+
+
+<h3 id="checkpoint-submission">检查点自测</h3>
+
+
+<p>检查确认你完成了阶段 1 和阶段 2 中的所有题目：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+<blockquote></blockquote>
+
+<p>运行 <code>ok</code> 命令时，你仍然会看到一些测试处于锁定状态，因为你还没有完成整个项目。只要你完成到当前为止的所有题目，就能拿到 checkpoint 的满分。</p>
+
+<p>恭喜！你已经完成了本项目的第一阶段和第二阶段！</p>
+
+
+<h2 id="phase-3-water-and-might">第三阶段：水域与力量</h2>
+
+
+<p>在最后一个阶段，你将通过引入一种新类型的地点，以及能够占据这种地点的新蚂蚁，为游戏添加最后一记猛料。其中一种蚂蚁是所有蚂蚁中最重要的那只：蚁后！</p>
+
+<!-- ### Phase 4 Hint Videos
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint Video<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-7">
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/YGIOrgD8I9c"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "ants-phase4"
+                allowfullscreen></iframe><p><a href='https://youtu.be/YGIOrgD8I9c'> YouTube link </a></p>
+</div> -->
+
+
+<h3 id="problem-10">题目 10</h3>
+
+<!-- ### Problem 10 (0.5 pt) -->
+
+<p>让我们给领地加点水！目前只有两种地点：<code>Hive</code> 和普通的 <code>Place</code>。为了让游戏更有趣，我们要创建一种名为 <code>Water</code> 的新 <code>Place</code> 类型。</p>
+
+<p>只有防水的 <code>Insect</code> 才能被放入 <code>Water</code> 中。为了判断一只 <code>Insect</code> 是否防水，请给 <code>Insect</code> 类添加一个名为 <code>is_waterproof</code> 的新类属性，设为 <code>False</code>。由于 <code>Bee</code> 会飞，它们的 <code>is_waterproof</code> 属性为 <code>True</code>，覆盖了继承来的值。</p>
+
+<p>现在，为 <code>Water</code> 实现 <code>add_insect</code> 方法。首先，无论该 <code>Insect</code> 是否防水，都把它添加到该 <code>Place</code> 中。然后，如果该 <code>Insect</code> 不防水，就把它的生命值减到 0。<em>不要重复程序其他地方的代码</em>，
+而应使用已经定义好的方法。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10 -u<button id="copy-code-python3ok-q10-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10-u").onclick = () => copyCode('python3 ok -q 10 -u', "copy-code-python3ok-q10-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10<button id="copy-code-python3ok-q10" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10").onclick = () => copyCode('python3 ok -q 10', "copy-code-python3ok-q10");
+        </script>
+        <br/>
+
+<p>完成这个问题后，玩一局包含水的游戏。要使用包含水的 <code>wet_layout</code>，请在启动游戏时加上 <code>&#x2d;&#x2d;water</code> 选项（简写为 <code>&#x2d;w</code>）。</p>
+
+<pre><code>python3 gui.py &#x2d;&#x2d;water</code></pre>
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+记得在 driver 和 navigator 两个角色之间轮换。
+driver 负责操作键盘；
+navigator 负责观察、提问并提出想法。</p>
+
+
+<h3 id="problem-11">题目 11</h3>
+
+<!-- ### Problem 11 (1 pt) -->
+
+<p>目前还没有任何蚂蚁能放在 <code>Water</code> 上。实现 <code>ScubaThrower</code>，它是 <code>ThrowerAnt</code> 的子类，花费更高且防水，<em>除此之外与它的基类完全相同</em>。<code>ScubaThrower</code> 被放入 <code>Water</code> 时不应失去生命值。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Scuba.gif" /> <br> <code>ScubaThrower</code></td>
+    <td>6</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p>我们没有为你提供类声明头。请从零开始实现 <code>ScubaThrower</code> 类。给它一个值为 <code>&#x27;Scuba&#x27;</code> 的 <code>name</code> 类属性（以便图形界面正常工作），并记得把 <code>implemented</code> 类属性设为 <code>True</code>（以便你可以在游戏中使用它）。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11 -u<button id="copy-code-python3ok-q11-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11-u").onclick = () => copyCode('python3 ok -q 11 -u', "copy-code-python3ok-q11-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11<button id="copy-code-python3ok-q11" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11").onclick = () => copyCode('python3 ok -q 11', "copy-code-python3ok-q11");
+        </script>
+        <br/>
+
+
+<h3 id="problem-12">问题 12</h3>
+
+<!-- ### Problem 12 ( prob12  pt) -->
+<!-- note for future: add two curly braces before and after prob12 above -->
+
+<p>最后，实现 <code>QueenAnt</code>。蚁后是一只 <code>ThrowerAnt</code>，她用自己的勇敢激励同伴蚂蚁。除了标准的 <code>ThrowerAnt</code> 动作之外，<code>QueenAnt</code> 每次执行动作时，都会使她所在隧道中位于她身后的所有蚂蚁的伤害翻倍。不过，一只蚂蚁的伤害一旦翻倍，就<em>不能</em>再次翻倍。试着想个办法来记录某只蚂蚁的伤害是否已经翻倍（提示：使用实例属性！）</p>
+
+<blockquote><p><strong>注意：</strong><code>FireAnt</code> 的<em>反射伤害</em>不应翻倍，只有它的生命值降到 0 时造成的额外伤害才翻倍。</p></blockquote>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Queen.gif" /> <br> <code>QueenAnt</code></td>
+    <td>7</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p>然而，能力越大，责任越大。如果 <code>QueenAnt</code> 的生命值降到 0，蚂蚁就输了。你需要在 <code>QueenAnt</code> 中覆盖 <code>Insect.reduce_health</code>，并在这种情况下调用 <code>ants_lose()</code>，以告知模拟器游戏已经结束。（如果任何蜜蜂到达隧道尽头，蚂蚁同样会输。）</p>
+
+<blockquote><p><strong>提示：</strong>要让位于她身后的所有蚂蚁的伤害翻倍，你可以填写 <code>Ant</code> 类中定义的 <code>double</code> 方法，然后在 <code>QueenAnt</code> 类中调用它。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>
+在让蚂蚁的伤害翻倍时，
+请记住一个 <code>Place</code> 中可能不止一只蚂蚁，
+比如容器蚂蚁容纳另一只蚂蚁的情况。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>
+记住，<code>QueenAnt</code> 的 <code>reduce_health</code> 方法在超类的 <code>reduce_health</code> 方法之外，
+还额外需要调用 <code>ants_lose()</code>。
+我们怎样才能既完成超类方法的所有工作，又不重复代码呢？</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p><strong>提示：</strong>
+你可以从蚁后的 <code>place.exit</code> 开始，然后反复回到前一个 <code>Place</code> 的 <code>exit</code>，
+从而找到 <code>QueenAnt</code> 身后隧道中的每个 <code>Place</code>。
+隧道末端 <code>Place</code> 的 <code>exit</code> 为 <code>None</code>。</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12 -u<button id="copy-code-python3ok-q12-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12-u").onclick = () => copyCode('python3 ok -q 12 -u', "copy-code-python3ok-q12-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12<button id="copy-code-python3ok-q12" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12").onclick = () => copyCode('python3 ok -q 12', "copy-code-python3ok-q12");
+        </script>
+        <br/>
+
+<h2 id="project-submission">项目提交</h2>
+
+
+<p>对所有题目运行 <code>ok</code>，确认测试都已解锁并通过：</p>
+
+<pre><code>python3 ok</code></pre>
+
+<p>你也可以查看项目每一部分的得分：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+<blockquote></blockquote>
+
+<p><strong>你现在已经完成整个项目了！</strong>如果还没有，你应该试着玩一玩这个游戏！</p>
+
+<pre><code>python3 gui.py [&#x2d;h] [&#x2d;d DIFFICULTY] [&#x2d;w] [&#x2d;&#x2d;food FOOD]</code></pre>
+
+<ul>
+  <li>-h = help</li>
+  <li>-d = 难度（easy/normal/hard/extra-hard）</li>
+  <li>-w = 水量</li>
+  <li>-food = 初始食物数量（默认为 2）</li>
+</ul>
+
+
+<h2 id="extra-challenges-optional">额外挑战（选做）</h2>
+
+
+<blockquote><p><strong>注意</strong>：
+这些题目是<strong>选做的</strong>，<strong>不计任何分数</strong>。</p></blockquote>
+
+<!-- line break -->
+
+
+
+<p>实现最后两种投掷蚁，它们不造成任何伤害，而是对它们用 <code>throw_at</code> 命中的 <code>Bee</code> 实例的 <code>action</code> 方法施加一个临时效果。这个“状态”会持续若干回合，之后便不再生效。</p>
+
+
+<h3 id="problem-ec-1-0-pt">题目 EC 1（0 分）</h3>
+
+
+<p>我们将实现一只新的蚂蚁 <code>SlowThrower</code>，它继承自 <code>ThrowerAnt</code>。</p>
+
+<p><code>SlowThrower</code> 会向一只蜜蜂投掷黏稠的糖浆，使其减速 5 个回合。当蜜蜂被减速时，如果 <code>gamestate.time</code> 为偶数，它会执行正常的 Bee 行动；否则不采取任何行动（既不移动也不蜇人）。如果一只蜜蜂在被减速期间再次被糖浆击中，它会从<em>最近一次</em>被糖浆击中的时刻起重新减速 5 个回合。也就是说，如果一只蜜蜂被糖浆击中，经过 2 个回合后又再次被糖浆击中，那么它会从<em>第二次</em>被击中起再减速 5 个回合。因此它总共会被减速 7 个回合（而不是 10 个！）。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Slow.gif" /> <br> <code>SlowThrower</code></td>
+    <td>6</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p>为了完成这个 <code>SlowThrower</code> 的实现，你需要正确设置它的类属性，并在 <code>SlowThrower</code> 中实现 <code>throw_at</code> 方法。</p>
+
+<p><strong>重要限制：</strong>本题中你<em>不得</em>修改 <code>SlowThrower</code> 类之外的任何代码。这意味着你<em>不能</em>直接修改 <code>Bee.action</code> 方法。我们的测试会检查这一点。</p>
+
+<blockquote><p><strong>提示</strong>：看看 <code>SlowThrower</code> 的父类 <code>ThrowerAnt</code>。<code>ThrowerAnt</code> 的 <code>action</code> 方法会调用 <code>throw_at</code>，而你应该在 <code>SlowThrower</code> 中重写这个方法。传入 <code>SlowThrower</code> 的 <code>throw_at</code> 函数中 <code>target</code> 参数的到底是什么，为什么？<code>target.action</code> 指的是什么？</p></blockquote>
+
+<!-- line break -->
+
+<blockquote><p><strong>实现提示</strong>：把 <code>target.action</code> 赋值为一个新函数，该函数有条件地调用 <code>Bee.action</code>。你可以创建并使用一个实例属性来记录这只蜜蜂还会被减速多少个回合。一旦减速效果结束，就应该在<em>每个</em>回合都重新调用 <code>Bee.action</code>。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC1 -u<button id="copy-code-python3ok-qEC1-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC1-u").onclick = () => copyCode('python3 ok -q EC1 -u', "copy-code-python3ok-qEC1-u");
+        </script>
+        <br/>
+
+<p>你可以运行一些提供的测试，但它们并不全面：</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC1<button id="copy-code-python3ok-qEC1" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC1").onclick = () => copyCode('python3 ok -q EC1', "copy-code-python3ok-qEC1");
+        </script>
+        <br/>
+
+<p>一定要测试你的代码！你的代码应该能够对同一个目标施加多个 status（状态）；每个新的 status 都作用于该蜜蜂当前（可能已被之前影响过）的 action 方法。</p>
+
+
+<h3 id="problem-ec-2-0-pt">题目 EC 2（0 分）</h3>
+
+
+<blockquote><p>你必须正确实现题目 EC 1（SlowThrower）才能通过本题的测试。
+我们将实现一只新的蚂蚁 <code>ScaryThrower</code>，它继承自 <code>ThrowerAnt</code>。</p></blockquote>
+
+<p><code>ScaryThrower</code> 会恐吓附近的一只蜜蜂，使它后退而不是前进。以下是一些需要记住的规则：</p>
+
+<ol>
+  <li>如果蜜蜂已经紧挨着 Hive 且无法再后退，它就不应移动。要检查蜜蜂是否紧挨着 Hive，你可能会发现 <code>Place</code> 的 <code>is_hive</code> 实例属性很有用。</li>
+  <li>蜜蜂在尝试后退<em>两次</em>之前会一直处于恐惧状态。因此，后退效果持续两个回合。</li>
+  <li>如果蜜蜂被<em>减速</em>且 <code>gamestate.time</code> 为<em>奇数</em>，它就不能尝试后退。因为此时它正被 SlowThrower 冻结！</li>
+  <li>一只蜜蜂一旦被吓到过一次，就再也不会被吓到了。</li>
+</ol>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Scary.gif" /> <br> <code>ScaryThrower</code></td>
+    <td>6</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p>为了完成这个 <code>ScaryThrower</code> 的实现，你需要正确设置它的类属性，并在 <code>Bee</code> 中实现 <code>scare</code> 方法，该方法对特定的蜜蜂施加恐惧状态。你可能还需要修改 <code>Bee</code> 的其他一些方法，比如 action。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC2 -u<button id="copy-code-python3ok-qEC2-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC2-u").onclick = () => copyCode('python3 ok -q EC2 -u', "copy-code-python3ok-qEC2-u");
+        </script>
+        <br/>
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC2<button id="copy-code-python3ok-qEC2" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC2").onclick = () => copyCode('python3 ok -q EC2', "copy-code-python3ok-qEC2");
+        </script>
+        <br/>
+
+<p>一定要测试你的代码！你的代码应该能够对同一个目标施加多个 status（状态）；每个新的 status 都作用于该蜜蜂当前（可能已被之前影响过）的 action 方法。</p>
+
+
+<h3 id="problem-ec-3-0-pt">题目 EC 3（0 分）</h3>
+
+
+<p>实现 <code>NinjaAnt</code>，它会伤害所有经过的 Bees，但永远不会被蜇。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Ninja.gif" /> <br> <code>NinjaAnt</code></td>
+    <td>5</td>
+    <td>1</td>
+  </td>
+</table>
+
+<p><code>NinjaAnt</code> 不会阻挡飞过的 <code>Bee</code> 的行进路径。要实现这一行为，首先修改 <code>Ant</code> 类，添加一个新的类属性 <code>blocks_path</code>，将其设为 <code>True</code>，然后在 <code>NinjaAnt</code> 类中把 <code>blocks_path</code> 的值重写为 <code>False</code>。</p>
+
+<p>其次，修改 <code>Bee</code> 的 <code>blocked</code> 方法：如果 <code>Bee</code> 所在位置没有 <code>Ant</code>，或者有 <code>Ant</code> 但其 <code>blocks_path</code> 属性为 <code>False</code>，就返回 <code>False</code>。这样 Bees 就会直接飞过 <code>NinjaAnt</code>。</p>
+
+<p>最后，我们希望让 <code>NinjaAnt</code> 伤害所有飞过的 Bees。在 <code>NinjaAnt</code> 中实现 <code>action</code> 方法，按照它的 <code>damage</code> 属性减少与 <code>NinjaAnt</code> 处于同一位置的所有 Bees 的生命值。与 <code>FireAnt</code> 类似，你必须遍历一个可能发生变化的 bees 列表。</p>
+
+<blockquote><p><strong>提示</strong>：在脑海中想象不出这些测试用例？试着把它们画在纸上！可以参考 <a href="#game-layout">游戏布局</a> 中的例子。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC3 -u<button id="copy-code-python3ok-qEC3-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC3-u").onclick = () => copyCode('python3 ok -q EC3 -u', "copy-code-python3ok-qEC3-u");
+        </script>
+        <br/>
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC3<button id="copy-code-python3ok-qEC3" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC3").onclick = () => copyCode('python3 ok -q EC3', "copy-code-python3ok-qEC3");
+        </script>
+        <br/>
+
+<p>作为挑战，试着只用 <code>HarvesterAnt</code> 和 <code>NinjaAnt</code> 赢得一局游戏。</p>
+
+
+<h3 id="problem-ec-4-0-pt">题目 EC 4（0 分）</h3>
+
+
+<p>我们已经秘密开发这只蚂蚁很久了。它太危险了，我们不得不把它锁在超级隐秘的地下金库里，但我们现在终于觉得它可以上战场测试了。在本题中，你将实现最后一只蚂蚁 —— <code>LaserAnt</code>，一只别具一格的 <code>ThrowerAnt</code>。</p>
+
+<table class="ant">
+  <tr>
+    <td><b>类</b></td>
+    <td><b>食物花费</b></td>
+    <td><b>初始生命值</b></td>
+  </tr>
+  <tr>
+    <td><img class="img-responsive center-block" src="static/assets/ants/Laser.gif" /> <br> <code>LaserAnt</code></td>
+    <td>10</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<p><code>LaserAnt</code> 会发射一束强力的激光，伤害所有胆敢站在其路径上的目标。所有类型的 <code>Bee</code> 和 <code>Ant</code> 都有被 <code>LaserAnt</code> 伤害的风险。当 <code>LaserAnt</code> 执行行动时，它会伤害其所在位置的所有 <code>Insect</code>（不包括它自己，但包括它的容器（如果有的话））以及它前方的 <code>Place</code>，不包括 <code>Hive</code>。</p>
+
+<p>如果仅此而已，<code>LaserAnt</code> 就会强大到我们无法控制。<code>LaserAnt</code> 的基础伤害是 <code>2</code>。但是，<code>LaserAnt</code> 的激光有一些怪癖。激光每远离 <code>LaserAnt</code> 所在位置一个格子，就会被削弱 <code>0.25</code>。此外，<code>LaserAnt</code> 的电量有限。每当 <code>LaserAnt</code> 实际伤害到一个 <code>Insect</code>，其激光的总伤害就会下降 <code>0.0625</code>（1/16）。这种削弱是即时生效的，所以如果 <code>LaserAnt</code> 前方同一格上有两只 Bees，它对第二只 <code>Bee</code> 造成的伤害会更低。如果由于这些限制，<code>LaserAnt</code> 的伤害变为负数，那么它就直接造成 0 伤害。</p>
+
+<blockquote><p>在一回合内，各目标受到伤害的确切顺序无关紧要。</p></blockquote>
+
+<p>为了完成这只终极蚂蚁的实现，请通读 <code>LaserAnt</code> 类，正确设置类属性，并实现以下两个函数：</p>
+
+<ol>
+  <li><code>insects_in_front</code> 是一个实例方法，由 <code>action</code> 方法调用，返回一个字典，其中每个键是一个 <code>Insect</code>，对应的值是该 <code>Insect</code> 距离 <code>LaserAnt</code> 的距离（以格子数为单位）。该字典应包含与 <code>LaserAnt</code> 处于同一位置或在其前方的所有 <code>Insects</code>，不包括 <code>LaserAnt</code> 本身。</li>
+  <li><p><code>calculate_damage</code> 是一个实例方法，接收 <code>distance</code>，即某个昆虫距离 <code>LaserAnt</code> 实例的距离。它根据以下因素返回 <code>LaserAnt</code> 实例应当造成的伤害：</p>
+
+  <ul>
+    <li><code>Insect</code> 距离 <code>LaserAnt</code> 实例的远近。</li>
+    <li>这个 <code>LaserAnt</code> 已经伤害过的 Insects 数量，存储在 <code>insects_shot</code> 实例属性中。</li>
+  </ul></li>
+</ol>
+
+<p>除了实现上述方法之外，你可能还需要根据需要修改、添加或使用 <code>LaserAnt</code> 类中的类属性或实例属性。</p>
+
+<blockquote><p><strong>重要</strong>：如果某个昆虫的生命值没有受到影响，它的生命值应当<em>保持为整数</em>，与它最初被创建时一样。</p>
+
+<p><strong>注意</strong>：本题没有解锁测试。</p></blockquote>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC4<button id="copy-code-python3ok-qEC4" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC4").onclick = () => copyCode('python3 ok -q EC4', "copy-code-python3ok-qEC4");
+        </script>
+        <br/>
+<strong>致谢</strong>：Tom Magrino 和 Eric Tzeng 与 John DeNero 一起开发了这个项目。还有许多其他人也为该项目做出了贡献！
+
+<p>插画由 Alana Tran、Andrew Huang、Emilee Chen、Jessie Salas、Jingyi Li、Katherine Xu、Meena Vempaty、Michelle Chang 和 Ryan Davis 绘制。</p>
+
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+<script>
+$("#cats_typing").hover(
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing.gif");
+  },
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing_still.gif");
+  }
+);
+</script>
+
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#introduction">引言</a></li>
+  <li><a href="#download-starter-files">下载起始文件</a></li>
+  <li><a href="#the-game">游戏</a></li>
+  <ul>
+    <li><a href="#core-concepts">核心概念</a></li>
+    <li><a href="#core-classes">核心类</a></li>
+    <li><a href="#game-layout">游戏布局</a></li>
+  </ul>
+  <li><a href="#phase-1-basic-gameplay">第一阶段：基础玩法</a></li>
+  <ul>
+    <li><a href="#problem-0">问题 0</a></li>
+    <li><a href="#problem-1">题目 1</a></li>
+    <li><a href="#problem-2">题目 2</a></li>
+    <li><a href="#problem-3">题目 3</a></li>
+    <li><a href="#playing-the-game">运行游戏</a></li>
+  </ul>
+  <li><a href="#phase-2-more-ants">第二阶段：更多蚂蚁！</a></li>
+  <ul>
+    <li><a href="#problem-4">题目 4</a></li>
+    <li><a href="#problem-5">题目 5</a></li>
+    <li><a href="#problem-6">题目 6</a></li>
+    <li><a href="#problem-7">题目 7</a></li>
+    <li><a href="#problem-8">题目 8</a></li>
+    <ul>
+      <li><a href="#problem-8a">问题 8a</a></li>
+      <li><a href="#problem-8b">问题 8b</a></li>
+      <li><a href="#problem-8c">问题 8c</a></li>
+    </ul>
+    <li><a href="#problem-9">题目 9</a></li>
+    <li><a href="#checkpoint-submission">检查点提交</a></li>
+  </ul>
+  <li><a href="#phase-3-water-and-might">第三阶段：水域与力量</a></li>
+  <ul>
+    <li><a href="#problem-10">题目 10</a></li>
+    <li><a href="#problem-11">题目 11</a></li>
+    <li><a href="#problem-12">问题 12</a></li>
+  </ul>
+  <li><a href="#project-submission">项目提交</a></li>
+  <li><a href="#extra-challenges-optional">额外挑战（选做）</a></li>
+  <ul>
+    <li><a href="#problem-ec-1-0-pt">题目 EC 1（0 分）</a></li>
+    <li><a href="#problem-ec-2-0-pt">题目 EC 2（0 分）</a></li>
+    <li><a href="#problem-ec-3-0-pt">题目 EC 3（0 分）</a></li>
+    <li><a href="#problem-ec-4-0-pt">题目 EC 4（0 分）</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

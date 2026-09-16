@@ -1,0 +1,702 @@
+[
+ {
+  "id": 140,
+  "en": "<strong>What type of values do they return?</strong>",
+  "zh": "它们返回什么类型的值？"
+ },
+ {
+  "id": 141,
+  "en": "<strong>What do the possible return values mean?</strong>",
+  "zh": "这些可能的返回值分别意味着什么？"
+ },
+ {
+  "id": 142,
+  "en": "<strong>How can you use those return values to complete your implementation?</strong>",
+  "zh": "你如何利用这些返回值来完成你的实现？"
+ },
+ {
+  "id": 143,
+  "en": "Implement <code>merge(incr_a, incr_b)</code>, which takes two iterables <code>incr_a</code> and <code>incr_b</code> whose\nelements are ordered. <code>merge</code> yields elements from <code>incr_a</code> and <code>incr_b</code> in sorted\norder, eliminating repetition.  You may assume <code>incr_a</code> and <code>incr_b</code> themselves do not\ncontain repeats, and that none of the elements of either are <code>None</code>.\nYou may <strong>not</strong> assume that the iterables are finite; either may produce an infinite\nstream of results.",
+  "zh": "实现 merge(incr_a, incr_b)，它接收两个元素有序的可迭代对象 incr_a 和 incr_b。merge 按排序顺序产出 incr_a 和 incr_b 中的元素，并消除重复。你可以假设 incr_a 和 incr_b 本身不含重复元素，且两者的元素都不为 None。你不能假设这些可迭代对象是有限的；任何一个都可能产生无限的结果流。"
+ },
+ {
+  "id": 144,
+  "en": "<strong>Hint:</strong> If you are having trouble getting started, think about how you would approach this\nproblem if it was not a generator function. What would the recursive steps look like?",
+  "zh": "提示：如果不知如何下手，想一想如果这不是一个生成器函数你会怎么解这道题。递归的步骤会是什么样子？"
+ },
+ {
+  "id": 145,
+  "en": "<strong>Hint:</strong> Remember, you can iterate over generator objects because they are a type of iterator!",
+  "zh": "提示：记住，你可以对生成器对象进行迭代，因为它们也是一种迭代器！"
+ },
+ {
+  "id": 146,
+  "en": "\n<strong>Object-oriented programming</strong> (OOP) uses objects and classes to organize programs. Here's an example of a class:",
+  "zh": "面向对象编程（OOP）使用对象和类来组织程序。下面是一个类的例子："
+ },
+ {
+  "id": 147,
+  "en": "<strong>Class</strong>: The type of an object. The <code>Car</code> class (shown above) describes the characteristics of all <code>Car</code>\n  objects.",
+  "zh": "类（Class）：对象的类型。Car 类（如上所示）描述了所有 Car 对象的特征。"
+ },
+ {
+  "id": 148,
+  "en": "<strong>Object</strong>: A single instance of a class. In Python, a new object is created by\n  calling a class.",
+  "zh": "对象（Object）：类的一个实例。在 Python 中，通过调用类来创建新对象。"
+ },
+ {
+  "id": 149,
+  "en": "<strong>Class attribute</strong>: A variable that belongs to a class and is accessed via dot notation. The <code>Car</code> class has a <code>max_tires</code> attribute.",
+  "zh": "类属性：属于类的变量，通过点号访问。Car 类有一个 max_tires 属性。"
+ },
+ {
+  "id": 150,
+  "en": "<strong>Instance attribute</strong>: A variable that belongs to a particular object. Each <code>Car</code> object has a <code>tires</code> attribute and a <code>color</code> attribute. Like class attributes, instance attributes are accessed via dot notation.",
+  "zh": "实例属性：属于某个具体对象的变量。每个 Car 对象都有一个 tires 属性和一个 color 属性。与类属性一样，实例属性也通过点号访问。"
+ },
+ {
+  "id": 151,
+  "en": "<strong>Method</strong>: A function that belongs to an object and is called via dot notation. By convention, the first parameter of a method is <code>self</code>.",
+  "zh": "方法：属于对象的函数，通过点号调用。按照约定，方法的第一个参数是 self。"
+ },
+ {
+  "id": 152,
+  "en": "<strong>__init__</strong>: A special function that is called automatically when a new instance of a class is created.",
+  "zh": "__init__：一种特殊函数，在创建类的新实例时会自动调用。"
+ },
+ {
+  "id": 153,
+  "en": "Notice how the <code>drive</code> method takes in <code>self</code> as an argument, but it\n  looks like we didn't pass one in! This is because the dot notation\n  <em>implicitly</em> passes in <code>ferrari</code> as <code>self</code> for us. So in this example, <code>self</code> is bound to the\n  object called <code>ferrari</code> in the global frame.",
+  "zh": "注意 drive 方法接收 self 作为参数，但看起来我们并没有传入它！这是因为点号表示法隐式地帮我们把 ferrari 作为 self 传了进去。所以在这个例子里，self 绑定到全局帧中名为 ferrari 的那个对象。"
+ },
+ {
+  "id": 154,
+  "en": "Implement the <code>VendingMachine</code> class, which models a vending machine for one specific product.\nThe methods of a <code>VendingMachine</code> object return strings to describe the machine’s status and operations.\nEnsure that your output matches <em>exactly</em> with the strings provided in the doctests, including punctuation and spacing.",
+  "zh": "实现 VendingMachine 类，它为某一种特定商品建模自动售货机。VendingMachine 对象的方法返回字符串来描述机器的状态和操作。请确保你的输出与 doctest 中给出的字符串完全一致，包括标点和空格。"
+ },
+ {
+  "id": 155,
+  "en": "<strong>Hint</strong>:\nBe careful of the order in which you mutate the current node's label and process its subtrees; which one should come first?",
+  "zh": "提示：注意你修改当前节点标签与处理其子树的先后顺序，哪一个应该先做？"
+ },
+ {
+  "id": 156,
+  "en": "Removing some nodes from a tree is called <em>pruning</em> the tree.",
+  "zh": "从树中移除一些节点称为对树进行剪枝。"
+ },
+ {
+  "id": 157,
+  "en": "Complete the function <code>prune_small</code> that takes in a <code>Tree</code> <code>t</code> and a number <code>n</code>.\nFor each node with more than <code>n</code> branches, keep only the <code>n</code> branches with the\nsmallest labels and remove (<em>prune</em>) the rest.",
+  "zh": "完成函数 prune_small，它接收一棵树 t 和一个数 n。对于每个分支数超过 n 的节点，只保留标签最小的 n 个分支，并移除（剪去）其余的分支。"
+ },
+ {
+  "id": 158,
+  "en": "<strong>Hint</strong>: The <code>max</code> function takes in an <code>iterable</code> as well as an optional <code>key</code> argument (which takes in a one-argument function).\nFor example, <code>max([&#x2d;7, 2, &#x2d;1], key=abs)</code> would return <code>&#x2d;7</code> since <code>abs(&#x2d;7)</code> is greater than <code>abs(2)</code> and <code>abs(&#x2d;1)</code>.",
+  "zh": "提示：max 函数接收一个可迭代对象以及一个可选的 key 参数（key 接收一个单参数函数）。例如，max([&#x2d;7, 2, &#x2d;1], key=abs) 会返回 &#x2d;7，因为 abs(&#x2d;7) 大于 abs(2) 和 abs(&#x2d;1)。"
+ },
+ {
+  "id": 159,
+  "en": "Write a function <code>add_link</code> that takes in two linked lists, <code>link1</code> and <code>link2</code>, and returns a <em>new</em> linked list\nthat concatenates <code>link2</code> to the end of <code>link1</code>.",
+  "zh": "编写函数 add_link，它接收两个链表 link1 和 link2，返回一个把 link2 连接到 link1 末尾的新链表。"
+ },
+ {
+  "id": 160,
+  "en": "<strong>Note</strong>: You <em>may not</em> assume that the input lists are of the same length.",
+  "zh": "注意：你不能假设输入的两个链表长度相同。"
+ },
+ {
+  "id": 161,
+  "en": "Your implementation should <em>mutate</em> the original linked list. <strong>Do not\ncreate any new linked lists.</strong> The function returns <code>None</code>.",
+  "zh": "你的实现应当修改原链表。不要创建任何新的链表。该函数返回 None。"
+ },
+ {
+  "id": 162,
+  "en": "<strong>Hint</strong>: You can use the built-in <code>isinstance</code> function to determine if an element is a linked list.",
+  "zh": "提示：你可以使用内置的 isinstance 函数判断某个元素是否为链表。"
+ },
+ {
+  "id": 163,
+  "en": "<strong>Construct Check</strong>: The final test case for this problem checks\nthat your function does not create any new linked lists.\nIf you are failing this doctest, make sure that you are not\ncreating link lists by calling the constructor, i.e.",
+  "zh": "构造检查：本题最后一个测试用例检查你的函数没有创建任何新的链表。如果你没通过这个 doctest，请确认你没有通过调用构造函数来创建链表，即"
+ },
+ {
+  "id": 164,
+  "en": "There's a slight nuance here: in CS 61A, we do runtime analysis with\nrespect to the input. In later classes (such as 61B, CS 170, etc.) runtime analysis is done with respect to the\n<em>size</em> (i.e. the number of bits) of the input. If this confuses you, don't worry about it too much.\nJust try to be consistent and tell students that we are considering how a function's runtime is affected when\nwe change the input.\n",
+  "zh": "这里有一个细微的差别：在 CS 61A 中，我们针对输入做运行时间分析。在后续课程（如 61B、CS 170 等）中，运行时间分析是针对输入的规模（即比特数）进行的。如果这让你困惑，不用太在意。只需保持一致，并告诉学生：我们考虑的是输入变化时函数的运行时间会如何变化。"
+ },
+ {
+  "id": 165,
+  "en": "Throughout this class, we have mainly focused on <em>correctness</em> — whether a program produces the correct output.\nHowever, computer scientists are also interested in creating <em>efficient</em> solutions to problems.\nOne way to quantify efficiency is to determine how a function's <em>runtime</em> changes as its input changes.\nIn this class, we measure a function's runtime by the number of operations it performs.",
+  "zh": "在这门课中，我们主要关注正确性——程序是否产生正确的输出。然而，计算机科学家也对构造高效的问题解法感兴趣。量化效率的一种方式是确定函数的运行时间如何随输入变化。在这门课中，我们用函数执行的操作次数来衡量它的运行时间。"
+ },
+ {
+  "id": 166,
+  "en": "<strong>Example 1:</strong> It takes a single multiplication operation to compute <code>square(1)</code>, and it takes a single multiplication operation to compute <code>square(100)</code>. In general, calling <code>square(n)</code> results in a <em>constant</em> number of operations that does not vary according to <code>n</code>. We say <code>square</code> has a runtime complexity of Θ(1).",
+  "zh": "例 1：计算 square(1) 需要一次乘法操作，计算 square(100) 也需要一次乘法操作。一般来说，调用 square(n) 产生的操作次数是常数，不随 n 变化。我们说 square 的运行时间复杂度是 Θ(1)。"
+ },
+ {
+  "id": 167,
+  "en": "<strong>Example 2:</strong> It takes a single multiplication operation to compute <code>factorial(1)</code>, and it takes 100 multiplication operations to compute <code>factorial(100)</code>. As <code>n</code> increases, the runtime of <code>factorial</code> increases <em>linearly</em>. We say <code>factorial</code> has a runtime complexity of Θ(<code>n</code>).",
+  "zh": "例 2：计算 factorial(1) 需要一次乘法操作，而计算 factorial(100) 需要 100 次乘法操作。随着 n 增大，factorial 的运行时间线性增长。我们说 factorial 的运行时间复杂度是 Θ(n)。"
+ },
+ {
+  "id": 168,
+  "en": "<strong>Example 3:</strong> Consider the following function:",
+  "zh": "例 3：考虑下面这个函数："
+ },
+ {
+  "id": 169,
+  "en": "Evaulating <code>bar(1)</code> results in a single <code>print</code> call, while evalulating <code>bar(100)</code> results in 10,000 <code>print</code> calls. As <code>n</code> increases, the runtime of <code>bar</code> increases <em>quadratically</em>. We say <code>bar</code> has a runtime complexity of Θ(<code>n^2</code>).",
+  "zh": "计算 bar(1) 会调用一次 print，而计算 bar(100) 会调用 10,000 次 print。随着 n 增大，bar 的运行时间平方增长。我们说 bar 的运行时间复杂度是 Θ(n^2)。"
+ },
+ {
+  "id": 170,
+  "en": "<strong>Example 4:</strong> Consider the following function:",
+  "zh": "例 4：考虑下面这个函数："
+ },
+ {
+  "id": 171,
+  "en": "As <code>n</code> increases, the runtime of <code>rec</code> increases <em>exponentially</em>. In particular, the runtime of <code>rec</code> approximately doubles when we increase <code>n</code> by 1. We say <code>rec</code> has a runtime complexity of Θ(<code>2^n</code>).",
+  "zh": "随着 n 增大，rec 的运行时间指数增长。特别地，当 n 增加 1 时，rec 的运行时间大约翻倍。我们说 rec 的运行时间复杂度是 Θ(2^n)。"
+ },
+ {
+  "id": 172,
+  "en": "<strong>Hint:</strong> you don't need to check whether every single number that is smaller than\nn divides n",
+  "zh": "提示：你不需要检查每一个比 n 小的数是否能整除 n"
+ },
+ {
+  "id": 173,
+  "en": "<em>Hint:</em>",
+  "zh": "提示："
+ },
+ {
+  "id": 174,
+  "en": "Your queries should still perform correctly <em>even if the values in these tables\nchange</em>. For example, if you are asked to list all dogs with a name that starts\nwith <code>h</code>, you should write:",
+  "zh": "即使这些表中的值发生变化，你的查询也应当仍然正确。例如，如果要求你列出所有名字以 h 开头的狗，你应该这样写："
+ },
+ {
+  "id": 175,
+  "en": "<strong>Hint</strong>: First, create a helper table containing the names of each pair of siblings. This\nwill make comparing the sizes of siblings when constructing the main table\neasier. Make sure to not pair a child with themselves and do not include duplicate pairs.",
+  "zh": "提示：首先创建一个辅助表，包含每对同胞的名字。这会让在构造主表时比较同胞的体型更容易。注意不要把某个孩子和它自己配对，也不要包含重复的配对。"
+ },
+ {
+  "id": 176,
+  "en": "<strong>Hint</strong>: If you join a table with itself, use <code>AS</code> within the <code>FROM</code> clause to\ngive each table an alias.",
+  "zh": "提示：如果你把一张表与它自己连接，请在 FROM 子句中使用 AS 给每张表起一个别名。"
+ },
+ {
+  "id": 177,
+  "en": "<strong>Hint</strong>: In order to concatenate two strings into one, use the <code>||</code> operator, e.g. <code>SELECT &quot;hello&quot; || &quot;world&quot;;</code> will return <code>helloworld</code>.",
+  "zh": "提示：要把两个字符串拼接成一个，请使用 || 运算符，例如 SELECT &quot;hello&quot; || &quot;world&quot;; 会返回 helloworld。"
+ },
+ {
+  "id": 178,
+  "en": "We want to create a table that contains the <em>height range</em> (defined as the difference between maximum and minimum <code>height</code>) of all dogs that share a <code>fur</code> type. However, we'll only\nconsider <code>fur</code> types where each dog with that <code>fur</code> type is within 30% of the average <code>height</code> of all dogs with that <code>fur</code> type; we call this the <em>low variance</em> criterion.",
+  "zh": "我们想创建一个表，包含共享同一毛发类型的所有狗的身高范围（定义为最大身高与最小身高之差）。不过，我们只考虑这样的毛发类型：具有该毛发类型的每只狗的身高都在该类型所有狗平均身高的 30% 以内；我们把这称为低方差标准。"
+ },
+ {
+  "id": 179,
+  "en": "For example, if the average <code>height</code> for short-haired dogs is 10, then in order to be included in our\noutput, all dogs with short hair must have a <code>height</code> of at most 13 and at least 7 (<em>inclusive</em>).",
+  "zh": "例如，如果短毛狗的平均身高是 10，那么要被包含在我们的输出中，所有短毛狗的身高必须至多 13、至少 7（含端点）。"
+ },
+ {
+  "id": 180,
+  "en": "<strong>Hint</strong>: <code>MIN</code>, <code>MAX</code>, and <code>AVG</code> will be useful here.",
+  "zh": "提示：MIN、MAX 和 AVG 在这里会很有用。"
+ },
+ {
+  "id": 181,
+  "en": "<strong>Hint</strong>: You may want to first find the average height and make sure that:",
+  "zh": "提示：你可能想先求出平均身高，并确保："
+ },
+ {
+  "id": 182,
+  "en": "<strong>Extension processing</strong>: There will be <strong>no</strong> extensions on this project (unless DSP).",
+  "zh": "延期处理：本项目不接受延期（除非是 DSP）。"
+ },
+ {
+  "id": 183,
+  "en": "<strong>Figure out which dogs are siblings</strong>",
+  "zh": "找出哪些狗是兄弟姐妹"
+ },
+ {
+  "id": 184,
+  "en": "<strong>Construct sentences based on sibling information</strong>",
+  "zh": "根据兄弟姐妹信息构造句子"
+ },
+ {
+  "id": 185,
+  "en": "<strong>Setup</strong>: Setting up the essential software for the course. This will require several\n  components, listed below.",
+  "zh": "环境配置（Setup）：配置本课程所需的基本软件。这需要以下几个\n  组件，列在下面。"
+ },
+ {
+  "id": 186,
+  "en": "<strong>Install a Terminal</strong>: Install a terminal so you can interact with files\n    in this course and run OK commands.",
+  "zh": "安装终端：安装一个终端，以便你与本课程中的文件交互\n    并运行 OK 命令。"
+ },
+ {
+  "id": 187,
+  "en": "<strong>Install Python 3</strong>: Install Python version 3.8 or later (ideally Python 3.11 or later) on your\n    computer.",
+  "zh": "安装 Python 3：在电脑上安装 Python 3.8 或更高版本（最好是 Python 3.11 或更高版本）。"
+ },
+ {
+  "id": 188,
+  "en": "<strong>Install a Text Editor</strong>: Install software to edit <code>.py</code> files for this\n    course. Almost all students use VS Code.",
+  "zh": "安装文本编辑器：安装用于编辑本课程 .py 文件的\n    软件。几乎所有学生都使用 VS Code。"
+ },
+ {
+  "id": 189,
+  "en": "<strong>Review: Your Computer's File System</strong> This is an overview of how your computer's file system\n  works, including the meaning of both absolute and relative file paths.",
+  "zh": "复习：你的计算机文件系统 这里概述了计算机文件系统的工作方式，包括绝对路径和相对路径的含义。"
+ },
+ {
+  "id": 190,
+  "en": "<strong>Walkthrough: Using the Terminal</strong>: This walks you through how to use the\n  terminal and Python interpreter.",
+  "zh": "演示：使用终端：本部分将带你一步步了解如何使用终端和 Python 解释器。"
+ },
+ {
+  "id": 191,
+  "en": "<strong>Walkthrough: Organizing your Files</strong>: This section walks you through how to\n  use your terminal to organize and navigate files for this course.\n  <strong>Everyone should read this section.</strong>",
+  "zh": "演示：整理你的文件：本节将带你一步步了解如何使用终端为本课程整理和浏览文件。每个人都应该阅读本节。"
+ },
+ {
+  "id": 192,
+  "en": "<strong>Required: Doing the Assignment</strong>: You must complete this section to get\n  credit for the assignment. The main goal of this part is to give you practice using our\n  software.",
+  "zh": "必修：完成作业：你必须完成本节才能获得作业学分。本部分的主要目的是让你练习使用我们的软件。"
+ },
+ {
+  "id": 193,
+  "en": "<strong>Required: Submitting the Assignment</strong>: Turn in your work.",
+  "zh": "必修：提交作业：把你的作业交上来。"
+ },
+ {
+  "id": 194,
+  "en": "<strong>Appendix: Useful Python Command Line Options</strong>: These are commands that are\n  useful in debugging your work, but not required to complete the lab. We\n  include them because they are likely to be helpful to you throughout\n  the course.",
+  "zh": "附录：有用的 Python 命令行选项：这些命令对调试你的工作很有帮助，但不是完成实验所必需的。我们收录它们，是因为它们很可能在整个课程中对你都有帮助。"
+ },
+ {
+  "id": 195,
+  "en": "<strong>Important</strong>: Turn on <code>Auto Save</code> in the <code>File</code> menu of VS Code. Then, whenever\nyou change a file, the contents will be saved. If you don't enable <code>Auto Save</code>,\nbe sure to frequently save your work.",
+  "zh": "重要：在 VS Code 的 File 菜单中打开 Auto Save。这样，每当你修改文件时，内容都会被保存。如果你没有启用 Auto Save，请务必经常保存你的工作。"
+ },
+ {
+  "id": 196,
+  "en": "<strong>Recommended</strong>: Use the terminal inside VS Code (<code>Terminal &gt; New Terminal</code> in\nthe menu). If you opened the assignment folder in VS Code as instructed above,\nthen the VS Code terminal's working directory will automatically be set to the\nassignment folder, which means you won't have to change directories to check\nyour work.",
+  "zh": "推荐：使用 VS Code 内置的终端（菜单中的 Terminal > New Terminal）。如果你按上面的说明在 VS Code 中打开了作业文件夹，那么 VS Code 终端的工作目录就会自动设为该作业文件夹，这意味着你无需切换目录就能检查你的工作。"
+ },
+ {
+  "id": 197,
+  "en": "<strong>Pro tip:</strong> If you\nopened the <code>lab00</code> folder in VS Code and select <code>New Terminal</code> in the <code>Terminal</code>\nmenu of VS Code, then the terminal will automatically be in the <code>lab00</code>\ndirectory.",
+  "zh": "专业提示：如果你在 VS Code 中打开了 lab00 文件夹，并选择 VS Code 的 Terminal 菜单中的 New Terminal，那么终端会自动位于 lab00 目录中。"
+ },
+ {
+  "id": 198,
+  "en": "<code>ls</code>: <strong>l</strong>i<strong>s</strong>ts all files in the current directory",
+  "zh": "ls：列出当前目录中的所有文件"
+ },
+ {
+  "id": 199,
+  "en": "<code>cd &lt;path to directory&gt;</code>: <strong>c</strong>hange into the specified <strong>d</strong>irectory",
+  "zh": "cd &lt;path to directory&gt;：切换到指定的目录"
+ },
+ {
+  "id": 200,
+  "en": "<code>mkdir &lt;directory name&gt;</code>: <strong>m</strong>a<strong>k</strong>es a new <strong>dir</strong>ectory with the given name",
+  "zh": "mkdir &lt;directory name&gt;：创建一个具有给定名称的新目录"
+ },
+ {
+  "id": 201,
+  "en": "<strong><code>&#x2d;i</code></strong>: The <code>&#x2d;i</code> option runs the code in the file you provide, then opens\n  an interactive session (with a <code>&gt;&gt;&gt;</code> prompt). You can then evaluate\n  expressions such as calling functions you defined. To exit, type\n  <code>exit()</code>. You can also use the keyboard shortcut <code>Ctrl&#x2d;D</code> on Linux/Mac\n  machines or <code>Ctrl&#x2d;Z  Enter</code> on Windows.",
+  "zh": "&#x2d;i：&#x2d;i 选项会运行你提供的文件中的代码，然后打开一个交互式会话（提示符为 &gt;&gt;&gt;）。之后你可以对表达式求值，例如调用你定义的函数。要退出，输入 exit()。你也可以使用快捷键：在 Linux/Mac 上是 Ctrl&#x2d;D，在 Windows 上是 Ctrl&#x2d;Z 再按 Enter。"
+ },
+ {
+  "id": 202,
+  "en": "<strong><code>&#x2d;m doctest</code></strong>: Runs the doctests in a file, which are the examples in\n  the docstrings of functions.",
+  "zh": "&#x2d;m doctest：运行文件中的 doctest，也就是函数文档字符串里的示例。"
+ },
+ {
+  "id": 203,
+  "en": "<strong>Important:</strong> If the <code>python3</code> command doesn't work, please try using <code>python</code> or <code>py</code>.",
+  "zh": "重要：如果 python3 命令无法使用，请尝试使用 python 或 py。"
+ },
+ {
+  "id": 204,
+  "en": "There are more features described on the {0}.\n<strong>You can quickly generate most ok commands at {1}.</strong>\n",
+  "zh": "更多功能在 {0} 中有介绍。\n你可以在 {1} 快速生成大多数 ok 命令。"
+ },
+ {
+  "id": 205,
+  "en": "In contrast, the <code>print</code> function is used to display values.\nUnlike a <code>return</code> statement, when Python evaluates a call to <code>print</code>, the\nfunction does <em>not</em> terminate immediately.",
+  "zh": "相比之下，print 函数用于显示值。与 return 语句不同，当 Python 对 print 的调用求值时，函数不会立即结束。"
+ },
+ {
+  "id": 206,
+  "en": "Notice also that <code>print</code> will display text <strong>without the quotes</strong>, but\n<code>return</code> will preserve the quotes.\n",
+  "zh": "还要注意，print 显示文本时不带引号，而 return 会保留引号。"
+ },
+ {
+  "id": 207,
+  "en": "<strong>Hint</strong>: <code>print</code> (unlike <code>return</code>) does <em>not</em> cause the function to exit.",
+  "zh": "提示：print（不同于 return）不会导致函数退出。"
+ },
+ {
+  "id": 208,
+  "en": "<strong>Hint:</strong> Use <code>//</code> and <code>%</code> and the built-in <code>pow</code> function to isolate a\nparticular digit of <code>n</code>.",
+  "zh": "提示：使用 // 和 %，以及内置的 pow 函数来取出 n 的某一位数字。"
+ },
+ {
+  "id": 209,
+  "en": "<strong>Hint:</strong> Try combining all the numbers and then taking away the ones you don't\nwant to return by using the built-in <code>min</code> and <code>max</code> functions.",
+  "zh": "提示：试着先把所有数组合起来，再用内置的 min 和 max 函数去掉你不想返回的那些数。"
+ },
+ {
+  "id": 210,
+  "en": "It evaluates to <code>True</code> because Python's <code>and</code> and <code>or</code> operators <em>short-circuit</em>. That is, they don't necessarily evaluate every operand.",
+  "zh": "它的求值结果是 True，因为 Python 的 and 和 or 运算符会短路。也就是说，它们不一定会对每个操作数求值。"
+ },
+ {
+  "id": 211,
+  "en": "If <code>and</code> and <code>or</code> do not <em>short-circuit</em>, they just return the last\nvalue; another way to remember this is that <code>and</code> and <code>or</code> always return the last\nthing they evaluate, whether they short circuit or not. Keep in mind that <code>and</code> and <code>or</code>\ndon't always return booleans when using values other than <code>True</code> and <code>False</code>.",
+  "zh": "如果 and 和 or 没有发生短路，它们就只返回最后一个值；另一种记忆方式是：无论是否短路，and 和 or 总是返回它们最后求值的东西。请记住，当使用的值不是 True 和 False 时，and 和 or 并不总是返回布尔值。"
+ },
+ {
+  "id": 212,
+  "en": "<i>Expression</i> that evaluates to a value.",
+  "zh": "求值为一个值的表达式。"
+ },
+ {
+  "id": 213,
+  "en": "<i>Statement</i> that alters the environment.",
+  "zh": "会改变环境的语句。"
+ },
+ {
+  "id": 214,
+  "en": "Evaluating a <code>lambda</code> expression does <i>not</i> create or\n          modify any variables.",
+  "zh": "对 lambda 表达式求值不会创建或修改任何变量。"
+ },
+ {
+  "id": 215,
+  "en": "Executing a <code>def</code> statement both creates a new function\n          object <i>and</i> binds it to a name in the current environment.",
+  "zh": "执行 def 语句既会创建一个新的函数对象，也会在当前环境中把它绑定到一个名字。"
+ },
+ {
+  "id": 216,
+  "en": "Write a function that takes in two single-argument functions, <code>f</code> and <code>g</code>, and\nreturns another <strong>function</strong> that has a single parameter <code>x</code>. The returned\nfunction should return <code>True</code> if <code>f(g(x))</code> is equal to <code>g(f(x))</code> and <code>False</code>\notherwise. You can assume the output of <code>g(x)</code> is a valid input for <code>f</code> and vice\nversa.",
+  "zh": "编写一个函数，接收两个单参数函数 f 和 g，并返回另一个只有一个参数 x 的函数。如果 f(g(x)) 等于 g(f(x))，返回的函数应返回 True，否则返回 False。你可以假设 g(x) 的输出是 f 的有效输入，反之亦然。"
+ },
+ {
+  "id": 217,
+  "en": "<strong>Note:</strong>\nWhen we say <code>condition</code> is a predicate function, we mean that it is\na function that will return <code>True</code> or <code>False</code>.",
+  "zh": "注意：\n当我们说 condition 是一个谓词函数时，意思是它会返回 True 或 False。"
+ },
+ {
+  "id": 218,
+  "en": "A number is considered a palindrome if it reads the same forwards\nand backwards. Fill in the blanks '<strong></strong>_' to help determine if\na number is a palindrome. In the spirit of exam style questions, please\ndo not edit any parts of the function other than the blanks.",
+  "zh": "如果一个数正着读和倒着读都一样，它就被认为是回文数。请填写空白处 '_'，以帮助判断一个数是否为回文数。本着考试题的精神，除空白处外，请不要修改函数的任何其他部分。"
+ },
+ {
+  "id": 219,
+  "en": "<strong>Disclaimer:</strong> Even though type checking is useful, prioritize using it more as\nan exercise to determine inputs and outputs. For some situations in this class,\nthe syntax for type checking will be out of scope. However, please read the information\nabout type checking and apply it when possible.",
+  "zh": "声明：尽管类型检查很有用，但请更多把它当作一种判断输入和输出的练习。在本课程的一些情形中，类型检查的语法会超出范围。不过，请阅读关于类型检查的内容，并在可能时加以应用。"
+ },
+ {
+  "id": 220,
+  "en": "<strong>Automatic Type Checking</strong>: VS Code can be configured to annotate locations\nwhere a variable has been assigned a value that does not have the expected type.\nTo enable type checking, open the VS Code settings, which you can do by pressing\nthe Command and <code>,</code> keys on a Mac, or the Control and <code>,</code> keys simultaneously on\na Windows machine. Type <code>type checking</code> in the search bar, which should pull up\nthe Type Checking options shown in the screenshot below.  Use the dropdown menu\nto change type checking from the default of <code>off</code> to <code>basic</code>.",
+  "zh": "自动类型检查：VS Code 可以配置为在某个变量被赋了不符合预期类型的值时加以标注。要启用类型检查，请打开 VS Code 设置：在 Mac 上按 Command 和 , 键，在 Windows 上同时按 Control 和 , 键。在搜索栏中输入 type checking，就会出现下图中所示的 Type Checking 选项。使用下拉菜单把类型检查从默认的 off 改为 basic。"
+ },
+ {
+  "id": 221,
+  "en": "Write a function <code>flatten</code> that takes in a list <code>s</code> and returns\na <strong>new list</strong> that is the \"flattened\" version of <code>s</code>.\nYou should not modify the original list.",
+  "zh": "编写一个函数 flatten，它接收一个列表 s，并返回一个新的列表，即 s 的“展平”版本。你不应修改原来的列表。"
+ },
+ {
+  "id": 222,
+  "en": "<strong>Note:</strong> The input list may be deeply nested, meaning that there\ncould be multiple layers of lists within lists.\nMake sure your solution supports this.",
+  "zh": "注意：输入的列表可能嵌套很深，也就是说列表里可能还有多层列表。请确保你的解法支持这种情况。"
+ },
+ {
+  "id": 223,
+  "en": "<strong>Hint</strong>: you can check if something is a list by using the built-in\n<code>type</code> function. For example:",
+  "zh": "提示：你可以使用内置的 type 函数来判断某个东西是不是列表。例如："
+ },
+ {
+  "id": 224,
+  "en": "<em>Hint</em>:  Use the <code>remove_first</code> function you just defined, and the built-in\n<code>min</code> function.",
+  "zh": "提示：使用你刚刚定义的 remove_first 函数，以及内置的 min 函数。"
+ },
+ {
+  "id": 225,
+  "en": "\nThis is very similar to a homework problem, but recursive.\nWe recommend covering this if you have time, it ties recursion and higher order functions together in an interesting way.\nMake sure to contrast with self-reference and show why this isn’t that,\nboth in behavior (here a single function call results in a bunch of computation not many function calls)\nand in implementation (here a call to repeat <em>calls</em> repeat rather than returning a new repeat function).\n",
+  "zh": "这与一道作业题非常相似，只是要求用递归实现。如果有时间，我们建议讲这道题，它以一种有趣的方式把递归和高阶函数结合在了一起。请务必与自引用作对比，说明为什么这不算自引用：既体现在行为上（这里一次函数调用会引发大量计算，而不是大量函数调用），也体现在实现上（这里调用 repeat 会去调用 repeat，而不是返回一个新的 repeat 函数）。"
+ },
+ {
+  "id": 226,
+  "en": "<em>Recommended</em>: Complete and use the helper function <code>count_digit</code> to calculate\nhow many times a digit appears in <code>n</code>.",
+  "zh": "建议：完成并使用辅助函数 count_digit 来计算某个数字在 n 中出现了多少次。"
+ },
+ {
+  "id": 227,
+  "en": "<strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).",
+  "zh": "重要：请使用递归；如果使用任何循环（for、while），测试将无法通过。"
+ },
+ {
+  "id": 228,
+  "en": "A <em>data abstraction</em> is a set of functions that compose and decompose compound\nvalues. One function called the <em>constructor</em> puts together two or more parts\ninto a whole (such as a rational number; also known as a fraction), and other\nfunctions called <em>selectors</em> return parts of that whole (such as the numerator\nor denominator).",
+  "zh": "数据抽象是一组用于组合和分解复合值的函数。其中一个称为构造函数的函数把两个或多个部分组合成一个整体（例如有理数，也叫分数），而另一些称为选择器的函数则返回该整体的各个部分（例如分子或分母）。"
+ },
+ {
+  "id": 229,
+  "en": "<strong>Use only a single line for the body of the function.</strong> (Hint: use a list comprehension.)",
+  "zh": "函数体只能使用一行。（提示：使用列表推导式。）"
+ },
+ {
+  "id": 230,
+  "en": "Our data abstraction has one <strong>constructor</strong>:",
+  "zh": "我们的数据抽象有一个构造函数："
+ },
+ {
+  "id": 231,
+  "en": "We also have the following <strong>selectors</strong> in order to get the information for\neach city:",
+  "zh": "我们还提供以下选择器，用来获取每个城市的信息："
+ },
+ {
+  "id": 232,
+  "en": "Next, implement <code>closer_city</code>, a function that takes a latitude,\nlongitude, and two cities, and returns the <em>name</em> of the city that is\ncloser to the provided latitude and longitude.",
+  "zh": "接下来实现 closer_city，这个函数接收一个纬度、一个经度和两个城市，并返回距离给定经纬度更近的那个城市的名称。"
+ },
+ {
+  "id": 233,
+  "en": "<strong>Hint</strong>: How can you use your <code>distance</code> function to find the distance between\nthe given location and each of the given cities?",
+  "zh": "提示：如何用你的 distance 函数求出给定位置到每个给定城市的距离？"
+ },
+ {
+  "id": 234,
+  "en": "When writing functions that use a data abstraction, we should use the\nconstructor(s) and selector(s) whenever possible instead of assuming the\ndata abstraction's implementation.\nRelying on a data abstraction's underlying implementation is known as\n<em>violating the abstraction barrier</em>.",
+  "zh": "在编写使用数据抽象的函数时，我们应尽可能使用构造函数和选择器，而不是假定数据抽象的实现方式。依赖数据抽象的底层实现被称为违反抽象屏障。"
+ },
+ {
+  "id": 235,
+  "en": "<strong>Challenge:</strong>\nSolve both of these parts with just 1 line of code each.",
+  "zh": "挑战：这两部分都只用 1 行代码完成。"
+ },
+ {
+  "id": 236,
+  "en": "A <strong>full binary tree</strong> is a tree where each node has either 2 branches or 0 branches, but never 1 branch.",
+  "zh": "满二叉树是指每个节点要么有 2 个分支，要么有 0 个分支，但绝不会只有 1 个分支的树。"
+ },
+ {
+  "id": 237,
+  "en": "<strong>Hint</strong>: A full binary tree can be constructed by connecting two smaller full binary trees to a root node. \nIf the two smaller full binary trees have <code>a</code> and <code>b</code> leaves, the new full binary tree will have <code>a + b</code> leaves.\nFor example, as shown in the first diagram below, a full binary tree with 4 leaves can be constructed by connecting \na full binary tree that has three leaves (yellow) with a full binary tree that has one leaf (orange).\nA full binary tree with 4 leaves can also be constructed by connecting two full binary trees with 2 leaves each (second diagram)\n",
+  "zh": "提示：一棵满二叉树可以通过把两棵较小的满二叉树连接到根节点上来构造。如果这两棵较小的满二叉树分别有 a 个和 b 个叶子，那么新的满二叉树就会有 a + b 个叶子。例如，如下面第一张图所示，一棵有 4 个叶子的满二叉树可以通过把一棵有三个叶子的满二叉树（黄色）与一棵有一个叶子的满二叉树（橙色）连接来构造。有 4 个叶子的满二叉树也可以通过连接两棵各有 2 个叶子的满二叉树来构造（第二张图）"
+ },
+ {
+  "id": 238,
+  "en": "<strong>Important:</strong> No new lists should be created.",
+  "zh": "重要：不应创建新列表。"
+ },
+ {
+  "id": 239,
+  "en": "<strong>Note:</strong>\nIf the values passed into <code>before</code> and <code>after</code> are equal, make\nsure you're not creating an infinitely long list while iterating through it.\nIf you find that your code is taking more than a few seconds to run, the\nfunction may be in an infinite loop of inserting new values.",
+  "zh": "注意：如果传给 before 和 after 的值相等，请确保在遍历列表时不要创建出无限长的列表。如果你发现代码运行超过几秒钟，这个函数可能陷入了不断插入新值的死循环。"
+ },
+ {
+  "id": 240,
+  "en": "<strong>Important:</strong>\nEnter <code>StopIteration</code> if a <code>StopIteration</code> exception occurs,\n<code>Error</code> if you believe a different error occurs,\nand <code>Iterator</code> if the output is an iterator object.",
+  "zh": "重要：如果发生 StopIteration 异常，请输入 StopIteration；如果你认为发生的是其他错误，请输入 Error；如果输出是一个迭代器对象，请输入 Iterator。"
+ },
+ {
+  "id": 241,
+  "en": "<strong>Important:</strong> Python's built-in function <code>map</code>, <code>filter</code>, and <code>zip</code> return <em>iterators</em>, not lists.",
+  "zh": "重要：Python 的内置函数 map、filter 和 zip 返回的是迭代器，而不是列表。"
+ },
+ {
+  "id": 242,
+  "en": "<strong>Important</strong>: You should call <code>next</code> on <code>t</code> exactly <code>n</code> times. If you\nneed to iterate through more than <code>n</code> elements, think about how you can\noptimize your solution.",
+  "zh": "重要：你应该对 t 恰好调用 next n 次。如果你需要遍历超过 n 个元素，想一想如何优化你的解法。"
+ },
+ {
+  "id": 243,
+  "en": "Given a sequence of unique elements, a <em>permutation</em> of the sequence is a list\ncontaining the elements of the sequence in some arbitrary order. For example, \n<code>[1, 2, 3]</code>, <code>[2, 1, 3]</code>, <code>[1, 3, 2]</code>, and <code>[3, 2, 1]</code> are some of the \npermutations of the sequence <code>[1, 2, 3]</code>.",
+  "zh": "给定一个元素互不相同的序列，该序列的一个排列就是按某种任意顺序包含这些元素的一个列表。例如，[1, 2, 3]、[2, 1, 3]、[1, 3, 2] 和 [3, 2, 1] 都是序列 [1, 2, 3] 的排列。"
+ },
+ {
+  "id": 244,
+  "en": "<em>Hint:</em>\nRemember, it's possible to loop over generator objects because generators are iterators!",
+  "zh": "提示：记住，生成器对象是可以循环遍历的，因为生成器就是迭代器！"
+ },
+ {
+  "id": 245,
+  "en": "<strong>Important:</strong> Call <code>next</code> on <code>t</code> only the minimum number of times required.\nIf you are receiving a <code>StopIteration</code> exception,\nyour <code>repeated</code> function is calling <code>next</code> too many times.",
+  "zh": "重要提示：对 t 调用 next 的次数要尽量少。如果你遇到了 StopIteration 异常，说明你的 repeated 函数调用 next 的次数过多了。"
+ },
+ {
+  "id": 246,
+  "en": "Extend the <code>BankAccount</code> class to include a <code>transactions</code> attribute. This attribute should be a list that keeps track of each transaction made on the account. Whenever the <code>deposit</code> or <code>withdraw</code> method is called, a new <code>Transaction</code> instance should be created and added to the list, <strong>even if the action is not successful</strong>.",
+  "zh": "扩展 BankAccount 类，为其添加一个 transactions 属性。该属性应为一个列表，记录账户上发生的每一笔交易。每当调用 deposit 或 withdraw 方法时，都应创建一个新的 Transaction 实例并加入该列表，即使该操作并未成功。"
+ },
+ {
+  "id": 247,
+  "en": "<strong>Important</strong>: Before you start, make sure you read the entire code snippet to understand the relationships between the classes, and pay attention to the parameter type of the methods. Think about what variables you have access to in each method and how can you use them to access the other classes and their methods.",
+  "zh": "重要提示：动手之前，请务必通读整段代码，理解各个类之间的关系，并注意方法的参数类型。思考在每个方法中你能访问哪些变量，以及如何利用它们访问其他类及其方法。"
+ },
+ {
+  "id": 248,
+  "en": "<strong>Note:</strong>",
+  "zh": "注意："
+ },
+ {
+  "id": 249,
+  "en": "Each <code>Mint</code> instance has a <code>year</code> stamp. The <code>update</code> method sets the\n  <code>year</code> stamp of the instance to the <code>present_year</code> class attribute of the <code>Mint</code> <em>class</em>.",
+  "zh": "每个 Mint 实例都有一个年份印记。update 方法会把该实例的年份印记设置为 Mint 类的 present_year 类属性。"
+ },
+ {
+  "id": 250,
+  "en": "The <code>create</code> method takes a subclass of <code>Coin</code> (<em>not</em> an instance!), then\n  creates and returns an instance of that subclass stamped with the <code>Mint</code>'s year (which may be different from\n  <code>Mint.present_year</code> if it has not been updated.)",
+  "zh": "create 方法接收一个 Coin 的子类（不是实例！），然后创建并返回该类的一个实例，并印上该 Mint 的年份（如果 Mint 尚未更新，这个年份可能不同于 Mint.present_year）。"
+ },
+ {
+  "id": 251,
+  "en": "<em>Hint</em>: Keep track of the previous number by setting a new instance attribute\ninside <code>next</code>. You can create new instance attributes for objects at any point,\neven outside the <code>__init__</code> method.",
+  "zh": "提示：在 next 中设置一个新的实例属性来记录前一个数。你可以随时为对象创建新的实例属性，即使在 __init__ 方法之外也可以。"
+ },
+ {
+  "id": 252,
+  "en": "If you would like some support with visualizing trees, please navigate\nto {0}, select <em>Start Python Interpreter</em>, and call <code>autodraw()</code>.",
+  "zh": "如果你想借助可视化工具来理解树结构，请前往 {0}，选择 Start Python Interpreter，然后调用 autodraw()。"
+ },
+ {
+  "id": 253,
+  "en": "<strong>Hint:</strong> Use a helper function to keep track of the depth!",
+  "zh": "提示：使用一个辅助函数来记录深度！"
+ },
+ {
+  "id": 254,
+  "en": "<strong>Hint:</strong> Be careful about when you add the new leaves to the tree.\nWe only want to add leaves to the original nodes in the tree, not to\nthe nodes we added.",
+  "zh": "提示：注意向树中添加新叶子的时机。我们只想给树中原有的节点添加叶子，而不是给我们新添加的节点添加叶子。"
+ },
+ {
+  "id": 255,
+  "en": "If a node is a leaf and there are remaining functions in <code>funcs</code>, all of these remaining functions should be applied <em>in order</em> to the label of the leaf node. If <code>funcs</code> is empty, the tree should remain <em>unmodified</em>.",
+  "zh": "如果某个节点是叶子，而 funcs 中还有剩余函数，则应把这些剩余函数按顺序全部作用于该叶子节点的 label。如果 funcs 为空，则树保持不变。"
+ },
+ {
+  "id": 256,
+  "en": "<strong>Tip:</strong>\nYou can open the terminal in VS Code by pressing <strong>Control + `</strong> (the key above Tab).",
+  "zh": "提示：\n在 VS Code 中，按 Control + `（Tab 键上方的那个键）可以打开终端。"
+ },
+ {
+  "id": 257,
+  "en": "If you would like some support with visualizing linked lists, please navigate \nto {0}, select <em>Start Python Interpreter</em>, \nand call <code>autodraw()</code>.",
+  "zh": "如果你在可视化链表方面需要一些帮助，请前往 {0}，选择 Start Python Interpreter，然后调用 autodraw()。"
+ },
+ {
+  "id": 258,
+  "en": "<strong>Hint:</strong> Using recursive approach might be easier than the iterative approach.",
+  "zh": "提示：使用递归方法可能比迭代方法更容易。"
+ },
+ {
+  "id": 259,
+  "en": "Write a function <code>duplicate_link</code> that takes in a linked list <code>s</code> and a value <code>val</code>. \nIt <strong>mutates</strong> <code>s</code> so that each element equal to <code>val</code> is followed by an additional <code>val</code> (a duplicate copy). \nIt returns <code>None</code>. Be careful not to get into an infinite loop where you keep duplicating the new copies!",
+  "zh": "编写函数 duplicate_link，它接收一个链表 s 和一个值 val。\n它会修改 s，使每个等于 val 的元素后面都紧跟一个额外的 val（即一份副本）。\n它返回 None。注意不要陷入不断复制新副本的死循环！"
+ },
+ {
+  "id": 260,
+  "en": "<strong>Note</strong>: In order to insert a link into a linked list, reassign the <code>rest</code> attribute of the <code>Link</code> instances that have <code>val</code> as their <code>first</code>. Try drawing out a doctest to visualize!",
+  "zh": "注意：要在链表中插入一个链接，需要重新赋值那些 first 为 val 的 Link 实例的 rest 属性。试着画出一个 doctest 的过程来直观理解！"
+ },
+ {
+  "id": 261,
+  "en": "<em>Hint</em>: Iterate through the linked list and try keeping track of which <code>Link</code>\nobjects you've already seen.",
+  "zh": "提示：遍历该链表，并尝试记录你已经见过哪些 Link 对象。"
+ },
+ {
+  "id": 262,
+  "en": "<strong>Extra challenge (Optional)</strong>: Implement <code>has_cycle</code> without keeping track of all <code>Link</code> objects you've already seen.\nThe solution is short (less than 20 lines of code), but requires a clever idea.\nTry to discover the solution yourself before asking around.",
+  "zh": "额外挑战（可选）：在不记录所有已见过的 Link 对象的情况下实现 has_cycle。解法很短（不到 20 行代码），但需要一个巧妙的思路。在向别人求助之前，先试着自己找出答案。"
+ },
+ {
+  "id": 263,
+  "en": "Atomic expressions (also called <em>atoms</em>) are expressions without\nsub-expressions, such as numbers, boolean values, and symbols.",
+  "zh": "原子表达式（也称为 atom）是没有子表达式的表达式，例如数字、布尔值和符号。"
+ },
+ {
+  "id": 264,
+  "en": "A Scheme <em>symbol</em> is equivalent to a Python name. A symbol evaluates to the value bound to that symbol in the current environment. (They are called symbols rather than names because they include <code>+</code> and other arithmetic symbols.)",
+  "zh": "Scheme 的符号（symbol）相当于 Python 中的名字。符号求值的结果是当前环境中绑定到该符号的值。（它们之所以被称为符号而不是名字，是因为它们包含 + 以及其他算术符号。）"
+ },
+ {
+  "id": 265,
+  "en": "In Scheme, <em>all</em> values except <code>#f</code> (equivalent to <code>False</code> in Python) are true\nvalues (unlike Python, which has other false values, such as <code>0</code>).",
+  "zh": "在 Scheme 中，除 #f（相当于 Python 中的 False）之外的所有值都是真值（这与 Python 不同，Python 还有其他假值，例如 0）。"
+ },
+ {
+  "id": 266,
+  "en": "All non-primitive expressions in Scheme are known as <strong>combinations</strong> and\nhave the following syntax:",
+  "zh": "Scheme 中所有非基本表达式都称为组合式（combination），其语法如下："
+ },
+ {
+  "id": 267,
+  "en": "A <strong>call expression</strong>, whose operator evaluates to a procedure",
+  "zh": "调用表达式，其运算符求值得到一个过程（procedure）"
+ },
+ {
+  "id": 268,
+  "en": "A <strong>special form expression</strong>, whose operator is a special form\n  ",
+  "zh": "特殊形式表达式，其运算符是一个特殊形式（special form）"
+ },
+ {
+  "id": 269,
+  "en": "<strong>Define:</strong>\nThe <code>define</code> form is used to assign values to symbols. It has the following syntax:",
+  "zh": "define：\ndefine 形式用于给符号赋值，其语法如下："
+ },
+ {
+  "id": 270,
+  "en": "<strong>If Expressions:</strong>\nThe <code>if</code> special form evaluates one of two expressions based on a predicate.",
+  "zh": "if 表达式：\nif 特殊形式根据谓词（predicate）对两个表达式之一求值。"
+ },
+ {
+  "id": 271,
+  "en": "<strong>Cond Expressions:</strong>\nThe <code>cond</code> special form can include multiple predicates (like if/elif in Python):",
+  "zh": "cond 表达式：\ncond 特殊形式可以包含多个谓词（类似 Python 中的 if/elif）："
+ },
+ {
+  "id": 272,
+  "en": "<strong>Lambdas:</strong>\nThe <code>lambda</code> special form creates a procedure.",
+  "zh": "lambda：\nlambda 特殊形式用于创建过程（procedure）。"
+ },
+ {
+  "id": 273,
+  "en": "We can also use the quote form to create a list, which will construct the exact\nlist that is given. Unlike with the <code>list</code> procedure, the argument to <code>&#x27;</code> is\n<em>not</em> evaluated.",
+  "zh": "我们也可以用 quote 形式来创建 list，它会原样构造所给出的那个 list。与 list 过程不同，&#x27; 的参数不会被求值。"
+ },
+ {
+  "id": 274,
+  "en": "<strong><code>map</code></strong> — Transforms each element, keeping the same number of elements.\n  It's like you walk down the list and replace each item with <code>(fn item)</code>.",
+  "zh": "map — 转换每个元素，元素个数保持不变。就像你沿着 list 往下走，把每一项替换成 (fn item)。"
+ },
+ {
+  "id": 275,
+  "en": "<strong><code>filter</code></strong> — Keeps or drops each element, but never changes.\n  Tests a yes/no predicate, if yes it stays as it is and if no it is dropped.",
+  "zh": "filter — 保留或丢弃每个元素，但从不改变元素。它测试一个“是/否”谓词：是则原样保留，否则丢弃。"
+ },
+ {
+  "id": 276,
+  "en": "<strong><code>reduce</code></strong> — Collapses the whole list down to a single value (with a left to right combining procedure)",
+  "zh": "reduce — 把整个 list 折叠成单个值（使用一个从左到右的合并过程）"
+ },
+ {
+  "id": 277,
+  "en": "<strong>Writing <code>map</code> manually:</strong>",
+  "zh": "手动编写 map："
+ },
+ {
+  "id": 278,
+  "en": "<strong>Note:</strong> \nRemember that every parenthesis in Scheme makes a function call. For example, just typing <code>0</code> in the Scheme interpeter will return <code>0</code>. However, typing <code>(0)</code> will cause an Error because <code>0</code> is not a function.",
+  "zh": "注意：\n记住，Scheme 中的每一对括号都构成一次函数调用。例如，在 Scheme 解释器中只输入 0 会返回 0；但如果输入 (0)，则会引发 Error，因为 0 不是一个函数。"
+ },
+ {
+  "id": 279,
+  "en": "<em>Challenge: Implement this in 2 different ways using <code>if</code> and <code>cond</code>!</em>",
+  "zh": "挑战：分别用 if 和 cond 两种不同的方式实现它！"
+ }
+]

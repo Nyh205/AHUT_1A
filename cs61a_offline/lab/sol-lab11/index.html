@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/lab.css">
+
+
+    <title>实验 11 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 11 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab11.zip" class="label label-outline">lab11.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<h2 id="lab-checkoff-questions">概念自测</h2>
+
+
+<ul>
+  <li><strong>SQL 命令中各子句出现的顺序是什么？</strong></li>
+  <li><code>SELECT</code> <em>(第 3 步)</em> <code>FROM</code> <em>(第 1 步)</em> <code>WHERE</code> <em>(第 1 步)</em> <code>GROUP BY</code> <em>(第 2 步)</em> <code>HAVING</code> <em>(第 2 步)</em> <code>ORDER BY</code> <em>(第 3 步)</em>;</li>
+  <li><strong>什么时候该用 where，什么时候该用 having？</strong></li>
+  <li>having 用于在 group by 之后对聚合后的行进行筛选，where 则用于尚未应用 group by 时。</li>
+  <li><strong>在 SQL 命令中如何给表起别名？</strong></li>
+  <li>table AS alias</li>
+</ul>
+
+    
+
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+<!-- <br> -->
+
+
+<h2 id="sql">SQL</h2>
+
+
+<p>一条 <code>SELECT</code> 语句基于输入行描述一张输出表。编写一条 SELECT 语句的步骤是：</p>
+
+<ol>
+  <li>用 <code>FROM</code> 和 <code>WHERE</code> 子句描述<strong>输入行</strong>。</li>
+  <li>用 <code>GROUP BY</code> 和 <code>HAVING</code> 子句对这些行<strong>分组</strong>，并确定哪些组应该作为输出行出现。</li>
+  <li>用 <code>SELECT</code> 和 <code>ORDER BY</code> 子句设置<strong>输出行</strong>和列的格式与顺序。</li>
+</ol>
+
+<p><code>SELECT</code> <em>(第 3 步)</em> <code>FROM</code> <em>(第 1 步)</em> <code>WHERE</code> <em>(第 1 步)</em> <code>GROUP BY</code> <em>(第 2 步)</em> <code>HAVING</code> <em>(第 2 步)</em> <code>ORDER BY</code> <em>(第 3 步)</em>;</p>
+
+<p>第 1 步可能涉及连接表（用逗号），从而形成由已有表中的两行或更多行组成的输入行。</p>
+
+<p><code>WHERE</code>、<code>GROUP BY</code>、<code>HAVING</code> 和 <code>ORDER BY</code> 子句都是可选的。</p>
+
+<p>如果你需要温习 SQL，可以查看下拉框。你也可以直接跳到题目部分，卡住了再回到这里查阅。
+<br></p>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        SQL<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+
+<h2 id="sql-basics" class="no-toc">SQL 基础</h2>
+
+
+
+<h3 id="example-table" class="no-toc">示例表</h3>
+
+
+<p>下面例子中用到的表叫做 <code>big_game</code>，它记录了每年 Big Game 的比分。这张表有三列：<code>berkeley</code>、<code>stanford</code> 和 <code>year</code>。</p>
+
+<img class="img-responsive center-block" src="assets/big-game.png" width="300">
+
+<pre><code>CREATE TABLE big_game (
+    berkeley INTEGER, stanford INTEGER, year INTEGER);
+
+INSERT INTO big_game (berkeley, stanford, year) VALUES
+    (30, 7, 2002),
+    (28, 16, 2003),
+    (17, 38, 2014);</code></pre>
+
+
+
+<p>你可以在 sqlite 中这样查看它：</p>
+
+<pre><code>sqlite&gt; .mode column
+sqlite&gt; SELECT * FROM big_game;
+berkeley  stanford  year
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;
+30        7         2002
+28        16        2003
+17        38        2014</code></pre>
+
+
+
+<webonly>
+如果你使用的 sqlite 版本不支持 <code>.mode column</code> 命令，也没关系，忽略它即可。
+</webonly>
+
+
+<h3 id="selecting-from-tables" class="no-toc">从表中查询</h3>
+
+
+<p>通常，我们会用 <code>SELECT</code> 语句从已有的表创建一张新表：</p>
+
+<pre><code>SELECT [columns] FROM [tables] WHERE [condition] ORDER BY [columns] LIMIT [limit];</code></pre>
+
+<p>让我们拆解一下这条语句：</p>
+
+<ul>
+  <li><code>SELECT [columns]</code> 告诉 SQL 我们希望在输出表中包含给定的列；<code>[columns]</code> 是用逗号分隔的列名列表，用 <code>*</code> 可以选择所有列</li>
+  <li><code>FROM [table]</code> 告诉 SQL 我们要选择的列来自给定的表</li>
+  <li><code>WHERE [condition]</code> 对输出表进行筛选，只保留值满足给定 <code>[condition]</code> 的行，[condition] 是一个布尔表达式</li>
+  <li><code>ORDER BY [columns]</code> 按照给定的逗号分隔的列列表对输出表中的行排序；默认情况下值按升序（ASC）排列，但你可以用 DESC 按降序排列</li>
+  <li><code>LIMIT [limit]</code> 用整数 <code>[limit]</code> 限制输出表中的行数</li>
+</ul>
+
+<page-break>
+
+<p>下面是一些例子：</p>
+
+<p>从 <code>big_game</code> 表中选出 Berkeley 的所有比分，但只包含 2002 年之后的年份的比分：</p>
+
+<pre><code>sqlite&gt; SELECT berkeley FROM big_game WHERE year &gt; 2002;
+28
+17</code></pre>
+
+<p>选出 Berkeley 获胜的那些年份里两所学校的比分：</p>
+
+<pre><code>sqlite&gt; SELECT berkeley, stanford FROM big_game WHERE berkeley &gt; stanford;
+30|7
+28|16</code></pre>
+
+<p>选出 Stanford 得分超过 15 分的年份：</p>
+
+<pre><code>sqlite&gt; SELECT year FROM big_game WHERE stanford &gt; 15;
+2003
+2014</code></pre>
+
+
+<h3 id="sql-operators" class="no-toc">SQL 运算符</h3>
+
+
+<p><code>SELECT</code>、<code>WHERE</code> 和 <code>ORDER BY</code> 子句中的表达式可以包含以下一个或多个运算符：</p>
+
+<ul>
+  <li>比较运算符：<code>=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;=</code>、<code>&lt;&gt;</code> 或 <code>!=</code>（“不等于”）</li>
+  <li>布尔运算符：<code>AND</code>、<code>OR</code></li>
+  <li>算术运算符：<code>+</code>、<code>&#x2d;</code>、<code>*</code>、<code>/</code></li>
+  <li>连接运算符：<code>||</code></li>
+</ul>
+
+<p>输出每年 Berkeley 的得分与 Stanford 的得分的比值：</p>
+
+<pre><code>sqlite&gt; select berkeley * 1.0 / stanford from big_game;
+0.447368421052632
+1.75
+4.28571428571429</code></pre>
+
+<p>输出两支球队得分都超过 10 分的那些年份的比分之和：</p>
+
+<pre><code>sqlite&gt; select berkeley + stanford from big_game where berkeley &gt; 10 and stanford &gt; 10;
+55
+44</code></pre>
+
+<p>输出一张只有一列一行的表，其中包含值 “hello world”：</p>
+
+<pre><code>sqlite&gt; SELECT &quot;hello&quot; || &quot; &quot; || &quot;world&quot;;
+hello world</code></pre>
+
+
+<h2 id="joins" class="no-toc">连接（Joins）</h2>
+
+
+<p>要从多张表中选择数据，我们可以使用连接（join）。连接有很多种类型，但我们只需要关心内连接（inner join）。要对两张或更多表执行内连接，只需把它们都列在 <code>SELECT</code> 语句的 <code>FROM</code> 子句中：</p>
+
+<pre><code>SELECT [columns] FROM [table1], [table2], ... WHERE [condition] ORDER BY [columns] LIMIT [limit];</code></pre>
+
+<p>我们可以从多张不同的表中选择，也可以多次从同一张表中选择。</p>
+
+<p>假设我们有下面这张表，其中包含 2002 年以来 Cal 的橄榄球队主教练姓名：</p>
+
+<pre><code>CREATE TABLE coaches (
+    name TEXT,
+    start INTEGER,
+    end INTEGER
+);
+
+INSERT INTO coaches (name, start, end)
+VALUES
+    (&#x27;Jeff Tedford&#x27;, 2002, 2012),
+    (&#x27;Sonny Dykes&#x27;, 2013, 2016),
+    (&#x27;Justin Wilcox&#x27;, 2017, 2025);</code></pre>
+
+
+
+<p>当我们连接两张或更多表时，默认输出是 <a href="https://en.wikipedia.org/wiki/Cartesian_product">笛卡尔积</a>。例如，如果把 <code>big_game</code> 与 <code>coaches</code> 连接，我们会得到以下结果：</p>
+
+<pre><code>sqlite&gt; SELECT * FROM big_game JOIN coaches;
+berkeley  stanford  year  name           start  end
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;
+30        7         2002  Jeff Tedford   2002   2012
+30        7         2002  Sonny Dykes    2013   2016
+30        7         2002  Justin Wilcox  2017   2025
+28        16        2003  Jeff Tedford   2002   2012
+28        16        2003  Sonny Dykes    2013   2016
+28        16        2003  Justin Wilcox  2017   2025
+17        38        2014  Jeff Tedford   2002   2012
+17        38        2014  Sonny Dykes    2013   2016
+17        38        2014  Justin Wilcox  2017   2025</code></pre>
+
+
+
+<p>如果我们想把每场比赛与那个赛季的教练对应起来，就需要在 <code>WHERE</code> 子句中比较两张表的列：</p>
+
+<pre><code>sqlite&gt; SELECT * FROM big_game JOIN coaches ON year &gt;= start AND year &lt;= end
+   ...&gt; ;
+berkeley  stanford  year  name          start  end
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;
+30        7         2002  Jeff Tedford  2002   2012
+28        16        2003  Jeff Tedford  2002   2012
+17        38        2014  Sonny Dykes   2013   2016</code></pre>
+
+
+
+<p>在上面的查询中，没有列名是有歧义的。例如，很明显 <code>start</code> 列来自 <code>coaches</code> 表，因为 <code>big_game</code> 表中没有同名的列。然而，如果某个列名在被连接的多张表中都存在，或者我们把一张表与它自己连接，就必须使用点号和别名来消除列名的歧义。</p>
+
+<p>举个例子，我们来看看 <code>big_game</code> 中的某场比赛与之前任何一场比赛之间，各队的比分差是多少。由于这张表中的每一行代表一场比赛，为了比较两场比赛，我们必须把 <code>big_game</code> 与它自己连接：</p>
+
+<pre><code>sqlite&gt; SELECT b.Berkeley &#x2d; a.Berkeley, b.Stanford &#x2d; a.Stanford, a.Year, b.Year
+   ...&gt;   FROM big_game AS a, big_game AS b WHERE a.Year &lt; b.Year;
+b.Berkeley &#x2d; a.Berkeley  b.Stanford &#x2d; a.Stanford  year  year
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;
+&#x2d;2                       9                        2002  2003
+&#x2d;13                      31                       2002  2014
+&#x2d;11                      22                       2003  2014</code></pre>
+
+
+
+<p>在上面的查询中，我们给第一个 <code>big_game</code> 表起别名为 <code>a</code>，给第二个 <code>big_game</code> 表起别名为 <code>b</code>。之后就可以用别名加点号来引用各表的列，例如用 <code>a.Berkeley</code>、<code>a.Stanford</code> 和 <code>a.Year</code> 从第一张表中选取数据。</p>
+
+
+<h2 id="sql-aggregation" class="no-toc">SQL 聚合</h2>
+
+
+<p>下面是另一张示例表，这次是关于航班的：</p>
+
+<pre><code>CREATE TABLE flights (
+    departure TEXT, arrival TEXT, price INTEGER);
+
+INSERT INTO flights (departure, arrival, price) VALUES
+    (&#x27;SFO&#x27;, &#x27;LAX&#x27;, 97),
+    (&#x27;SFO&#x27;, &#x27;AUH&#x27;, 848),
+    (&#x27;LAX&#x27;, &#x27;SLC&#x27;, 115),
+    (&#x27;SFO&#x27;, &#x27;PDX&#x27;, 192),
+    (&#x27;AUH&#x27;, &#x27;SEA&#x27;, 932),
+    (&#x27;SLC&#x27;, &#x27;PDX&#x27;, 79),
+    (&#x27;SFO&#x27;, &#x27;LAS&#x27;, 40),
+    (&#x27;SLC&#x27;, &#x27;LAX&#x27;, 117),
+    (&#x27;SEA&#x27;, &#x27;PDX&#x27;, 32),
+    (&#x27;SLC&#x27;, &#x27;SEA&#x27;, 42),
+    (&#x27;SFO&#x27;, &#x27;SLC&#x27;, 97),
+    (&#x27;LAS&#x27;, &#x27;SLC&#x27;, 50),
+    (&#x27;LAX&#x27;, &#x27;PDX&#x27;, 89);</code></pre>
+
+
+
+<p>应用 <a href="http://www.sqlite.org/lang_aggfunc.html">聚合函数</a>（例如 <code>MAX(column)</code>）会把多行的值合并成一行输出。</p>
+
+<p>默认情况下，我们合并表中所有行的值。例如，如果我们想统计 <code>flights</code> 表中的行数，可以这样写：</p>
+
+<pre><code>sqlite&gt; SELECT COUNT(*) from FLIGHTS;
+13</code></pre>
+
+<p>如果我们想把相似的行归为一组，并在这些组内进行聚合运算，该怎么办呢？这时我们使用 <code>GROUP BY</code> 子句。</p>
+
+<p>再看一个例子。对于每个不同的出发地，把出发机场相同的所有行归为一组。然后选出 <code>price</code> 列并应用 <code>MIN</code> 聚合，得到该组中最便宜的出发航班的价格。最终结果是一张包含出发机场和最便宜出发航班的表。</p>
+
+<pre><code>sqlite&gt; SELECT departure, MIN(price) FROM flights GROUP BY departure;
+departure  MIN(price)
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+AUH        932
+LAS        50
+LAX        89
+SEA        32
+SFO        40
+SLC        42</code></pre>
+
+<page-break>
+
+<p>就像我们可以用 <code>WHERE</code> 筛选行一样，我们也可以用 <code>HAVING</code> 筛选组。通常 <code>HAVING</code> 子句中应该使用聚合函数。假设我们想查看所有至少有两次出发的机场：</p>
+
+<pre><code>sqlite&gt; SELECT departure FROM flights GROUP BY departure HAVING COUNT(*) &gt;= 2;
+departure
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+LAX
+SFO
+SLC</code></pre>
+
+<p>注意 <code>COUNT(*)</code> 聚合只是统计每个组中的行数。假设我们要统计<em>不同</em>机场的数量，那么可以使用下面这个查询：</p>
+
+<pre><code>sqlite&gt; SELECT COUNT(DISTINCT departure) AS destinations FROM flights;
+destinations
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+6</code></pre>
+
+<p>这会列出 <code>flights</code> 表中所有不同的出发机场（在这个例子里是：SFO、LAX、AUH、SLC、SEA 和 LAS）。</p>
+
+
+<h2 id="usage" class="no-toc">用法</h2>
+
+
+<p>首先，检查作业文件中是否有名为 <code>sqlite_shell.py</code> 的文件。如果没有看到它，或者使用它时遇到问题，请向下滚动到 Troubleshooting 一节，了解如何下载官方预编译的 SQLite 二进制文件，然后再继续。</p>
+
+<p>你可以在 Terminal 或 Git Bash 中用以下命令启动一个交互式 SQLite 会话：</p>
+
+<pre><code>python3 sqlite_shell.py</code></pre>
+
+<p>解释器运行期间，你可以输入 <code>.help</code> 查看一些可以运行的命令。</p>
+
+<p>要退出 SQLite 解释器，请输入 <code>.exit</code> 或 <code>.quit</code>，或者按 <code>Ctrl&#x2d;C</code>。记住，如果按回车后看到 <code>...&gt;</code>，那很可能是你漏写了一个 <code>;</code>。</p>
+
+<p>你也可以通过下面的方式运行一个 <code>.sql</code> 文件中的所有语句：
+（这里我们以 <code>lab11.sql</code> 文件为例。）</p>
+
+<ol>
+  <li><p>运行你的代码，然后立即退出 SQLite。</p>
+
+<pre><code>python3 sqlite_shell.py &lt; lab11.sql</code></pre></li>
+  <li><p>运行你的代码，然后打开一个交互式 SQLite 会话，这类似于用交互式 <code>&#x2d;i</code> 标志运行 Python 代码。</p>
+
+<pre><code>python3 sqlite_shell.py &#x2d;&#x2d;init lab11.sql</code></pre></li>
+</ol>
+
+
+<h2 id="visualizing-sql" class="no-toc">可视化 SQL</h2>
+
+
+<p>AHUT_1A SQL 网页解释器是可视化和调试 SQL 语句的绝佳工具！</p>
+
+<p>要开始使用，请访问 <a href="https://code.cs61a.org">code.cs61a.org</a>，然后在启动界面上点击 <code>Start SQL interpreter</code>。</p>
+
+<p>作业中用到的多数表都已经可以直接使用，所以让我们试着执行一条 <code>SELECT</code> 语句：</p>
+
+<img class="img-responsive center-block" src="assets/visualize-sql-names.png" width="400"> 
+
+<p>除了显示输出表的可视化表示外，"Step-by-step" 按钮还能让我们逐步执行 SQL，并把发生的每一次变换可视化。对于可以查看表中所有行的较小数据集，这种可视化往往很有用。但对于 movies 数据集来说，这种可视化就没那么有用了，因为每张表都有数千行。</p>
+
+</div>
+
+<br>
+
+
+<h2 id="imdb">IMDb</h2>
+
+
+<p>IMDb 1000 数据集包含来自 <a href="https://developer.imdb.com/non-commercial-datasets/">Internet Movie Database</a> 的 1000 部评分最高的热门电影（得票数前 0.2%）。</p>
+
+<p>这个数据集中的表相当大，所以用 <code>LIMIT</code> 只查看某张表中的几行往往很有用。要查看 <code>titles</code> 表中几行示例数据（该表包含每部电影的信息）：</p>
+
+<pre><code>    % sqlite3
+    sqlite&gt; .read imdb1000.sql
+    sqlite&gt; .tables
+    crew        names       principals  ratings     titles</code></pre>
+
+
+
+<p>以 <code>.read</code> 开头的命令会读入 <code>imdb1000.sql</code> 中的 SQL 命令，这些命令会用电影数据集创建新表。<code>.tables</code> 命令会列出所有表。</p>
+
+<p>下面是本 lab 中你会用到的表和列。<code>.mode column</code> 命令可以改善格式，但它在 <code>sqlite_shell.py</code> 中不起作用，而且是可选的。</p>
+
+<pre><code>sqlite&gt; .mode column
+sqlite&gt; SELECT tconst, title, year, runtime FROM titles LIMIT 3;
+tconst     title                            year  runtime
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+tt0012349  The Kid                          1921  68
+tt0013442  Nosferatu: A Symphony of Horror  1922  94
+tt0015864  The Gold Rush                    1925  95
+
+sqlite&gt; SELECT tconst, ordering, nconst, character FROM principals LIMIT 3;
+tconst     ordering  nconst     character
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+tt0012349  1         nm0000122  A Tramp
+tt0012349  2         nm0701012  The Woman
+tt0012349  3         nm0001067  The Child
+
+sqlite&gt; SELECT nconst, name, birth, death FROM names LIMIT 3;
+nconst     name            birth  death
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;  &#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+nm0000002  Lauren Bacall   1924   2014
+nm0000004  John Belushi    1949   1982
+nm0000005  Ingmar Bergman  1918   2007</code></pre>
+
+
+
+<p><code>tconst</code> 是每部电影的唯一标识符（<code>t</code> 代表 title），<code>nconst</code> 是每个人的唯一标识符。这些标识符对于连接不同表中的行很有用，例如，要确定某部电影的评分，我们可以在 titles 表中找到这部电影的 <code>nconst</code>，然后在 ratings 表中查找该 <code>nconst</code>。</p>
+
+
+<h3 id="q1-newest-movies">Q1：最新的电影</h3>
+
+
+<p>创建一张表 <code>newest</code>，其中包含数据集中最新的 10 部电影，且有两个列：</p>
+
+<ul>
+  <li><code>title</code>：电影名称</li>
+  <li><code>year</code>：电影的制作年份</li>
+</ul>
+
+<p>如果愿意，可以试试猜一猜结果中会包含哪些电影。</p>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：模板<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<pre><code>  SELECT ____, ____
+  FROM ____
+  ORDER BY ____
+  LIMIT ____;</code></pre>
+
+
+
+<ol>
+  <li>使用 <code>FROM</code> 指定从哪张表读取数据。</li>
+  <li>使用 <code>ORDER BY</code> 按电影的新旧程度排序。</li>
+  <li>使用 <code>LIMIT</code> 只选出最新的 10 部电影。</li>
+  <li>使用 <code>SELECT</code> 把电影名称和年份放入输出中。
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE table newest AS
+<div class="sol-highlight">  SELECT title, year
+  FROM titles
+  ORDER BY year DESC
+  LIMIT 10;</div></code></pre>
+
+</solution
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q newest<button id="copy-code-python3ok-qnewest" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qnewest").onclick = () => copyCode('python3 ok -q newest', "copy-code-python3ok-qnewest");
+        </script>
+        <br/>
+
+
+<h3 id="q2-movies-with-dogs">Q2：有狗的电影</h3>
+
+
+<p>创建一张 <code>dog_movies</code> 表，为每个名字中包含 "dog" 这个词的电影角色各包含一行，且有两个列：</p>
+
+<ul>
+  <li><code>title</code>（text）：电影名称</li>
+  <li><code>character</code>（text）：狗角色的名字</li>
+</ul>
+
+<p>如果一部电影有多个狗角色，那么它可能会出现多次。</p>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：模板<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<pre><code>SELECT _____, _____
+FROM _____ JOIN _____ ON _____
+WHERE ____ LIKE &quot;%dog%&quot;;</code></pre>
+
+
+
+<ol>
+  <li>使用 <code>FROM</code>、<code>JOIN</code> 和 <code>ON</code> 把 <code>titles</code> 表和 <code>principals</code> 表中的信息结合起来。</li>
+  <li>使用 <code>WHERE</code> 只选出包含 "dog" 的角色。</li>
+  <li>使用 <code>SELECT</code> 把电影名称和角色放入输出中。
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE table dog_movies AS 
+<div class="sol-highlight">  SELECT title, character
+  FROM titles JOIN principals
+  ON titles.tconst = principals.tconst
+  WHERE character LIKE &quot;%dog%&quot;;</div></code></pre>
+
+</solution
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q dog_movies<button id="copy-code-python3ok-qdog_movies" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdog_movies").onclick = () => copyCode('python3 ok -q dog_movies', "copy-code-python3ok-qdog_movies");
+        </script>
+        <br/>
+
+
+<h3 id="q3-leads-of-leads">Q3：主演中的主演</h3>
+
+
+<p>创建一张 <code>leads</code> 表，它有两个列：</p>
+
+<ul>
+  <li><code>name</code>（text）：演员姓名</li>
+  <li><code>lead_roles</code>（integer）：该演员担任主演的电影数量</li>
+</ul>
+
+<p>你可以通过在 <code>principals</code> 表中查找 <code>ordering</code> 为 1 的行来找到主演角色。只选出担任主演<strong>超过 10 部</strong>电影的演员。</p>
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：模板<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<pre><code>  SELECT ____, ____ AS lead_roles
+  FROM ____ JOIN ____ ON ____
+  WHERE ____
+  GROUP BY names.nconst
+  HAVING count(*) &gt; 10;</code></pre>
+
+
+
+<ol>
+  <li>使用 <code>FROM</code> 和 <code>ON</code> 把 <code>principals</code> 表和 <code>names</code> 表中的信息结合起来。</li>
+  <li>使用 <code>WHERE</code> 只选出主演角色。</li>
+  <li>使用 <code>GROUP BY</code> 为每个人创建一行。</li>
+  <li>使用 <code>HAVING</code> 只输出主演角色超过 10 个的人。</li>
+  <li>使用 <code>SELECT</code> 把这个人的姓名和其角色数量放入输出中。
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE table leads AS 
+<div class="sol-highlight">  SELECT name, count(*)
+  FROM names JOIN principals
+  ON names.nconst=principals.nconst
+  WHERE ordering=1
+  GROUP BY names.nconst
+  HAVING count(*) &gt; 10;</div></code></pre>
+
+</solution
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q leads<button id="copy-code-python3ok-qleads" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qleads").onclick = () => copyCode('python3 ok -q leads', "copy-code-python3ok-qleads");
+        </script>
+        <br/>
+
+
+<h3 id="q4-long-movies">Q4：长电影</h3>
+
+
+<p>创建一个 <code>long_movies</code> 表，其中包含每个年代中时长超过 3 小时的电影数量。<code>long_movies</code> 有两个列：</p>
+
+<ul>
+  <li><code>decade</code>（字符串）：年代，例如 <code>1920s</code></li>
+  <li><code>count</code>（数字）：该年代中时长超过 3 小时（180 分钟）的电影数量</li>
+</ul>
+
+<p>对于 IMDB 1000 数据集，结果将是：</p>
+
+<pre><code>+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| decade | count |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| 1930s  | 1     |
+| 1950s  | 2     |
+| 1960s  | 2     |
+| 1970s  | 3     |
+| 1980s  | 2     |
+| 1990s  | 7     |
+| 2000s  | 4     |
+| 2010s  | 3     |
+| 2020s  | 4     |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：构造年代字符串<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-6">
+当把数字相加并把结果放进字符串时，要给算术表达式加上括号，例如：
+小心字符串拼接！
+
+<pre><code>sqlite&gt; SELECT (192 * 10) || &quot;s&quot;;
+1920s</code></pre>
+
+
+
+</div>
+
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：模板<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-7">
+
+<pre><code>SELECT ____ AS decade, ____ AS count
+FROM ____
+WHERE ____
+GROUP BY ____;</code></pre>
+
+
+
+<ol>
+  <li>使用 <code>FROM</code> 和 <code>WHERE</code> 只选出时长大于 180 分钟的电影。</li>
+  <li>使用 <code>GROUP BY</code> 把同一个年代的所有电影归为一组。</li>
+  <li>使用 <code>SELECT</code> 为每个年代构造形如 <code>1920s</code> 的字符串，并选出每个年代的电影数量。
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE table long_movies AS 
+<div class="sol-highlight">  SELECT ((year / 10) * 10) || &quot;s&quot; AS decade, COUNT(*) AS count
+  FROM titles
+  WHERE runtime&gt;180
+  GROUP BY year / 10;</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q long_movies<button id="copy-code-python3ok-qlong_movies" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlong_movies").onclick = () => copyCode('python3 ok -q long_movies', "copy-code-python3ok-qlong_movies");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+</div>
+<div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#sql">SQL</a></li>
+    <li><a href="#imdb">IMDb</a></li>
+    <ul>
+      <li><a href="#q1-newest-movies">Q1：最新的电影</a></li>
+      <li><a href="#q2-movies-with-dogs">Q2：有狗的电影</a></li>
+      <li><a href="#q3-leads-of-leads">Q3：主演中的主演</a></li>
+      <li><a href="#q4-long-movies">Q4：长电影</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

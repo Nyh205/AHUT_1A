@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 1 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 1：函数、控制
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc01.pdf" class="label label-outline">disc01.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+<!-- Find your group, and then get started on this worksheet on Berkeley time. -->
+
+
+
+
+
+
+<!-- # Ice Breaker
+
+Everyone say your name and some activity you enjoy doing outside. For each
+activity, ask if anyone else in your group likes to do that too. (Optional:
+after discussion you could make plans to go do one of these activities
+together.)
+
+Then, each person share an expression that people say when they really like
+something, such as "that's awesome" or "nice one" or "bruuuhhh."  Each person should
+try to come up with a different expression. Feel free to ask your group for help
+if you're stuck. You can even use other languages than English. Then, during the
+discussion, if someone says or does something well, use your expression! -->
+
+
+
+
+<h1 id="while-and-if">while 与 if</h1>
+
+
+<p>学会使用 <code>if</code> 和 <code>while</code> 是一项基本技能。在本次讨论课中，请专注于我们前三次课学过的内容：<code>if</code>、<code>while</code>、赋值（<code>=</code>）、比较（<code>&lt;</code>、<code>&gt;</code>、<code>==</code>）以及算术运算。请不要使用课堂上还没有讲过的 Python 特性，例如 <code>for</code>、<code>range</code> 和列表。课程后期我们会有充足的时间学习这些内容，而现在正是练习使用 <code>if</code>（教材第 <a href="https://www.composingprograms.com/pages/15-control.html#conditional-statements">1.5.4</a> 节）和 <code>while</code>（教材第 <a href="https://www.composingprograms.com/pages/15-control.html#conditional-statements">1.5.5</a> 节）的时候。</p>
+
+<!-- <include topics/control/medium/race.md> -->
+
+
+<h1 id="problem-solving">问题求解</h1>
+
+
+<p>实现函数的一个有用方法是：</p>
+
+<ol>
+  <li>选一个示例输入和对应的输出。</li>
+  <li>用英语描述一个过程，说明如何用简单的步骤从输入算出输出。</li>
+  <li>想出执行这个过程还需要哪些额外的名字。</li>
+  <li>用这些额外的名字把这个过程用代码实现出来。</li>
+  <li>判断这个实现是否真的能在你最初的例子上正常工作。</li>
+  <li>判断这个实现是否也能在其他例子上正常工作。（如果不能，你可能需要修改第 2 步。）</li>
+</ol>
+
+<p>重要的是，这种方法并不是读完题目就直接写代码。</p>
+
+<p>例如，在下一页的 <code>is_prime</code> 问题中，你可以：</p>
+
+<ol>
+  <li>选择 <code>n</code> 为 9 作为输入，<code>False</code> 作为输出。</li>
+  <li>过程是这样的：检查 <code>9</code>（<code>n</code>）不是 1 到 <code>9</code>（<code>n</code>）之间任何整数的倍数。</li>
+  <li>引入 <code>i</code> 来表示 1 到 9（<code>n</code>）之间的每个数。</li>
+  <li>实现 <code>is_prime</code>（这一部分由你和你的小组一起完成）。</li>
+  <li>通过在心里推演代码的执行过程，检查 <code>is_prime(9)</code> 会返回 <code>False</code>。</li>
+  <li>检查 <code>is_prime(3)</code> 会返回 <code>True</code>，<code>is_prime(1)</code> 会返回 <code>False</code>。</li>
+</ol>
+
+<!-- Try this approach together on the next two problems. -->
+
+<!-- **Important:** It's highly recommended that you **don't** check your work using
+a computer right away. Instead, talk to your group and think to try to figure
+out if an answer is correct. On exams, you won't be able to guess and check
+because you won't have a Python interpreter.
+Now is a great time to practice checking your work by thinking through examples.
+You could even draw an environment diagram! -->
+
+
+
+<div class="page-break"></div>
+
+
+<h3 id="q1-is-prime">Q1：是否为质数？</h3>
+
+
+<p>写一个函数：如果正整数 <code>n</code> 是质数就返回 <code>True</code>，否则返回 <code>False</code>。</p>
+
+<p>质数 n 是指除了 1 和 n 本身之外不能被任何数整除的数。例如，13 是质数，因为它只能被 1 和 13 整除；而 14 不是，因为它能被 1、2、7 和 14 整除。</p>
+
+<p>使用 <code>%</code> 运算符：<code>x % y</code> 返回 <code>x</code> 除以 <code>y</code> 的余数。</p>
+
+
+            <div class="monaco-storable" id="is_prime-input" style="height:450px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-is_prime-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-is_prime-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-is_prime-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def is_prime(n):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; is_prime(2)\n    True\n    &gt;&gt;&gt; is_prime(7)\n    True\n    &gt;&gt;&gt; is_prime(9)\n    False\n    &gt;&gt;&gt; is_prime(1) # one is not a prime number!!\n    False\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "is_prime-input"));
+            </script>
+        
+
+<!-- 
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+Here's a <code>while</code> statement that goes through all numbers above 1 and below <code>n</code> :
+
+<pre><code>i = 2
+while i &lt; n:
+    ...
+    i = i + 1</code></pre>
+
+
+
+<p>You can use <code>n % i == 0</code> to check whether <code>i</code> is a factor of <code>n</code>. If it is, <code>return False</code>.
+</div> --></p>
+
+
+
+<!-- **Description Time**: Come up with a **one sentence description** of the process you implemented to solve <code>is_prime</code> that you think someone could understand without looking at your code. Try not to just read your code, but instead describe the process it carries out. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-fizzbuzz">Q2：Fizzbuzz</h3>
+
+
+<p>实现经典的 <a href="https://en.wikipedia.org/wiki/Fizz_buzz"><em>Fizz Buzz</em>
+sequence</a>。<code>fizzbuzz</code> 函数接收一个正整数 <code>n</code>，并为从 1 到 <code>n</code> 的每个整数打印<em>一行</em>。对于每个 <code>i</code>：</p>
+
+<ul>
+  <li>如果 <code>i</code> 同时能被 3 和 5 整除，打印 <code>fizzbuzz</code>。</li>
+  <li>如果 <code>i</code> 能被 3 整除（但不能被 5 整除），打印 <code>fizz</code>。</li>
+  <li>如果 <code>i</code> 能被 5 整除（但不能被 3 整除），打印 <code>buzz</code>。</li>
+  <li>否则，打印数字 <code>i</code>。</li>
+</ul>
+
+<p>尽量让 <code>fizzbuzz</code> 的实现简洁。</p>
+
+
+            <div class="monaco-storable" id="fizzbuzz-input" style="height:612px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-fizzbuzz-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-fizzbuzz-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-fizzbuzz-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def fizzbuzz(n):\n    &quot;&quot;&quot;\n    &gt;&gt;&gt; result = fizzbuzz(16)\n    1\n    2\n    fizz\n    4\n    buzz\n    fizz\n    7\n    8\n    fizz\n    buzz\n    11\n    fizz\n    13\n    14\n    fizzbuzz\n    16\n    &gt;&gt;&gt; print(result)\n    None\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "fizzbuzz-input"));
+            </script>
+        
+
+<!-- 
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+Be careful about the order of your <code>if</code> and <code>elif</code> clauses: try first checking if the current number is divisible by both 3 and 5, then check for just divisibility by 3 and just divisibility by 5.
+</div> -->
+
+<!--  -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-ordered-digits">Q3：有序数字</h3>
+
+
+<p>实现函数 <code>ordered_digits</code>，它接受一个正整数作为输入：如果从左到右读它的各位数字是非递减的，就返回 <code>True</code>，否则返回 <code>False</code>。例如，5、11、127、1357 的各位数字是有序的，而 21 和 1375 的不是。</p>
+
+
+            <div class="monaco-storable" id="ordered_digits-input" style="height:630px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-ordered_digits-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-ordered_digits-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-ordered_digits-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def ordered_digits(x):\n    &quot;&quot;&quot;Return True if the (base 10) digits of X&gt;0 are in non&#x2d;decreasing\n    order, and False otherwise.\n\n    &gt;&gt;&gt; ordered_digits(5)\n    True\n    &gt;&gt;&gt; ordered_digits(11)\n    True\n    &gt;&gt;&gt; ordered_digits(127)\n    True\n    &gt;&gt;&gt; ordered_digits(1357)\n    True\n    &gt;&gt;&gt; ordered_digits(21)\n    False\n    &gt;&gt;&gt; result = ordered_digits(1375) # Return, don&#x27;t print\n    &gt;&gt;&gt; result\n    False\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n', "python", "ordered_digits-input"));
+            </script>
+        
+
+
+
+<!-- If you want to discuss this problem with a TA, just ask. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q4-unique-digits">Q4：不重复的数字</h3>
+
+
+<p>写一个函数，返回一个正整数中不同数字的个数。</p>
+
+<blockquote><p><strong>提示：</strong>你可以用 <code>//</code> 和 <code>%</code> 把正整数拆成它的个位数字和其余数字。</p>
+
+<p>你可能发现，先定义一个函数 <code>has_digit(n, k)</code> 会很有帮助，它判断数 <code>n</code> 中是否含有数字 <code>k</code>。</p></blockquote>
+
+
+            <div class="monaco-storable" id="unique_digits-input" style="height:612px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-unique_digits-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-unique_digits-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-unique_digits-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def unique_digits(n):\n    &quot;&quot;&quot;Return the number of unique digits in positive integer n.\n\n    &gt;&gt;&gt; unique_digits(8675309) # All are unique\n    7\n    &gt;&gt;&gt; unique_digits(13173131) # 1, 3, and 7\n    3\n    &gt;&gt;&gt; unique_digits(101) # 0 and 1\n    2\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\ndef has_digit(n, k):\n    &quot;&quot;&quot;Returns whether k is a digit in n.\n\n    &gt;&gt;&gt; has_digit(10, 1)\n    True\n    &gt;&gt;&gt; has_digit(12, 7)\n    False\n    &quot;&quot;&quot;\n    assert k &gt;= 0 and k &lt; 10\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n', "python", "unique_digits-input"));
+            </script>
+        
+
+<!-- 
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+One approach is to loop through every digit from 0 to 9 and check whether <code>n</code> has the digit. Count up the ones it has.
+</div> -->
+
+
+
+<div class="page-break"></div>
+
+<!-- # Optional: Exam Practice -->
+
+<!-- If you all finish early, it's a great idea to get ready for Quest by trying out this slight variant of a Spring 2023 Midterm 1 question. -->
+
+
+<h3 id="q5-repeating">Q5：重复序列</h3>
+
+
+<p><strong>定义</strong>：如果正整数 <code>n</code> 是由正整数 <code>m</code> 的数字重复一次或多次写成的，就称 <code>n</code> 是 <code>m</code> 的<em>重复序列</em>。例如，616161 是 61 的重复序列，但 61616 不是。</p>
+
+<p>实现 <code>repeating</code>，它接受正整数 <code>t</code> 和 <code>n</code>，返回 <code>n</code> 是否是某个 <code>t</code> 位整数的重复序列。</p>
+
+
+            <div class="monaco-storable" id="repeating-input" style="height:450px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-repeating-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-repeating-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-repeating-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def repeating(t, n):\n    &quot;&quot;&quot;Return whether t digits repeat to form positive integer n.\n\n    &gt;&gt;&gt; repeating(1, 6161)\n    False\n    &gt;&gt;&gt; repeating(2, 6161)  # repeats 61 (2 digits)\n    True\n    &gt;&gt;&gt; repeating(3, 6161)\n    False\n    &gt;&gt;&gt; repeating(4, 6161)  # repeats 6161 (4 digits)\n    True\n    &gt;&gt;&gt; repeating(5, 6161)  # there are only 4 digits\n    False\n    &quot;&quot;&quot;\n    if pow(10, t&#x2d;1) &gt; n:  # make sure n has at least t digits\n        return False\n    end = _____\n    rest = n\n    while rest:\n        if rest % pow(10, t) != end:\n           return _____\n        _____\n    return True\n', "python", "repeating-input"));
+            </script>
+        
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+实现这个函数所需的迭代过程是：检查 <code>rest</code> 的最后 <code>t</code> 位数字是否与 <code>n</code> 的最后 <code>t</code> 位数字相同，然后去掉 <code>rest</code> 的最后 <code>t</code> 位。
+</div>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#while-and-if">while 与 if</a></li>
+  <li><a href="#problem-solving">问题求解</a></li>
+  <ul>
+    <li><a href="#q1-is-prime">Q1：是否为质数？</a></li>
+    <li><a href="#q2-fizzbuzz">Q2：Fizzbuzz</a></li>
+    <li><a href="#q3-ordered-digits">Q3：有序数字</a></li>
+    <li><a href="#q4-unique-digits">Q4：不重复的数字</a></li>
+    <li><a href="#q5-repeating">Q5：重复序列</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

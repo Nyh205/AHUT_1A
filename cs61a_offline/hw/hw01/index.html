@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>作业 1 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+作业 1：函数、控制、高阶函数
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw01.zip" class="label label-outline">hw01.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+
+
+
+
+
+
+<h2>说明</h2>
+
+<p>下载 <a href="hw01.zip">hw01.zip</a>。</p>
+
+
+
+<p><strong>关于 Ok 的使用：</strong>如果你对如何使用 Ok 有任何疑问，请参阅 <a href="../../articles/using-ok.html">本指南</a>
+
+
+  <p><strong>阅读材料：</strong>你可能会觉得以下参考资料有用：</p>
+  <ul>
+  <li><a href="https://www.composingprograms.com/pages/11-getting-started.html">Section 1.1</a></li>
+  <li><a href="https://www.composingprograms.com/pages/12-elements-of-programming.html">Section 1.2</a></li>
+  <li><a href="https://www.composingprograms.com/pages/13-defining-new-functions.html">Section 1.3</a></li>
+  <li><a href="https://www.composingprograms.com/pages/14-designing-functions.html">Section 1.4</a></li>
+  <li><a href="https://www.composingprograms.com/pages/15-control.html">Section 1.5</a></li>
+  <li><a href="https://www.composingprograms.com/pages/16-higher-order-functions.html">Section 1.6</a></li>
+</ul>
+  
+
+<p><strong>评分：</strong>作业按照正确性评分。每做错一道题，总分减一分。<strong>本次作业满分为 2 分。</strong>
+
+
+
+
+    
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+<h2 id="functions-amp-control">函数与控制</h2>
+
+
+
+<h3 id="q1-a-plus-abs-b">Q1：a 加上 b 的绝对值</h3>
+
+
+<p>Python 的 <code>operator</code> 模块包含与 Python 内置算术运算符对应的双参数函数，例如 <code>add</code> 和 <code>sub</code>。例如，<code>add(2, 3)</code> 的求值结果是 5，就像表达式 <code>2 + 3</code> 一样。</p>
+
+<p>填写下面函数中的空白，把 <code>a</code> 加上 <code>b</code> 的绝对值，且不能调用 <code>abs</code> 函数。除了这两处空白之外，你<strong>不能</strong>修改任何已提供的代码。</p>
+
+<pre><code>def a_plus_abs_b(a, b):
+    &quot;&quot;&quot;Return a+abs(b), but without calling abs.
+
+    &gt;&gt;&gt; a_plus_abs_b(2, 3)
+    5
+    &gt;&gt;&gt; a_plus_abs_b(2, &#x2d;3)
+    5
+    &gt;&gt;&gt; a_plus_abs_b(&#x2d;1, 4)
+    3
+    &gt;&gt;&gt; a_plus_abs_b(&#x2d;1, &#x2d;4)
+    3
+    &quot;&quot;&quot;
+    if b &lt; 0:
+        f = _____
+    else:
+        f = _____
+    return f(a, b)</code></pre>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q a_plus_abs_b<button id="copy-code-python3ok-qa_plus_abs_b" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qa_plus_abs_b").onclick = () => copyCode('python3 ok -q a_plus_abs_b', "copy-code-python3ok-qa_plus_abs_b");
+        </script>
+        <br/>
+
+<p>用 ok 运行本地语法检查器（它会检查你除了这两处空白之外没有修改任何已提供的代码）：</p>
+
+<pre><code>python3 ok &#x2d;q a_plus_abs_b_syntax_check</code></pre>
+
+
+
+
+
+
+<h3 id="q2-hailstone">Q2：冰雹数列</h3>
+
+
+<p>道格拉斯·霍夫施塔特获得普利策奖的著作<em>《哥德尔、艾舍尔、巴赫》</em>提出了下面这个数学谜题。</p>
+
+<ol>
+  <li>选一个正整数 <code>n</code> 作为起点。</li>
+  <li>如果 <code>n</code> 是偶数，就把它除以 2。</li>
+  <li>如果 <code>n</code> 是奇数，就把它乘以 3 再加 1。</li>
+  <li>重复这个过程，直到 <code>n</code> 等于 1。</li>
+</ol>
+
+<p>数字 <code>n</code> 会上下起伏，但最终都会停在 1（至少对所有试过的数都是这样——没有人证明过这个序列一定会终止）。类似地，冰雹在大气中上下翻滚，最终落到地面。</p>
+
+<p>这个 <code>n</code> 的取值序列通常称为冰雹数列（Hailstone sequence）。写一个函数，接收一个形参名为 <code>n</code> 的单个参数，打印从 <code>n</code> 开始的冰雹数列，并返回该序列的步数：</p>
+
+<pre><code>def hailstone(n):
+    &quot;&quot;&quot;Print the hailstone sequence starting at n and return its
+    length.
+
+    &gt;&gt;&gt; a = hailstone(10)
+    10
+    5
+    16
+    8
+    4
+    2
+    1
+    &gt;&gt;&gt; a
+    7
+    &gt;&gt;&gt; b = hailstone(1)
+    1
+    &gt;&gt;&gt; b
+    1
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>冰雹数列可以变得很长！试试 27。你能找到最长的吗？</p>
+
+<blockquote><p>注意，如果一开始 <code>n == 1</code>，那么这个序列的长度就是一步。 <br>
+<strong>提示：</strong>如果你看到 4.0 但只想要 4，可以试试用整除 <code>//</code> 代替普通除法 <code>/</code>。</p></blockquote>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q hailstone<button id="copy-code-python3ok-qhailstone" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhailstone").onclick = () => copyCode('python3 ok -q hailstone', "copy-code-python3ok-qhailstone");
+        </script>
+        <br/>
+
+<p><strong>对冰雹数列感到好奇吗？看看这篇文章：</strong></p>
+
+<ul>
+  <li>2019 年，人们在理解冰雹猜想对大多数数字为何成立方面取得了重大的 <a href="https://www.quantamagazine.org/mathematician-terence-tao-and-the-collatz-conjecture-20191211/">development</a>！</li>
+</ul>
+
+
+
+
+<h2 id="higher-order-functions">高阶函数</h2>
+
+
+<!-- <include topics/hof/text/doctest-utils.md> -->
+
+
+<h3 id="q3-product">Q3：乘积</h3>
+
+
+<p>写一个名为 <code>product</code> 的函数，返回某个序列前 <code>n</code> 项的乘积。具体来说，<code>product</code> 接收一个整数 <code>n</code> 和一个单参数函数 <code>term</code>，后者确定一个序列（也就是说，<code>term(i)</code> 给出该序列的第 <code>i</code> 项）。<code>product(n, term)</code> 应返回 <code>term(1) * ... * term(n)</code>。</p>
+
+<pre><code>def product(n, term):
+    &quot;&quot;&quot;Return the product of the first n terms in a sequence.
+
+    n: a positive integer
+    term: a function that takes an index as input and produces a term
+
+    &gt;&gt;&gt; product(3, identity)  # 1 * 2 * 3
+    6
+    &gt;&gt;&gt; product(5, identity)  # 1 * 2 * 3 * 4 * 5
+    120
+    &gt;&gt;&gt; product(3, square)    # 1^2 * 2^2 * 3^2
+    36
+    &gt;&gt;&gt; product(5, square)    # 1^2 * 2^2 * 3^2 * 4^2 * 5^2
+    14400
+    &gt;&gt;&gt; product(3, increment) # (1+1) * (2+1) * (3+1)
+    24
+    &gt;&gt;&gt; product(3, triple)    # 1*3 * 2*3 * 3*3
+    162
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q product<button id="copy-code-python3ok-qproduct" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qproduct").onclick = () => copyCode('python3 ok -q product', "copy-code-python3ok-qproduct");
+        </script>
+        <br/>
+
+
+
+
+<h3 id="q4-make-repeater">Q4：make_repeater</h3>
+
+
+<p>实现函数 <code>make_repeater</code>，它接收一个单参数函数 <code>f</code> 和一个正整数 <code>n</code>。它返回一个单参数函数，使得 <code>make_repeater(f, n)(x)</code> 返回 <code>f(f(...f(x)...))</code> 的值，也就是把 <code>f</code> 作用在 <code>x</code> 上 <code>n</code> 次。例如，<code>make_repeater(square, 3)(5)</code> 会对 5 求三次平方并返回 390625，就像 <code>square(square(square(5)))</code> 一样。</p>
+
+<pre><code>def make_repeater(f, n):
+    &quot;&quot;&quot;Returns the function that computes the nth application of f.
+
+    &gt;&gt;&gt; add_three = make_repeater(increment, 3)
+    &gt;&gt;&gt; add_three(5)
+    8
+    &gt;&gt;&gt; make_repeater(triple, 5)(1) # 3 * (3 * (3 * (3 * (3 * 1))))
+    243
+    &gt;&gt;&gt; make_repeater(square, 2)(5) # square(square(5))
+    625
+    &gt;&gt;&gt; make_repeater(square, 3)(5) # square(square(square(5)))
+    390625
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q make_repeater<button id="copy-code-python3ok-qmake_repeater" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmake_repeater").onclick = () => copyCode('python3 ok -q make_repeater', "copy-code-python3ok-qmake_repeater");
+        </script>
+        <br/>
+
+
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h2 id="optional-questions">选做题</h2>
+
+
+
+<h3 id="q5-largest-factor">Q5：最大因子</h3>
+
+
+<p>写一个函数，接收一个<strong>大于 1</strong> 的整数 <code>n</code>，返回小于 <code>n</code> 且能整除 <code>n</code> 的最大整数。</p>
+
+<pre><code>def largest_factor(n):
+    &quot;&quot;&quot;Return the largest factor of n that is smaller than n.
+
+    &gt;&gt;&gt; largest_factor(15) # factors are 1, 3, 5
+    5
+    &gt;&gt;&gt; largest_factor(80) # factors are 1, 2, 4, 5, 8, 10, 16, 20, 40
+    40
+    &gt;&gt;&gt; largest_factor(13) # factors are 1, 13
+    1
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<blockquote><p><strong>提示：</strong>要检查 <code>b</code> 是否能整除 <code>a</code>，使用表达式 <code>a % b == 0</code>，它可以理解为「<code>a</code> 除以 <code>b</code> 的余数为 0」。</p></blockquote>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q largest_factor<button id="copy-code-python3ok-qlargest_factor" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlargest_factor").onclick = () => copyCode('python3 ok -q largest_factor', "copy-code-python3ok-qlargest_factor");
+        </script>
+        <br/>
+
+
+
+
+<h3 id="q6-accumulate">Q6：累加</h3>
+
+
+<p>我们来看看 <code>product</code> 是如何成为一个更通用的函数 <code>accumulate</code> 的特例的，我们现在想实现它：</p>
+
+<pre><code>def accumulate(fuse, start, n, term):
+    &quot;&quot;&quot;Return the result of fusing together the first n terms in a sequence 
+    and start.  The terms to be fused are term(1), term(2), ..., term(n). 
+    The function fuse is a two&#x2d;argument commutative &amp; associative function.
+
+    &gt;&gt;&gt; accumulate(add, 0, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
+    15
+    &gt;&gt;&gt; accumulate(add, 11, 5, identity) # 11 + 1 + 2 + 3 + 4 + 5
+    26
+    &gt;&gt;&gt; accumulate(add, 11, 0, identity) # 11 (fuse is never used)
+    11
+    &gt;&gt;&gt; accumulate(add, 11, 3, square)   # 11 + 1^2 + 2^2 + 3^2
+    25
+    &gt;&gt;&gt; accumulate(mul, 2, 3, square)    # 2 * 1^2 * 2^2 * 3^2
+    72
+    &gt;&gt;&gt; # 2 + (1^2 + 1) + (2^2 + 1) + (3^2 + 1)
+    &gt;&gt;&gt; accumulate(lambda x, y: x + y + 1, 2, 3, square)
+    19
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p><code>accumulate</code> 有以下参数：</p>
+
+<ul>
+  <li><code>fuse</code>：一个双参数函数，规定当前项如何与之前累加的结果融合</li>
+  <li><code>start</code>：开始累加时的值</li>
+  <li><code>n</code>：一个非负整数，表示要融合的项数</li>
+  <li><code>term</code>：一个单参数函数；<code>term(i)</code> 是序列的第 <code>i</code> 项</li>
+</ul>
+
+<p>实现 <code>accumulate</code>，它用 <code>fuse</code> 函数把由 <code>term</code> 定义的序列的前 <code>n</code> 项与 <code>start</code> 值融合起来。</p>
+
+<p>例如，<code>accumulate(add, 11, 3, square)</code> 的结果是</p>
+
+<pre><code>add(11,  add(square(1), add(square(2),  square(3)))) =
+    11 +     square(1) +    square(2) + square(3)    =
+    11 +     1         +    4         + 9            = 25</code></pre>
+
+<blockquote><p>假设 <code>fuse</code> 满足交换律 <code>fuse(a, b) == fuse(b, a)</code> 和结合律 <code>fuse(fuse(a, b), c) == fuse(a, fuse(b, c))</code>。</p></blockquote>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q accumulate<button id="copy-code-python3ok-qaccumulate" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qaccumulate").onclick = () => copyCode('python3 ok -q accumulate', "copy-code-python3ok-qaccumulate");
+        </script>
+        <br/>
+
+<p>然后，用一行调用 <code>accumulate</code> 的方式实现 <code>summation</code> 和 <code>product</code>。</p>
+
+<blockquote><p><strong>重要：</strong><code>summation_using_accumulate</code> 和 <code>product_using_accumulate</code> 都必须用一行以 <code>return</code> 开头的代码实现。</p></blockquote>
+
+<pre><code>def summation_using_accumulate(n, term):
+    &quot;&quot;&quot;Returns the sum: term(1) + ... + term(n), using accumulate.
+
+    &gt;&gt;&gt; summation_using_accumulate(5, square) # square(1) + square(2) + ... + square(4) + square(5)
+    55
+    &gt;&gt;&gt; summation_using_accumulate(5, triple) # triple(1) + triple(2) + ... + triple(4) + triple(5)
+    45
+    &gt;&gt;&gt; # This test checks that the body of the function is just a return statement.
+    &gt;&gt;&gt; import inspect, ast
+    &gt;&gt;&gt; [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
+    [&#x27;Expr&#x27;, &#x27;Return&#x27;]
+    &quot;&quot;&quot;
+    return ____
+
+def product_using_accumulate(n, term):
+    &quot;&quot;&quot;Returns the product: term(1) * ... * term(n), using accumulate.
+
+    &gt;&gt;&gt; product_using_accumulate(4, square) # square(1) * square(2) * square(3) * square()
+    576
+    &gt;&gt;&gt; product_using_accumulate(6, triple) # triple(1) * triple(2) * ... * triple(5) * triple(6)
+    524880
+    &gt;&gt;&gt; # This test checks that the body of the function is just a return statement.
+    &gt;&gt;&gt; import inspect, ast
+    &gt;&gt;&gt; [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
+    [&#x27;Expr&#x27;, &#x27;Return&#x27;]
+    &quot;&quot;&quot;
+    return ____
+</code></pre>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q summation_using_accumulate
+python3 ok -q product_using_accumulate<button id="copy-code-python3ok-qsummation_using_accumulatepython3ok-qproduct_using_accumulate" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsummation_using_accumulatepython3ok-qproduct_using_accumulate").onclick = () => copyCode('python3 ok -q summation_using_accumulate\npython3 ok -q product_using_accumulate', "copy-code-python3ok-qsummation_using_accumulatepython3ok-qproduct_using_accumulate");
+        </script>
+        <br/>
+
+</li>
+</ul>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#functions-amp-control">函数与控制</a></li>
+    <ul>
+      <li><a href="#q1-a-plus-abs-b">Q1：a 加上 b 的绝对值</a></li>
+      <li><a href="#q2-hailstone">Q2：冰雹数列</a></li>
+    </ul>
+    <li><a href="#higher-order-functions">高阶函数</a></li>
+    <ul>
+      <li><a href="#q3-product">Q3：乘积</a></li>
+      <li><a href="#q4-make-repeater">Q4：make_repeater</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <ul>
+    <li><a href="#optional-questions">选做题</a></li>
+    <ul>
+      <li><a href="#q5-largest-factor">Q5：最大因子</a></li>
+      <li><a href="#q6-accumulate">Q6：累加</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1050,
+  "en": "templates: A directory of HTML templates used by gui.py"
+ },
+ {
+  "id": 1051,
+  "en": "ants.py"
+ },
+ {
+  "id": 1052,
+  "en": "The Game"
+ },
+ {
+  "id": 1053,
+  "en": "A game of Ants Vs. SomeBees consists of a series of turns. In each turn, new\nbees may enter the ant colony. Then, new ants are placed to defend their colony.\nFinally, all insects (ants, then bees) take individual actions. Bees either try\nto move toward the end of the tunnel or sting ants in their way. Ants perform a\ndifferent action depending on their type, such as collecting more food or\nthrowing leaves at the bees. The game ends either when a bee reaches the end of\nthe tunnel (ants lose), the bees destroy a QueenAnt if it exists (ants lose),\nor the entire bee fleet has been vanquished (ants win)."
+ },
+ {
+  "id": 1054,
+  "en": "Core concepts"
+ },
+ {
+  "id": 1055,
+  "en": "The Colony. This is where the game takes place. The colony consists of\nseveral Places that are chained together to form tunnels through which the\nbees travel. The colony also has some quantity of food which can be expended in\norder to place an ant in a tunnel."
+ },
+ {
+  "id": 1056,
+  "en": "Places. A place links to another place to form a tunnel. The player can\nput a single ant into each place. However, there can be many bees in a single\nplace."
+ },
+ {
+  "id": 1057,
+  "en": "The Hive. This is the place where bees originate. Bees exit the beehive to\nenter the ant colony."
+ },
+ {
+  "id": 1058,
+  "en": "Ants. The player places an ant into the colony by selecting from the\navailable ant types at the top of the screen.\nEach type of ant takes a different action and requires a different\namount of colony food to place. The two most basic ant types are the HarvesterAnt,\nwhich adds one food to the colony during each turn, and the ThrowerAnt, which\nthrows a leaf at a bee each turn. You will be implementing many more!"
+ },
+ {
+  "id": 1059,
+  "en": "Bees. Each turn, a bee either advances to the next place in the tunnel if no\nant is in its way, or it stings the ant in its way. Bees win when at least one\nbee reaches the end of a tunnel. In addition to the orange bees, there are\nyellow wasps that do double damage and a green boss bee that is quite difficult\nto vanquish."
+ },
+ {
+  "id": 1060,
+  "en": "Core classes"
+ },
+ {
+  "id": 1061,
+  "en": "The concepts described above each have a corresponding class that encapsulates\nthe logic for that concept. Here is a summary of the main classes involved in\nthis game:"
+ },
+ {
+  "id": 1062,
+  "en": "GameState: Represents the colony and some state information about the game,\n  including how much food is available, how much time has elapsed, where the\n  AntHomeBase is, and all the Places in the game."
+ },
+ {
+  "id": 1063,
+  "en": "Place: Represents a single place that holds insects. At most one Ant can\n  be in a single place, but there can be many Bees in a single place. Place objects have an\n  exit to the left and an entrance to the right, which are also places.\n  Bees travel through a tunnel by moving to each Place's exit to reach the next Place."
+ },
+ {
+  "id": 1064,
+  "en": "Hive: Represents the place where Bees start out (on the right of the tunnel)."
+ },
+ {
+  "id": 1065,
+  "en": "AntHomeBase: Represents the place Ants are defending (on the left of the tunnel). If Bees get here, they win :("
+ },
+ {
+  "id": 1066,
+  "en": "Insect: A base class for Ant and Bee. Each insect has a health\n  attribute representing its remaining health and a place attribute representing the Place where\n  it is currently located. During each turn, every active Insect in the game\n  performs its action."
+ },
+ {
+  "id": 1067,
+  "en": "Ant: Represents ants. Each Ant subclass has special attributes or a\n  special action that distinguish it from other Ant types. For example, a\n  HarvesterAnt gets food for the colony and a ThrowerAnt attacks Bees.\n  Each ant type also has a food_cost attribute that indicates how much it\n  costs to deploy one unit of that type of ant."
+ },
+ {
+  "id": 1068,
+  "en": "Bee: Represents bees. Each turn, a bee moves to the exit of\n  its current Place if the Place is not blocked by an ant. Otherwise, it stings the\n  ant occupying its current Place."
+ },
+ {
+  "id": 1069,
+  "en": "Game Layout"
+ },
+ {
+  "id": 1070,
+  "en": "Below is a visualization of a GameState."
+ },
+ {
+  "id": 1071,
+  "en": "To help visualize how all the classes fit together,\n{0} is a diagram of all of the classes and their\ninheritance relationships."
+ },
+ {
+  "id": 1072,
+  "en": "Phase 1: Basic gameplay"
+ },
+ {
+  "id": 1073,
+  "en": "In the first phase you will complete the implementation that will allow for\nbasic gameplay with the two basic Ants: the HarvesterAnt and the\nThrowerAnt."
+ },
+ {
+  "id": 1074,
+  "en": "Answer a set of conceptual questions after you have read the\nentire ants.py file by running this ok command:"
+ },
+ {
+  "id": 1075,
+  "en": "If you get stuck while answering these questions, you can try reading through\nants.py again or asking questions on Ed."
+ },
+ {
+  "id": 1076,
+  "en": "A note on unlocking tests:\nIf you'd like to review the unlocking questions\nafter you have completed the unlocking test,\nyou can navigate to\nthe tests folder (within the ants folder).\nFor example, after unlocking Problem 0,\nyou can review the unlocking test at tests/00.py."
+ },
+ {
+  "id": 1077,
+  "en": "Part A: Currently, there is no cost\nfor placing any type of Ant, and so there is no challenge to the\ngame. The base class Ant has a food_cost of\nzero. Override this class attribute for HarvesterAnt and ThrowerAnt\naccording to the \"Food Cost\" column in the table below."
+ },
+ {
+  "id": 1078,
+  "en": "HarvesterAnt"
+ },
+ {
+  "id": 1079,
+  "en": "ThrowerAnt"
+ },
+ {
+  "id": 1080,
+  "en": "Part B: Now that placing an Ant costs food, we need to be able to gather more food!\nTo fix this issue, implement the HarvesterAnt class. A HarvesterAnt is a\ntype of Ant that increases gamestate.food by 1 as its action."
+ },
+ {
+  "id": 1081,
+  "en": "In this problem, you'll complete Place.__init__ by adding code that tracks entrances. Right\nnow, a Place keeps track only of its exit. We would like a Place to keep\ntrack of its entrance as well. A Place needs to track only one entrance.\nTracking entrances will be useful when an Ant needs to see what Bees are in\nfront of it in the tunnel."
+ },
+ {
+  "id": 1082,
+  "en": "However, simply passing an entrance to a Place constructor will be\nproblematic; we would need to have both the exit and the entrance before\ncreating a Place! (It's a {0}\nproblem.) To get around this problem, we will keep track of entrances in the\nfollowing way instead. Place.__init__ should use this logic:"
+ },
+ {
+  "id": 1083,
+  "en": "A newly created Place always starts with its entrance set to None."
+ },
+ {
+  "id": 1084,
+  "en": "If the Place has an exit, then the exit's entrance is set to\n  that Place."
+ },
+ {
+  "id": 1085,
+  "en": "Hint: Remember that when the __init__ method is called, the first parameter,\nself, is bound to the newly created object."
+ },
+ {
+  "id": 1086,
+  "en": "Hint: Try drawing out two Places next to each other if things get confusing.\nIn the GUI, a place's entrance is to its right while the exit is to its left."
+ },
+ {
+  "id": 1087,
+  "en": "Hint: Remember that Places are not stored in a list, so you can't index into anything to access them. This means that you can't do something like colony[index + 1] to access an adjacent Place. How can you move from one place to another?"
+ },
+ {
+  "id": 1088,
+  "en": "In order for a ThrowerAnt to throw a leaf, it must know which Bee to hit.\nThe provided implementation of the nearest_bee method in the ThrowerAnt\nclass only allows ThrowerAnts to hit Bees in the same Place. Your job is to fix it\nso that a ThrowerAnt will throw_at the nearest Bee in front of it that is not still in the Hive.\nThis includes Bees that are in the same Place as a ThrowerAnt"
+ },
+ {
+  "id": 1089,
+  "en": "Hint: All Places have an is_hive attribute, which is set to True when that\nplace is the Hive and False otherwise."
+ },
+ {
+  "id": 1090,
+  "en": "Change nearest_bee so that it returns a random Bee from the nearest Place that\ncontains Bees. Your implementation should follow this logic:"
+ },
+ {
+  "id": 1091,
+  "en": "Start from the ThrowerAnt's current Place."
+ },
+ {
+  "id": 1092,
+  "en": "If the Place contains one or more Bees, return a random one. Otherwise, check the next Place in front of it (stored as the current Place's entrance)."
+ },
+ {
+  "id": 1093,
+  "en": "Repeat this process until a Bee is found and returned. If no Bee is available to attack, return None."
+ },
+ {
+  "id": 1094,
+  "en": "Ensure that Bees in the Hive are never returned by nearest_bee."
+ },
+ {
+  "id": 1095,
+  "en": "Hint: The random_bee function provided in ants.py returns a random\nBee from a list of Bees or None if the list is empty."
+ },
+ {
+  "id": 1096,
+  "en": "Hint: As a reminder, if there are no Bees present at a Place,\nthen the bees attribute of that Place instance will be an empty list."
+ },
+ {
+  "id": 1097,
+  "en": "Hint: Having trouble visualizing the test cases?\nTry drawing them out on paper!\nThe sample diagram provided in {0} shows the first test case for this problem."
+ },
+ {
+  "id": 1098,
+  "en": "Playing the game"
+ },
+ {
+  "id": 1099,
+  "en": "After implementing nearest_bee, a ThrowerAnt should be able to throw_at a\nBee in front of it that is not still in the Hive."
+ },
+ {
+  "id": 1100,
+  "en": "Now you're ready to try what you've built. To start a graphical game, run:"
+ },
+ {
+  "id": 1101,
+  "en": "After you start the graphical version, the game is (usually) available at\nhttp://127.0.0.1:31415/."
+ },
+ {
+  "id": 1102,
+  "en": "The game has several options that you will use throughout the project,\nwhich you can view with python3 gui.py &#x2d;&#x2d;help."
+ },
+ {
+  "id": 1103,
+  "en": "You can refresh the webpage to restart the game, but if you changed your code,\nyou need to terminate gui.py and run it again. To terminate gui.py, you can\nhit Ctrl + C on the terminal."
+ },
+ {
+  "id": 1104,
+  "en": "You cannot have multiple tabs of this same Ants GUI open simultaneously or they\nwill all error."
+ },
+ {
+  "id": 1105,
+  "en": "Phase 2: More Ants!"
+ },
+ {
+  "id": 1106,
+  "en": "Now that you've implemented basic gameplay with two types of Ants, let's\nadd some flavor to the ways ants can attack bees. In this problem and on, you'll be\nimplementing several different Ants with different attack strategies."
+ },
+ {
+  "id": 1107,
+  "en": "After you implement each Ant subclass in these sections, you'll need to set its\nimplemented class attribute to True so that that type of ant will show up in the\nGUI. Feel free to try out the game with each new ant to test the functionality!"
+ },
+ {
+  "id": 1108,
+  "en": "With all following ants from now on, try python3 gui.py to play against a\nfull swarm of bees in a multi-tunnel layout and try &#x2d;d hard or\n&#x2d;d extra&#x2d;hard if you want a real challenge! If the bees are too numerous to\nvanquish, you might need to create some new ants."
+ },
+ {
+  "id": 1109,
+  "en": "A ThrowerAnt is a powerful threat to the bees, but it has a high food_cost.\nIn this problem, you'll implement two subclasses of ThrowerAnt that are less\ncostly but have constraints on the distance they can throw:"
+ },
+ {
+  "id": 1110,
+  "en": "The LongThrower can only throw_at a Bee that is found after following\n  at least 5 entrance transitions. In other words, it cannot hit Bees that are in the same\n  Place as it or in the first 4 Places in front of it. If there are two\n  Bees, one too close to the LongThrower and the other within its range,\n  the LongThrower should only throw at the farther Bee, which is within its range, instead of trying to hit the closer Bee."
+ },
+ {
+  "id": 1111,
+  "en": "The ShortThrower can only throw_at a Bee that is found after following\n  at most 3 entrance transitions. In other words, it cannot throw at any Bees further than 3\n  Places in front of it."
+ },
+ {
+  "id": 1112,
+  "en": "Neither of these specialized throwers can throw_at a Bee that is exactly 4\nPlaces away."
+ },
+ {
+  "id": 1113,
+  "en": "ShortThrower"
+ },
+ {
+  "id": 1114,
+  "en": "LongThrower"
+ },
+ {
+  "id": 1115,
+  "en": "To implement these new throwing ants, your ShortThrower and LongThrower classes\nshould inherit the nearest_bee method from the base ThrowerAnt class."
+ },
+ {
+  "id": 1116,
+  "en": "Next, modify the nearest_bee method in ThrowerAnt to reference the lower_bound and upper_bound attributes, and only return a Bee from a Place if that Place is within range of the provided bounds. This is necessary because the range of Places in which the ShortThrower and LongThrower ants can throw_at a Bee is limited by an upper_bound and a lower_bound, respectively."
+ },
+ {
+  "id": 1117,
+  "en": "Make sure to give these lower_bound and upper_bound attributes appropriate\nvalues in the ThrowerAnt class so that the behavior of ThrowerAnt is\nunchanged. Then, implement the subclasses LongThrower and ShortThrower\nwith appropriately constrained ranges."
+ },
+ {
+  "id": 1118,
+  "en": "You should not need to repeat any code between ThrowerAnt,\nShortThrower, and LongThrower."
+ },
+ {
+  "id": 1119,
+  "en": "Important:\nMake sure your class attributes are called upper_bound and lower_bound\nThe tests directly reference these attribute names, and will error\nif you use another name for these attributes."
+ },
+ {
+  "id": 1120,
+  "en": "Hint: float(&#x27;inf&#x27;) returns an infinite positive value represented as a\nfloat that can be compared with other numbers."
+ },
+ {
+  "id": 1121,
+  "en": "Hint: lower_bound and upper_bound should mark an inclusive range."
+ },
+ {
+  "id": 1122,
+  "en": "Don't forget to set the implemented class attribute of LongThrower and\nShortThrower to True."
+ },
+ {
+  "id": 1123,
+  "en": "After writing code, test your implementation (rerun the tests for 03 to make sure they still work):"
+ },
+ {
+  "id": 1124,
+  "en": "Implement the FireAnt, which does damage when it receives damage. Specifically,\nif it is damaged by damage_taken health units, it does a damage of\ndamage_taken to all Bees in its place (this is called reflected damage).\nIf it dies, it does an additional amount of damage, as specified by its damage attribute,\nto all the Bees in its place. The default value for the damage attribute in the FireAnt class is 3."
+ },
+ {
+  "id": 1125,
+  "en": "To implement this, override FireAnt's reduce_health method.\nYour overriden method should call the reduce_health method inherited from\nthe superclass (Ant) which inherits from its superclass Insect to reduce the current FireAnt instance's health.\nCalling the inherited reduce_health method on a FireAnt instance reduces\nthe insect's health by the given damage_taken and removes the insect from its\nplace if its health reaches zero or lower."
+ },
+ {
+  "id": 1126,
+  "en": "Hint:\nDo not call self.reduce_health,\nor you'll end up stuck in a recursive loop. (Can you see why?)"
+ },
+ {
+  "id": 1127,
+  "en": "However, your method needs to also include the reflective damage logic:"
+ },
+ {
+  "id": 1128,
+  "en": "Determine the reflective damage amount:\n  start with the damage_taken inflicted on the FireAnt,\n  and then add damage if the ant's health has dropped to or below 0."
+ },
+ {
+  "id": 1129,
+  "en": "For each Bee in the place, damage them with the total reflective damage amount by\n  calling its appropriate reduce_health method."
+ },
+ {
+  "id": 1130,
+  "en": "Important:\nRemember that when any Ant loses all its health, it is removed from its Place,\nso pay careful attention to the order of your logic in reduce_health."
+ },
+ {
+  "id": 1131,
+  "en": "FireAnt"
+ },
+ {
+  "id": 1132,
+  "en": "Important: Damaging a bee may cause it to be removed from its place; when an insect dies, it is removed from its current place. If you\niterate over a list, but change the contents of that list at the same time,\nyou {0}.\nThis can be prevented by making a copy of the list.\nYou can either use a list slice, or use the built-in list function to make sure\nthe original list is not affected."
+ },
+ {
+  "id": 1133,
+  "en": "Once you've finished implementing the FireAnt, give it a class attribute\nimplemented with the value True."
+ },
+ {
+  "id": 1134,
+  "en": "Note:\nEven though you are overriding the superclass's reduce_health function\n(Ant.reduce_health),\nyou can still use this method in your implementation by calling it."
+ },
+ {
+  "id": 1135,
+  "en": "You can also test your program by playing a game or two! A FireAnt should\ndestroy all co-located Bees when it is stung. To start a game with ten food\n(for easy testing):"
+ },
+ {
+  "id": 1136,
+  "en": "We are going to add some protection to our glorious home base by implementing\nthe WallAnt, an ant that does nothing each turn. A WallAnt is\nuseful because it has a large health value."
+ },
+ {
+  "id": 1137,
+  "en": "WallAnt"
+ },
+ {
+  "id": 1138,
+  "en": "Unlike with previous ants, we have not provided you with a class statement.\nImplement the WallAnt class from scratch. Give it a class attribute name\nwith the value &#x27;Wall&#x27; (so that the graphics work) and a class attribute\nimplemented with the value True (so that you can use it in a game)."
+ },
+ {
+  "id": 1139,
+  "en": "Hint: Make sure you implement the __init__ method too\nso the WallAnt starts off with the appropriate amount of health!"
+ },
+ {
+  "id": 1140,
+  "en": "Implement the HungryAnt, which will select a random Bee from its Place and\ndeal damage to the Bee equal to the Bee's health, eating it whole. After\neating a Bee, a HungryAnt must spend 3 turns chewing before being able to\neat again. While the HungryAnt is chewing, it is not able to eat (deal damage\nto) any Bees. If there is no Bee in its place available to eat, the\nHungryAnt will do nothing."
+ },
+ {
+  "id": 1141,
+  "en": "We have not provided you with a class header.\nImplement the HungryAnt class from scratch. Give it a class attribute name\nwith the value &#x27;Hungry&#x27; (so that the graphics work) and a class attribute\nimplemented with the value True (so that you can use it in a game)."
+ },
+ {
+  "id": 1142,
+  "en": "Hint:\nWhen a Bee is eaten, its health should be reduced by its health."
+ },
+ {
+  "id": 1143,
+  "en": "HungryAnt"
+ },
+ {
+  "id": 1144,
+  "en": "Give HungryAnt a chew_cooldown class attribute that stores the number of\nturns that it will take a HungryAnt to chew (set to 3). Also, give each\nHungryAnt an instance attribute cooldown that counts the number of turns\nit has left to chew, initialized to 0, since it hasn't eaten anything at the\nbeginning. You can also think of cooldown as the number of turns until a\nHungryAnt can eat another Bee."
+ },
+ {
+  "id": 1145,
+  "en": "Implement the action method of the HungryAnt: First, check if it is chewing; if\nso, decrement its cooldown. Otherwise, eat a random Bee in its\nPlace by reducing the Bee's health to 0. Make sure to set the cooldown\nwhen a Bee is eaten!"
+ },
+ {
+  "id": 1146,
+  "en": "Hint: Other than the action method, make sure you implement the __init__\nmethod too in order to define any instance variables and make sure that\nHungryAnt starts off with the appropriate amount of health!"
+ },
+ {
+  "id": 1147,
+  "en": "Right now, our ants are quite frail. We'd like to provide a way to help them\nlast longer against the onslaught of the bees. Enter the ProtectorAnt."
+ },
+ {
+  "id": 1148,
+  "en": "ProtectorAnt"
+ },
+ {
+  "id": 1149,
+  "en": "To more easily implement the ProtectorAnt, we will break up this problem into 3 subparts.\nIn each part, we will making changes in either the ContainerAnt class, Ant\nclass, or ProtectorAnt class."
+ },
+ {
+  "id": 1150,
+  "en": "Note:\nWe have separated out Question 8 into three different subparts. We recommend going through the unlocking test for each subpart before writing any code for it.\nYou will be tested on each subpart, with each subpart worth one point, for a total of three points for the entire question."
+ },
+ {
+  "id": 1151,
+  "en": "Problem 8a"
+ },
+ {
+  "id": 1152,
+  "en": "First, we will define and work in a ContainerAnt parent class that we will later use for our ProtectorAnt."
+ },
+ {
+  "id": 1153,
+  "en": "A ProtectorAnt differs from a normal ant because it is a ContainerAnt; it can\ncontain another ant and protect it, all in one Place. When a Bee stings the\nant in a Place where one ant contains another, only the container is\ndamaged. The ant inside the container can still perform its original action.\nIf the container perishes, the contained ant still remains in the place (and\ncan then be damaged)."
+ },
+ {
+  "id": 1154,
+  "en": "Each ContainerAnt has an instance attribute ant_contained that stores the ant it\ncontains. This ant, ant_contained, initially starts off as None to indicate that there is no ant being\nstored yet. Implement the store_ant method so that it sets the ContainerAnt's\nant_contained instance attribute to the ant argument passed in. Then implement the\nContainerAnt's action method. This method will ensure that if our ContainerAnt currently contains an ant, ant_contained's action is performed."
+ },
+ {
+  "id": 1155,
+  "en": "In addition, to ensure that a container and its contained ant can both occupy a Place at\nthe same time (a maximum of two ants per Place), but only if exactly one is a\ncontainer, we can create an can_contain method."
+ },
+ {
+  "id": 1156,
+  "en": "There is already an Ant.can_contain method, but it always returns False.\nOverride the method can_contain in ContainerAnt so that it takes an ant other as an\nargument and returns True if:"
+ },
+ {
+  "id": 1157,
+  "en": "This ContainerAnt does not already contain another ant."
+ },
+ {
+  "id": 1158,
+  "en": "The other ant is not a container."
+ },
+ {
+  "id": 1159,
+  "en": "Hint:\nYou may find the is_container attribute that each Ant has useful for\nchecking if a specific Ant is a container."
+ },
+ {
+  "id": 1160,
+  "en": "Problem 8b"
+ },
+ {
+  "id": 1161,
+  "en": "Next, we will be working in the Ant class."
+ },
+ {
+  "id": 1162,
+  "en": "Modify Ant.add_to to allow a container and its contained ant\nto occupy the same place according to the following rules:"
+ },
+ {
+  "id": 1163,
+  "en": "If the Ant originally occupying a place can_contain the Ant being added,\n  then both Ants occupy the place and the original Ant contains the Ant being added."
+ },
+ {
+  "id": 1164,
+  "en": "If the Ant being added can_contain the Ant originally in the space, then both Ants occupy the place and the Ant being added contains the original Ant."
+ },
+ {
+  "id": 1165,
+  "en": "If neither Ant can_contain the other, raise the same\n  AssertionError as before (the one already present in the starter\n  code)."
+ },
+ {
+  "id": 1166,
+  "en": "Important: If there are two Ants in a specific Place,\nthe ant attribute of the Place instance should refer to the container\nant, and the container ant should contain the non-container ant."
+ },
+ {
+  "id": 1167,
+  "en": "Hint:\nYou should also take advantage of the can_contain method you wrote\nand avoid repeating code."
+ },
+ {
+  "id": 1168,
+  "en": "Note:\nIf you're getting an \"unreachable code\" warning for Ant.add_to\nvia the VSCode Pylance extension,\nit's fine to ignore this specific warning\nas the code is actually run\n(the warning in this case is inaccurate)."
+ },
+ {
+  "id": 1169,
+  "en": "Problem 8c"
+ },
+ {
+  "id": 1170,
+  "en": "Finally, we can work on implementing our ProtectorAnt class."
+ },
+ {
+  "id": 1171,
+  "en": "Add a ProtectorAnt.__init__ that sets the initial amount of health for the ProtectorAnt.\nWe do not need to create an action method here since the ProtectorAnt class inherits it from the ContainerAnt class.\nAlso note that the ProtectorAnt does not do any damage."
+ },
+ {
+  "id": 1172,
+  "en": "Once you've finished implementing the ProtectorAnt,\ngive it a class attribute implemented with the value True."
+ },
+ {
+  "id": 1173,
+  "en": "The ProtectorAnt provides great defense, but they say the best defense is a\ngood offense. The TankAnt is a ContainerAnt that protects an ant in its place\nand also deals 1 damage to all Bees in its Place each turn. Like any ContainerAnt, a TankAnt allows the ant that it contains to perform its action each turn."
+ },
+ {
+  "id": 1174,
+  "en": "TankAnt"
+ },
+ {
+  "id": 1175,
+  "en": "We have not provided you with a class header.\nImplement the TankAnt class from scratch. Give it a class attribute name\nwith the value &#x27;Tank&#x27; (so that the graphics work) and a class attribute\nimplemented with the value True (so that you can use it in a game)."
+ },
+ {
+  "id": 1176,
+  "en": "You should not need to modify any code outside of the TankAnt class. If you\nfind yourself needing to make changes elsewhere, look for a way to write your\ncode for the previous question such that it applies not just to ProtectorAnt\nand TankAnt objects, but to ContainerAnts in general."
+ },
+ {
+  "id": 1177,
+  "en": "Hint: The only methods you need to override from TankAnt's parent class are __init__ and action."
+ },
+ {
+  "id": 1178,
+  "en": "Hint: Like with FireAnt, it is possible that damaging a bee will cause it to be removed from its place."
+ },
+ {
+  "id": 1179,
+  "en": "Congratulations! You have finished Phase 1 and Phase 2 of this project!"
+ },
+ {
+  "id": 1180,
+  "en": "Phase 3: Water and Might"
+ },
+ {
+  "id": 1181,
+  "en": "In the final phase, you're going to add one last kick to the game by\nintroducing a new type of place and new ants that are able to occupy this\nplace. One of these ants is the most important ant of them all: the queen of\nthe colony!"
+ },
+ {
+  "id": 1182,
+  "en": "Let's add water to the colony! Currently there are only two types of places, the\nHive and a basic Place. To make things more interesting, we're going to\ncreate a new type of Place called Water."
+ },
+ {
+  "id": 1183,
+  "en": "Only an Insect that is waterproof can be placed in Water. In order\nto determine whether an Insect is waterproof, add a new class attribute to the\nInsect class named is_waterproof that is set to False. Since Bees can fly,\ntheir is_waterproof attribute is True, overriding the inherited value."
+ },
+ {
+  "id": 1184,
+  "en": "Now, implement the add_insect method for Water. First, add the Insect to\nthe Place regardless of whether it is waterproof. Then, if the Insect is not\nwaterproof, reduce the Insect's health to 0. Do not repeat code from elsewhere\nin the program. Instead, use methods that have already been defined."
+ },
+ {
+  "id": 1185,
+  "en": "Once you've finished this problem, play a game that includes water. To access\nthe wet_layout, which includes water, add the &#x2d;&#x2d;water option (or &#x2d;w for\nshort) when you start the game."
+ },
+ {
+  "id": 1186,
+  "en": "Currently there are no ants that can be placed on Water. Implement the\nScubaThrower, which is a subclass of ThrowerAnt that is more costly and\nwaterproof, but otherwise identical to its base class. A ScubaThrower should\nnot lose its health when placed in Water."
+ },
+ {
+  "id": 1187,
+  "en": "ScubaThrower"
+ },
+ {
+  "id": 1188,
+  "en": "We have not provided you with a class header. Implement the ScubaThrower\nclass from scratch. Give it a class attribute name with the value &#x27;Scuba&#x27;\n(so that the graphics work) and remember to set the class attribute\nimplemented with the value True (so that you can use it in a game)."
+ },
+ {
+  "id": 1189,
+  "en": "Finally, implement the QueenAnt. A queen is a ThrowerAnt that inspires her\nfellow ants through her bravery. In addition to the standard ThrowerAnt\naction, a QueenAnt doubles the damage of all the ants behind her in her tunnel each time she\nperforms an action. However, once an ant's damage has been doubled, it cannot be\ndoubled again. Try to think of a way to keep track of whether an ant's damage has already been doubled (Hint: Use an instance attribute!)"
+ },
+ {
+  "id": 1190,
+  "en": "Note: The reflected damage of a FireAnt should not be doubled, only the\nextra damage it deals when its health is reduced to 0."
+ },
+ {
+  "id": 1191,
+  "en": "QueenAnt"
+ },
+ {
+  "id": 1192,
+  "en": "However, with great power comes great responsibility.  If a QueenAnt ever has its\nhealth reduced to 0, the ants lose. You will need to override\nInsect.reduce_health in QueenAnt and call ants_lose() in that case in\norder to signal to the simulator that the game is over. (The ants also still\nlose if any bee reaches the end of a tunnel.)"
+ },
+ {
+  "id": 1193,
+  "en": "Hint: For doubling the damage of all ants behind her, you may fill out the\ndouble method defined in the Ant class, then call it from the QueenAnt\nclass."
+ },
+ {
+  "id": 1194,
+  "en": "Hint:\nWhen doubling the ants' damage,\nkeep in mind that there can be more than one ant in a Place,\nlike in the case of container ants storing another."
+ },
+ {
+  "id": 1195,
+  "en": "Hint:\nRemember that QueenAnt's reduce_health method adds the additional task\nof calling ants_lose() to the superclass's reduce_health method.\nHow can we make sure we still do everything from the superclass's method\nwithout repeating code?"
+ },
+ {
+  "id": 1196,
+  "en": "Hint:\nYou can find each Place in a tunnel behind a QueenAnt by starting at\nthe queen's place.exit and then repeatedly moving back to the previous Place's exit.\nThe exit of a Place at the end of a tunnel is None."
+ },
+ {
+  "id": 1197,
+  "en": "Project submission"
+ },
+ {
+  "id": 1198,
+  "en": "You are now done with the project! If you haven't yet, you should try\nplaying the game!"
+ },
+ {
+  "id": 1199,
+  "en": "-h = help"
+ }
+]

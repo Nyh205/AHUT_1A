@@ -1,0 +1,1245 @@
+{
+ "cs61a_offline/disc/disc00/index.html": {
+  "code": 0,
+  "div": 0,
+  "divn": 83,
+  "doctest": 0,
+  "href": "9e493c352ae8",
+  "hrefn": 30,
+  "len": 30608,
+  "pre": 0,
+  "script": 19,
+  "slot": 0,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/disc01/index.html": {
+  "code": 81,
+  "div": 0,
+  "divn": 41,
+  "doctest": 0,
+  "href": "c85eed7fd645",
+  "hrefn": 41,
+  "len": 24614,
+  "pre": 1,
+  "script": 24,
+  "slot": 4,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/disc02/index.html": {
+  "code": 92,
+  "div": 0,
+  "divn": 46,
+  "doctest": 0,
+  "href": "9e51f4b2e442",
+  "hrefn": 49,
+  "len": 31084,
+  "pre": 2,
+  "script": 25,
+  "slot": 2,
+  "unbal": [],
+  "underscore": 75
+ },
+ "cs61a_offline/disc/disc03/index.html": {
+  "code": 59,
+  "div": 0,
+  "divn": 42,
+  "doctest": 0,
+  "href": "e1cb4146debd",
+  "hrefn": 40,
+  "len": 24190,
+  "pre": 1,
+  "script": 25,
+  "slot": 1,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/disc04/index.html": {
+  "code": 116,
+  "div": 0,
+  "divn": 47,
+  "doctest": 7,
+  "href": "6f68617a7bd7",
+  "hrefn": 41,
+  "len": 29980,
+  "pre": 8,
+  "script": 25,
+  "slot": 5,
+  "unbal": [],
+  "underscore": 38
+ },
+ "cs61a_offline/disc/disc05/index.html": {
+  "code": 104,
+  "div": 0,
+  "divn": 56,
+  "doctest": 41,
+  "href": "3b2a4fcf92b0",
+  "hrefn": 50,
+  "len": 33757,
+  "pre": 18,
+  "script": 24,
+  "slot": 7,
+  "unbal": [],
+  "underscore": 24
+ },
+ "cs61a_offline/disc/disc06/index.html": {
+  "code": 135,
+  "div": 0,
+  "divn": 71,
+  "doctest": 8,
+  "href": "d1bd8b4e5704",
+  "hrefn": 39,
+  "len": 39781,
+  "pre": 20,
+  "script": 25,
+  "slot": 11,
+  "unbal": [],
+  "underscore": 7
+ },
+ "cs61a_offline/disc/disc07/index.html": {
+  "code": 97,
+  "div": 0,
+  "divn": 44,
+  "doctest": 13,
+  "href": "6661560e4050",
+  "hrefn": 38,
+  "len": 27873,
+  "pre": 12,
+  "script": 23,
+  "slot": 0,
+  "unbal": [],
+  "underscore": 55
+ },
+ "cs61a_offline/disc/disc08/index.html": {
+  "code": 88,
+  "div": 0,
+  "divn": 44,
+  "doctest": 8,
+  "href": "ddc271585c6e",
+  "hrefn": 40,
+  "len": 28931,
+  "pre": 8,
+  "script": 24,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 18
+ },
+ "cs61a_offline/disc/disc09/index.html": {
+  "code": 119,
+  "div": 0,
+  "divn": 53,
+  "doctest": 0,
+  "href": "c10fd52f6dd2",
+  "hrefn": 48,
+  "len": 29516,
+  "pre": 5,
+  "script": 26,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/disc10/index.html": {
+  "code": 128,
+  "div": 0,
+  "divn": 39,
+  "doctest": 0,
+  "href": "548c31488646",
+  "hrefn": 44,
+  "len": 27892,
+  "pre": 9,
+  "script": 23,
+  "slot": 7,
+  "unbal": [],
+  "underscore": 53
+ },
+ "cs61a_offline/disc/disc11/index.html": {
+  "code": 166,
+  "div": 0,
+  "divn": 63,
+  "doctest": 0,
+  "href": "2a3de63ba0d1",
+  "hrefn": 48,
+  "len": 42047,
+  "pre": 21,
+  "script": 26,
+  "slot": 12,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 37
+ },
+ "cs61a_offline/disc/disc12/index.html": {
+  "code": 70,
+  "div": 0,
+  "divn": 47,
+  "doctest": 10,
+  "href": "ba04725b7d03",
+  "hrefn": 47,
+  "len": 29047,
+  "pre": 6,
+  "script": 27,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 31
+ },
+ "cs61a_offline/disc/sol-disc01/index.html": {
+  "code": 87,
+  "div": 0,
+  "divn": 49,
+  "doctest": 23,
+  "href": "fed3591ed88e",
+  "hrefn": 42,
+  "len": 29812,
+  "pre": 6,
+  "script": 24,
+  "slot": 4,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/sol-disc02/index.html": {
+  "code": 104,
+  "div": 0,
+  "divn": 53,
+  "doctest": 31,
+  "href": "a4998fa3e581",
+  "hrefn": 50,
+  "len": 37559,
+  "pre": 8,
+  "script": 25,
+  "slot": 2,
+  "unbal": [],
+  "underscore": 75
+ },
+ "cs61a_offline/disc/sol-disc03/index.html": {
+  "code": 81,
+  "div": 0,
+  "divn": 58,
+  "doctest": 24,
+  "href": "e1cb4146debd",
+  "hrefn": 40,
+  "len": 31423,
+  "pre": 8,
+  "script": 25,
+  "slot": 6,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/sol-disc04/index.html": {
+  "code": 136,
+  "div": 0,
+  "divn": 56,
+  "doctest": 32,
+  "href": "2e5cb2e8348f",
+  "hrefn": 42,
+  "len": 36665,
+  "pre": 14,
+  "script": 25,
+  "slot": 5,
+  "unbal": [],
+  "underscore": 38
+ },
+ "cs61a_offline/disc/sol-disc05/index.html": {
+  "code": 109,
+  "div": 0,
+  "divn": 69,
+  "doctest": 49,
+  "href": "3b2a4fcf92b0",
+  "hrefn": 50,
+  "len": 37416,
+  "pre": 23,
+  "script": 24,
+  "slot": 7,
+  "unbal": [],
+  "underscore": 24
+ },
+ "cs61a_offline/disc/sol-disc06/index.html": {
+  "code": 141,
+  "div": 0,
+  "divn": 91,
+  "doctest": 28,
+  "href": "d1bd8b4e5704",
+  "hrefn": 39,
+  "len": 47756,
+  "pre": 26,
+  "script": 25,
+  "slot": 11,
+  "unbal": [],
+  "underscore": 7
+ },
+ "cs61a_offline/disc/sol-disc07/index.html": {
+  "code": 102,
+  "div": 0,
+  "divn": 58,
+  "doctest": 41,
+  "href": "6661560e4050",
+  "hrefn": 38,
+  "len": 33506,
+  "pre": 17,
+  "script": 23,
+  "slot": 0,
+  "unbal": [],
+  "underscore": 55
+ },
+ "cs61a_offline/disc/sol-disc08/index.html": {
+  "code": 141,
+  "div": 0,
+  "divn": 51,
+  "doctest": 34,
+  "href": "ddc271585c6e",
+  "hrefn": 40,
+  "len": 37737,
+  "pre": 12,
+  "script": 24,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 18
+ },
+ "cs61a_offline/disc/sol-disc09/index.html": {
+  "code": 125,
+  "div": 0,
+  "divn": 59,
+  "doctest": 0,
+  "href": "c10fd52f6dd2",
+  "hrefn": 48,
+  "len": 33398,
+  "pre": 11,
+  "script": 26,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/disc/sol-disc10/index.html": {
+  "code": 144,
+  "div": 0,
+  "divn": 47,
+  "doctest": 3,
+  "href": "548c31488646",
+  "hrefn": 44,
+  "len": 32053,
+  "pre": 13,
+  "script": 23,
+  "slot": 7,
+  "unbal": [],
+  "underscore": 53
+ },
+ "cs61a_offline/disc/sol-disc11/index.html": {
+  "code": 173,
+  "div": 0,
+  "divn": 75,
+  "doctest": 0,
+  "href": "2a3de63ba0d1",
+  "hrefn": 48,
+  "len": 47253,
+  "pre": 28,
+  "script": 26,
+  "slot": 12,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 37
+ },
+ "cs61a_offline/disc/sol-disc12/index.html": {
+  "code": 77,
+  "div": 0,
+  "divn": 55,
+  "doctest": 45,
+  "href": "ba04725b7d03",
+  "hrefn": 47,
+  "len": 35174,
+  "pre": 13,
+  "script": 27,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 31
+ },
+ "cs61a_offline/hw/hw01/index.html": {
+  "code": 87,
+  "div": 0,
+  "divn": 13,
+  "doctest": 39,
+  "href": "8df40d15cb82",
+  "hrefn": 46,
+  "len": 24348,
+  "pre": 17,
+  "script": 26,
+  "slot": 0,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw02/index.html": {
+  "code": 91,
+  "div": 0,
+  "divn": 13,
+  "doctest": 64,
+  "href": "885a89c19e22",
+  "hrefn": 47,
+  "len": 27795,
+  "pre": 15,
+  "script": 26,
+  "slot": 0,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw03/index.html": {
+  "code": 217,
+  "div": 0,
+  "divn": 20,
+  "doctest": 92,
+  "href": "c07b4931162c",
+  "hrefn": 47,
+  "len": 41253,
+  "pre": 26,
+  "script": 25,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -6
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw04/index.html": {
+  "code": 106,
+  "div": 0,
+  "divn": 13,
+  "doctest": 50,
+  "href": "4a5ceefd40d6",
+  "hrefn": 48,
+  "len": 28795,
+  "pre": 20,
+  "script": 23,
+  "slot": 3,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw05/index.html": {
+  "code": 167,
+  "div": 0,
+  "divn": 21,
+  "doctest": 37,
+  "href": "a5430107fea7",
+  "hrefn": 48,
+  "len": 36402,
+  "pre": 27,
+  "script": 25,
+  "slot": 5,
+  "unbal": [
+   [
+    "a",
+    -6
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw06/index.html": {
+  "code": 138,
+  "div": 0,
+  "divn": 14,
+  "doctest": 0,
+  "href": "d3cfbd8bf372",
+  "hrefn": 47,
+  "len": 32761,
+  "pre": 32,
+  "script": 23,
+  "slot": 4,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/hw07/index.html": {
+  "code": 0,
+  "div": 0,
+  "divn": 6,
+  "doctest": 0,
+  "href": "597abacaf2a8",
+  "hrefn": 25,
+  "len": 7837,
+  "pre": 0,
+  "script": 18,
+  "slot": 0,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw01/index.html": {
+  "code": 116,
+  "div": 0,
+  "divn": 28,
+  "doctest": 39,
+  "href": "31ba1db34655",
+  "hrefn": 39,
+  "len": 26194,
+  "pre": 17,
+  "script": 25,
+  "slot": 0,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw02/index.html": {
+  "code": 96,
+  "div": 0,
+  "divn": 23,
+  "doctest": 64,
+  "href": "176f67e0349c",
+  "hrefn": 44,
+  "len": 30667,
+  "pre": 16,
+  "script": 25,
+  "slot": 0,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw03/index.html": {
+  "code": 220,
+  "div": 0,
+  "divn": 33,
+  "doctest": 92,
+  "href": "93363dc8d38b",
+  "hrefn": 42,
+  "len": 43259,
+  "pre": 26,
+  "script": 24,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -6
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw04/index.html": {
+  "code": 105,
+  "div": 0,
+  "divn": 25,
+  "doctest": 50,
+  "href": "d4328296e1ff",
+  "hrefn": 42,
+  "len": 29353,
+  "pre": 20,
+  "script": 22,
+  "slot": 3,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw05/index.html": {
+  "code": 204,
+  "div": 0,
+  "divn": 32,
+  "doctest": 37,
+  "href": "37bbdca938f4",
+  "hrefn": 44,
+  "len": 38848,
+  "pre": 27,
+  "script": 24,
+  "slot": 5,
+  "unbal": [
+   [
+    "a",
+    -6
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/hw/sol-hw06/index.html": {
+  "code": 147,
+  "div": 0,
+  "divn": 22,
+  "doctest": 0,
+  "href": "022bdbbe08ab",
+  "hrefn": 44,
+  "len": 34554,
+  "pre": 32,
+  "script": 22,
+  "slot": 4,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/index.html": {
+  "code": 0,
+  "div": 0,
+  "divn": 33,
+  "doctest": 0,
+  "href": "3cdd9daedbe3",
+  "hrefn": 287,
+  "len": 49974,
+  "pre": 0,
+  "script": 18,
+  "slot": 0,
+  "unbal": [],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/lab00/index.html": {
+  "code": 69,
+  "div": 0,
+  "divn": 15,
+  "doctest": 8,
+  "href": "b94794af1b49",
+  "hrefn": 37,
+  "len": 16588,
+  "pre": 8,
+  "script": 19,
+  "slot": 9,
+  "unbal": [],
+  "underscore": 4
+ },
+ "cs61a_offline/lab/lab01/index.html": {
+  "code": 97,
+  "div": 0,
+  "divn": 36,
+  "doctest": 49,
+  "href": "d845f150d776",
+  "hrefn": 49,
+  "len": 29354,
+  "pre": 31,
+  "script": 28,
+  "slot": 20,
+  "unbal": [
+   [
+    "a",
+    -9
+   ]
+  ],
+  "underscore": 8
+ },
+ "cs61a_offline/lab/lab02/index.html": {
+  "code": 117,
+  "div": 0,
+  "divn": 120,
+  "doctest": 104,
+  "href": "5747c0f41935",
+  "hrefn": 42,
+  "len": 44678,
+  "pre": 39,
+  "script": 26,
+  "slot": 105,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 52
+ },
+ "cs61a_offline/lab/lab03/index.html": {
+  "code": 133,
+  "div": 0,
+  "divn": 53,
+  "doctest": 68,
+  "href": "38f9b4b854a3",
+  "hrefn": 47,
+  "len": 36071,
+  "pre": 35,
+  "script": 28,
+  "slot": 38,
+  "unbal": [
+   [
+    "a",
+    -9
+   ]
+  ],
+  "underscore": 17
+ },
+ "cs61a_offline/lab/lab04/index.html": {
+  "code": 178,
+  "div": 0,
+  "divn": 44,
+  "doctest": 82,
+  "href": "874ac89c4f3d",
+  "hrefn": 47,
+  "len": 44655,
+  "pre": 46,
+  "script": 29,
+  "slot": 28,
+  "unbal": [
+   [
+    "a",
+    -10
+   ]
+  ],
+  "underscore": 14
+ },
+ "cs61a_offline/lab/lab05/index.html": {
+  "code": 167,
+  "div": 0,
+  "divn": 74,
+  "doctest": 129,
+  "href": "02e62f11f2a4",
+  "hrefn": 41,
+  "len": 40018,
+  "pre": 31,
+  "script": 26,
+  "slot": 61,
+  "unbal": [
+   [
+    "a",
+    -7
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 29
+ },
+ "cs61a_offline/lab/lab06/index.html": {
+  "code": 154,
+  "div": 0,
+  "divn": 11,
+  "doctest": 75,
+  "href": "fc848fd491ed",
+  "hrefn": 37,
+  "len": 32189,
+  "pre": 18,
+  "script": 23,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/lab07/index.html": {
+  "code": 113,
+  "div": 0,
+  "divn": 13,
+  "doctest": 67,
+  "href": "d698df8cc593",
+  "hrefn": 38,
+  "len": 27773,
+  "pre": 15,
+  "script": 23,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -5
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 21
+ },
+ "cs61a_offline/lab/lab08/index.html": {
+  "code": 81,
+  "div": 0,
+  "divn": 43,
+  "doctest": 62,
+  "href": "907ebea9d53e",
+  "hrefn": 39,
+  "len": 24883,
+  "pre": 18,
+  "script": 23,
+  "slot": 32,
+  "unbal": [
+   [
+    "a",
+    -5
+   ]
+  ],
+  "underscore": 15
+ },
+ "cs61a_offline/lab/lab09/index.html": {
+  "code": 170,
+  "div": 0,
+  "divn": 35,
+  "doctest": 1,
+  "href": "1f4960aa3ae5",
+  "hrefn": 47,
+  "len": 35014,
+  "pre": 44,
+  "script": 23,
+  "slot": 24,
+  "unbal": [
+   [
+    "a",
+    -5
+   ]
+  ],
+  "underscore": 9
+ },
+ "cs61a_offline/lab/lab10/index.html": {
+  "code": 157,
+  "div": 0,
+  "divn": 39,
+  "doctest": 24,
+  "href": "05c4a1c45d25",
+  "hrefn": 41,
+  "len": 35469,
+  "pre": 24,
+  "script": 23,
+  "slot": 28,
+  "unbal": [
+   [
+    "a",
+    -5
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 16
+ },
+ "cs61a_offline/lab/lab11/index.html": {
+  "code": 180,
+  "div": 0,
+  "divn": 16,
+  "doctest": 0,
+  "href": "e137c9e6bb53",
+  "hrefn": 40,
+  "len": 35348,
+  "pre": 39,
+  "script": 22,
+  "slot": 6,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/lab12/index.html": {
+  "code": 192,
+  "div": 0,
+  "divn": 20,
+  "doctest": 95,
+  "href": "246b8d558360",
+  "hrefn": 50,
+  "len": 42402,
+  "pre": 30,
+  "script": 30,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -12
+   ]
+  ],
+  "underscore": 50
+ },
+ "cs61a_offline/lab/sol-lab00/index.html": {
+  "code": 74,
+  "div": 0,
+  "divn": 8,
+  "doctest": 8,
+  "href": "0b5b37de0129",
+  "hrefn": 39,
+  "len": 21510,
+  "pre": 10,
+  "script": 19,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab01/index.html": {
+  "code": 102,
+  "div": 0,
+  "divn": 26,
+  "doctest": 49,
+  "href": "241c75f9b217",
+  "hrefn": 48,
+  "len": 29138,
+  "pre": 31,
+  "script": 27,
+  "slot": 4,
+  "unbal": [
+   [
+    "a",
+    -9
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab02/index.html": {
+  "code": 133,
+  "div": 0,
+  "divn": 26,
+  "doctest": 104,
+  "href": "2c9b986e7ad0",
+  "hrefn": 41,
+  "len": 37979,
+  "pre": 39,
+  "script": 25,
+  "slot": 3,
+  "unbal": [
+   [
+    "a",
+    -7
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab03/index.html": {
+  "code": 137,
+  "div": 0,
+  "divn": 33,
+  "doctest": 68,
+  "href": "d87d24abd9e6",
+  "hrefn": 46,
+  "len": 35724,
+  "pre": 35,
+  "script": 27,
+  "slot": 4,
+  "unbal": [
+   [
+    "a",
+    -9
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab04/index.html": {
+  "code": 178,
+  "div": 0,
+  "divn": 32,
+  "doctest": 82,
+  "href": "c3ac015c566d",
+  "hrefn": 46,
+  "len": 44937,
+  "pre": 46,
+  "script": 28,
+  "slot": 4,
+  "unbal": [
+   [
+    "a",
+    -10
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab05/index.html": {
+  "code": 167,
+  "div": 0,
+  "divn": 30,
+  "doctest": 129,
+  "href": "2015195c4c6f",
+  "hrefn": 40,
+  "len": 37967,
+  "pre": 31,
+  "script": 25,
+  "slot": 3,
+  "unbal": [
+   [
+    "a",
+    -7
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab06/index.html": {
+  "code": 160,
+  "div": 0,
+  "divn": 27,
+  "doctest": 75,
+  "href": "815d8826ab88",
+  "hrefn": 36,
+  "len": 34782,
+  "pre": 18,
+  "script": 22,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab07/index.html": {
+  "code": 145,
+  "div": 0,
+  "divn": 26,
+  "doctest": 67,
+  "href": "c7e5ca36ee87",
+  "hrefn": 37,
+  "len": 33273,
+  "pre": 20,
+  "script": 23,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -5
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab08/index.html": {
+  "code": 90,
+  "div": 0,
+  "divn": 18,
+  "doctest": 62,
+  "href": "36cbdbea6c07",
+  "hrefn": 38,
+  "len": 24749,
+  "pre": 18,
+  "script": 23,
+  "slot": 2,
+  "unbal": [
+   [
+    "a",
+    -5
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab09/index.html": {
+  "code": 177,
+  "div": 0,
+  "divn": 23,
+  "doctest": 1,
+  "href": "274a5269d43d",
+  "hrefn": 46,
+  "len": 35410,
+  "pre": 44,
+  "script": 23,
+  "slot": 6,
+  "unbal": [
+   [
+    "a",
+    -5
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab10/index.html": {
+  "code": 157,
+  "div": 0,
+  "divn": 27,
+  "doctest": 24,
+  "href": "0dd03016de5d",
+  "hrefn": 40,
+  "len": 35434,
+  "pre": 24,
+  "script": 23,
+  "slot": 8,
+  "unbal": [
+   [
+    "a",
+    -5
+   ],
+   [
+    "code",
+    1
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab11/index.html": {
+  "code": 186,
+  "div": 0,
+  "divn": 20,
+  "doctest": 0,
+  "href": "5669975b65a1",
+  "hrefn": 39,
+  "len": 36367,
+  "pre": 39,
+  "script": 22,
+  "slot": 6,
+  "unbal": [
+   [
+    "a",
+    -4
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/lab/sol-lab12/index.html": {
+  "code": 198,
+  "div": 0,
+  "divn": 50,
+  "doctest": 97,
+  "href": "ba16e33f9265",
+  "hrefn": 49,
+  "len": 46677,
+  "pre": 31,
+  "script": 30,
+  "slot": 1,
+  "unbal": [
+   [
+    "a",
+    -12
+   ]
+  ],
+  "underscore": 6
+ },
+ "cs61a_offline/proj/ants/index.html": {
+  "code": 652,
+  "div": 0,
+  "divn": 50,
+  "doctest": 6,
+  "href": "ba83d22f61ce",
+  "hrefn": 72,
+  "len": 93396,
+  "pre": 55,
+  "script": 56,
+  "slot": 7,
+  "unbal": [
+   [
+    "a",
+    -36
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/proj/cats/index.html": {
+  "code": 413,
+  "div": 0,
+  "divn": 35,
+  "doctest": 31,
+  "href": "66ab736be827",
+  "hrefn": 71,
+  "len": 79422,
+  "pre": 53,
+  "script": 42,
+  "slot": 6,
+  "unbal": [
+   [
+    "a",
+    -22
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/proj/hog/index.html": {
+  "code": 292,
+  "div": 0,
+  "divn": 40,
+  "doctest": 14,
+  "href": "e9ef5054276f",
+  "hrefn": 60,
+  "len": 69484,
+  "pre": 46,
+  "script": 45,
+  "slot": 7,
+  "unbal": [
+   [
+    "a",
+    -24
+   ]
+  ],
+  "underscore": 0
+ },
+ "cs61a_offline/proj/scheme/index.html": {
+  "code": 598,
+  "div": 0,
+  "divn": 41,
+  "doctest": 9,
+  "href": "ab64a2a1f8a1",
+  "hrefn": 94,
+  "len": 96036,
+  "pre": 85,
+  "script": 51,
+  "slot": 3,
+  "unbal": [
+   [
+    "a",
+    -31
+   ]
+  ],
+  "underscore": 0
+ }
+}

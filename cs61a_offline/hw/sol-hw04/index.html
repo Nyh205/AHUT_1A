@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>作业 4 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+作业 4 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw04.zip" class="label label-outline">hw04.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<p>你可以在 <a href="hw04.py">hw04.py</a> 中找到解答。</p>
+
+    
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+<p>如果需要复习本次作业涉及的主题，请查阅下拉菜单。你也可以直接跳到题目，遇到卡住时再回来查看。
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        面向对象编程<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+<strong>面向对象编程</strong>（OOP）使用对象和类来组织程序。下面是一个类的例子：</p>
+
+<pre><code>class Car:
+    max_tires = 4
+
+    def __init__(self, color):
+        self.tires = Car.max_tires
+        self.color = color
+
+    def drive(self):
+        if self.tires &lt; Car.max_tires:
+            return self.color + &#x27; car cannot drive!&#x27;
+        return self.color + &#x27; car goes vroom!&#x27;
+
+    def pop_tire(self):
+        if self.tires &gt; 0:
+            self.tires &#x2d;= 1</code></pre>
+
+<p><strong>类（Class）</strong>：对象的类型。<code>Car</code> 类（如上所示）描述了所有 <code>Car</code> 对象的特征。</p>
+
+<p><strong>对象（Object）</strong>：类的一个实例。在 Python 中，通过调用类来创建新对象。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)</code></pre>
+
+<p>这里，<code>ferrari</code> 是一个绑定到 <code>Car</code> 对象的名字。</p>
+
+<p><strong>类属性</strong>：属于类的变量，通过点号访问。<code>Car</code> 类有一个 <code>max_tires</code> 属性。</p>
+
+<pre><code>&gt;&gt;&gt; Car.max_tires
+4</code></pre>
+
+<page-break>
+
+<p><strong>实例属性</strong>：属于某个具体对象的变量。每个 <code>Car</code> 对象都有一个 <code>tires</code> 属性和一个 <code>color</code> 属性。与类属性一样，实例属性也通过点号访问。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari.color
+&#x27;red&#x27;
+&gt;&gt;&gt; ferrari.tires
+4
+&gt;&gt;&gt; ferrari.color = &#x27;green&#x27;
+&gt;&gt;&gt; ferrari.color
+&#x27;green&#x27;</code></pre>
+
+<p><strong>方法</strong>：属于对象的函数，通过点号调用。按照约定，方法的第一个参数是 <code>self</code>。</p>
+
+<p>当调用对象的某个方法时，该对象会被隐式地作为 <code>self</code> 的参数传入。例如，<code>ferrari</code> 对象的 <code>drive</code> 方法是用空括号调用的，因为 <code>self</code> 被隐式地绑定到 <code>ferrari</code> 对象。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)
+&gt;&gt;&gt; ferrari.drive()
+&#x27;red car goes vroom!&#x27;</code></pre>
+
+<p>我们也可以调用最初的 <code>Car.drive</code> 函数。这个原始函数不属于任何特定的 <code>Car</code> 对象，所以我们必须显式地为 <code>self</code> 传入参数。</p>
+
+<pre><code>&gt;&gt;&gt; ferrari = Car(&#x27;red&#x27;)
+&gt;&gt;&gt; Car.drive(ferrari)
+&#x27;red car goes vroom!&#x27;</code></pre>
+
+<p><strong>__init__</strong>：一种特殊函数，在创建类的新实例时会自动调用。</p>
+
+<p>注意 <code>drive</code> 方法接收 <code>self</code> 作为参数，但看起来我们并没有传入它！这是因为点号表示法<em>隐式地</em>帮我们把 <code>ferrari</code> 作为 <code>self</code> 传了进去。所以在这个例子里，<code>self</code> 绑定到全局帧中名为 <code>ferrari</code> 的那个对象。</p>
+
+<p>求值表达式 <code>Car(&#x27;red&#x27;)</code> 时，Python 会创建一个新的 <code>Car</code> 对象。然后，Python 调用 <code>Car</code> 类的 <code>__init__</code> 函数，把 <code>self</code> 绑定到新对象，把 <code>color</code> 绑定到 <code>&#x27;red&#x27;</code>。
+</div></p>
+
+<br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        可变的树<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<h1 id="trees" class="no-toc">树</h1>
+
+<p>回顾一下树这种抽象数据类型：一棵树被定义为有一个标签和若干分支。之前我们用 Python 列表实现了树的抽象。现在我们看看另一种用对象实现的方式：</p>
+
+<pre><code>class Tree:
+    def __init__(self, label, branches=[]):
+        for b in branches:
+            assert isinstance(b, Tree)
+        self.label = label
+        self.branches = branches
+
+    def is_leaf(self):
+        return not self.branches</code></pre>
+
+
+
+<p>使用这种实现，我们可以通过属性赋值来修改树，而之前用列表的实现做不到这一点。这也是我们有时把这些对象称为「可变树」的原因。</p>
+
+<pre><code>&gt;&gt;&gt; t = Tree(3, [Tree(4), Tree(5)])
+&gt;&gt;&gt; t.label = 5
+&gt;&gt;&gt; t.label
+5</code></pre>
+
+
+</div>
+
+<br>
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        继承<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+<!-- This is the short version of inheritance introduction.
+A longer version can be found in inheritance-introduction.md -->
+
+<p>为了避免为相似的类重复定义属性和方法，我们可以写一个<strong>基类</strong>，让更专门的类<strong>继承</strong>它。例如，我们可以写一个叫做 <code>Pet</code> 的类，并把 <code>Dog</code> 定义为 <code>Pet</code> 的<strong>子类</strong>：</p>
+
+<pre><code class="python">class Pet:
+    def __init__(self, name, owner):
+        self.is_alive = True    # It&#x27;s alive!!!
+        self.name = name
+        self.owner = owner
+    def eat(self, thing):
+        print(self.name + &quot; ate a &quot; + str(thing) + &quot;!&quot;)
+    def talk(self):
+        print(self.name)
+
+class Dog(Pet):
+    def talk(self):
+        super().talk()
+        print(&#x27;This Dog says woof!&#x27;)</code></pre>
+
+
+
+<page-break>
+
+<p>继承表示两个或多个类之间的层次关系，其中一个类<strong>是</strong>另一个类更具体的版本：狗<strong>是</strong>一种宠物。（在面向对象语言中，我们用「<strong><code>is</code> a</strong>」来描述这类关系，而不是指 Python 的 is 运算符。）</p>
+
+<p>由于 <code>Dog</code> 继承自 <code>Pet</code>，<code>Dog</code> 类也会继承 <code>Pet</code> 类的方法，因此我们不必重新定义 <code>__init__</code> 或 <code>eat</code>。但我们希望每只 <code>Dog</code> 都用 <code>Dog</code> 特有的方式说话，所以可以<strong>重写</strong> <code>talk</code> 方法。</p>
+
+<p>我们可以用 <code>super()</code> 来表示 <code>self</code> 的超类，并像超类的实例一样访问任何超类方法。例如，<code>Dog</code> 类中的 <code>super().talk()</code> 会调用 <code>Pet</code> 类中的 talk 方法，但传入的 <code>self</code> 是 <code>Dog</code> 实例。
+</div></p>
+
+
+<h2 id="object-oriented-programming">面向对象编程</h2>
+
+
+
+<h3 id="q1-vending-machine">Q1：自动售货机</h3>
+
+
+<p>在这道题中，你将创建一个 <a href="https://en.wikipedia.org/wiki/Vending_machine">自动售货机</a>，它只售卖一种商品，并在需要时找零。</p>
+
+<p>实现 <code>VendingMachine</code> 类，它为某一种特定商品建模自动售货机。<code>VendingMachine</code> 对象的方法返回字符串来描述机器的状态和操作。请确保你的输出与 doctest 中给出的字符串<em>完全</em>一致，包括标点和空格。</p>
+
+<blockquote><p>你可能会发现 Python 的格式化字符串字面量（即 <a href="https://docs.python.org/3/tutorial/inputoutput.html#fancier-output-formatting">f-strings</a>）很有用。
+一个简单的例子：</p>
+
+<pre><code>&gt;&gt;&gt; feeling = &#x27;love&#x27;
+&gt;&gt;&gt; course = &#x27;CS 61A!&#x27;
+&gt;&gt;&gt; combined_string = f&#x27;I {feeling} {course}&#x27;
+&gt;&gt;&gt; combined_string
+&#x27;I love CS 61A!&#x27;</code></pre></blockquote>
+
+<solution>
+
+<pre><code>class VendingMachine:
+    &quot;&quot;&quot;A vending machine that vends some product for some price.
+
+    &gt;&gt;&gt; v = VendingMachine(&#x27;candy&#x27;, 10)
+    &gt;&gt;&gt; v.vend()
+    &#x27;Nothing left to vend. Please restock.&#x27;
+    &gt;&gt;&gt; v.add_funds(15)
+    &#x27;Nothing left to vend. Please restock. Here is your $15.&#x27;
+    &gt;&gt;&gt; v.restock(2)
+    &#x27;Current candy stock: 2&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Please add $10 more funds.&#x27;
+    &gt;&gt;&gt; v.add_funds(7)
+    &#x27;Current balance: $7&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Please add $3 more funds.&#x27;
+    &gt;&gt;&gt; v.add_funds(5)
+    &#x27;Current balance: $12&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Here is your candy and $2 change.&#x27;
+    &gt;&gt;&gt; v.add_funds(10)
+    &#x27;Current balance: $10&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Here is your candy.&#x27;
+    &gt;&gt;&gt; v.add_funds(15)
+    &#x27;Nothing left to vend. Please restock. Here is your $15.&#x27;
+
+    &gt;&gt;&gt; w = VendingMachine(&#x27;soda&#x27;, 2)
+    &gt;&gt;&gt; w.restock(3)
+    &#x27;Current soda stock: 3&#x27;
+    &gt;&gt;&gt; w.restock(3)
+    &#x27;Current soda stock: 6&#x27;
+    &gt;&gt;&gt; w.add_funds(2)
+    &#x27;Current balance: $2&#x27;
+    &gt;&gt;&gt; w.vend()
+    &#x27;Here is your soda.&#x27;
+    &quot;&quot;&quot;
+    def __init__(self, product: str, price: int):
+        &quot;&quot;&quot;Set the product and its price, as well as other instance attributes.&quot;&quot;&quot;
+<div class="sol-highlight">        self.product = product
+        self.price = price
+        self.stock = 0
+        self.balance = 0</div>
+    def restock(self, n: int) &#x2d;&gt; str:
+        &quot;&quot;&quot;Add n to the stock and return a message about the updated stock level.
+
+        E.g., Current candy stock: 3
+        &quot;&quot;&quot;
+<div class="sol-highlight">        self.stock += n
+        return f&#x27;Current {self.product} stock: {self.stock}&#x27;</div>
+    def add_funds(self, n: int) &#x2d;&gt; str:
+        &quot;&quot;&quot;If the machine is out of stock, return a message informing the user to restock
+        (and return their n dollars).
+
+        E.g., Nothing left to vend. Please restock. Here is your $4.
+
+        Otherwise, add n to the balance and return a message about the updated balance.
+
+        E.g., Current balance: $4
+        &quot;&quot;&quot;
+<div class="sol-highlight">        if self.stock == 0:
+            return f&#x27;Nothing left to vend. Please restock. Here is your ${n}.&#x27;
+            # Alternatively, we could have:
+            # return self.vend() + f&#x27; Here is your ${n}.&#x27;
+        self.balance += n
+        return f&#x27;Current balance: ${self.balance}&#x27;</div>
+    def vend(self) &#x2d;&gt; str:
+        &quot;&quot;&quot;Dispense the product if there is sufficient stock and funds and
+        return a message. Update the stock and balance accordingly.
+
+        E.g., Here is your candy and $2 change.
+
+        If not, return a message suggesting how to correct the problem.
+
+        E.g., Nothing left to vend. Please restock.
+              Please add $3 more funds.
+        &quot;&quot;&quot;
+<div class="sol-highlight">        if self.stock == 0:
+            return &#x27;Nothing left to vend. Please restock.&#x27;
+        difference = self.price &#x2d; self.balance
+        if difference &gt; 0:
+            return f&#x27;Please add ${difference} more funds.&#x27;
+        message = f&#x27;Here is your {self.product}&#x27;
+        if difference != 0:
+            message += f&#x27; and ${&#x2d;difference} change&#x27;
+        self.balance = 0
+        self.stock &#x2d;= 1
+        return message + &#x27;.&#x27;</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q VendingMachine<button id="copy-code-python3ok-qVendingMachine" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qVendingMachine").onclick = () => copyCode('python3 ok -q VendingMachine', "copy-code-python3ok-qVendingMachine");
+        </script>
+        <br/>
+
+
+<h2 id="mutable-trees">可变的树</h2>
+
+
+
+<h3 id="q2-cumulative-mul">Q2：累积相乘</h3>
+
+
+<p>编写函数 <code>cumulative_mul</code>，它修改树 <code>t</code>，使每个节点的标签被替换为该节点标签与其所有后代标签的乘积。</p>
+
+<blockquote><p><strong>提示</strong>：注意你修改当前节点标签与处理其子树的先后顺序，哪一个应该先做？</p></blockquote>
+
+<solution>
+
+<pre><code>def cumulative_mul(t: Tree) &#x2d;&gt; None:
+    &quot;&quot;&quot;Mutates t so that each node&#x27;s label becomes the product of its own
+    label and all labels in the corresponding subtree rooted at t.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
+    &gt;&gt;&gt; cumulative_mul(t)
+    &gt;&gt;&gt; t
+    Tree(105, [Tree(15, [Tree(5)]), Tree(7)])
+    &gt;&gt;&gt; otherTree = Tree(2, [Tree(1, [Tree(3), Tree(4), Tree(5)]), Tree(6, [Tree(7)])])
+    &gt;&gt;&gt; cumulative_mul(otherTree)
+    &gt;&gt;&gt; otherTree
+    Tree(5040, [Tree(60, [Tree(3), Tree(4), Tree(5)]), Tree(42, [Tree(7)])])
+    &quot;&quot;&quot;
+<div class="sol-highlight">    for b in t.branches:
+        cumulative_mul(b)
+    total = t.label
+    for b in t.branches:
+        total *= b.label
+    t.label = total
+
+# Alternate solution using only one loop
+def cumulative_mul(t: Tree) &#x2d;&gt; None:
+    for b in t.branches:
+        cumulative_mul(b)
+        t.label *= b.label</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q cumulative_mul<button id="copy-code-python3ok-qcumulative_mul" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcumulative_mul").onclick = () => copyCode('python3 ok -q cumulative_mul', "copy-code-python3ok-qcumulative_mul");
+        </script>
+        <br/>
+
+
+<h3 id="q3-prune-small">Q3：剪去小分支</h3>
+
+
+<p>从树中移除一些节点称为对树进行<em>剪枝</em>。</p>
+
+<p>完成函数 <code>prune_small</code>，它接收一棵树 <code>t</code> 和一个数 <code>n</code>。对于每个分支数超过 <code>n</code> 的节点，只保留标签最小的 <code>n</code> 个分支，并移除（<em>剪去</em>）其余的分支。</p>
+
+<blockquote><p><strong>提示</strong>：<code>max</code> 函数接收一个可迭代对象以及一个可选的 <code>key</code> 参数（key 接收一个单参数函数）。例如，<code>max([&#x2d;7, 2, &#x2d;1], key=abs)</code> 会返回 <code>&#x2d;7</code>，因为 <code>abs(&#x2d;7)</code> 大于 <code>abs(2)</code> 和 <code>abs(&#x2d;1)</code>。</p>
+
+<p><code>remove</code> 函数接收一个值参数，并通过移除 <code>value</code> 的第一次出现来修改列表。例如，如果 <code>l = [1, 2, 3, 2]</code>，调用 <code>l.remove(2)</code> 会把 <code>l</code> 修改为 <code>[1, 3, 2]</code>，因为它移除遇到的第一个 <code>2</code>。</p></blockquote>
+
+<solution>
+
+<pre><code>def prune_small(t: Tree, n: int) &#x2d;&gt; None:
+    &quot;&quot;&quot;Prune the tree mutatively, keeping only the n branches
+    of each node with the smallest labels.
+
+    &gt;&gt;&gt; t1 = Tree(6)
+    &gt;&gt;&gt; prune_small(t1, 2)
+    &gt;&gt;&gt; t1
+    Tree(6)
+    &gt;&gt;&gt; t2 = Tree(6, [Tree(3), Tree(4)])
+    &gt;&gt;&gt; prune_small(t2, 1)
+    &gt;&gt;&gt; t2
+    Tree(6, [Tree(3)])
+    &gt;&gt;&gt; t3 = Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2), Tree(3)]), Tree(5, [Tree(3), Tree(4)])])
+    &gt;&gt;&gt; prune_small(t3, 2)
+    &gt;&gt;&gt; t3
+    Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2)])])
+    &quot;&quot;&quot;
+<div class="sol-highlight">    while len(t.branches) &gt; n:</div><div class="sol-highlight">        largest = max(t.branches, key=lambda x: x.label)</div><div class="sol-highlight">        t.branches.remove(largest)</div>    for b in t.branches:
+<div class="sol-highlight">        prune_small(b, n)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q prune_small<button id="copy-code-python3ok-qprune_small" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qprune_small").onclick = () => copyCode('python3 ok -q prune_small', "copy-code-python3ok-qprune_small");
+        </script>
+        <br/>
+
+
+<h2 id="inheritance">继承</h2>
+
+
+
+<h3 id="q4-cat">Q4：猫</h3>
+
+
+<p>下面是一个 <code>Pet</code> 类的实现。每只宠物有两个实例属性（<code>name</code> 和 <code>owner</code>），以及一个实例方法（<code>talk</code>）。</p>
+
+<pre><code>class Pet:
+
+    def __init__(self, name, owner):
+        self.name = name
+        self.owner = owner
+
+    def talk(self):
+        print(self.name)</code></pre>
+
+
+
+<p>实现 <code>Cat</code> 类，它继承自上面看到的 <code>Pet</code> 类。</p>
+
+<solution>
+
+<pre><code>class Pet:
+
+    def __init__(self, name: str, owner: str) &#x2d;&gt; None:
+        self.name = name
+        self.owner = owner
+
+    def talk(self) &#x2d;&gt; None:
+        print(self.name)
+
+class Cat(Pet):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; my_cat = Cat(&quot;Furball&quot;, &quot;Me&quot;, lives=2)
+    &gt;&gt;&gt; my_cat.talk()
+    Meow!
+    &gt;&gt;&gt; my_cat.name
+    &#x27;Furball&#x27;
+    &gt;&gt;&gt; my_cat.lose_life()
+    &gt;&gt;&gt; my_cat.is_alive
+    True
+    &gt;&gt;&gt; my_cat.eat(&quot;poison&quot;)
+    Meow!
+    Furball ate a poison!
+    &gt;&gt;&gt; my_cat.is_alive
+    False
+    &gt;&gt;&gt; my_cat.lose_life()
+    &#x27;Cat is dead x_x&#x27;
+    &quot;&quot;&quot;
+    def __init__(self, name: str, owner: str, lives: int = 9) &#x2d;&gt; None:
+        assert type(lives) == int and  lives &gt; 0
+<div class="sol-highlight">        Pet.__init__(self, name, owner)
+        self.lives = lives
+        self.is_alive = True</div>
+    def talk(self) &#x2d;&gt; None:
+        &quot;&quot;&quot;A cat says &#x27;Meow!&#x27; when asked to talk.&quot;&quot;&quot;
+<div class="sol-highlight">        print(&quot;Meow!&quot;)</div>
+    def lose_life(self) &#x2d;&gt; str | None:
+        &quot;&quot;&quot;A cat can only lose a life if it has at least one
+        life. When there are zero lives left, the &#x27;is_alive&#x27;
+        variable becomes False.
+        &quot;&quot;&quot;
+<div class="sol-highlight">        if not self.is_alive:
+            return &quot;Cat is dead x_x&quot;
+        self.lives &#x2d;= 1
+        if self.lives == 0:
+            self.is_alive = False</div>
+    def eat(self, thing: str) &#x2d;&gt; None:
+        self.talk()
+        print(f&quot;{self.name} ate a {thing}!&quot;)
+        if thing == &quot;poison&quot;:
+            self.is_alive = False</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q Cat<button id="copy-code-python3ok-qCat" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qCat").onclick = () => copyCode('python3 ok -q Cat', "copy-code-python3ok-qCat");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="exam-practice">历年考题</h1>
+
+<p>作业中还会包含一些往年的考题供你参考。这些题目没有提交要求；如果你想挑战一下，尽管尝试！</p>
+
+<ol>
+  <li>2022 年春季 MT2 Q8：<a href="../../exam/sp22/mt2/61a-sp22-mt2.pdf#page=17">AHUT_1A Presents The Game of Hoop.</a></li>
+  <li>2024 年春季期末 Q5：<a href="../../exam/sp24/final/61a-sp24-final.pdf#page=15">树</a></li>
+  <li>2026 年春季 MT Q5：<a href="../../exam/sp26/midterm/61a-sp26-midterm.pdf#page=9">Making Pen Friends!</a></li>
+</ol>
+
+<p></li>
+</ol>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#object-oriented-programming">面向对象编程</a></li>
+    <ul>
+      <li><a href="#q1-vending-machine">Q1：自动售货机</a></li>
+    </ul>
+    <li><a href="#mutable-trees">可变的树</a></li>
+    <ul>
+      <li><a href="#q2-cumulative-mul">Q2：累积相乘</a></li>
+      <li><a href="#q3-prune-small">Q3：剪去小分支</a></li>
+    </ul>
+    <li><a href="#inheritance">继承</a></li>
+    <ul>
+      <li><a href="#q4-cat">Q4：猫</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#exam-practice">历年考题</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/lab.css">
+
+
+    <title>实验 3 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 3 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab03.zip" class="label label-outline">lab03.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<h2 id="lab-checkoff-questions">概念自测</h2>
+
+
+<ul>
+  <li><strong>为什么类型检查是一种好习惯？你如何用它来帮助自己解决问题？</strong></li>
+  <li>它有助于在你编写代码时发现错误，也有助于你思考输入并解决问题！</li>
+  <li><strong>有没有什么场景我们会使用列表推导式而不是普通列表？</strong></li>
+  <li>它更简洁，而且在递归函数中可以在同一行构建结果，尤其适用于需要构造嵌套列表的树形递归。</li>
+  <li><strong>如何索引列表的第一个、中间和最后一个元素？</strong></li>
+  <li>给定列表 <code>lst</code>，用 <code>lst[0]</code> 索引第一个元素，用 <code>lst[len(lst) // 2]</code> 索引中间元素，用 <code>lst[&#x2d;1]</code> 索引最后一个元素。（严格来说，这种访问中间元素的方式在偶数长度的列表中给出的才是正确的中间元素）</li>
+</ul>
+
+    
+
+
+
+<h1 id="topics">主题</h1>
+
+
+<p>如果你需要复习本次实验课的内容，可以查阅本节。你也可以直接跳到 <a href="#required-questions">the questions</a>，遇到困难时再回到这里查阅。</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        列表<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+
+<h2 id="lists" class="no-toc">列表</h2>
+
+
+<p>列表是一种数据结构，可以保存有序的元素集合。这些元素称为元素项，可以是任意数据类型，包括数字、字符串，甚至其他列表。用方括号括起、以逗号分隔的表达式列表可以创建一个列表：</p>
+
+<pre><code>&gt;&gt;&gt; list_of_values = [2, 1, 3, True, 3]
+&gt;&gt;&gt; nested_list = [2, [1, 3], [True, [3]]]</code></pre>
+
+<p>列表中的每个位置都有一个索引，最左边的元素索引为 <code>0</code>。</p>
+
+<pre><code>&gt;&gt;&gt; list_of_values[0]
+2
+&gt;&gt;&gt; nested_list[1]
+[1, 3]</code></pre>
+
+<p>负索引从末尾开始计数，最右边的元素索引为 <code>&#x2d;1</code>。</p>
+
+<pre><code>&gt;&gt;&gt; nested_list[&#x2d;1]
+[True, [3]]</code></pre>
+
+<p>列表相加会生成一个更长的列表，其中包含被相加的各个列表的元素。</p>
+
+<pre><code>&gt;&gt;&gt; [1, 2] + [3] + [4, 5]
+[1, 2, 3, 4, 5]</code></pre>
+
+</div>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        列表推导式<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+
+<h2 id="list-comprehensions" class="no-toc">列表推导式</h2>
+
+
+<p>列表推导式描述一个列表中的元素，求值后得到一个包含这些元素的新列表。</p>
+
+<p>它有两种形式：</p>
+
+<pre><code>[&lt;expression&gt; for &lt;element&gt; in &lt;sequence&gt;]
+[&lt;expression&gt; for &lt;element&gt; in &lt;sequence&gt; if &lt;conditional&gt;]</code></pre>
+
+<p>下面这个例子从 <code>[1, 2, 3, 4]</code> 开始，用 <code>if i % 2 == 0</code> 挑出偶数元素 <code>2</code> 和 <code>4</code>，再用 <code>i*i</code> 分别把它们平方。<code>for i</code> 的作用是给 <code>[1, 2, 3, 4]</code> 中的每个元素起一个名字。</p>
+
+<pre><code>&gt;&gt;&gt; [i*i for i in [1, 2, 3, 4] if i % 2 == 0]
+[4, 16]</code></pre>
+
+<p>这个列表推导式求值后得到的是一个列表，其中包含：</p>
+
+<ul>
+  <li><code>i*i</code> 的值</li>
+  <li>对应序列 <code>[1, 2, 3, 4]</code> 中的每个元素 <code>i</code></li>
+  <li>且满足 <code>i % 2 == 0</code></li>
+</ul>
+
+<p>换句话说，这个列表推导式会创建一个新列表，其中包含原列表 <code>[1, 2, 3, 4]</code> 中每个偶数元素的平方。</p>
+
+<p>我们也可以把列表推导式改写成等价的 <code>for</code> 语句，例如上面的例子可以改写成：</p>
+
+<pre><code>&gt;&gt;&gt; result = []
+&gt;&gt;&gt; for i in [1, 2, 3, 4]:
+...     if i % 2 == 0:
+...         result = result + [i*i]
+&gt;&gt;&gt; result
+[4, 16]</code></pre>
+
+</div>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        For 循环<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+
+<h2 id="for-statements" class="no-toc"><code>for</code> 语句</h2>
+
+
+<p><code>for</code> 语句会为序列（例如列表或 range）中的每个元素执行代码。每次执行时，<code>for</code> 后面的名字都会绑定到序列中不同的元素。</p>
+
+<pre><code>for &lt;name&gt; in &lt;expression&gt;:
+    &lt;suite&gt;</code></pre>
+
+<p>首先，对 <code>&lt;expression&gt;</code> 求值，它必须求值出一个序列。然后，按顺序对序列中的每个元素：</p>
+
+<ol>
+  <li>把 <code>&lt;name&gt;</code> 绑定到该元素。</li>
+  <li>执行 <code>&lt;suite&gt;</code>。</li>
+</ol>
+
+<p>下面是一个例子：</p>
+
+<pre><code>for x in [&#x2d;1, 4, 2, 0, 5]:
+    print(&quot;Current elem:&quot;, x)</code></pre>
+
+<p>这段代码会输出以下内容：</p>
+
+<pre><code>Current elem: &#x2d;1
+Current elem: 4
+Current elem: 2
+Current elem: 0
+Current elem: 5</code></pre>
+
+</div>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        range<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+
+<h2 id="ranges" class="no-toc">range</h2>
+
+
+<p>range 是一种用于存放整数序列的数据结构。可以通过以下方式创建 range：</p>
+
+<ul>
+  <li><code>range(stop)</code> 包含 0, 1, ..., <code>stop</code> - 1</li>
+  <li><code>range(start, stop)</code> 包含 <code>start</code>, <code>start</code> + 1, ..., <code>stop</code> - 1</li>
+</ul>
+
+<p>注意 range 函数不包含 <code>stop</code> 值；它生成的数字一直取到 <code>stop</code> 为止，但不包括 stop 本身。</p>
+
+<p>例如：</p>
+
+<pre><code>&gt;&gt;&gt; for i in range(3):
+...     print(i)
+...
+0
+1
+2</code></pre>
+
+<p>虽然 range 和列表都属于<a href="https://en.wikibooks.org/wiki/Python_Programming/Sequences">sequences</a>，但 range 对象与列表并不相同。调用 <code>list()</code> 可以把 range 转换成列表：</p>
+
+<pre><code>&gt;&gt;&gt; range(3, 6)
+range(3, 6)  # this is a range object
+&gt;&gt;&gt; list(range(3, 6))
+[3, 4, 5]  # list() converts the range object to a list
+&gt;&gt;&gt; list(range(5))
+[0, 1, 2, 3, 4]
+&gt;&gt;&gt; list(range(1, 6))
+[1, 2, 3, 4, 5]</code></pre>
+
+</div>
+
+<br>
+
+
+<h1 id="type-checking">类型检查</h1>
+
+
+<p><strong>声明：</strong>尽管类型检查很有用，但请更多把它当作一种判断输入和输出的练习。在本课程的一些情形中，类型检查的语法会超出范围。不过，请阅读关于类型检查的内容，并在可能时加以应用。</p>
+
+<!-- It is currently deemed out of scope to use imports, please amend this if it changes in the future -->
+
+<p>类型提示可以出现在赋值语句和 <code>def</code> 语句中（以及少数其他位置），用来表明变量应具有的值类型，或函数应返回的值类型。</p>
+
+<p>一个没有类型提示的例子：</p>
+
+<pre><code>x = 4
+
+def pair(y, z):
+    return [y, z]</code></pre>
+
+<p>同一个例子加上类型提示，表明 <code>x</code>、<code>y</code> 和 <code>z</code> 都是整数，并且 <code>pair</code> 函数返回一个整数列表：</p>
+
+<pre><code>x: int = 4
+
+def pair(y: int, z: int) &#x2d;&gt; list[int]:
+    return [y, z]</code></pre>
+
+<p>无论有没有类型提示，代码的行为都完全相同。你可以在<a href="../../articles/type-hints/index.html">类型标注</a>这篇文章中了解更多。</p>
+
+<p><strong>自动类型检查</strong>：VS Code 可以配置为在某个变量被赋了不符合预期类型的值时加以标注。要启用类型检查，请打开 VS Code 设置：在 Mac 上按 Command 和 <code>,</code> 键，在 Windows 上同时按 Control 和 <code>,</code> 键。在搜索栏中输入 <code>type checking</code>，就会出现下图中所示的 Type Checking 选项。使用下拉菜单把类型检查从默认的 <code>off</code> 改为 <code>basic</code>。</p>
+
+<p><img class="img-responsive center-block" src="assets/type_hints_vscode.png" alt="type-hints" width=" height="></p>
+
+<p>如果这些类型检查选项没有出现，你可能需要安装 <code>Pylance</code> 扩展。按住 Mac 上的 Shift、Command 和 <code>X</code>，或 Windows 上的 Shift、Control 和 <code>X</code>，打开扩展视图。在搜索栏中输入 Pylance，然后按下安装按钮。</p>
+
+<p>要确认类型检查是否已启用，请在 Python 文件中输入以下内容：</p>
+
+<pre><code>a: int = &#x27;not an int&#x27;</code></pre>
+
+<p>你应该会看到 <code>&#x27;not an int&#x27;</code> 下方出现红色下划线。如果把鼠标悬停在 <code>&#x27;not an int&#x27;</code> 上，VS Code 会显示一条错误信息，说明 <code>&#x27;not an int&#x27;</code> 与预期的类型 <code>int</code> 不匹配。写代码时请留意这些错误！它们通常是在提示你的代码哪里有 bug。</p>
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+
+        
+
+
+<h2 id="lists">列表</h2>
+
+
+
+<h3 id="q1-wwpd-lists-amp-ranges">Q1：WWPD：列表与 range</h3>
+
+
+<blockquote><p>用 ok 回答下面的「Python 会输出什么？」（WWPD）题目：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q lists-wwpd -u<button id="copy-code-python3ok-qlists-wwpd-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlists-wwpd-u").onclick = () => copyCode('python3 ok -q lists-wwpd -u', "copy-code-python3ok-qlists-wwpd-u");
+        </script>
+        <br/>
+
+<p><strong>重要：</strong>对于所有「Python 会输出什么？」题目，如果你认为答案是 <code>&lt;function...&gt;</code>，请输入 <code>Function</code>；如果会报错，请输入 <code>Error</code>；如果什么也不显示，请输入 <code>Nothing</code>。</p></blockquote>
+
+<p>先预测在交互式解释器中输入下面内容会输出什么，然后实际运行一次来核对答案。</p>
+
+<prompt>
+
+<pre><code>&gt;&gt;&gt; s = [7//3, 5, [4, 0, 1], 2]
+&gt;&gt;&gt; s[0]
+2
+&gt;&gt;&gt; s[2]
+[4, 0, 1]
+&gt;&gt;&gt; s[&#x2d;1]
+2
+&gt;&gt;&gt; len(s)
+4
+&gt;&gt;&gt; 4 in s
+False
+&gt;&gt;&gt; 4 in s[2]
+True
+&gt;&gt;&gt; s[2] + [3 + 2]
+[4, 0, 1, 5]
+&gt;&gt;&gt; 5 in s[2]
+False
+&gt;&gt;&gt; s[2] * 2
+[4, 0, 1, 4, 0, 1]
+&gt;&gt;&gt; list(range(3, 6))
+[3, 4, 5]
+&gt;&gt;&gt; range(3, 6)
+range(3, 6)
+&gt;&gt;&gt; r = range(3, 6)
+&gt;&gt;&gt; [r[0], r[2]]
+[3, 5]
+&gt;&gt;&gt; range(4)[&#x2d;1]
+3</code></pre>
+
+</prompt>
+
+
+<h3 id="q2-flatten">Q2：展平</h3>
+
+
+<p>编写一个函数 <code>flatten</code>，它接收一个列表 <code>s</code>，并返回一个<strong>新的列表</strong>，即 <code>s</code> 的“展平”版本。你不应修改原来的列表。</p>
+
+<blockquote><p><strong>注意：</strong>输入的列表可能嵌套很深，也就是说列表里可能还有多层列表。请确保你的解法支持这种情况。</p>
+
+<p><strong>提示</strong>：你可以使用内置的 <code>type</code> 函数来判断某个东西是不是列表。例如：</p>
+
+<pre><code>&gt;&gt;&gt; type(3) == list
+False
+&gt;&gt;&gt; type([1, 2, 3]) == list
+True</code></pre></blockquote>
+
+<solution>
+
+<pre><code>def flatten(s: list) &#x2d;&gt; list:
+    &quot;&quot;&quot;Returns a flattened version of list s.
+
+    &gt;&gt;&gt; flatten([1, 2, 3])
+    [1, 2, 3]
+    &gt;&gt;&gt; deep = [1, [[2], 3], 4, [5, 6]]
+    &gt;&gt;&gt; flatten(deep)
+    [1, 2, 3, 4, 5, 6]
+    &gt;&gt;&gt; deep                                # input list is unchanged
+    [1, [[2], 3], 4, [5, 6]]
+    &gt;&gt;&gt; very_deep = [[&#x27;m&#x27;, [&#x27;i&#x27;, [&#x27;n&#x27;, [&#x27;m&#x27;, &#x27;e&#x27;, [&#x27;w&#x27;, &#x27;t&#x27;, [&#x27;a&#x27;], &#x27;t&#x27;, &#x27;i&#x27;, &#x27;o&#x27;], &#x27;n&#x27;]], &#x27;s&#x27;]]]
+    &gt;&gt;&gt; flatten(very_deep)
+    [&#x27;m&#x27;, &#x27;i&#x27;, &#x27;n&#x27;, &#x27;m&#x27;, &#x27;e&#x27;, &#x27;w&#x27;, &#x27;t&#x27;, &#x27;a&#x27;, &#x27;t&#x27;, &#x27;i&#x27;, &#x27;o&#x27;, &#x27;n&#x27;, &#x27;s&#x27;]
+    &quot;&quot;&quot;
+<div class="sol-highlight">    lst = []
+    for elem in s:
+        if type(elem) == list:
+            lst += flatten(elem)
+        else:
+            lst += [elem]
+    return lst
+
+# Alternate solution
+    if not s:
+        return []
+    elif type(s[0]) == list:
+        return flatten(s[0]) + flatten(s[1:])
+    else:
+        return [s[0]] + flatten(s[1:])</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q flatten<button id="copy-code-python3ok-qflatten" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qflatten").onclick = () => copyCode('python3 ok -q flatten', "copy-code-python3ok-qflatten");
+        </script>
+        <br/>
+
+
+<h2 id="list-comprehensions">列表推导式</h2>
+
+
+
+<h3 id="q3-wwpd-list-comprehensions">Q3：WWPD：列表推导式</h3>
+
+
+<blockquote><p>用 ok 回答下面的「Python 会输出什么？」（WWPD）题目：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q list-comprehensions-wwpd -u<button id="copy-code-python3ok-qlist-comprehensions-wwpd-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qlist-comprehensions-wwpd-u").onclick = () => copyCode('python3 ok -q list-comprehensions-wwpd -u', "copy-code-python3ok-qlist-comprehensions-wwpd-u");
+        </script>
+        <br/>
+
+<p><strong>重要：</strong>对于所有「Python 会输出什么？」题目，如果你认为答案是 <code>&lt;function...&gt;</code>，请输入 <code>Function</code>；如果会报错，请输入 <code>Error</code>；如果什么也不显示，请输入 <code>Nothing</code>。</p></blockquote>
+
+<p>先预测在交互式解释器中输入下面内容会输出什么，然后实际运行一次来核对答案。</p>
+
+<prompt>
+
+<pre><code>&gt;&gt;&gt; [2 * x for x in range(4)]
+[0, 2, 4, 6]
+&gt;&gt;&gt; [y for y in [6, 1, 6, 1] if y &gt; 2]
+[6, 6]
+&gt;&gt;&gt; [[1] + s for s in [[4], [5, 6]]]
+[[1, 4], [1, 5, 6]]
+&gt;&gt;&gt; [z + 1 for z in range(10) if z % 3 == 0]
+[1, 4, 7, 10]</code></pre>
+
+</prompt>
+
+
+<h3 id="q4-close-list">Q4：相近列表</h3>
+
+
+<p>实现 <code>close_list</code>，它接收一个整数列表 <code>s</code> 和一个非负整数 <code>k</code>，返回一个列表，其中包含 <code>s</code> 中与其索引相差不超过 <code>k</code> 的元素。也就是说，元素与其索引之差的绝对值小于或等于 <code>k</code>。</p>
+
+<solution>
+
+<pre><code>def close_list(s: list[int], k: int) &#x2d;&gt; list[int]:
+    &quot;&quot;&quot;Return a list of the elements of s that are within k of their index.
+
+    &gt;&gt;&gt; t = [6, 2, 4, 3, 5]
+    &gt;&gt;&gt; close_list(t, 0)  # Only 3 is equal to its index
+    [3]
+    &gt;&gt;&gt; close_list(t, 1)  # 2, 3, and 5 are within 1 of their index
+    [2, 3, 5]
+    &gt;&gt;&gt; close_list(t, 2)  # 2, 3, 4, and 5 are all within 2 of their index
+    [2, 4, 3, 5]
+    &quot;&quot;&quot;
+    assert k &gt;= 0
+<div class="sol-highlight">    return [s[i] for i in range(len(s)) if abs(i &#x2d; s[i]) &lt;= k]</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q close_list<button id="copy-code-python3ok-qclose_list" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qclose_list").onclick = () => copyCode('python3 ok -q close_list', "copy-code-python3ok-qclose_list");
+        </script>
+        <br/>
+
+
+<h2 id="recursion">递归</h2>
+
+
+
+<h3 id="q5-sorting-a-list">Q5：列表排序</h3>
+
+
+<p>排序是计算机科学中一个非常重要的主题。本题中我们用递归来试着对一个列表排序。</p>
+
+<p>首先，编写一个函数 <code>remove_first</code>，它接收一个列表 <code>lst</code>，并移除数字 <code>elem</code> 第一次出现的那一项。</p>
+
+<solution>
+
+<pre><code>def remove_first(lst: list, elem: int) &#x2d;&gt; list:
+    &quot;&quot;&quot; This function removes the first appearance of elem in list lst.
+
+    &gt;&gt;&gt; remove_first([3, 4] , 3)
+    [4]
+    &gt;&gt;&gt; remove_first([3, 4, 3] , 3)
+    [4, 3]
+    &gt;&gt;&gt; remove_first([2, 4] , 3)
+    [2, 4]
+    &gt;&gt;&gt; remove_first([] , 0)
+    []
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if lst == []:
+        return lst
+    elif lst[0] == elem:
+        return lst[1:]
+    else:
+        return lst[:1] + remove_first(lst[1:], elem)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q remove_first<button id="copy-code-python3ok-qremove_first" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qremove_first").onclick = () => copyCode('python3 ok -q remove_first', "copy-code-python3ok-qremove_first");
+        </script>
+        <br/>
+
+<p>接下来，编写一个函数 <code>sort</code>，它接收一个列表 <code>lst</code> 并返回该列表排序后的版本。请使用递归！</p>
+
+<blockquote><p><em>提示</em>：使用你刚刚定义的 <code>remove_first</code> 函数，以及内置的 <code>min</code> 函数。</p></blockquote>
+
+<solution>
+
+<pre><code>def sort(lst: list) &#x2d;&gt; list:
+    &quot;&quot;&quot;This function returns a sorted version of the list lst.
+
+    &gt;&gt;&gt; sort([6, 2, 5])
+    [2, 5, 6]
+    &gt;&gt;&gt; sort([2, 3])
+    [2, 3]
+    &gt;&gt;&gt; sort([3])
+    [3]
+    &gt;&gt;&gt; sort([])
+    []
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if len(lst) &lt;= 1:
+        return lst
+    else:
+        small = min(lst)
+        new_lst = remove_first(lst,small)
+        return [small] + sort(new_lst)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q sort<button id="copy-code-python3ok-qsort" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsort").onclick = () => copyCode('python3 ok -q sort', "copy-code-python3ok-qsort");
+        </script>
+        <br/>
+
+
+<h3 id="q6-making-onions">Q6：制作洋葱</h3>
+
+
+<p>编写一个函数 <code>make_onion</code>，它接收两个单参数函数 <code>f</code> 和 <code>g</code>。它返回一个函数，该函数接收三个参数：<code>x</code>、<code>y</code> 和 <code>limit</code>。如果可以在最多 <code>limit</code> 次对 <code>f</code> 和 <code>g</code> 的调用内从 <code>x</code> 到达 <code>y</code>，返回的函数就返回 <code>True</code>，否则返回 <code>False</code>。</p>
+
+<p>例如，如果 <code>f</code> 是加 1、<code>g</code> 是乘 2，那么可以在四次调用内从 5 到达 25：<code>f(g(g(f(5))))</code>。</p>
+
+<solution>
+
+<pre><code>def make_onion(f, g):
+    &quot;&quot;&quot;Return a function can_reach(x, y, limit) that returns
+    whether some call expression containing only f, g, and x with
+    up to limit calls will give the result y.
+
+    &gt;&gt;&gt; up = lambda x: x + 1
+    &gt;&gt;&gt; double = lambda y: y * 2
+    &gt;&gt;&gt; can_reach = make_onion(up, double)
+    &gt;&gt;&gt; can_reach(5, 25, 4)      # 25 = up(double(double(up(5))))
+    True
+    &gt;&gt;&gt; can_reach(5, 25, 3)      # Not possible
+    False
+    &gt;&gt;&gt; can_reach(1, 1, 0)      # 1 = 1
+    True
+    &gt;&gt;&gt; add_ing = lambda x: x + &quot;ing&quot;
+    &gt;&gt;&gt; add_end = lambda y: y + &quot;end&quot;
+    &gt;&gt;&gt; can_reach_string = make_onion(add_ing, add_end)
+    &gt;&gt;&gt; can_reach_string(&quot;cry&quot;, &quot;crying&quot;, 1)      # &quot;crying&quot; = add_ing(&quot;cry&quot;)
+    True
+    &gt;&gt;&gt; can_reach_string(&quot;un&quot;, &quot;unending&quot;, 3)     # &quot;unending&quot; = add_ing(add_end(&quot;un&quot;))
+    True
+    &gt;&gt;&gt; can_reach_string(&quot;peach&quot;, &quot;folding&quot;, 4)   # Not possible
+    False
+    &quot;&quot;&quot;
+    def can_reach(x, y, limit: int) &#x2d;&gt; bool:
+        if limit &lt; 0:
+<div class="sol-highlight">            return False</div>        elif x == y:
+<div class="sol-highlight">            return True</div>        else:
+<div class="sol-highlight">            return can_reach(f(x), y, limit &#x2d; 1) or can_reach(g(x), y, limit &#x2d; 1)</div>    return can_reach</code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q make_onion<button id="copy-code-python3ok-qmake_onion" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmake_onion").onclick = () => copyCode('python3 ok -q make_onion', "copy-code-python3ok-qmake_onion");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+
+<h1 id="optional-questions">选做题</h1>
+
+
+<blockquote><p>这些是选做题。即使不做，本次作业仍然可以拿到全部学分。不过它们是不错的练习，建议还是做一下！</p></blockquote>
+
+
+<h3 id="q7-function-repeater">Q7：函数重复器</h3>
+
+
+<p>定义一个函数 <code>make_fn_repeater</code>，它接收一个单参数函数 <code>f</code> 和一个整数 <code>x</code>。它应返回另一个函数，该函数接收一个参数，也就是另一个整数。这个函数返回把 <code>f</code> 应用到 <code>x</code> 上指定次数后的结果。</p>
+
+<p>请确保在解法中使用递归。</p>
+
+<solution>
+
+<pre><code>def make_func_repeater(f, x: int):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; increment_repeater = make_func_repeater(lambda x: x + 1, 1)
+    &gt;&gt;&gt; increment_repeater(2) #same as f(f(x))
+    3
+    &gt;&gt;&gt; increment_repeater(5)
+    6
+    &quot;&quot;&quot;
+<div class="sol-highlight">    def repeat(i: int) &#x2d;&gt; int:</div><div class="sol-highlight">        if i == 0:</div><div class="sol-highlight">            return x</div>        else:
+<div class="sol-highlight">            return f(repeat(i &#x2d; 1))</div><div class="sol-highlight">    return repeat</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q make_func_repeater<button id="copy-code-python3ok-qmake_func_repeater" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmake_func_repeater").onclick = () => copyCode('python3 ok -q make_func_repeater', "copy-code-python3ok-qmake_func_repeater");
+        </script>
+        <br/>
+
+<guide>
+这与一道作业题非常相似，只是要求用递归实现。如果有时间，我们建议讲这道题，它以一种有趣的方式把递归和高阶函数结合在了一起。请务必与自引用作对比，说明为什么这不算自引用：既体现在行为上（这里一次函数调用会引发大量计算，而不是大量函数调用），也体现在实现上（这里调用 repeat 会去<em>调用</em> repeat，而不是返回一个新的 repeat 函数）。
+</guide>
+
+
+<h3 id="q8-ten-pairs">Q8：十数对</h3>
+
+
+<p>编写一个函数，它接收一个正整数 <code>n</code>，并返回其中包含的十数对的个数。十数对是 <code>n</code> 中两个数字组成的一对，它们的和为 10。</p>
+
+<p>数字 7,823,952 有 3 个十数对。第一位和第四位数字之和为 7+3=10，第二位和第三位数字之和为 8+2=10，第二位和最后一位数字之和为 8+2=10。</p>
+
+<p>重要说明：</p>
+
+<ul>
+  <li>一个数字可以属于多个十数对。</li>
+  <li>一个 5 不能和它自己组成十数对。</li>
+</ul>
+
+<blockquote><p><em>建议</em>：完成并使用辅助函数 <code>count_digit</code> 来计算某个数字在 <code>n</code> 中出现了多少次。</p></blockquote>
+
+<p><strong>重要：</strong>请使用递归；如果使用任何循环（for、while），测试将无法通过。</p>
+
+<solution>
+
+<pre><code>def ten_pairs(n: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return the number of ten&#x2d;pairs within positive integer n.
+
+    &gt;&gt;&gt; ten_pairs(7823952) # 7+3, 8+2, and 8+2
+    3
+    &gt;&gt;&gt; ten_pairs(55055)
+    6
+    &gt;&gt;&gt; ten_pairs(9641469) # 9+1, 6+4, 6+4, 4+6, 1+9, 4+6 
+    6
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;ten_pairs&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if n &lt; 10:
+        return 0
+    else:
+        return ten_pairs(n//10) + count_digit(n//10, 10 &#x2d; n%10)</div>
+def count_digit(n: int, digit: int) &#x2d;&gt; int:
+    &quot;&quot;&quot;Return how many times digit appears in n.
+
+    &gt;&gt;&gt; count_digit(55055, 5) # digit 5 appears 4 times in 55055
+    4
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;count_digits&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if n == 0:
+        return 0
+    else:
+        if n%10 == digit:
+            return count_digit(n//10, digit) + 1
+        else:
+            return count_digit(n//10, digit)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q ten_pairs<button id="copy-code-python3ok-qten_pairs" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qten_pairs").onclick = () => copyCode('python3 ok -q ten_pairs', "copy-code-python3ok-qten_pairs");
+        </script>
+        <br/>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <li><a href="#topics">主题</a></li>
+  <li><a href="#type-checking">类型检查</a></li>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#lists">列表</a></li>
+    <ul>
+      <li><a href="#q1-wwpd-lists-amp-ranges">Q1：WWPD：列表与 range</a></li>
+      <li><a href="#q2-flatten">Q2：展平</a></li>
+    </ul>
+    <li><a href="#list-comprehensions">列表推导式</a></li>
+    <ul>
+      <li><a href="#q3-wwpd-list-comprehensions">Q3：WWPD：列表推导式</a></li>
+      <li><a href="#q4-close-list">Q4：相近列表</a></li>
+    </ul>
+    <li><a href="#recursion">递归</a></li>
+    <ul>
+      <li><a href="#q5-sorting-a-list">Q5：列表排序</a></li>
+      <li><a href="#q6-making-onions">Q6：制作洋葱</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+  <li><a href="#optional-questions">选做题</a></li>
+  <ul>
+    <li><a href="#q7-function-repeater">Q7：函数重复器</a></li>
+    <li><a href="#q8-ten-pairs">Q8：十数对</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

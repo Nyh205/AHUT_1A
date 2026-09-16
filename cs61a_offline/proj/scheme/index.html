@@ -1,0 +1,1747 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link href="../../assets/css/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>Scheme 解释器 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Scheme 解释器
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="scheme.zip" class="label label-outline">scheme.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <blockquote><p><img class="img-responsive center-block" src="images/schememon_splash.png" alt="Schememon art by Alicia Gullon" width=" height="></p>
+
+<cite>
+  eval 调用 apply，<br />
+  而 apply 又再次调用 eval！<br />
+  这一切何时才会结束？
+</cite></blockquote>
+</div>
+
+    
+
+<h2 id="introduction">引言</h2>
+
+<!-- blockquote hack -->
+
+<!-- > * Submit with Phase 1 complete by <strong></strong> (worth 0.5 pt).
+
+<blockquote><ul>
+  <li>Submit with Phase 1 and Phase 2 complete by <strong></strong> (worth 0.5 pt).
+  -->
+  <strong>重要提交说明</strong>：要获得满分，</li>
+</ul>
+
+<p>请在 <strong>08/06 星期四</strong>之前提交完成第 1 阶段和第 2 阶段的作业（占 1 分）。</p>
+
+<p>请在 <strong>08/13 星期四</strong>之前提交完成所有阶段的作业。</p>
+
+<p><strong>延期处理</strong>：本项目<strong>不</strong>接受延期（除非是 DSP）。</p>
+
+<p>请尽量按顺序完成各题并运行它们的 <code>ok</code> 测试，因为后面有些题目的实现会依赖前面的题目。</p>
+
+<p>整个项目可以两人合作完成。</p>
+
+</blockquote>
+
+<p>在本项目中，你将用 Python 为 Scheme 语言的一个子集实现一个解释器。本项目使用的这个语言子集在《Composing Programs》的 <a href="https://www.composingprograms.com/pages/32-functional-programming.html">函数式编程</a> 一节以及这个 <a href="../../articles/scheme-spec/index.html">语言规范</a> 和 <a href="../../articles/scheme-builtins/index.html">内置过程参考</a> 中有描述。</p>
+
+<p>要了解更多关于 Scheme 的内容，你可以免费在线阅读 <a href=">Structure and Interpretation of Computer Programs</a>。第 1 章和第 2 章的示例已作为测试用例包含在本项目中。第 3、4、5 章的语言特性不属于本项目的内容，但当然欢迎你扩展自己的解释器以实现更多语言特性。</p>
+
+
+<h2 id="download-starter-files">下载起始文件</h2>
+
+
+<p>你可以把项目代码全部下载为一个 <a href="scheme.zip">zip 压缩包</a>。</p>
+
+<p>你将编辑的文件：</p>
+
+<ul>
+  <li><code>scheme_eval_apply.py</code>：用于 Scheme 表达式的递归求值器</li>
+  <li><code>scheme_forms.py</code>：用于求值 Scheme 中特殊形式（如 <code>define</code>、<code>lambda</code>、<code>and</code>、<code>cond</code> 等）的 Python 函数</li>
+  <li><code>scheme_classes.py</code>：描述 Scheme 表达式的 Python 类</li>
+  <li><code>questions.scm</code>：供你实现的 Scheme 过程</li>
+</ul>
+
+<p>项目中的其余文件：</p>
+
+<ul>
+  <li><code>link.py</code>：定义了 <code>Link</code> 类、<code>nil</code> 和 <code>map_link</code></li>
+  <li><code>scheme.py</code>：解释器的读取-求值-打印循环（REPL），即解释器的用户界面</li>
+  <li><code>scheme_builtins.py</code>：内置的 Scheme 过程</li>
+  <li><code>scheme_reader.py</code>：Scheme 表达式的读取器（解析器）</li>
+  <li><code>scheme_tokens.py</code>：Scheme 输入的词法分析器</li>
+  <li><code>scheme_utils.py</code>：用于检查 Scheme 表达式的函数</li>
+  <li><code>buffer.py</code>：供 Scheme 读取器使用的工具类</li>
+  <li><code>ucb.py</code>：供 61A 项目使用的工具函数</li>
+  <li><code>tests.scm</code>：用 Scheme 编写的一组测试用例</li>
+  <li><code>ok</code>：自动评分程序</li>
+  <li><code>tests</code>：<code>ok</code> 所使用的测试目录</li>
+  <li><code>mytests.rst</code>：一个你可以添加自己测试的文件</li>
+</ul>
+
+<!-- <include proj/scheme/oral-exams.md> -->
+
+
+
+
+<!-- This is a hack so this section shows up in the sidebar -->
+
+<h2 id="logistics">事务安排</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>你需要提交以下文件：</p>
+
+<ul>
+  <li><code>scheme_eval_apply.py</code></li>
+  <li><code>scheme_forms.py</code></li>
+  <li><code>scheme_classes.py</code></li>
+  <li><code>questions.scm</code></li>
+</ul>
+
+
+
+
+
+<p>对于我们要求你完成的函数，我们可能会提供一些初始代码。如果你不想使用这些代码，可以删掉它们，从零开始写。你也可以按自己的需要添加新的函数定义。</p>
+
+<p><b>但是，请不要修改任何其他函数，也不要编辑上面未列出的文件</b>，否则你的代码可能无法通过自动评分程序的测试。另外，请不要改动任何函数签名（名称、参数顺序或参数个数）。</p>
+
+
+
+<p>在整个项目中，你都应该测试代码的正确性。经常测试是个好习惯，这样容易定位问题。但也不要测试得<i>过于</i>频繁，要留出时间把问题想清楚。</p>
+
+<p>我们提供了一个名为 <code>ok</code> 的<b>自动评分程序</b>，帮助你测试代码并跟踪进度。第一次运行时，它会要求你<b>通过网页浏览器登录 Ok 账号</b>，请照做。每次运行 <code>ok</code>，它都会把你的工作和进度备份到我们的服务器上。</p>
+
+<p><code>ok</code> 的主要用途是测试你的实现。</p>
+
+<!-- <p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code>python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>
+=====================================================================
+Assignment: Scheme Interpreter
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>  -->
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<!-- <p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue. <b>If you forget to submit, your last backup will be automatically converted to a submission. </b></p>
+-->
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<!--- <p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="scheme.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p> -->
+
+<!---
+<p>If you do not want us to record a backup of your work or information about
+your progress, you can run
+
+<pre>python3 ok --local</pre>
+
+
+With this option, no information will be sent to our course
+servers.
+
+-->
+
+<p>如果你想交互式地测试代码，可以运行
+
+<pre> python3 ok -q [question number] -i </pre>
+
+并填入对应的题目编号（例如 <code>01</code>）。它会运行该题目的测试，直到你第一个失败的测试为止，然后让你有机会交互式地测试自己写的函数。</p>
+
+<p>你也可以使用 OK 的调试打印功能，只要在 print 语句前加上 "DEBUG:"。例如，如果你想查看变量 <code>x</code> 的值，可以这样写：
+
+<pre> print(f"DEBUG: x is {x}") </pre>
+
+这样终端就会输出内容，而不会因为多出来的输出导致 OK 测试失败。
+
+<h2 id="interpreter-details">解释器细节</h2>
+
+
+
+<h3 id="scheme-features">Scheme 特性</h3>
+
+
+<p><strong>读取-求值-打印。</strong>解释器读取 Scheme 表达式，对它们求值，并显示结果。</p>
+
+<pre><code class="scheme">scm&gt; 2
+2
+scm&gt; (+ 2 3)
+5
+scm&gt; ((lambda (x) (* x x)) 5)
+25</code></pre>
+
+
+
+<p>为 Scheme 解释器提供的起始代码足以成功求值上面的第一个表达式——一个数字。不过，更复杂的操作，例如第二个例子（调用一个内置过程）和第三个例子（计算 5 的平方），目前还无法工作。</p>
+
+<p><strong>Load。</strong>你可以通过传入表示文件名的符号来加载文件。例如，要加载 <code>tests.scm</code>，请对下面的调用表达式求值。</p>
+
+<pre><code class="scheme">scm&gt; (load &#x27;tests)</code></pre>
+
+
+
+<p><strong>符号（Symbols）。</strong>在我们 AHUT_1A 使用的 Scheme 方言中，符号（或<em>标识符</em>）是由字母（a-z 和 A-Z）、数字以及 <code>!$%&amp;*/:&lt;=&gt;?@^_~&#x2d;+.</code> 中的字符组成的序列，且不能构成合法的整数或浮点数。</p>
+
+<p>我们这个版本的 Scheme 不区分大小写：如果两个标识符仅在字母大小写上不同，它们就被视为相同。它们在内部以小写形式表示和打印：</p>
+
+<pre><code class="scheme">scm&gt; &#x27;Hello
+hello</code></pre>
+
+
+
+
+<h3 id="running-the-interpreter">运行解释器</h3>
+
+
+<p>要启动一个交互式的 Scheme 解释器会话，请输入：</p>
+
+<pre><code>python3 scheme.py</code></pre>
+
+<p>要退出 Scheme 解释器，在 Mac/Linux 上按 <code>Ctrl&#x2d;d</code>（在 Windows 上按 <code>Ctrl&#x2d;z Enter</code>），或者调用内置的 <code>exit</code> 过程
+（在完成第 3 题、实现了内置 Scheme 过程的调用之后）：</p>
+
+<pre><code class="scheme">scm&gt; (exit)</code></pre>
+
+
+
+<p>你可以把文件名作为命令行参数传给 <code>scheme.py</code>，用你的 Scheme 解释器求值输入文件中的表达式：</p>
+
+<pre><code>python3 scheme.py tests.scm</code></pre>
+
+<p><code>tests.scm</code> 文件中包含一长串示例 Scheme 表达式及其期望值。其中许多例子来自 <a href="https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html">Structure and Interpretation of Computer Programs</a> 的第 1 章和第 2 章，该书正是《Composing Programs》改编所依据的教材。</p>
+
+<br>
+
+
+<h2 id="schememon">Schememon</h2>
+
+
+<p>解释器的一个实际应用，就是让用某种编程语言编写的程序能够包含用另一种语言编写的代码。例如，用 Python 编写的游戏如果内置了一个用 Python 写的 Scheme 解释器（它求值 Scheme 表达式并把它们的值表示为 Python 对象），那么这个游戏也可以包含 Scheme 代码。</p>
+
+<p>本项目就包含这样一个游戏，叫做 Schémémon，由往届学生 Tristan Roath 和 Tyler Roath 制作。在这个卡牌对战游戏中，当玩家正确填写出一个 Scheme 过程定义时，伤害会翻倍。你在这个项目中构建的 Scheme 解释器就用来检查玩家的答案是否正确。</p>
+
+<p>你可以随时<a href="https://schememon.cs61a.org/">在线玩 Schememon</a>。为了给你更多动力，每当你在本 Scheme 项目中完成一道题，就可以在 <em>candies</em> 菜单中领取一些 gummy bears 来解锁新的对战。详情请阅读<a href="https://schememon.cs61a.org/schememon.html">instructions</a>。</p>
+
+
+<h2 id="phase-1-the-evaluator">阶段 1：求值器</h2>
+
+
+<p>在你拿到的初始实现中，解释器只能求值自求值表达式：数字、布尔值和 <code>nil</code>。</p>
+
+<p>在阶段 1 中，你将为解释器开发以下功能：</p>
+
+<ul>
+  <li>符号的定义与查找</li>
+  <li>表达式的求值</li>
+  <li>调用内置过程（例如 <code>+</code>、<code>exit</code>、<code>equal?</code> 等；完整列表见 <a href="../../articles/scheme-builtins/index.html">内置过程参考</a>）</li>
+</ul>
+
+<p>下面带你浏览一遍起始代码。</p>
+
+<p>在 <code>scheme_eval_apply.py</code> 中：</p>
+
+<ul>
+  <li><code>scheme_eval</code> 在环境 <code>env</code> 中对 Scheme 表达式 <code>expr</code> 求值。这个函数几乎已经完成，只是缺少处理调用表达式的逻辑。</li>
+  <li>看看 <code>scheme_eval</code> 中的这个 <code>if</code> 语句块：</li>
+</ul>
+
+<pre><code>  if scheme_symbolp(first) and first in scheme_forms.SPECIAL_FORMS:
+      return scheme_forms.SPECIAL_FORMS[first](rest, env)</code></pre>
+
+
+
+<p>注意，在求值特殊形式时，<code>scheme_eval</code> 会把求值重定向到 <code>scheme_forms.py</code> 中相应的 <code>do_?_form</code> 函数。特殊形式的一些例子有 <code>and</code>、<code>or</code>、<code>cond</code>、<code>if</code>（注意它们<em>不是</em>内置过程）。我们将在后面的某一节实现 <code>do_?_form</code> 函数。</p>
+
+<ul>
+  <li><code>scheme_apply</code> 把一个过程<em>应用</em>到一些参数上。</li>
+</ul>
+
+<p>在 <code>scheme_classes.py</code> 中：</p>
+
+<ul>
+  <li><code>Frame</code> 类表示帧，每个帧同时也表示一个以该帧为起点的环境。</li>
+  <li><code>LambdaProcedure</code> 类表示用户定义的过程。</li>
+</ul>
+
+<blockquote><p><strong>重要提示：</strong>由于所有非原子的 Scheme 表达式（即调用表达式、特殊形式、定义）都是 Scheme 列表（因而是链表），我们用 <code>Link</code> 类来表示它们。例如，表达式 <code>(+ 1 2)</code> 在我们的解释器中会表示为 <code>Link(&#x27;+&#x27;, Link(1, Link(2, nil)))</code>。更复杂的表达式可以用嵌套的 <code>Link</code> 表示。例如，表达式 <code>(+ 1 (* 2 3))</code> 会表示为 <code>Link(&#x27;+&#x27;, Link(1, Link(Link(&#x27;*&#x27;, Link(2, Link(3, nil))), nil)))</code>。</p></blockquote>
+
+<p>用 ok 检验你的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q eval_apply -u<button id="copy-code-python3ok-qeval_apply-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qeval_apply-u").onclick = () => copyCode('python3 ok -q eval_apply -u', "copy-code-python3ok-qeval_apply-u");
+        </script>
+        <br/>
+
+
+<h3 id="problem-1">题目 1</h3>
+
+<!-- (0.6666666666666666 pts) -->
+
+<p>在 <code>scheme_classes.py</code> 中实现 <code>Frame</code> 类的 <code>define</code> 和 <code>lookup</code> 方法。</p>
+
+<p>每个 <code>Frame</code> 对象都有以下实例属性：</p>
+
+<ul>
+  <li><code>bindings</code> 是一个字典，表示该帧实例中的绑定。每一项把一个 Scheme 符号（用 Python 字符串表示）关联到一个 Scheme 值。</li>
+  <li><code>parent</code> 是父 <code>Frame</code> 实例（父环境帧）。Global Frame 的 parent 为 <code>None</code>。</li>
+</ul>
+
+<p>要完成这些方法：</p>
+
+<ol>
+  <li><code>define</code> 接收一个符号（用 Python 字符串表示）和一个值，它使用 <code>bindings</code> 把该符号绑定到这个值上。</li>
+  <li><p><code>lookup</code> 接收一个符号，并返回环境中第一个找到该符号的帧里所绑定的值。一个 <code>Frame</code> 实例的<em>环境</em>由该帧、它的父帧以及它的所有祖先帧（包括 Global Frame）组成。查找符号时：</p>
+
+  <ul>
+    <li>如果该符号绑定在当前帧中，就返回它的值。</li>
+    <li>如果该符号没有绑定在当前帧中，而该帧有父帧，就继续在父帧中查找该符号。</li>
+    <li>持续检查所有父帧，直到找到该符号，或者没有更多父帧为止。</li>
+    <li>如果在任何帧中都找不到该符号，就抛出 SchemeError。</li>
+  </ul></li>
+</ol>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01 -u<button id="copy-code-python3ok-q01-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01-u").onclick = () => copyCode('python3 ok -q 01 -u', "copy-code-python3ok-q01-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01<button id="copy-code-python3ok-q01" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01").onclick = () => copyCode('python3 ok -q 01', "copy-code-python3ok-q01");
+        </script>
+        <br/>
+
+<p>完成这道题之后，启动你的 Scheme 解释器（用 python3 scheme.py），现在你应该能够查找内置过程的名字了：</p>
+
+<pre><code class="scheme">scm&gt; +
+#[+]
+scm&gt; odd?
+#[odd?]</code></pre>
+
+
+
+<p>不过，在完成下一题之前，你的 Scheme 解释器仍然无法<em>调用</em>这些过程。</p>
+
+<p>记住，此时你只能通过在 Max/Linux 上按 <code>Ctrl&#x2d;d</code>（在 Windows 上按 <code>Ctrl&#x2d;z Enter</code>）来退出解释器。</p>
+
+
+<h3 id="problem-2">题目 2</h3>
+
+<!-- (1 pts) -->
+
+<p>要能够调用内置过程（例如 <code>+</code>），你需要完成 <code>scheme_eval_apply.py</code> 中 <code>scheme_apply</code> 函数里的 <code>BuiltinProcedure</code> 分支。内置过程是通过调用实现该过程的相应 Python 函数来应用的。</p>
+
+<blockquote><p>要查看项目中用到的所有 Scheme 内置过程列表，请看 <code>scheme_builtins.py</code> 文件。任何用 <code>@builtin</code> 装饰的函数都会被加入全局定义的 <code>BUILTINS</code> 列表。</p></blockquote>
+
+<p><code>BuiltinProcedure</code> 有两个实例属性：</p>
+
+<ul>
+  <li><code>py_func</code>：实现该内置 Scheme 过程的 <em>Python</em> 函数。</li>
+  <li><code>need_env</code>：一个布尔值，表示这个内置过程是否需要把当前环境作为最后一个参数传入。例如，要实现内置的 <code>eval</code> 过程就需要环境。</li>
+</ul>
+
+<p><code>scheme_apply</code> 接收过程对象、由参数值组成的链表 <code>args</code> 以及当前环境 <code>env</code>。<code>args</code> 参数是一个 Scheme 列表，用 <code>Link</code> 对象或 <code>nil</code> 表示，其中包含传给该过程的值。例如，如果我们要用的 Scheme 内置过程是 <code>+</code>，并且传给 <code>scheme_apply</code> 的 <code>args</code> 是 <code>Link(1, Link(2, nil))</code>，那么我们就相当于在进行调用 <code>(+ 1 2)</code>。</p>
+
+<blockquote><p>你的实现应该完成以下步骤：</p>
+
+<ul>
+  <li>把 Scheme 列表转换成 Python 参数列表。<em>提示：</em><code>args</code> 是一个 <code>Link</code>，它有 <code>.first</code> 和 <code>.rest</code> 属性。</li>
+  <li>如果 <code>procedure.need_env</code> 为 <code>True</code>，就把当前环境 <code>env</code> 添加到这个列表的末尾。</li>
+  <li>返回用所有这些参数调用 <code>procedure.py_func</code> 的结果。由于你不知道参数的确切个数，请使用 <code>*args</code> 记法：<code>f(1, 2, 3)</code> 等价于 <code>f(*[1, 2, 3]</code>)。请在提供的 <code>try</code> 语句中、也就是写着 <code>try:</code> 的那一行之后完成这部分。</li>
+</ul></blockquote>
+
+<p>我们已经为你实现了以下行为：</p>
+
+<ul>
+  <li>如果调用该函数引发了 <code>TypeError</code> 异常，说明传入的参数个数不对。<code>try</code> 语句会处理这个异常，并抛出带有消息 <code>&#x27;incorrect number of arguments&#x27;</code> 的 <code>SchemeError</code>。</li>
+</ul>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02 -u<button id="copy-code-python3ok-q02-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02-u").onclick = () => copyCode('python3 ok -q 02 -u', "copy-code-python3ok-q02-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02<button id="copy-code-python3ok-q02" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02").onclick = () => copyCode('python3 ok -q 02', "copy-code-python3ok-q02");
+        </script>
+        <br/>
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+记得在 driver 和 navigator 两个角色之间轮换。
+driver 负责操作键盘；
+navigator 负责观察、提问并提出想法。</p>
+
+
+<h3 id="problem-3">题目 3</h3>
+
+<!-- (1 pts) -->
+
+<p><code>scheme_eval</code> 函数（在 <code>scheme_eval_apply.py</code> 中）在环境中对 Scheme 表达式求值。提供的代码已经能够在当前环境中查找符号、返回自求值表达式（例如数字）并求值特殊形式。</p>
+
+<p>实现 <code>scheme_eval</code> 中缺失的那部分，也就是对调用表达式的求值。要对调用表达式求值：</p>
+
+<ol>
+  <li>求值运算符（它应该求值为一个 <code>Procedure</code> 实例 —— 关于 <code>Procedure</code> 的定义见 <code>scheme_classes.py</code>）。</li>
+  <li>求值所有操作数，并把结果（参数值）收集到一个 Scheme 列表中。</li>
+  <li>返回对这个 <code>Procedure</code>、这些参数值以及当前环境调用 <code>scheme_apply</code> 的结果。</li>
+</ol>
+
+<p>你需要在前两步中递归地调用 <code>scheme_eval</code>。以下是其他一些你应该使用的函数/方法：</p>
+
+<ul>
+  <li><code>map_link</code> 函数返回一个新的 Scheme 列表，它是把某个<em>单参数 Python 函数</em>应用到 Scheme 列表中每一项后构造出来的。</li>
+  <li><code>scheme_apply</code> 函数把 Scheme 过程应用到以 Scheme 列表（<code>Link</code> 实例或 <code>nil</code>）表示的参数上。</li>
+</ul>
+
+<blockquote><p><strong>重要</strong>：不要修改传入的 <code>expr</code>。那样会在程序求值的过程中改变它，产生奇怪且错误的效果。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03 -u<button id="copy-code-python3ok-q03-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03-u").onclick = () => copyCode('python3 ok -q 03 -u', "copy-code-python3ok-q03-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03<button id="copy-code-python3ok-q03" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03").onclick = () => copyCode('python3 ok -q 03', "copy-code-python3ok-q03");
+        </script>
+        <br/>
+
+<blockquote><p>有些解锁测试会调用一个叫 <code>print&#x2d;then&#x2d;return</code> 的原生（内置）过程。这个过程在 Scheme 中并不存在，是为了测试这道题才加入本项目的。<code>print&#x2d;then&#x2d;return</code> 接收两个参数：它打印出第一个参数并返回第二个参数。如果你感兴趣，可以在 <code>scheme_builtins.py</code> 的底部找到这个函数。</p></blockquote>
+
+<p>你的解释器现在应该能够求值内置过程调用了，这让你拥有了 Calculator 语言的功能甚至更多。运行 python3 scheme.py，现在你就可以做加法和乘法了！</p>
+
+<pre><code class="scheme">scm&gt; (+ 1 2)
+3
+scm&gt; (* 3 4 (&#x2d; 5 2) 1)
+36
+scm&gt; (odd? 31)
+#t</code></pre>
+
+
+
+
+<h3 id="problem-4">题目 4</h3>
+
+<!-- (1 pts) -->
+
+<p>Scheme 中的 <code>define</code> 特殊形式（<a href="../../articles/scheme-spec/index.html#define">spec</a>）<em>既可以</em>用来把给定表达式的值赋给一个符号，也可以用来创建一个过程并将其绑定到一个符号：</p>
+
+<pre><code class="scheme">scm&gt; (define a (+ 2 3))  ; Binds the symbol a to the value of expression (+ 2 3)
+a
+scm&gt; (define (foo x) x)  ; Creates a procedure and binds it to the symbol foo
+foo</code></pre>
+
+
+
+<p>注意，第一个操作数的类型能告诉我们正在定义的是什么：</p>
+
+<ul>
+  <li>如果它是一个符号，例如 <code>a</code>，那么这个表达式定义的是一个符号。</li>
+  <li>如果它是一个 Scheme 列表，例如 <code>(foo x)</code>，那么这个表达式创建的是一个过程。</li>
+</ul>
+
+<p><code>scheme_forms.py</code> 中的 <code>do_define_form</code> 函数负责求值 <code>(define ...)</code> 表达式。这个函数有两处缺失：一处在第一个操作数是符号时，另一处在第一个操作数是 Scheme 列表（即 <code>Link</code>）时。本题<strong>只需实现第一部分</strong>，即求值第二个操作数得到一个值，并把第一个操作数（一个符号）绑定到该值。然后，<code>do_define_form</code> 返回被绑定的那个符号。</p>
+
+<blockquote><p><em>提示：</em><code>Frame</code> 实例的 <code>define</code> 方法会在该环境帧中创建一个绑定。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04 -u<button id="copy-code-python3ok-q04-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04-u").onclick = () => copyCode('python3 ok -q 04 -u', "copy-code-python3ok-q04-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04<button id="copy-code-python3ok-q04" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04").onclick = () => copyCode('python3 ok -q 04', "copy-code-python3ok-q04");
+        </script>
+        <br/>
+
+<p>现在你应该能够给符号赋值并求值这些符号了。</p>
+
+<pre><code class="scheme">scm&gt; (define x 15)
+x
+scm&gt; (define y (* 2 x))
+y
+scm&gt; y
+30</code></pre>
+
+
+
+<p>下面这个 <code>ok</code> 测试用来判断调用表达式的运算符是否被求值了多次。在抛出错误之前，运算符应该只被求值<em>一次</em>（因为 <code>x</code> 并没有绑定到一个过程）。</p>
+
+<pre><code class="scheme">(define x 0)
+; expect x
+((define x (+ x 1)) 2)
+; expect SchemeError
+x
+; expect 1</code></pre>
+
+
+
+<p>如果运算符被求值了两次，那么最后 <code>x</code> 会绑定到 2 而不是 1，导致测试失败。因此，如果你的代码没通过这个测试，就要确保在 <code>scheme_eval</code> 中只对调用表达式的运算符求值一次。</p>
+
+
+<h3 id="problem-5">题目 5</h3>
+
+<!-- (0.6666666666666666 pts) -->
+
+<p>在 Scheme 中，你可以用两种方式引用表达式：使用 <code>quote</code> 特殊形式（<a href="../../articles/scheme-spec/index.html#quote">spec</a>），或者使用符号 <code>&#x27;</code>（撇号）。读取器会把 <code>&#x27;...</code> 转换成 <code>(quote ...)</code>，因此你的解释器只需要求值 <code>(quote ...)</code> 这种语法。<code>quote</code> 特殊形式不求值就返回它的操作数表达式：</p>
+
+<pre><code class="scheme">scm&gt; (quote hello)
+hello
+scm&gt; &#x27;(cons 1 2)  ; Equivalent to (quote (cons 1 2))
+(cons 1 2)</code></pre>
+
+
+
+<p>实现 <code>scheme_forms.py</code> 中的 <code>do_quote_form</code> 函数，让它直接返回 <code>(quote ...)</code> 表达式中未被求值的操作数。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05 -u<button id="copy-code-python3ok-q05-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05-u").onclick = () => copyCode('python3 ok -q 05 -u', "copy-code-python3ok-q05-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05<button id="copy-code-python3ok-q05" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05").onclick = () => copyCode('python3 ok -q 05', "copy-code-python3ok-q05");
+        </script>
+        <br/>
+
+<p>完成这个函数之后，你应该能够求值被引用的表达式了。在你的解释器里试试下面这些例子吧！</p>
+
+<pre><code class="scheme">scm&gt; (quote a)
+a
+scm&gt; (quote (1 2))
+(1 2)
+scm&gt; (quote (1 (2 three (4 5))))
+(1 (2 three (4 5)))
+scm&gt; (car (quote (a b)))
+a
+scm&gt; &#x27;hello
+hello
+scm&gt; &#x27;(1 2)
+(1 2)
+scm&gt; &#x27;(1 (2 three (4 5)))
+(1 (2 three (4 5)))
+scm&gt; (car &#x27;(a b))
+a
+scm&gt; (eval (cons &#x27;car &#x27;(&#x27;(1 2))))
+1
+scm&gt; (eval (define tau 6.28))
+6.28
+scm&gt; (eval &#x27;tau)
+6.28
+scm&gt; tau
+6.28</code></pre>
+
+
+
+
+<h3 id="check-problems-for-phase-1">检查阶段 1 的题目</h3>
+
+
+
+<p>检查确认你完成了阶段 1 中的所有题目：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+<p>运行 <code>ok</code> 命令时，你仍然会看到一些测试被锁定，因为你还没有完成整个项目。
+</p>
+
+
+<h2 id="phase-2-procedures">阶段 2：过程</h2>
+
+
+<p>在阶段 2 中，你将添加创建和调用用户定义过程的能力。你将为解释器添加以下功能：</p>
+
+<ul>
+  <li>Lambda 过程，使用 <code>(lambda ...)</code> 特殊形式</li>
+  <li>具名过程，使用 <code>(define (...) ...)</code> 特殊形式</li>
+  <li>动态作用域的 mu 过程，使用 <code>(mu ...)</code> 特殊形式。</li>
+</ul>
+
+
+<h3 id="problem-6">题目 6</h3>
+
+<!-- (0.6666666666666666 pts) -->
+
+<p>修改 <code>scheme_eval_apply.py</code> 中的 <code>eval_all</code> 函数（它由 <code>scheme_forms.py</code> 中的 <code>do_begin_form</code> 调用），以完成 <code>begin</code> 特殊形式（<a href="../../articles/scheme-spec/index.html#begin">spec</a>）的实现。</p>
+
+<p><code>begin</code> 表达式通过按顺序求值所有子表达式来求值。<code>begin</code> 表达式的值是最后一个子表达式的值。</p>
+
+<p>要完成 <code>begin</code> 的实现，<code>eval_all</code> 将接收 <code>expressions</code>（由表达式组成的 Scheme 列表）和 <code>env</code>（表示当前环境的 <code>Frame</code>），求值 <code>expressions</code> 中的所有表达式，并返回 <code>expressions</code> 中最后一个表达式的值。</p>
+
+<pre><code class="scheme">scm&gt; (begin (+ 2 3) (+ 5 6))
+11
+scm&gt; (define x (begin (display 3) (newline) (+ 2 3)))
+3
+x
+scm&gt; (+ x 3)
+8
+scm&gt; (begin (print 3) &#x27;(+ 2 3))
+3
+(+ 2 3)</code></pre>
+
+
+
+<p>如果传给 <code>eval_all</code> 的是空的表达式列表（<code>nil</code>），它应返回 Python 值 <code>None</code>，它表示 Scheme 值 <code>undefined</code>。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06 -u<button id="copy-code-python3ok-q06-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06-u").onclick = () => copyCode('python3 ok -q 06 -u', "copy-code-python3ok-q06-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06<button id="copy-code-python3ok-q06" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06").onclick = () => copyCode('python3 ok -q 06', "copy-code-python3ok-q06");
+        </script>
+        <br/>
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+现在是交换角色的好时机。交换角色能确保你们双方都能从各自角色的学习体验中获益。</p>
+
+
+<h3 id="user-defined-procedures">用户定义过程</h3>
+
+
+<p>用户定义的 lambda 过程表示为 <code>LambdaProcedure</code> 类的实例。一个 <code>LambdaProcedure</code> 实例有三个实例属性：</p>
+
+<ul>
+  <li><code>formals</code>：一个 Scheme 列表，包含该 lambda 过程各参数的形式参数名。</li>
+  <li><code>body</code>：一个嵌套的 Scheme 表达式列表，表示过程的主体。</li>
+  <li><code>env</code>：<strong>定义</strong>该过程时所处的环境。</li>
+</ul>
+
+<p>例如，在 <code>(lambda (x y) (+ x y))</code> 中，<code>formals</code> 是 <code>Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))</code>。<code>body</code> 是 <code>Link(Link(&#x27;+&#x27;, Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))), nil)</code>，这是一个嵌套的 Scheme 列表，其中第一个元素（<code>body.first</code>）是表达式 <code>(+ x y)</code>，表示为 <code>Link(&#x27;+&#x27;, Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil)))</code>。<code>body</code> 之所以采用嵌套结构，是为了支持复杂表达式和嵌套函数调用。</p>
+
+
+<h3 id="problem-7">题目 7</h3>
+
+<!-- (1 pts) -->
+
+<p>实现 <code>scheme_forms.py</code> 中的 <code>do_lambda_form</code> 函数（<a href="../../articles/scheme-spec/index.html#lambda">spec</a>），它创建并返回一个 <code>LambdaProcedure</code> 实例。</p>
+
+<p>在 Scheme 中，过程的主体可以包含多个表达式，但至少要有一个。<code>LambdaProcedure</code> 实例的 <code>body</code> 属性是由这些表达式组成的嵌套 Scheme 列表，<code>formals</code> 属性则是一个 <code>Link</code>。和 <code>begin</code> 特殊形式一样，求值过程的主体时会按顺序执行所有表达式。过程返回其最后一个主体表达式的值。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07 -u<button id="copy-code-python3ok-q07-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07-u").onclick = () => copyCode('python3 ok -q 07 -u', "copy-code-python3ok-q07-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07<button id="copy-code-python3ok-q07" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07").onclick = () => copyCode('python3 ok -q 07', "copy-code-python3ok-q07");
+        </script>
+        <br/>
+
+<p>虽然你现在还不能调用用户定义的过程，但可以在解释器里求值一个 lambda 表达式，用眼睛确认你正确创建了这个过程。</p>
+
+<pre><code class="scheme">scm&gt; (lambda (x y) (+ x y))
+(lambda (x y) (+ x y))</code></pre>
+
+
+
+
+<h3 id="problem-8">题目 8</h3>
+
+<!-- (1 pts) -->
+
+<p>实现 <code>Frame</code> 类的 <code>make_child_frame</code> 方法（在 <code>scheme_classes.py</code> 中），它将在调用用户定义过程时用来创建新帧。这个方法接收两个参数：<code>formals</code>，一个由符号组成的 Scheme 列表（例如 <code>Link(&#x27;x&#x27;, Link(&#x27;y&#x27;, nil))</code>）；以及 <code>vals</code>，一个由值组成的 Scheme 列表（例如 <code>Link(3, Link(5, nil))</code>）。它应返回一个新的子帧，其中形式参数已绑定到对应的值。</p>
+
+<p>具体做法：</p>
+
+<ul>
+  <li>如果参数值的个数与形式参数的个数不匹配，抛出 <code>SchemeError</code>。</li>
+  <li>创建一个新的 <code>Frame</code> 实例，作为该帧（即 <code>self</code>）的子帧。</li>
+  <li>在新创建的帧中，把每个形式参数绑定到对应的值。<code>formals</code> 中的第一个符号应绑定到 <code>vals</code> 中的第一个值，依此类推。记住 <code>formals</code> 和 <code>vals</code> 都是 <code>Link</code>。</li>
+  <li>返回这个新帧。</li>
+</ul>
+
+<blockquote><p><em>提示：</em><code>Frame</code> 实例的 <code>define</code> 方法会在该环境帧中创建一个绑定。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08 -u<button id="copy-code-python3ok-q08-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08-u").onclick = () => copyCode('python3 ok -q 08 -u', "copy-code-python3ok-q08-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08<button id="copy-code-python3ok-q08" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08").onclick = () => copyCode('python3 ok -q 08', "copy-code-python3ok-q08");
+        </script>
+        <br/>
+
+
+<h3 id="problem-9">题目 9</h3>
+
+<!-- (1 pts) -->
+
+<p>实现 <code>scheme_eval_apply.py</code> 中 <code>scheme_apply</code> 函数里的 <code>LambdaProcedure</code> 分支。当被应用的过程是 <code>LambdaProcedure</code> 实例时，就会执行这个 <code>elif</code> 块。</p>
+
+<p>首先创建一个新的 <code>Frame</code> 实例，并通过对适当的父帧调用 <code>make_child_frame</code> 方法，把该过程的形式参数绑定到参数值上。</p>
+
+<p>然后，在这个新帧中，用 <code>eval_all</code> 依次求值该过程主体的每一个表达式。</p>
+
+<blockquote><p><em>提示：</em>你的新帧应该是<strong>定义</strong>该 lambda 的那个帧的子帧。而作为参数传给 <code>scheme_apply</code> 的 <code>env</code> 则是<strong>调用</strong>该过程时所处的帧。</p>
+
+<p>参见 <a href="#user-defined-procedures">用户定义过程</a>，回忆一下 <code>LambdaProcedure</code> 的各个属性。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09 -u<button id="copy-code-python3ok-q09-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09-u").onclick = () => copyCode('python3 ok -q 09 -u', "copy-code-python3ok-q09-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09<button id="copy-code-python3ok-q09" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09").onclick = () => copyCode('python3 ok -q 09', "copy-code-python3ok-q09");
+        </script>
+        <br/>
+
+
+<h3 id="problem-10">题目 10</h3>
+
+<!-- Problem 10 (1 pts) -->
+
+<p>目前，你的 Scheme 解释器已经能够按以下方式把符号绑定到用户定义的过程：</p>
+
+<pre><code class="scheme">scm&gt; (define f (lambda (x) (* x 2)))
+f</code></pre>
+
+
+
+<p>不过，我们还希望能使用定义具名过程的<em>简写</em>形式，也就是我们在作业和实验里一直用的那种写法：</p>
+
+<pre><code class="scheme">scm&gt; (define (f x) (* x 2))
+f</code></pre>
+
+
+
+<p>修改 <code>scheme_forms.py</code> 中的 <code>do_define_form</code> 函数，使它能够正确处理 <code>define (...) ...)</code> 表达式（<a href="../../articles/scheme-spec/index.html#define">spec</a>）。</p>
+
+<p>确保它能处理包含多个表达式的主体。例如，</p>
+
+<pre><code class="scheme">scm&gt; (define (g y) (print y) (+ y 1))
+g
+scm&gt; (g 3)
+3
+4</code></pre>
+
+
+
+<p>这道题（至少）有两种解法。一种是构造一个 <code>(define _ (lambda ...))</code> 表达式并对其调用 <code>do_define_form</code>（省略 <code>define</code>）。第二种是直接实现：</p>
+
+<ul>
+  <li>使用给定的变量 <code>signature</code> 和 <code>expressions</code>，找出所定义函数的名字（符号）、formals 和 body。</li>
+  <li>用 formals 和 body 创建一个 <code>LambdaProcedure</code> 实例。（你可以调用 <code>do_lambda_form</code> 来完成。）</li>
+  <li>把该符号绑定到这个新的 <code>LambdaProcedure</code> 实例上。</li>
+  <li>返回被绑定的那个符号。</li>
+</ul>
+
+<blockquote><p><em>Doctest 演示</em>：
+考虑这个 doctest：<code>do_define_form(read_line(&quot;((f x) (+ x 2))&quot;), env)</code>。这个 Python 调用会在 Scheme 中求值
+<code>(define (f x) (+ x 2))</code>。<code>read_line</code> 是一个工具函数，它接收 <code>&quot;((f x) (+ x 2))&quot;</code> 并返回其 <code>Link</code> 表示。
+因此，那个 <code>Link</code> 表示会作为 <code>expressions</code> 参数传入 <code>do_define_form</code>。</p>
+
+<p><em>解法 2 的提示</em>：我们如何利用 <code>((f x) (+ x 2))</code>（即 <code>(define (f x) (* x 2))</code> 的结构）的 Scheme 列表表示，
+来实现与 <code>(define f (lambda (x) (+ x 2)))</code> 相同的功能？后者我们知道我们的 Scheme 解释器（因而我们的 Python 代码）已经能处理了。
+请试着自己把它的 Scheme 列表表示写出来，并考虑需要从中提取哪些组成部分，才能在 <code>do_define_form</code> 中用 Python 复现
+<code>(define f (lambda (x) (+ x 2)))</code> 的功能。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10 -u<button id="copy-code-python3ok-q10-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10-u").onclick = () => copyCode('python3 ok -q 10 -u', "copy-code-python3ok-q10-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10<button id="copy-code-python3ok-q10" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10").onclick = () => copyCode('python3 ok -q 10', "copy-code-python3ok-q10");
+        </script>
+        <br/>
+
+<p>在项目的这个阶段，你的 Scheme 解释器应该支持以下功能：</p>
+
+<ul>
+  <li>用 <code>lambda</code> 表达式创建过程，</li>
+  <li>用 <code>define</code> 表达式定义具名过程，以及</li>
+  <li>调用用户定义的过程。</li>
+</ul>
+
+
+<h3 id="submit-your-phase-1-amp-2-checkpoint">检查点自测</h3>
+
+
+<p>检查一下你是否完成了阶段 1 和阶段 2 中的所有题目：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+<p>运行 <code>ok</code> 命令时，你仍然会看到一些测试处于锁定状态，因为你还没有完成整个项目。只要你完成到当前为止的所有题目，就能拿到 checkpoint 的满分。</p>
+
+
+<h2 id="phase-3-mu-and-logical-forms">阶段 3：Mu 与逻辑形式</h2>
+
+
+
+<h3 id="problem-11">题目 11</h3>
+
+<!-- 11 (0.6666666666666666 pts) -->
+
+<p>到目前为止我们看到的所有 Scheme 过程都采用<strong>词法作用域</strong>：新调用帧的父帧就是<em>定义</em>该过程时所处的环境。另一种作用域在 Scheme 中并不标准，但出现在 Lisp 的其他变体中，叫做<strong>动态作用域</strong>：新调用帧的父帧是<em>求值</em>该调用表达式时所处的环境。在动态作用域下，从代码的不同位置用相同的参数调用同一个过程可能产生不同的行为（因为父帧不同）。</p>
+
+<p><code>mu</code> 特殊形式（<a href="../../articles/scheme-spec/index.html#mu">spec</a>；为本项目而发明）求值为一个动态作用域的过程。</p>
+
+<pre><code class="scheme">scm&gt; (define f (mu () (* a b)))
+f
+scm&gt; (define g (lambda () (define a 4) (define b 5) (f)))
+g
+scm&gt; (g)
+20</code></pre>
+
+
+
+<p>在上面的例子中，过程 <code>f</code> 并没有参数 <code>a</code> 或 <code>b</code>；但是，由于 <code>f</code> 是在过程 <code>g</code> <strong>内部</strong>被调用的，它能够访问 <code>g</code> 的帧中定义的 <code>a</code> 和 <code>b</code>。</p>
+
+<p>你的任务：</p>
+
+<ul>
+  <li>实现 <code>scheme_forms.py</code> 中的 <code>do_mu_form</code>，以对 <code>mu</code> 特殊形式求值。一个 <code>mu</code> 表达式求值为一个 <code>MuProcedure</code>。<code>MuProcedure</code> 类（定义在 <code>scheme_classes.py</code> 中）已经为你提供好了。</li>
+  <li>除了实现 <code>do_mu_form</code> 之外，还要完成 <code>scheme_apply</code> 函数（在 <code>scheme_eval_apply.py</code> 中）里的 <code>MuProcedure</code> 分支，使得调用 mu 过程时，其主体在正确的环境中求值。调用 <code>MuProcedure</code> 时，新调用帧的父帧是<strong>求值</strong>该调用表达式时所处的环境。因此，<code>MuProcedure</code> 不需要把环境保存为实例属性。你这里的代码应该和第 9 题非常相似。</li>
+</ul>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11 -u<button id="copy-code-python3ok-q11-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11-u").onclick = () => copyCode('python3 ok -q 11 -u', "copy-code-python3ok-q11-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11<button id="copy-code-python3ok-q11" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11").onclick = () => copyCode('python3 ok -q 11', "copy-code-python3ok-q11");
+        </script>
+        <br/>
+
+<p>本节剩下的内容将在 <code>scheme_forms.py</code> 中完成。</p>
+
+<p>逻辑特殊形式包括 <code>if</code>、<code>and</code>、<code>or</code> 和 <code>cond</code>。这些表达式之所以特殊，是因为它们的子表达式不一定全都会被求值。</p>
+
+<p>在 Scheme 中，只有 <code>#f</code> 是假值。其他所有值（包括 <code>0</code> 和 <code>nil</code>）都是真值。你可以用 <code>scheme_utils.py</code> 中提供的 Python 函数 <code>is_scheme_true</code> 和 <code>is_scheme_false</code> 来判断一个值是真值还是假值。</p>
+
+<blockquote><p>Scheme 传统上用 <code>#f</code> 表示布尔假值。在我们的解释器中，它等价于 <code>false</code> 或 <code>False</code>。同样，<code>true</code>、<code>True</code> 和 <code>#t</code> 也都等价。不过，<strong>在做解锁测试时</strong>，请使用 <code>#t</code> 和 <code>#f</code>。</p></blockquote>
+
+<p>为了帮你上手，我们在 <code>do_if_form</code> 函数中提供了 <code>if</code> 特殊形式的实现。</p>
+
+
+<h3 id="problem-12">问题 12</h3>
+
+<!-- (1 pts) -->
+
+<p>实现 <code>do_and_form</code> 和 <code>do_or_form</code>，使 <code>and</code> 和 <code>or</code> 表达式（<a href="../../articles/scheme-spec/index.html#and">spec</a>）能够被正确求值。</p>
+
+<p>逻辑形式 <code>and</code> 和 <code>or</code> 都是<em>短路的</em>。对于 <code>and</code>，你的解释器应从左到右依次求值每个子表达式，如果其中任何一个为假值，就返回该值。否则，返回最后一个子表达式的值。如果 <code>and</code> 表达式中没有子表达式，它的求值结果为 <code>#t</code>。</p>
+
+<pre><code class="scheme">scm&gt; (and)
+#t
+scm&gt; (and 4 5 6)  ; all operands are true values
+6
+scm&gt; (and 4 5 (+ 3 3))
+6
+scm&gt; (and #t #f 42 (/ 1 0))  ; short&#x2d;circuiting behavior of and
+#f</code></pre>
+
+
+
+<blockquote><p>在这里的代码中，你应该把 Scheme 的 <code>#t</code> 表示为 Python 的 <code>True</code>，把 Scheme 的 <code>#f</code> 表示为 Python 的 <code>False</code>。</p></blockquote>
+
+<p>对于 <code>or</code>，从左到右依次求值每个子表达式。如果任何子表达式求值为真值，就返回该值。否则，返回最后一个子表达式的值。如果 <code>or</code> 表达式中没有子表达式，它的求值结果为 <code>#f</code>。</p>
+
+<pre><code class="scheme">scm&gt; (or)
+#f
+scm&gt; (or 5 2 1)  ; 5 is a true value
+5
+scm&gt; (or #f (&#x2d; 1 1) 1)  ; 0 is a true value in Scheme
+0
+scm&gt; (or 4 #t (/ 1 0))  ; short&#x2d;circuiting behavior of or
+4</code></pre>
+
+
+
+<p><strong>重要：</strong>使用 <code>scheme_utils.py</code> 中提供的 Python 函数 <code>is_scheme_true</code> 和 <code>is_scheme_false</code> 来判断布尔值。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12 -u<button id="copy-code-python3ok-q12-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12-u").onclick = () => copyCode('python3 ok -q 12 -u', "copy-code-python3ok-q12-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12<button id="copy-code-python3ok-q12" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12").onclick = () => copyCode('python3 ok -q 12', "copy-code-python3ok-q12");
+        </script>
+        <br/>
+
+
+<h3 id="problem-13">第 13 题</h3>
+
+<!-- (1 pts) -->
+
+<p>填写 <code>do_cond_form</code> 中缺失的部分，使其正确实现 <code>cond</code>（<a href="../../articles/scheme-spec/index.html#cond">spec</a>）：返回第一个谓词为真的结果子表达式的值，或者返回与 <code>else</code> 对应的结果子表达式的值。</p>
+
+<p>一些特殊情况：</p>
+
+<ul>
+  <li>当为真的谓词没有对应的结果子表达式时，返回该谓词的值。</li>
+  <li>当 <code>cond</code> 分支的结果子表达式包含多个表达式时，把它们全部求值并返回最后一个表达式的值。（<em>提示</em>：使用 <code>eval_all</code>。）</li>
+</ul>
+
+<p>你的实现应该与下面的示例以及 <code>tests.scm</code> 中的其他测试相符。</p>
+
+<pre><code class="scheme">scm&gt; (cond ((= 4 3) &#x27;nope)
+           ((= 4 4) &#x27;hi)
+           (else &#x27;wait))
+hi
+scm&gt; (cond ((= 4 3) &#x27;wat)
+           ((= 4 4))
+           (else &#x27;hm))
+#t
+scm&gt; (cond ((= 4 4) &#x27;here (+ 40 2))
+           (else &#x27;wat 0))
+42</code></pre>
+
+
+
+<p>如果没有为真的谓词也没有 <code>else</code>，则 <code>cond</code> 的值是未定义的。在这种情况下，<code>do_cond_form</code> 应返回 <code>None</code>。如果只有 <code>else</code>，就返回其结果子表达式的值。如果它没有结果子表达式，则返回 <code>#t</code>。</p>
+
+<pre><code class="scheme">scm&gt; (cond (False 1) (False 2))
+scm&gt; (cond (else))
+#t</code></pre>
+
+
+
+<p>用 ok 解锁并测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 13 -u
+python3 ok -q 13<button id="copy-code-python3ok-q13-upython3ok-q13" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q13-upython3ok-q13").onclick = () => copyCode('python3 ok -q 13 -u\npython3 ok -q 13', "copy-code-python3ok-q13-upython3ok-q13");
+        </script>
+        <br/>
+
+
+<h3 id="additional-scheme-tests">额外的 Scheme 测试</h3>
+
+<!-- (0.6666666666666666 pts) -->
+
+<p>本项目第三部分的最后一项任务，是确保你的 scheme 解释器通过我们提供的额外测试套件。</p>
+
+<p>要运行这些测试（值 1 分），请运行命令：</p>
+
+<pre><code>python3 ok &#x2d;q tests.scm</code></pre>
+
+
+
+<p>如果你通过了所有必需的情况，运行 <code>python3 ok &#x2d;&#x2d;score</code> 时应该会看到 <code>tests.scm</code> 得到 1/1 分。
+如果你因为代码中为调试而添加的 <code>print</code> 语句的输出而导致测试失败，也请务必删除这些语句，测试才能通过。</p>
+
+<p>恭喜！你的 Scheme 解释器实现现在完成了！</p>
+
+
+<h2 id="phase-4-write-some-scheme">阶段 4：写一些 Scheme</h2>
+
+
+<p>你的 Scheme 解释器本身不仅是一个树递归程序，而且足够灵活，能够求值<em>其他</em>递归程序。请在 <code>questions.scm</code> 文件中实现以下过程，这将完成 <a href="https://schememon.cs61a.org/">Schémémon</a> 这个游戏的实现。</p>
+
+<p>有关所有内置 Scheme 过程的行为说明，请参阅<a href="../../articles/scheme-builtins/index.html">内置过程参考</a>。</p>
+
+<p>为了帮助你编写 Scheme 代码，你可以使用<a href="https://scheme.cs61a.org">在线 Scheme 解释器</a>，或者运行 <code>python3 editor</code> 在你的浏览器中打开一个窗口，使用由往届学生 Rahul Arya 创建的基于网页的 Scheme 编辑器。如果浏览器窗口没有自动打开，请访问<a href="localhost:31415">localhost:31415</a>。</p>
+
+<p>请务必在单独的标签页或窗口中运行 <code>python3 ok</code>，这样编辑器才能持续运行。</p>
+
+<p>👩🏽‍💻👨🏿‍💻 <a href="../../articles/pair-programming.html">结对编程？</a>
+记得在 driver 和 navigator 两个角色之间轮换。
+driver 负责操作键盘；
+navigator 负责观察、提问并提出想法。</p>
+
+<blockquote><p>如果你想在第 13、14 或 15 题中使用 <code>cond</code>，就必须先实现 Problem EC1，你的测试才能运行。</p></blockquote>
+
+
+<h3 id="problem-14">问题 14</h3>
+
+<!-- (0.6666666666666666 pts) -->
+
+<p>实现 <code>(enumerate s)</code> 过程，它接收一个值列表 <code>s</code>，并返回一个由二元列表组成的列表，其中第一个元素是该值的索引，第二个元素是该值本身。将第一个索引设为 0。</p>
+
+<pre><code class="scheme">scm&gt; (enumerate &#x27;(3 4 5 6))
+((0 3) (1 4) (2 5) (3 6))
+scm&gt; (enumerate &#x27;(c s 6 1 a))
+((0 c) (1 s) (2 6) (3 1) (4 a))
+scm&gt; (enumerate &#x27;())
+()</code></pre>
+
+
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 14<button id="copy-code-python3ok-q14" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q14").onclick = () => copyCode('python3 ok -q 14', "copy-code-python3ok-q14");
+        </script>
+        <br/>
+
+
+<h3 id="problem-15">问题 15</h3>
+
+<!-- (1 pts) -->
+
+<p><em>字典列表（dictionary list）</em>是一种 Scheme 列表，由若干对 <code>((key value) (key value) ... (key value))</code> 组成，其中每个 <code>key</code> 都是唯一的符号。</p>
+
+<p>实现 <code>(get dict key)</code>，这是一个 scheme 过程，接收一个字典列表 <code>dict</code> 和一个值 <code>key</code>，该 <code>key</code> 出现在 <code>dict</code> 中某个 pair 的<strong>第一个</strong>元素位置。<code>get</code> 过程返回与 <code>key</code> 配对的值。如果 key 不是 <code>dict</code> 中某个 pair 的第一个值，则返回 <code>#f</code>。</p>
+
+<p>然后实现 <code>(set dict key value)</code>，这是一个 scheme 过程，接收一个字典列表 <code>dict</code> 以及 <code>key</code> 和 <code>value</code> 两个值。如果 <code>key</code> 是 <code>dict</code> 中的一个键，则返回一个新的字典列表，其长度与 <code>dict</code> 相同，但与 <code>key</code> 配对的值变为 <code>value</code>。如果 <code>key</code> 不是 <code>dict</code> 中的键，则返回一个字典列表，其中包含 <code>dict</code> 中所有的键值对，并在末尾新增一个包含 <code>(key value)</code> 的 pair。假设 <code>dict</code> 中没有任何 key 出现多次。</p>
+
+<pre><code class="scheme">scm&gt; (define dict&#x2d;list &#x27;((a 1) (b 2) (c 3)))
+dict&#x2d;list
+scm&gt; (get dict&#x2d;list &#x27;b)
+2
+scm&gt; (get dict&#x2d;list &#x27;e)
+#f
+scm&gt; (set dict&#x2d;list &#x27;b 4)
+((a 1) (b 4) (c 3))
+scm&gt; (set dict&#x2d;list &#x27;x 0)
+((a 1) (b 2) (c 3) (x 0))</code></pre>
+
+
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 15<button id="copy-code-python3ok-q15" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q15").onclick = () => copyCode('python3 ok -q 15', "copy-code-python3ok-q15");
+        </script>
+        <br/>
+
+
+<h3 id="problem-16">问题 16</h3>
+
+<!-- (1 pts) -->
+
+<p>在 Schémémon 中，采取行动之前，你可以选择解决一道 Scheme 编程题。正确解答该题会使你本回合造成的伤害翻倍，并且让你不会失手！这些编程题都由一段描述和一个带空白的 <code>define</code> 形式组成。例如，</p>
+
+<pre><code class="scheme">Implement factorial(), which takes an integer &quot;n&quot; and outputs the value of &quot;n&quot;!.
+
+(define (factorial n)
+    (if (= n 0)
+        1
+        (* n _____)
+    )
+)</code></pre>
+
+
+
+<p>实现 <code>solution&#x2d;code</code>，这是一个 scheme 过程，接收一个 Scheme 列表 <code>problem</code>（其中包含一个带空白的 Scheme 表达式）以及一个 Scheme 表达式 <code>solution</code>。它返回将<strong>五条下划线的空白</strong> <code>_____</code> 替换为 <code>solution</code> 后的结果。如果有多个空白，它们都应被替换为同一个 <code>solution</code> 表达式。</p>
+
+<pre><code class=" scheme">scm&gt; (define add&#x2d;problem &#x27;(define (add x y) _____))
+add&#x2d;problem
+scm&gt; (define add&#x2d;sol &#x27;(+ x y))
+add&#x2d;sol
+scm&gt; (solution&#x2d;code add&#x2d;problem add&#x2d;sol)
+(define (add x y) (+ x y))</code></pre>
+
+
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 16<button id="copy-code-python3ok-q16" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q16").onclick = () => copyCode('python3 ok -q 16', "copy-code-python3ok-q16");
+        </script>
+        <br/>
+
+
+<h3 id="play-schémémon">开始玩 Schémémon</h3>
+
+
+<p>当你完成 Scheme 解释器并实现 <code>solution&#x2d;code</code> 之后，就可以用 <code>python3 schememon.py</code> 在自己的电脑上运行 Schémémon。它会使用你的解释器来检查双倍伤害的 Scheme 题是否被正确解答。</p>
+
+
+<h2 id="conclusion">总结</h2>
+
+
+<p><strong>恭喜你，你已经完成了最后一个 AHUT_1A 项目！</strong>
+你刚刚实现了一门完整语言的解释器！
+如果你喜欢这个项目并想进一步扩展它，你可能会对更高级的特性感兴趣，比如<a href="http://schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-7.html#%_sec_4.2.2">let* 与 letrec</a>、<a href="http://schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-7.html#%_sec_4.2.6">unquote 拼接</a>、<a href="https://en.wikipedia.org/wiki/Stack_trace">错误追踪</a>和<a href="https://en.wikipedia.org/wiki/Call-with-current-continuation">continuations</a>。</p>
+
+
+<h2 id="project-submission">项目提交</h2>
+
+
+<p>对所有题目运行 <code>ok</code>，确认测试都已解锁并通过：</p>
+
+<pre><code>python3 ok</code></pre>
+
+<p>你也可以查看项目每一部分的得分：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+<h2 id="extra-challenge">额外挑战</h2>
+
+
+<!-- > Check out the video below for some hints on how to get started: -->
+
+<!-- 
+            <iframe width="560" height="315" src="https://youtube.com/embed/iC5_rtPpzmQ"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "scheme-hints-ec12"
+                allowfullscreen></iframe><p><a href='https://youtu.be/iC5_rtPpzmQ'> YouTube link </a></p> -->
+
+
+
+
+<h3 id="problem-ec-1-0-pts">问题 EC 1（0 分）</h3>
+
+
+<p><code>let</code> 特殊形式（<a href="../../articles/scheme-spec/index.html#let">spec</a>）在局部将符号绑定到值，赋予它们初始值。例如：</p>
+
+<pre><code class="scheme">scm&gt; (define x 5)
+x
+scm&gt; (define y &#x27;bye)
+y
+scm&gt; (let ((x 42)
+           (y (* x 10)))  ; this x refers to the global value of x, not 42
+       (list x y))
+(42 50)
+scm&gt; (list x y)
+(5 bye)</code></pre>
+
+
+
+<p>在 <code>scheme_forms.py</code> 中实现 <code>make_let_frame</code>，它返回 <code>env</code> 的一个子帧，把 <code>bindings</code> 中每个元素里的符号绑定到其对应表达式的值。<code>bindings</code> 这个 Scheme 列表中包含若干 pair，每个 pair 都包含一个符号和一个对应的表达式。</p>
+
+<p>以下函数和方法可能会对你有帮助：</p>
+
+<ul>
+  <li><code>validate_form</code>：该函数可用于验证每个绑定的结构。它接收一个由表达式组成的 Scheme 列表 <code>expr</code> 以及最小长度 <code>min</code> 和最大长度 <code>max</code>。如果 <code>expr</code> 不是长度介于 <code>min</code> 和 <code>max</code>（含端点）之间的列表，它会抛出错误。如果没有传入 <code>max</code>，则默认值为无穷大。</li>
+  <li><code>validate_formals</code>：该函数验证其参数是否为一个由符号组成的 Scheme 列表，且其中每个符号都互不相同。</li>
+</ul>
+
+<blockquote><p><strong>提示：</strong>在迭代地构建新的链表时，从右到左（即从末尾到开头）构建可能会更容易。</p></blockquote>
+
+<p>如果你对任何测试用例有疑问，记得参考<a href="../../articles/scheme-spec/index.html#let">spec</a>！</p>
+
+<p>用 ok 解锁并测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC1 -u
+python3 ok -q EC1<button id="copy-code-python3ok-qEC1-upython3ok-qEC1" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC1-upython3ok-qEC1").onclick = () => copyCode('python3 ok -q EC1 -u\npython3 ok -q EC1', "copy-code-python3ok-qEC1-upython3ok-qEC1");
+        </script>
+        <br/>
+
+<p>在下一个挑战中，你将实现尾调用优化，这是 Scheme 语言的一个核心特性。观看这个<a href="https://www.youtube.com/watch?v=zOxxB-gdO9U&list=PL6BsET-8jgYVSrrJ9XNFsYQButTbRFlJo">playlist</a>来了解尾调用。</p>
+
+<p>我们将通过一种称为“蹦床”（trampolining）的技术，<em>在 Python 中</em>对 <code>scheme_eval</code> 函数进行尾调用优化，从而在 Scheme 中实现尾调用优化。</p>
+
+<p>首先，让我们从为什么优化 <code>scheme_eval</code> 函数就能优化 Scheme 解释器谈起。</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        为什么要优化 scheme_eval？<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+我们解释器的核心是 <code>scheme_eval</code>，一个树形递归函数。因此，当我们首次调用 <code>scheme_eval</code> 时，随后会产生大量对 <code>scheme_eval</code> 的递归调用。
+
+<p>例如，考虑下面这个简单过程：</p>
+
+<pre><code>(define (foo n)
+    (if (= n 0)
+        0
+        (foo (&#x2d; n 1))))</code></pre>
+
+<p>在我们的 Scheme 解释器中求值 <code>(foo 4)</code> 会导致 <code>scheme_eval</code> 被调用 52 次。</p>
+
+<p>如果我们把对表达式 <code>(foo 4)</code> 调用 <code>scheme_eval</code> 的过程可视化，会看到一个有趣的模式：</p>
+
+<p><img class="img-responsive center-block" src="images/scheme_eval_recursion.png" alt="Diagram" width=" height="></p>
+
+<p><code>scheme_eval</code> 所产生的递归调用结构，与 <code>foo</code> 所产生的递归调用结构高度一致：</p>
+
+<ul>
+  <li>计算 <code>(foo 4)</code> 的那次 <code>scheme_eval</code> 调用最终会进行递归调用，去计算 <code>(foo 3)</code>。计算 <code>(foo 3)</code> 的那次 <code>scheme_eval</code> 调用最终会进行递归调用，去计算 <code>(foo 2)</code>，依此类推。</li>
+  <li>在 Scheme 的 <code>foo</code> 函数中，<code>(foo 4)</code> 这次调用的最后一步动作是对 <code>(foo 3)</code> 的递归调用。同样地，在 Python 中，为 <code>(foo 4)</code> 进行的 <code>scheme_eval</code> 调用的最后一步动作，是对 <code>(foo 3)</code> 的 <code>scheme_eval</code> 递归调用。
+<em>换句话说，这些 <code>scheme_eval</code> 调用都是尾调用！</em></li>
+</ul>
+
+<p>在 Python 中，会打开并保留大量的 <code>scheme_eval</code> 帧。每个 <code>scheme_eval</code> 帧都通过 <code>env</code> 参数持有对上一次调用产生的 <code>foo</code> 帧（用 <code>Frame</code> 类的实例表示）的<em>引用</em>。由于我们当前的解释器实现会保持 <code>scheme_eval</code> 帧处于打开状态，以便在一切求值完成后再返回，因此它也把所有那些不必要的 <code>foo</code> 帧都保持着打开。</p>
+
+<p>然而，由于其中一些 <code>scheme_eval</code> 调用是尾调用，我们实际上并不需要保留在 Python 中创建的所有那些 <code>scheme_eval</code> 帧。通过对 <code>scheme_eval</code> 进行尾调用优化，我们可以消除这些不必要的帧。而由于 Scheme 帧存储于 <code>scheme_eval</code> 调用帧之中，在 Python 中对 <code>scheme_eval</code> 进行尾调用优化，将自动地优化整个 Scheme 解释器（耶！）。</p>
+
+<p>事实证明，对 <code>scheme_eval</code> 进行尾调用优化除了能优化 Scheme 之外，还有其他效果。例如，<code>(or #f (or #f (or #f f )))</code> 这样的表达式运行起来也会高效得多（我们会在其中一个子部分中探讨这一点）。
+</div></p>
+
+<br>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        尾调用<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+下面是一个简单的递归过程 <code>foo</code>，它做的事情并不多。
+
+<pre><code>(define (foo n)
+    (if (= n 0)
+        0
+        (foo (&#x2d; n 1))))</code></pre>
+
+<p>在未做尾调用优化的 Scheme 版本中，调用 <code>foo(4)</code> 时会发生以下情况：</p>
+
+<p><img class="img-responsive center-block" src="images/tco.gif" alt="Foo" width=" height="></p>
+
+<p>为了计算 <code>(foo 4)</code>，我们需要调用 <code>(foo 3)</code>。为了计算 <code>(foo 3)</code>，我们需要调用 <code>(foo 2)</code>。为了计算 <code>(foo 2)</code>，我们需要调用 <code>(foo 1)</code>。为了计算 <code>(foo 1)</code>，我们需要调用 <code>(foo 0)</code>，它返回 <code>0</code>。</p>
+
+<p>在这些递归调用进行期间，每个调用都在<em>等待</em>下一个递归调用的结果，其帧在这段时间内始终保持打开。对于较小的输入这还能应付，但对于 <code>(foo 1000000)</code>，在某个时刻会同时有超过 100 万个帧处于打开状态！这可能会让你的电脑崩溃。</p>
+
+<p>在大多数情况下，在后续的过程调用期间保持这些帧处于活动状态是很重要的。例如，在下面的代码中，过程 <code>f</code> 调用 <code>g</code>。在调用 <code>g</code> 期间，<code>f</code> 的帧<em>需要</em>保持活动状态，这样我们最终才能返回到 <code>f</code>，并用 <code>g</code> 的结果完成它的执行。</p>
+
+<pre><code>(define (f x)
+    (define y (g x))
+    (* x y))
+
+(define (g x)
+   (* 6 x))
+
+(f 7)</code></pre>
+
+<p>然而，有些过程（例如 <code>foo</code>）只在<em>最最后一步</em>才进行过程调用。由于 <code>(foo 4)</code> 做的最后一件事就是调用 <code>(foo 3)</code>，所以在 <code>(foo 3)</code> 返回之后，<code>(foo 4)</code> 调用中就没有其他事情要做了。</p>
+
+<p>因此，一旦我们完成了对 <code>(foo 3)</code> 的递归调用，就不需要真的保留 <code>(foo 4)</code> 的帧了。我们的解释器目前会保存这些帧，尽管它们是多余的。如果我们能在用完它们之后将其丢弃，就能解决 <code>foo</code> 在大输入下崩溃的问题，并大幅提升程序的效率。</p>
+
+<p>当某个调用是过程返回之前最后求值的内容时，该调用就处于<strong>尾上下文（tail context）</strong>中。完整的 Scheme 实现都会实现<strong>尾调用优化</strong>，即丢弃不必要的帧，使<strong>尾调用</strong>运行得更高效。
+</div></p>
+
+<br>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        蹦床（Trampolining）<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+蹦床是一种在通常不支持尾调用优化的语言（例如 Python）中实现该优化的方法：把处于尾上下文中的函数调用保存为未求值的调用（Thunk），然后仅在需要时才对其求值并展开（这就是蹦床）。
+
+<p>该方法的基本单元是 Thunk，它表示一个尚未求值的操作。创建 Thunk 并模拟未求值操作最简单的方式，是把该操作包装成一个零参数函数保存起来，留待以后求值。</p>
+
+<pre><code>&gt;&gt;&gt; my_thunk1 = lambda: sqrt(16384) + 22
+&gt;&gt;&gt; my_thunk2 = lambda: some_costly_operation(1000)</code></pre>
+
+<p>在第一个 Thunk 中，我们把操作 <code>sqrt(16384) + 22</code> 包装成一个零参数 lambda 函数，并保存到变量 <code>my_thunk1</code> 中。在第二个 Thunk 中，我们把 <code>some_costly_operation(1000)</code> 包装成一个零参数 lambda 函数，并保存到变量 <code>my_thunk2</code> 中。</p>
+
+<p>之后可以通过调用保存零参数函数的那个变量来“展开”这些 Thunk，调用时就会求值其中的操作。</p>
+
+<pre><code>&gt;&gt;&gt; my_thunk1()
+150.0
+&gt;&gt;&gt; my_thunk2()
+# result of evaluating some_costly_operation(1000)</code></pre>
+
+<p>Thunk 也可以嵌套，这时需要多次调用才能展开：</p>
+
+<pre><code>&gt;&gt;&gt; my_nested_thunk = lambda: lambda: lambda: 4 * (2 + 3)
+&gt;&gt;&gt; thunk2 = my_nested_thunk()
+&gt;&gt;&gt; thunk3 = thunk2()
+&gt;&gt;&gt; result = thunk3()
+&gt;&gt;&gt; result
+20</code></pre>
+
+<p>这种对嵌套 thunk 的“展开”可以自动完成：反复调用该 thunk，直到它最终返回一个值。这个过程就是我们所说的蹦床（trampolining）。</p>
+
+<pre><code>def trampoline(value):
+    while callable(value): # While value is still a thunk
+        value = value()
+    return value</code></pre>
+
+<p>这有什么用呢？考虑一下我们经过尾调用优化的 Python 阶乘：</p>
+
+<pre><code>def tail_factorial(n, so_far=1):
+    if n == 0:
+        return so_far
+    return tail_factorial(n &#x2d; 1, so_far * n)</code></pre>
+
+<p>虽然 Scheme 版本的 <code>tail_factorial</code> 会进行尾调用优化，但请回想一下，Python 并不会优化尾调用。在这个 Python 版本的 <code>tail_factorial</code> 中，每次递归调用都会打开一个帧，并且只在最后才关闭，这使得它和 Python 中未做尾调用的原始 <code>factorial</code> 实现一样低效！把它可视化为调用栈就是：</p>
+
+<p><img class="img-responsive center-block" src="images/non_thunked_calls.png" alt="Non-Thunk Calls" width=" height="></p>
+
+<p>可以看到，当我们到达基本情况时，每一个 <code>tail_factorial</code> 帧都还处于打开状态。要解决这个问题，我们可以应用 thunk 化（thunking）！</p>
+
+<p>实现看起来是这样的：</p>
+
+<pre><code>def thunk_factorial(n, so_far=1):
+    def thunk():
+        if n == 0:
+            return so_far
+        return thunk_factorial(n &#x2d; 1, so_far * n)
+    return thunk
+
+def factorial(n):
+    value = thunk_factorial(n)
+    while callable(value): # While value is still a thunk
+        value = value()
+    return value</code></pre>
+
+<p>Thunk 化通过让每次调用只计算阶乘的一步，从而使同时只有一个 <code>thunk_factorial</code> 帧处于打开状态。<code>thunk_factorial</code> 不是进行并返回另一个嵌套调用（像 <code>tail_factorial</code> 中 <code>return tail_factorial(n &#x2d; 1, so_far * n)</code> 那样），而是返回一个<em>未求值</em>的 thunk。想想 <code>thunk_factorial</code> 中的相互递归是如何做到这一点的！</p>
+
+<p>现在，对于 <code>factorial</code>，我们应用蹦床技术，不断展开 <code>thunk_factorial</code>，直到得到最终答案。</p>
+
+<p>有了这两个函数，我们不再需要在每次递归调用时都让每一个帧保持打开！</p>
+
+<p>为了直观地看出好处，请看下面新的函数调用图，并与原来的尾递归版本作比较：</p>
+
+<p><img class="img-responsive center-block" src="images/thunked_calls.png" alt="Thunk Calls" width=" height="></p>
+
+<p>虽然 <code>thunk</code> 化的版本乍看之下可能更复杂，但请注意，任何时刻最多只有一个 <code>thunk_factorial</code> 和一个 <code>thunk</code> 调用处于活动状态。无论 <code>n</code> 变得多大都是如此！每一步中，调用当前的 <code>thunk</code> 都恰好计算阶乘的一步，然后返回一个新的 thunk 用于下一步，这样过程就能在下一轮循环中继续。</p>
+
+<p>你也可以仔细观察下面这张分步示意图，它演示了 <code>factorial(3)</code> 第一部分的求值过程：</p>
+
+<p><img class="img-responsive center-block" src="images/thunk_detailed.gif" alt="Detailed Animated Thunk" width=" height="></p>
+
+<p>注意，通过从 <code>thunk_factorial</code> 返回一个未求值的 thunk 而不是进行递归调用，已完成的帧就可以关闭，而不必保持打开以等待它们所发出的递归调用返回。这样一来，任何时刻都只有必要的帧保持打开。</p>
+
+<p>对于我们的 Scheme 解释器，一个 <code>Unevaluated</code> 实例就是 <code>scheme_eval</code>（我们想要优化的那个函数）的 thunk。我们通过对所存储的参数反复调用 <code>scheme_eval</code> 来反复求值这个 thunk，直到得到一个值（然后我们返回该值）。</p>
+
+<br>
+
+</div>
+
+<br><br>
+
+
+<h3 id="problem-ec-2-0-pts">问题 EC 2（0 分）</h3>
+
+
+<blockquote><p><strong>前言：</strong>本题具有挑战性，需要你在不指明具体位置的情况下修改解释器中的多个部分。<strong>我们建议你先花时间彻底理解所有概念，并制定清晰的策略，然后再开始写代码。</strong></p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>重要：</strong>在做题过程中，请持续确认你为本题编写的代码不会导致项目其他部分失败。如果你发现自己理不清改过哪些地方，保存一份原始代码的副本以供参考可能是个好主意。</p></blockquote>
+
+<p>完成 <code>scheme_eval_apply.py</code> 中的函数 <code>optimize_tail_calls</code>。它返回一个 <code>scheme_eval</code> 的替代版本，该版本在 Python 中经过尾调用优化。也就是说，它允许在常数空间中存在数量不限的、处于活动状态的 <code>scheme_eval</code> 尾调用。它还有第三个参数 <code>tail</code>，用于指示对 <code>scheme_eval</code> 的这次调用是否是尾调用。</p>
+
+<p><code>Unevaluated</code> 类表示一个需要在特定环境中求值的表达式。当 <code>optimized_eval</code> 在尾上下文中接收到一个非原子表达式时，它会返回一个 <code>Unevaluated</code> 实例。否则，<code>optimized_eval</code> 应当持续对当前的 <code>expr</code> 和 <code>env</code> 调用 <code>unoptimized_scheme_eval</code>，直到结果是一个最终值，而不是一个 <code>Unevaluated</code> 实例。</p>
+
+<p>在你实现完 <code>optimize_tail_calls</code> 之后，取消注释 <code>scheme_eval_apply.py</code> 中的下面这一行，把原来的 <code>scheme_eval</code> 重新赋值为优化后的实现：</p>
+
+<pre><code>scheme_eval = optimize_tail_calls(scheme_eval)</code></pre>
+
+<p>最后，找出你的解释器中哪些对 <code>scheme_eval</code> 的调用是尾调用。在适用的情况下，把这些 <code>scheme_eval</code> 尾调用改为传入 True 作为第三个参数（即 <code>tail</code> 参数）。</p>
+
+<blockquote><p><strong>注意：</strong>一份成功的实现需要修改<em>其他若干函数</em>，其中包括一些我们已为你提供的函数。</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>提示</strong>：</p>
+
+<p>如果一次对 <code>scheme_eval</code> 的调用是函数返回之前最后要做的事情，那么它就是尾调用。</p>
+
+<p>即使是在同一个函数内部，也并非每一次对 <code>scheme_eval</code> 的调用都能从尾调用优化中获益。想想具体哪些调用会获益，并相应地为其 <code>tail</code> 参数传入 True。</p></blockquote>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q EC2<button id="copy-code-python3ok-qEC2" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qEC2").onclick = () => copyCode('python3 ok -q EC2', "copy-code-python3ok-qEC2");
+        </script>
+        <br/>
+
+<!-- <include proj/scheme/let-to-lambda.md> -->
+
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+<script>
+$("#cats_typing").hover(
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing.gif");
+  },
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing_still.gif");
+  }
+);
+</script>
+
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#introduction">引言</a></li>
+  <li><a href="#download-starter-files">下载起始文件</a></li>
+  <li><a href="#interpreter-details">解释器细节</a></li>
+  <ul>
+    <li><a href="#scheme-features">Scheme 特性</a></li>
+    <li><a href="#running-the-interpreter">运行解释器</a></li>
+  </ul>
+  <li><a href="#schememon">Schememon</a></li>
+  <li><a href="#phase-1-the-evaluator">阶段 1：求值器</a></li>
+  <ul>
+    <li><a href="#problem-1">题目 1</a></li>
+    <li><a href="#problem-2">题目 2</a></li>
+    <li><a href="#problem-3">题目 3</a></li>
+    <li><a href="#problem-4">题目 4</a></li>
+    <li><a href="#problem-5">题目 5</a></li>
+    <li><a href="#check-problems-for-phase-1">检查阶段 1 的题目</a></li>
+  </ul>
+  <li><a href="#phase-2-procedures">阶段 2：过程</a></li>
+  <ul>
+    <li><a href="#problem-6">题目 6</a></li>
+    <li><a href="#user-defined-procedures">用户定义过程</a></li>
+    <li><a href="#problem-7">题目 7</a></li>
+    <li><a href="#problem-8">题目 8</a></li>
+    <li><a href="#problem-9">题目 9</a></li>
+    <li><a href="#problem-10">题目 10</a></li>
+    <li><a href="#submit-your-phase-1-amp-2-checkpoint">检查点自测</a></li>
+  </ul>
+  <li><a href="#phase-3-mu-and-logical-forms">阶段 3：Mu 与逻辑形式</a></li>
+  <ul>
+    <li><a href="#problem-11">题目 11</a></li>
+    <li><a href="#problem-12">问题 12</a></li>
+    <li><a href="#problem-13">第 13 题</a></li>
+    <li><a href="#additional-scheme-tests">额外的 Scheme 测试</a></li>
+  </ul>
+  <li><a href="#phase-4-write-some-scheme">阶段 4：写一些 Scheme</a></li>
+  <ul>
+    <li><a href="#problem-14">问题 14</a></li>
+    <li><a href="#problem-15">问题 15</a></li>
+    <li><a href="#problem-16">问题 16</a></li>
+    <li><a href="#play-schémémon">开始玩 Schémémon</a></li>
+  </ul>
+  <li><a href="#conclusion">总结</a></li>
+  <li><a href="#project-submission">项目提交</a></li>
+  <li><a href="#extra-challenge">额外挑战</a></li>
+  <ul>
+    <li><a href="#problem-ec-1-0-pts">问题 EC 1（0 分）</a></li>
+    <li><a href="#problem-ec-2-0-pts">问题 EC 2（0 分）</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,1199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Rebecca Dang" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>
+Homework 5 Solutions | CS 61A Summer 2026
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            CS 61A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">Lectures</a></li>
+            
+            <li><a href="../../articles/about-61a/index.html">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/99538/discussion">Ed</a></li>
+            
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            
+            <li><a href="../../articles/contact-61a/index.html">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://go.cs61a.org/extensions">Request an Extension</a></li>
+                
+                <li><a href="https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                
+                <li><a href="https://oh.cs61a.org/">Office Hours Queue</a></li>
+                
+                <li><a href="https://www.gradescope.com/courses/1324284">Gradescope</a></li>
+                
+                <li><a href="https://sections.cs61a.org">Add/Change Sections</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1555178/pages">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">Code Editors</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="../../articles/campus-res/index.html">Campus Resources</a></li>
+                
+                <li><a href="../../articles/advice/index.html">Advice from Students</a></li>
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme Specifications</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme Built-In Procedures</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Guides
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">Type Hints</a></li>
+                
+                <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 Study Guide</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">Final Study Guide</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../instructor.html">Instructors</a></li>
+                
+                <li><a href="../../staff.html">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Homework 5 Solutions
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw05.zip" class="label label-outline">hw05.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>Solution Files</h2>
+<p>You can find the solutions in <a href="hw05.py">hw05.py</a>.</p>
+
+    
+<p>The 61A Scheme interpreter is included in each Scheme assignment. To start it,
+type <code>python3 scheme</code> in a terminal. To load a Scheme file called <code>f.scm</code>, type <code>python3 scheme &#x2d;i f.scm</code>. To exit the Scheme interpreter, type
+<code>(exit)</code>.</p>
+
+<h3 id="recommended-vs-code-extensions">Recommended VS Code Extensions</h3>
+
+
+<p>We recommend that you install the <a href="https://marketplace.visualstudio.com/items?itemName=sjhuangx.vscode-scheme">vscode-scheme</a>
+extension so that parentheses are highlighted.</p>
+
+<p>Before:</p>
+
+<img class="img-responsive center-block" src="assets/before.png" width="600">
+
+<p>After:</p>
+
+<img class="img-responsive center-block" src="assets/after.png" width="600">
+
+<p>In addition, the 61a-bot (<a href="../../articles/61a-bot.html">installation instructions</a>) VS Code extension is available for Scheme homeworks. The bot is also integrated into <code>ok</code>.</p>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+<!-- <br>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Getting Started Videos<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<h2 id="getting-started-videos" class="no-toc">Getting Started Videos</h2>
+
+
+<p>These videos may provide some helpful direction for tackling the coding
+problems on this assignment.</p>
+
+<blockquote><p>To see these videos, you should be logged into your berkeley.edu email.</p></blockquote>
+
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/videoseries?list=PLx38hZJ5RLZdzYiERSJFdUg163hJ2WsGm&si=xe6x0XR4BN23LX1T"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "hw5-getstarted"
+                allowfullscreen></iframe><p><a href='https://youtu.be/playlist?list=PLx38hZJ5RLZdzYiERSJFdUg163hJ2WsGm&si=xe6x0XR4BN23LX1T'> YouTube link </a></p>
+</div>
+
+<p>--></p>
+
+
+<h2 id="linked-lists">Linked Lists</h2>
+
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Linked Lists<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p>Here is the implementation of the <code>Link</code> class:</p>
+
+<pre><code class="python">class Link:
+    &quot;&quot;&quot;A linked list is either a Link object or Link.empty
+
+    &gt;&gt;&gt; s = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; s.rest
+    Link(4, Link(5))
+    &gt;&gt;&gt; s.rest.rest.rest is Link.empty
+    True
+    &gt;&gt;&gt; s.rest.first * 2
+    8
+    &gt;&gt;&gt; print(s)
+    (3 4 5)
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;(&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;)&#x27;</code></pre>
+
+
+
+<table class='table table-bordered'>
+    <tr>
+        <th></th>
+        <th>Mutable Linked Lists</th>
+        <th>Regular Linked Lists</th>
+    </tr>
+    <tr>
+        <td>Traits</td>
+        <td>- Represented with custom object, <code>Link</code> <br>
+            - Has methods and attributes <br>
+            - Mutable
+        </td>
+        <td>- Represented with abstract data type <br>
+            - Has selector functions <br>
+            - Not mutable
+        </td>
+    </tr>
+    <tr>
+        <td>Examples</td>
+        <td>
+<pre><code>>>> s = Link(1, Link(2, Link(3, Link(4))))
+>>> s
+Link(1, Link(2, Link(3, Link(4))))
+>>> s.first = 9
+>>> s
+Link(9, Link(2, Link(3, Link(4))))
+</code></pre>
+        </td>
+        <td>
+<pre><code>>>> s = link(1, link(2, link(3, link(4))))
+>>> s
+[1, [2, [3, [4, 'empty']]]]
+>>> first(s) = 9
+  File "<stdin>", line 1
+SyntaxError: can't assign to function call
+</code></pre>
+        </td>
+    <tr>
+        <td>Explanations</td>
+        <td>
+            <code>Link</code> is mutable because we have created an object <code>Link</code> with attributes that allow direct access to the elements inside of it. This allows us to change the elements, thus mutating the <code>Link</code>
+        </td>
+        <td>
+            <code>link</code> is not mutable because its selector functions only return to us the values of its elements. We are not able to change or reassign these values.
+        </td>
+    </tr>
+</table>
+
+</div>
+
+
+<h3 id="q1-add-links">Q1: Add Links</h3>
+
+
+<!-- Let's implement a method in order to add together items of <code>link1</code> and <code>link2</code>. -->
+<!-- Do not assume that the links are the same length. -->
+
+<p>Write a function <code>add_link</code> that takes in two linked lists, <code>link1</code> and <code>link2</code>, and returns a <em>new</em> linked list
+that concatenates <code>link2</code> to the end of <code>link1</code>.</p>
+
+<p>You may assume that the input list is shallow; none of its elements are themselves another linked list.</p>
+
+<blockquote><p><strong>Note</strong>: You <em>may not</em> assume that the input lists are of the same length.</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p>Challenge (Optional): Do NOT assume that the input list is shallow (i.e. your input can be a nested linked list). Hint: use the built-in <code>type</code> function.</p></blockquote>
+
+<solution>
+
+<pre><code>def add_links(link1: Link, link2: Link) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Adds two Links, returning a new Link
+
+    &gt;&gt;&gt; l1 = Link(1, Link(2))
+    &gt;&gt;&gt; l2 = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; new = add_links(l1, l2)
+    &gt;&gt;&gt; print(new)
+    (1 2 3 4 5)
+    &gt;&gt;&gt; new2 = add_links(l2,l1)
+    &gt;&gt;&gt; print(new2)
+    (3 4 5 1 2)
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if link1 is not Link.empty:
+        return Link(link1.first, add_links(link1.rest, link2))
+    elif link2 is not Link.empty:
+        return Link(link2.first, add_links(link1, link2.rest))
+    else:
+        return Link.empty
+
+# Iterative version (using reverse)
+def add_links(link1, link2):
+    result = Link.empty
+    while link1 is not Link.empty:
+        result = Link(link1.first, result)
+        link1 = link1.rest
+    while link2 is not Link.empty:
+        result = Link(link2.first, result)
+        link2 = link2.rest
+    return reverse(result)</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q add_links<button id="copy-code-python3ok-qadd_links" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qadd_links").onclick = () => copyCode('python3 ok -q add_links', "copy-code-python3ok-qadd_links");
+        </script>
+        <br/>
+
+
+<h3 id="q2-mutable-mapping">Q2: Mutable Mapping</h3>
+
+
+<p>Implement <code>deep_map_mut(func, s)</code>, which applies the function <code>func</code> to each
+element in the linked list <code>s</code>. If an element is itself a linked list,
+recursively apply <code>func</code> to its elements as well.</p>
+
+<p>Your implementation should <em>mutate</em> the original linked list. <strong>Do not
+create any new linked lists.</strong> The function returns <code>None</code>.</p>
+
+<blockquote><p><strong>Hint</strong>: You can use the built-in <code>isinstance</code> function to determine if an element is a linked list.</p>
+
+<pre><code>&gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
+&gt;&gt;&gt; isinstance(s, Link)
+True
+&gt;&gt;&gt; isinstance(s, int)
+False</code></pre></blockquote>
+
+<!-- separator for the indent blocks -->
+
+<blockquote><p><strong>Construct Check</strong>: The final test case for this problem checks
+that your function does not create any new linked lists.
+If you are failing this doctest, make sure that you are not
+creating link lists by calling the constructor, i.e.</p>
+
+<pre><code>s = Link(1)</code></pre></blockquote>
+
+<solution>
+
+<pre><code>def deep_map_mut(func, s: Link) &#x2d;&gt; None:
+    &quot;&quot;&quot;Mutates a deep link s by replacing each item found with the
+    result of calling func on the item. Does NOT create new Links (so
+    no use of Link&#x27;s constructor).
+
+    Does not return the modified Link object.
+
+    &gt;&gt;&gt; link1 = Link(3, Link(Link(4), Link(5, Link(6))))
+    &gt;&gt;&gt; square = lambda x: x * x
+    &gt;&gt;&gt; print(link1)
+    (3 (4) 5 6)
+    &gt;&gt;&gt; link2 = Link(1, Link(Link(Link(2, Link(3))), Link(4)))
+    &gt;&gt;&gt; double = lambda x: x * 2
+    &gt;&gt;&gt; print(link2)
+    (1 ((2 3)) 4)
+    &gt;&gt;&gt; # Disallow the use of making new Links before calling deep_map_mut
+    &gt;&gt;&gt; Link.__init__, hold = lambda *args: print(&quot;Do not create any new Links.&quot;), Link.__init__
+    &gt;&gt;&gt; try:
+    ...     deep_map_mut(square, link1)
+    ...     deep_map_mut(double, link2)
+    ... finally:
+    ...     Link.__init__ = hold
+    &gt;&gt;&gt; print(link1)
+    (9 (16) 25 36)
+    &gt;&gt;&gt; print(link2)
+    (2 ((4 6)) 8)
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if s is Link.empty:
+        return None
+    elif isinstance(s.first, Link):
+        deep_map_mut(func, s.first)
+    else:
+        s.first = func(s.first)
+    deep_map_mut(func, s.rest)</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q deep_map_mut<button id="copy-code-python3ok-qdeep_map_mut" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdeep_map_mut").onclick = () => copyCode('python3 ok -q deep_map_mut', "copy-code-python3ok-qdeep_map_mut");
+        </script>
+        <br/>
+
+
+<h2 id="efficiency">Efficiency</h2>
+
+<br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Efficiency<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+<guide>
+Tricky efficiency examples are for 61B, not 61A. We explore efficiency on a basic level only; for example, we treat the runtime of multiplication and other primitive operations as constant even for large inputs.
+
+<p>In addition to classifying algorithms as Exponential, Quadratic, Linear, Logarithmic, or Constant, we also introduce Big Theta notation, but do not go into the details of runtime analysis.</p>
+
+<p>There's a slight nuance here: in CS 61A, we do runtime analysis with
+respect to the input. In later classes (such as 61B, CS 170, etc.) runtime analysis is done with respect to the
+<em>size</em> (i.e. the number of bits) of the input. If this confuses you, don't worry about it too much.
+Just try to be consistent and tell students that we are considering how a function's runtime is affected when
+we change the input.
+</guide></p>
+
+<p>Throughout this class, we have mainly focused on <em>correctness</em> — whether a program produces the correct output.
+However, computer scientists are also interested in creating <em>efficient</em> solutions to problems.
+One way to quantify efficiency is to determine how a function's <em>runtime</em> changes as its input changes.
+In this class, we measure a function's runtime by the number of operations it performs.</p>
+
+<p>A function <code>f(n)</code> has...</p>
+
+<ul>
+  <li>constant runtime if the runtime of <code>f</code> does not depend on <code>n</code>. Its runtime is Θ(<code>1</code>).</li>
+  <li>logarithmic runtime if the runtime of <code>f</code> is proportional to <code>log(n)</code>. Its runtime is Θ(<code>log(n)</code>).</li>
+  <li>linear runtime if the runtime of <code>f</code> is proportional to <code>n</code>. Its runtime is Θ(<code>n</code>).</li>
+  <li>quadratic runtime if the runtime of <code>f</code> is proportional to <code>n^2</code>. Its runtime is Θ(<code>n^2</code>).</li>
+  <li>exponential runtime if the runtime of <code>f</code> is proportional to <code>b^n</code>, for some constant <code>b</code>. Its runtime is Θ(<code>b^n</code>).</li>
+</ul>
+
+<p><strong>Example 1:</strong> It takes a single multiplication operation to compute <code>square(1)</code>, and it takes a single multiplication operation to compute <code>square(100)</code>. In general, calling <code>square(n)</code> results in a <em>constant</em> number of operations that does not vary according to <code>n</code>. We say <code>square</code> has a runtime complexity of Θ(1).</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>function call</th>
+    <th>return value</th>
+    <th>operations</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>square(1)</code></td>
+    <td>1*1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>square(2)</code></td>
+    <td>2*2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>square(100)</code></td>
+    <td>100*100</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>square(n)</code></td>
+    <td>n*n</td>
+    <td>1</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>Example 2:</strong> It takes a single multiplication operation to compute <code>factorial(1)</code>, and it takes 100 multiplication operations to compute <code>factorial(100)</code>. As <code>n</code> increases, the runtime of <code>factorial</code> increases <em>linearly</em>. We say <code>factorial</code> has a runtime complexity of Θ(<code>n</code>).</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>function call</th>
+    <th>return value</th>
+    <th>operations</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>factorial(1)</code></td>
+    <td>1*1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>factorial(2)</code></td>
+    <td>2*1*1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>factorial(100)</code></td>
+    <td>100*99*...*1*1</td>
+    <td>100</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>factorial(n)</code></td>
+    <td>n*(n-1)*...*1*1</td>
+    <td>n</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>Example 3:</strong> Consider the following function:</p>
+
+<pre><code>def bar(n):
+    for a in range(n):
+        for b in range(n):
+            print(a,b)</code></pre>
+
+<p>Evaulating <code>bar(1)</code> results in a single <code>print</code> call, while evalulating <code>bar(100)</code> results in 10,000 <code>print</code> calls. As <code>n</code> increases, the runtime of <code>bar</code> increases <em>quadratically</em>. We say <code>bar</code> has a runtime complexity of Θ(<code>n^2</code>).</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>function call</th>
+    <th>operations (prints)</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>bar(1)</code></td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>bar(2)</code></td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td><code>bar(100)</code></td>
+    <td>10000</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>bar(n)</code></td>
+    <td>n^2</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p><strong>Example 4:</strong> Consider the following function:</p>
+
+<pre><code>def rec(n):
+    if n == 0:
+        return 1
+    else:
+        return rec(n &#x2d; 1) + rec(n &#x2d; 1)</code></pre>
+
+<p>Evaluating <code>rec(1)</code> results in a single addition operation. Evaluating <code>rec(4)</code> results in <code>2^4 &#x2d; 1</code> = 15 addition operations, as shown by the diagram below.</p>
+
+<p>During the evaulation of <code>rec(4)</code>, there are two calls to <code>rec(3)</code>, four calls to <code>rec(2)</code>, eight calls to <code>rec(1)</code>, and 16 calls to <code>rec(0)</code>.</p>
+
+<p>So we have eight instances of <code>rec(0) + rec(0)</code>, four instances of <code>rec(1) + rec(1)</code>, two instances of <code>rec(2) + rec(2)</code>, and a single instance of <code>rec(3) + rec(3)</code>, for a total of 1 + 2 + 4 + 8 = 15 addition operations.</p>
+
+<p><img class="img-responsive center-block" src="assets/rec.png" alt="Above: Call structure of rec(4)." title="Rec Tree" width=" height="></p>
+
+<p>As <code>n</code> increases, the runtime of <code>rec</code> increases <em>exponentially</em>. In particular, the runtime of <code>rec</code> approximately doubles when we increase <code>n</code> by 1. We say <code>rec</code> has a runtime complexity of Θ(<code>2^n</code>).</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>input</th>
+    <th>function call</th>
+    <th>return value</th>
+    <th>operations</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>rec(1)</code></td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>rec(2)</code></td>
+    <td>4</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><code>rec(10)</code></td>
+    <td>1024</td>
+    <td>1023</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>n</td>
+    <td><code>rec(n)</code></td>
+    <td>2^n</td>
+    <td>2^n - 1</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p>Tips for finding the order of growth of a function's runtime:</p>
+
+<ul>
+  <li>If the function is recursive, determine the number of recursive calls and the runtime of each recursive call.</li>
+  <li>If the function is iterative, determine the number of inner loops and the runtime of each loop.</li>
+  <li>Ignore coefficients. A function that performs <code>n</code> operations and a function that performs <code>100 * n</code> operations are both linear.</li>
+  <li>Choose the largest order of growth. If the first part of a function has a linear runtime and the second part has a quadratic runtime, the overall function has a quadratic runtime.</li>
+  <li><p>In this course, we only consider constant, logarithmic, linear, quadratic, and exponential runtimes.
+  </div></p>
+
+  <h3 id="q3-prime">Q3: Prime</h3></li>
+</ul>
+
+<p>Write a function that returns whether a number is prime or not in O(sqrt(n)) time, where
+sqrt means square root. You can assume n >= 2.</p>
+
+<blockquote><p><strong>Hint:</strong> you don't need to check whether every single number that is smaller than
+n divides n</p></blockquote>
+
+<solution>
+
+<pre><code>from math import sqrt
+def is_prime_sqrt(n: int) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Tests whether a number N is prime or not. Implement this function
+    in O(sqrt(n)) time. You can assume n &gt;= 2
+
+    &gt;&gt;&gt; is_prime_sqrt(2)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(67092481)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(524287)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(2251748274470911)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(6700417)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(44895587973889)
+    False
+    &gt;&gt;&gt; is_prime_sqrt(2147483647)
+    True
+    &gt;&gt;&gt; is_prime_sqrt(67280421310721)
+    True
+    &quot;&quot;&quot;
+    # sqrt(k) will give the square root of k as a floating point (decimal)
+<div class="sol-highlight">    if sqrt(n) &lt; 2:
+        return True
+    for i in range(2, int(sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q is_prime_sqrt<button id="copy-code-python3ok-qis_prime_sqrt" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qis_prime_sqrt").onclick = () => copyCode('python3 ok -q is_prime_sqrt', "copy-code-python3ok-qis_prime_sqrt");
+        </script>
+        <br/>
+
+
+<h2 id="scheme">Scheme</h2>
+
+<br>
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Call expressions<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+Scheme uses Polish prefix notation, in which the operator expression comes before
+the operand expressions. For example, to evaluate <code>3 * (4 + 2)</code>, we write:
+
+<pre><code>scm&gt; (* 3 (+ 4 2))
+18</code></pre>
+
+
+
+<p>Just like in Python, to evaluate a call expression:</p>
+
+<ol>
+  <li>Evaluate the operator. It should evaluate to a procedure.</li>
+  <li>Evaluate the operands, left to right.</li>
+  <li>Apply the procedure to the evaluated operands.</li>
+</ol>
+
+<p>Here are some examples using built-in procedures:</p>
+
+<pre><code class="scheme">scm&gt; (+ 1 2)
+3
+scm&gt; (&#x2d; 10 (/ 6 2))
+7
+scm&gt; (modulo 35 4)
+3
+scm&gt; (even? (quotient 45 2))
+#t</code></pre>
+
+
+</div>
+<br>
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Define<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+The <code>define</code> form is used to assign values to symbols. It has the following syntax:
+
+<pre><code>(define &lt;symbol&gt; &lt;expression&gt;)</code></pre>
+
+<pre><code class="scheme">scm&gt; (define pi (+ 3 0.14))
+pi
+scm&gt; pi
+3.14</code></pre>
+
+
+
+<p>To evaluate the <code>define</code> expression:</p>
+
+<ol>
+  <li>Evaluate the final sub-expression (<code>&lt;expression&gt;</code>), which in this case evaluates to <code>3.14</code>.</li>
+  <li>Bind that value to the symbol (<code>symbol</code>), which in this case is <code>pi</code>.</li>
+  <li>Return the symbol.</li>
+</ol>
+
+<p>The <code>define</code> form can also define new procedures, described in the "Defining Functions" section.
+</div>
+<br>
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Cond<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+The <code>cond</code> special form can include multiple predicates (like if/elif in Python):</p>
+
+<pre><code>(cond
+    (&lt;p1&gt; &lt;e1&gt;)
+    (&lt;p2&gt; &lt;e2&gt;)
+    ...
+    (&lt;pn&gt; &lt;en&gt;)
+    (else &lt;else&#x2d;expression&gt;))</code></pre>
+
+<p>The first expression in each clause is a predicate.  The second expression in
+the clause is the return expression corresponding to its predicate. The <code>else</code>
+clause is optional; its <code>&lt;else&#x2d;expression&gt;</code> is the return expression if none of
+the predicates are true.</p>
+
+<p>The rules of evaluation are as follows:</p>
+
+<ol>
+  <li>Evaluate the predicates <code>&lt;p1&gt;</code>, <code>&lt;p2&gt;</code>, ..., <code>&lt;pn&gt;</code> in order until one
+  evaluates to a true value (anything but <code>#f</code>).</li>
+  <li>Evalaute and return the value of the return expression corresponding to the
+  first predicate expression with a true value.</li>
+  <li>If none of the predicates evaluate to true values and there is an <code>else</code>
+  clause, evaluate and return <code>&lt;else&#x2d;expression&gt;</code>.</li>
+</ol>
+
+<p>For example, this <code>cond</code> expression returns the nearest multiple of 3 to <code>x</code>:</p>
+
+<pre><code class="scheme">scm&gt; (define x 5)
+x
+scm&gt; (cond ((= (modulo x 3) 0) x)
+            ((= (modulo x 3) 1) (&#x2d; x 1))
+            ((= (modulo x 3) 2) (+ x 1)))
+6</code></pre>
+
+
+</div>
+
+<h3 id="q4-pow">Q4: Pow</h3>
+
+
+<p>Implement a procedure <code>pow</code> that raises a number <code>base</code> to the power of a nonnegative integer <code>exp</code>. The number of recursive <code>pow</code> calls should grow logarithmically with respect to <code>exp</code>, rather than linearly. For example, <code>(pow 2 32)</code> should result in 5 recursive <code>pow</code> calls rather than 32 recursive <code>pow</code> calls.</p>
+
+<blockquote><p><em>Hint:</em></p>
+
+<ol>
+  <li>x<sup>2y</sup> = (x<sup>y</sup>)<sup>2</sup></li>
+  <li>x<sup>2y+1</sup> = x(x<sup>y</sup>)<sup>2</sup></li>
+</ol>
+
+<p>For example, 2<sup>16</sup> = (2<sup>8</sup>)<sup>2</sup> and 2<sup>17</sup> = 2 * (2<sup>8</sup>)<sup>2</sup>.</p>
+
+<p>You may use the built-in predicates <code>even?</code> and <code>odd?</code>. Also, the <code>square</code> procedure is defined for you.</p>
+
+<p>Scheme doesn't have <code>while</code> or <code>for</code> statements, so use recursion to solve this problem.</p></blockquote>
+
+<solution>
+
+<pre><code class="scheme">(define (square n) (* n n))
+
+(define (pow base exp)
+<div class="sol-highlight">  (cond ((= exp 0) 1)
+        ((even? exp) (square (pow base (/ exp 2))))
+        (else (* base (pow base (&#x2d; exp 1)))))</div>)</code></pre>
+
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q pow<button id="copy-code-python3ok-qpow" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qpow").onclick = () => copyCode('python3 ok -q pow', "copy-code-python3ok-qpow");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>We avoid unnecessary <code>pow</code> calls by squaring the result of <code>base^(exp/2)</code> when <code>exp</code> is even.</p>
+
+<p>The <code>else</code> clause, which is for odd values of <code>exp</code>, multiplies the result of <code>base^(exp&#x2d;1)</code> by <code>base</code>.</p>
+
+<p>When <code>exp</code> is even, computing <code>base^exp</code> requires one more call than computing <code>base^(exp/2)</code>. When <code>exp</code> is odd, computing <code>base^exp</code> requires two more calls than computing <code>base^((exp&#x2d;1)/2)</code>.</p>
+
+<p>So we have a logarithmic runtime for <code>pow</code> with respect to <code>exp</code>.</p>
+
+<!--
+Video walkthrough:
+<p>
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/-yt2EOv9ZLU"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "scheme-pow"
+                allowfullscreen></iframe><p><a href='https://youtu.be/-yt2EOv9ZLU'> YouTube link </a></p>
+-->
+</div>
+
+
+<h3 id="q5-repeatedly-cube">Q5: Repeatedly Cube</h3>
+
+
+<p>Implement <code>repeatedly&#x2d;cube</code>, which receives a number <code>x</code> and cubes it <code>n</code> times.</p>
+
+<p>Here are some examples of how <code>repeatedly&#x2d;cube</code> should behave:</p>
+
+<pre><code class="scheme">scm&gt; (repeatedly&#x2d;cube 100 1) ; 1 cubed 100 times is still 1
+1
+scm&gt; (repeatedly&#x2d;cube 2 2) ; (2^3)^3
+512
+scm&gt; (repeatedly&#x2d;cube 3 2) ; ((2^3)^3)^3
+134217728</code></pre>
+
+
+
+<solution>
+
+<pre><code class="scheme">(define (repeatedly&#x2d;cube n x)
+    (if (zero? n)
+        x
+        (begin
+<div class="sol-highlight">            (define y (repeatedly&#x2d;cube (&#x2d; n 1) x))</div><div class="sol-highlight">            (* y y y))))</div></code></pre>
+
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q repeatedly-cube<button id="copy-code-python3ok-qrepeatedly-cube" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qrepeatedly-cube").onclick = () => copyCode('python3 ok -q repeatedly-cube', "copy-code-python3ok-qrepeatedly-cube");
+        </script>
+        <br/>
+
+<div class="sol-highlight">
+
+<p>We know our solution must be recursive because Scheme handles recursion much better than it handles iteration.</p>
+
+<p>The provided code returns <code>x</code> when <code>n</code> is zero. This is the correct base case for <code>repeatedly&#x2d;cube</code>; we just need to write the recursive case.</p>
+
+<p>In the recursive case, the provided code returns <code>(* y y y)</code>, which is the cube of <code>y</code>. We use recursion to set <code>y</code> to the result of cubing <code>x</code> <code>n &#x2d; 1</code> times. Then the cube of <code>y</code> is the result of cubing <code>x</code> <code>n</code> times, as desired.</p>
+
+</div>
+
+
+<h3 id="q6-cadr-and-caddr">Q6: Cadr and Caddr</h3>
+
+
+<p>Define the procedure <code>cadr</code>, which returns the second element of a list. Also define <code>caddr</code>, which returns the third element of a list.
+Try writing <code>cadr</code> and <code>caddr</code> in terms of <code>car</code> and <code>cdr</code>.</p>
+
+<solution>
+
+<pre><code class="scheme">(define (cddr s)
+  (cdr (cdr s)))
+
+(define (cadr s)
+<div class="sol-highlight">  (car (cdr s))</div>)
+
+(define (caddr s)
+<div class="sol-highlight">  (car (cddr s))</div>)</code></pre>
+
+
+
+</solution>
+
+<div class="sol-highlight">
+
+<p>The second element of a list <code>s</code> is the first element of the rest of <code>s</code>. So we define <code>(cadr s)</code> as the <code>car</code> of the <code>cdr</code> of s.</p>
+
+<p>The provided <code>cddr</code> procedure takes a list <code>s</code> and returns a list that starts at the third element of <code>s</code>. So we define <code>(caddr s)</code> as the <code>car</code> of the <code>cddr</code> of <code>s</code>.</p>
+
+</div>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q cadr-caddr<button id="copy-code-python3ok-qcadr-caddr" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcadr-caddr").onclick = () => copyCode('python3 ok -q cadr-caddr', "copy-code-python3ok-qcadr-caddr");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h1 id="submit-assignment">Submit Assignment</h1>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="../../lab/lab00/index.html">Lab 00</a> has detailed instructions.</p>
+
+
+<h1 id="exam-practice">Exam Practice</h1>
+
+
+<p>Homework assignments will also contain prior exam questions for you to try.
+These questions have no submission component; feel free to attempt them if you'd like some practice!</p>
+
+<ol>
+  <li>Fall 2019 Final Q7b: <a href="../../exam/fa19/final/61a-fa19-final.pdf#page=9">Mull It Over</a></li>
+  <li>Spring 2018 Midterm 2 Q4(a): <a href="../../exam/sp18/mt2/61a-sp18-mt2.pdf#page=6">Sequences</a></li>
+</ol>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#recommended-vs-code-extensions">Recommended VS Code Extensions</a></li>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#linked-lists">Linked Lists</a></li>
+    <ul>
+      <li><a href="#q1-add-links">Q1: Add Links</a></li>
+      <li><a href="#q2-mutable-mapping">Q2: Mutable Mapping</a></li>
+    </ul>
+    <li><a href="#efficiency">Efficiency</a></li>
+    <ul>
+      <li><a href="#q3-prime">Q3: Prime</a></li>
+    </ul>
+    <li><a href="#scheme">Scheme</a></li>
+    <ul>
+      <li><a href="#q4-pow">Q4: Pow</a></li>
+      <li><a href="#q5-repeatedly-cube">Q5: Repeatedly Cube</a></li>
+      <li><a href="#q6-cadr-and-caddr">Q6: Cadr and Caddr</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+  </ul>
+  <li><a href="#submit-assignment">Submit Assignment</a></li>
+  <li><a href="#exam-practice">Exam Practice</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly">Weekly Schedule</a></li>
+            <li><a href="../../office-hours/index.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources/index.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying/index.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging/index.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition/index.html">Composition Guide</a></li>
+            <li><a href="../../articles/pair-programming.html">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about#assignments">Assignments</a></li>
+            <li><a href="../../articles/about#exams">Exams</a></li>
+            <li><a href="../../articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

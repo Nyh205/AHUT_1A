@@ -1,0 +1,1097 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 6 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 6：面向对象编程、继承、字符串表示
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc06.pdf" class="label label-outline">disc06.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+
+
+
+
+<!-- # Getting Started
+
+Say your name and share a favorite place on the Berkeley campus or surrounding
+city that you've discovered. Try to pick a place that others might not have been
+yet. (But if the room you're in now is your favorite place on campus, that's ok
+too.)
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+<a href="https://www.campus-maps.com/university-of-california-berkeley/mccone-hall/">McCone Hall</a> has a nice view from the 5th floor balcony.
+</div>
+
+<p>This emoticon of a guy in a cowboy hat is valid Python: <code>o[:&#x2d;D]</code></p>
+
+<pre><code>&gt;&gt;&gt; o = [2, 0, 2, 5]
+&gt;&gt;&gt; [ o[:&#x2d;D] for D in range(1,4) ]
+[[2, 0, 2], [2, 0], [2]]</code></pre>
+
+
+<p>🤠 --></p>
+
+
+<h1 id="object-oriented-programming">面向对象编程</h1>
+
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        面向对象编程<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+<strong>面向对象编程</strong>（OOP）是一种编程范式，它允许我们把数据当作对象来处理，就像现实生活中的做法一样。
+
+<p>例如，考虑 <code>Student</code> <strong>类</strong>。你们每个人都是这个类的一个<strong>实例</strong>。</p>
+
+<p>所有 AHUT_1A 学生都具备的信息（比如 <code>name</code>）称为<strong>实例变量</strong>。每个学生都有这些变量，但它们的值因人而异。所有 <code>Student</code> 实例共享的变量称为<strong>类变量</strong>。例如，<code>extension_days</code> 属性就是一个类变量，因为它是所有学生共有的属性。</p>
+
+<p>所有学生都能做作业、上课、去答疑时间。当函数属于某个特定对象时，它们被称为<strong>方法</strong>。在这里，这些行为就是 <code>Student</code> 对象的方法。</p>
+
+<p>下面是上面讨论内容的回顾：</p>
+
+<ul>
+  <li><strong>class</strong>（类）：用于创建对象的模板</li>
+  <li><strong>instance</strong>（实例）：由某个类创建出来的单个对象</li>
+  <li><strong>instance variable</strong>（实例变量）：对象的数据属性，属于某个具体实例</li>
+  <li><strong>class variable</strong>（类变量）：对象的数据属性，由某个类的所有实例共享</li>
+  <li><strong>method</strong>（方法）：绑定函数，可以在某个类的所有实例上调用</li>
+</ul>
+
+<p>实例变量、类变量和方法都被视为对象的<strong>属性</strong>。
+</div></p>
+
+<!-- <div class="page-break"></div> -->
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        继承<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+<!-- This is the short version of inheritance introduction.
+A longer version can be found in inheritance-introduction.md -->
+
+<p>为了避免为相似的类重复定义属性和方法，我们可以写一个<strong>基类</strong>，让更专门的类<strong>继承</strong>它。例如，我们可以写一个叫做 <code>Pet</code> 的类，并把 <code>Dog</code> 定义为 <code>Pet</code> 的<strong>子类</strong>：</p>
+
+<pre><code class="python">class Pet:
+    def __init__(self, name, owner):
+        self.is_alive = True    # It&#x27;s alive!!!
+        self.name = name
+        self.owner = owner
+    def eat(self, thing):
+        print(self.name + &quot; ate a &quot; + str(thing) + &quot;!&quot;)
+    def talk(self):
+        print(self.name)
+
+class Dog(Pet):
+    def talk(self):
+        super().talk()
+        print(&#x27;This Dog says woof!&#x27;)</code></pre>
+
+
+
+<div class="page-break"></div>
+
+<p>继承表示两个或多个类之间的层次关系，其中一个类<strong>是</strong>另一个类更具体的版本：狗<strong>是</strong>一种宠物。（在面向对象语言中，我们用「<strong><code>is</code> a</strong>」来描述这类关系，而不是指 Python 的 is 运算符。）</p>
+
+<p>由于 <code>Dog</code> 继承自 <code>Pet</code>，<code>Dog</code> 类也会继承 <code>Pet</code> 类的方法，因此我们不必重新定义 <code>__init__</code> 或 <code>eat</code>。但我们希望每只 <code>Dog</code> 都用 <code>Dog</code> 特有的方式说话，所以可以<strong>重写</strong> <code>talk</code> 方法。</p>
+
+<p>我们可以用 <code>super()</code> 来表示 <code>self</code> 的超类，并像超类的实例一样访问任何超类方法。例如，<code>Dog</code> 类中的 <code>super().talk()</code> 会调用 <code>Pet</code> 类中的 talk 方法，但传入的 <code>self</code> 是 <code>Dog</code> 实例。
+</div></p>
+
+<!-- <div class="page-break"></div> -->
+
+<p><strong>提示</strong>：着手定义一个类的好方法是先确定必要的类属性和实例属性。在实现一个类之前，先描述每个属性的类型以及它将如何使用。</p>
+
+
+<h3 id="q1-keyboard">第 1 题：键盘</h3>
+
+
+<p><strong>概述：</strong>键盘为字母表中的每个字母都有一个按钮。按下按钮时，它通过调用一个输出函数（例如 <code>print</code>）来输出自己的字母。这个字母是大写还是小写，取决于 <em>caps lock</em> 键被按下的次数。</p>
+
+<p><strong>首先</strong>，实现 <code>Button</code> 类，它接收一个小写字母（字符串）和一个单参数的输出函数，例如 <code>Button(&#x27;c&#x27;, print)</code>。</p>
+
+<p><code>Button</code> 的 <code>press</code> 方法会在它的 <code>letter</code> 属性上调用它的 <code>output</code> 属性（一个函数）：如果 <code>caps_lock</code> 被按下的次数是奇数，就输出大写，否则输出小写。<code>press</code> 方法还会让 <code>pressed</code> 加一，并返回被按下的键。<em>提示</em>：<code>&#x27;hi&#x27;.upper()</code> 求值为 <code>&#x27;HI&#x27;</code>。</p>
+
+<p><strong>其次</strong>，实现 <code>Keyboard</code> 类。<code>Keyboard</code> 有一个名为 <code>keys</code> 的字典，其中为 <code>LOWERCASE_LETTERS</code> 中的每个字母保存一个 <code>Button</code>（以该字母为键）。它还有一个已输入字母的列表，其中可能混合着大写和小写字母。</p>
+
+<p><code>type</code> 方法接收一个只含小写字母的字符串 <code>word</code>。它对 <code>word</code> 中的每个字母调用 <code>keys</code> 中对应 <code>Button</code> 的 <code>press</code> 方法，从而向 <code>Keyboard</code> 的 <code>typed</code> 列表中添加一个字母（根据 <code>caps_lock</code> 决定是小写还是大写）。<strong>重要：</strong>在实现 <code>type</code> 时不要使用 <code>upper</code> 或 <code>letter</code>，只调用 <code>press</code>。实现 <code>type</code> 时也不要使用 <code>append</code>；你只能通过 <code>press</code> 来修改 <code>typed</code> 列表。</p>
+
+<p>阅读 doctest 并讨论：</p>
+
+<ul>
+  <li>为什么可以用 <code>.press().press().press()</code> 反复按同一个按钮。</li>
+  <li>为什么反复按按钮有时只打印在一行，有时却打印多行。</li>
+  <li>为什么 <code>bored.typed</code> 最后有 10 个元素。</li>
+</ul>
+
+
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Button 提示：转大写<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+因为 <code>self.letter</code> 始终是小写，所以用 <code>self.letter.upper()</code> 来得到大写版本。
+</div>
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Button 提示：Caps Lock<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-5">
+<code>caps_lock</code> 被按下的次数是 <code>self.caps_lock.pressed</code> 或 <code>Button.caps_lock.pressed</code>。
+</div>
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Button 提示：输出<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-6">
+<code>output</code> 属性是一个可以被调用的函数：<code>self.output(self.letter)</code> 或 <code>self.output(self.letter.upper())</code>。你不需要返回结果。
+</div>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="button-input" style="height:828px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-button-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-button-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-button-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('LOWERCASE_LETTERS = &#x27;abcdefghijklmnopqrstuvwxyz&#x27;\n\nclass CapsLock:\n    def __init__(self):\n        self.pressed = 0\n\n    def press(self):\n        self.pressed += 1\n\nclass Button:\n    &quot;&quot;&quot;A button on a keyboard.\n\n    &gt;&gt;&gt; f = lambda c: print(c, end=&#x27;&#x27;) # The end=&#x27;&#x27; argument avoids going to new line\n    &gt;&gt;&gt; k, e, y = Button(&#x27;k&#x27;, f), Button(&#x27;e&#x27;, f), Button(&#x27;y&#x27;, f)\n    &gt;&gt;&gt; s = e.press().press().press()\n    eee\n    &gt;&gt;&gt; caps = Button.caps_lock\n    &gt;&gt;&gt; t = [x.press() for x in [k, e, y, caps, e, e, k, caps, e, y, e, caps, y, e, e]]\n    keyEEKeyeYEE\n    &gt;&gt;&gt; u = Button(&#x27;a&#x27;, print).press().press().press()\n    A\n    A\n    A\n    &quot;&quot;&quot;\n    caps_lock = CapsLock()\n\n    def __init__(self, letter, output):\n        assert letter in LOWERCASE_LETTERS\n        self.letter = letter\n        self.output = output\n        self.pressed = 0\n\n    def press(self):\n        &quot;&quot;&quot;Call output on letter (maybe uppercased), then return the button that was pressed.&quot;&quot;&quot;\n        self.pressed += 1\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n\n\n', "python", "button-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>LOWERCASE_LETTERS = &#x27;abcdefghijklmnopqrstuvwxyz&#x27;
+
+class CapsLock:
+    def __init__(self):
+        self.pressed = 0
+
+    def press(self):
+        self.pressed += 1
+
+class Button:
+    &quot;&quot;&quot;A button on a keyboard.
+
+    &gt;&gt;&gt; f = lambda c: print(c, end=&#x27;&#x27;) # The end=&#x27;&#x27; argument avoids going to new line
+    &gt;&gt;&gt; k, e, y = Button(&#x27;k&#x27;, f), Button(&#x27;e&#x27;, f), Button(&#x27;y&#x27;, f)
+    &gt;&gt;&gt; s = e.press().press().press()
+    eee
+    &gt;&gt;&gt; caps = Button.caps_lock
+    &gt;&gt;&gt; t = [x.press() for x in [k, e, y, caps, e, e, k, caps, e, y, e, caps, y, e, e]]
+    keyEEKeyeYEE
+    &gt;&gt;&gt; u = Button(&#x27;a&#x27;, print).press().press().press()
+    A
+    A
+    A
+    &quot;&quot;&quot;
+    caps_lock = CapsLock()
+
+    def __init__(self, letter, output):
+        assert letter in LOWERCASE_LETTERS
+        self.letter = letter
+        self.output = output
+        self.pressed = 0
+
+    def press(self):
+        &quot;&quot;&quot;Call output on letter (maybe uppercased), then return the button that was pressed.&quot;&quot;&quot;
+        self.pressed += 1
+        if self.caps_lock.pressed % 2 == 1:
+            self.output(self.letter.upper())
+        else:
+            self.output(self.letter)
+        return self
+
+
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Keyboard 提示：Keys<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-7">
+keys 可以用字典推导式创建：<code>self.keys = {c: Button(c, ...) for c in LETTERS}</code>。对 <code>Button</code> 的调用应当接收 <code>c</code> 和<strong>一个会向 <code>self.typed</code> 追加内容的输出函数</strong>，这样每当这些按钮被按下时，就会向 <code>self.typed</code> 追加一个字母。
+</div>
+
+
+        <button id='toggle-8' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Keyboard 提示：Type<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-8">
+对 <code>word</code> 中的每个 <code>w</code>，调用 <code>self.key[w]</code> 的 <code>press</code> 方法。当你调用 <code>press</code> 时，<code>Button</code> 应该已经（在 <code>Keyboard.__init__</code> 方法中）设置好，会把内容输出到当前 <code>Keyboard</code> 的 <code>typed</code> 列表。
+</div>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="keyboard-input" style="height:630px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-keyboard-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-keyboard-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-keyboard-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('class Keyboard:\n    &quot;&quot;&quot;A keyboard.\n\n    &gt;&gt;&gt; Button.caps_lock.pressed = 0  # Reset the caps_lock key\n    &gt;&gt;&gt; bored = Keyboard()\n    &gt;&gt;&gt; bored.type(&#x27;hello&#x27;)\n    &gt;&gt;&gt; bored.typed\n    [&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;]\n    &gt;&gt;&gt; bored.keys[&#x27;l&#x27;].pressed\n    2\n\n    &gt;&gt;&gt; Button.caps_lock.press()\n    &gt;&gt;&gt; bored.type(&#x27;hello&#x27;)\n    &gt;&gt;&gt; bored.typed\n    [&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27;H&#x27;, &#x27;E&#x27;, &#x27;L&#x27;, &#x27;L&#x27;, &#x27;O&#x27;]\n    &gt;&gt;&gt; bored.keys[&#x27;l&#x27;].pressed\n    4\n    &quot;&quot;&quot;\n    def __init__(self):\n        self.typed = []\n        self.keys = ____________________________________________\n\n    def type(self, word):\n        &quot;&quot;&quot;Press the button for each letter in word.&quot;&quot;&quot;\n\n\n\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n\n\n\n\n', "python", "keyboard-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>class Keyboard:
+    &quot;&quot;&quot;A keyboard.
+
+    &gt;&gt;&gt; Button.caps_lock.pressed = 0  # Reset the caps_lock key
+    &gt;&gt;&gt; bored = Keyboard()
+    &gt;&gt;&gt; bored.type(&#x27;hello&#x27;)
+    &gt;&gt;&gt; bored.typed
+    [&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;]
+    &gt;&gt;&gt; bored.keys[&#x27;l&#x27;].pressed
+    2
+
+    &gt;&gt;&gt; Button.caps_lock.press()
+    &gt;&gt;&gt; bored.type(&#x27;hello&#x27;)
+    &gt;&gt;&gt; bored.typed
+    [&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27;H&#x27;, &#x27;E&#x27;, &#x27;L&#x27;, &#x27;L&#x27;, &#x27;O&#x27;]
+    &gt;&gt;&gt; bored.keys[&#x27;l&#x27;].pressed
+    4
+    &quot;&quot;&quot;
+    def __init__(self):
+        self.typed = []
+        # END SOLUTION
+        # BEGIN SOLUTION NO PROMPT ALT=&quot;# Try a dictionary comprehension!&quot;
+        self.keys = {c: Button(c, self.typed.append) for c in LOWERCASE_LETTERS}
+
+    def type(self, word):
+        &quot;&quot;&quot;Press the button for each letter in word.&quot;&quot;&quot;
+        assert all([w in LOWERCASE_LETTERS for w in word]), &#x27;word must be all lowercase&#x27;
+        for w in word:
+            self.keys[w].press()
+
+
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<!-- **Description Time**: Describe how new letters are added to
+<code>typed</code> each time a <code>Button</code> in <code>keys</code> is pressed. Instead of just reading
+your code, say what it does (e.g., "When the button of a keyboard is pressed ...").
+One short sentence is enough to describe how new letters are added to <code>typed</code>. -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-shapes">第 2 题：图形</h3>
+
+
+<p>补全下面这套用于描述几何图形的类骨架。每个类都有 <code>area</code> 和 <code>perimeter</code> 方法，但这些方法的实现略有不同。请在必要的地方重写基类 <code>Shape</code> 的方法，以便我们能轻松、准确地计算各种图形的周长和面积。<strong>提醒：</strong>你可以导入 <strong>math</strong> 模块来使用 math.pi。</p>
+
+
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="shapes_circle-input" style="height:612px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-shapes_circle-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-shapes_circle-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-shapes_circle-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('class Shape:\n    &quot;&quot;&quot;All geometric shapes will inherit from this Shape class.&quot;&quot;&quot;\n    def __init__(self, name):\n        self.name = name\n\n    def area(self):\n        &quot;&quot;&quot;Returns the area of a shape&quot;&quot;&quot;\n        print(&quot;Override this method in &quot;, type(self))\n\n    def perimeter(self):\n        &quot;&quot;&quot;Returns the perimeter of a shape&quot;&quot;&quot;\n        print(&quot;Override this function in &quot;, type(self))\n\nclass Circle(Shape):\n    &quot;&quot;&quot;A circle is characterized by its radii&quot;&quot;&quot;\n    def __init__(self, name, radius):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n    def perimeter(self):\n        &quot;&quot;&quot;Returns the perimeter of a circle (2πr)&quot;&quot;&quot;\n        "*** YOUR CODE HERE ***"\n\n\n\n\n    def area(self):\n        &quot;&quot;&quot;Returns the area of a circle (πr^2)&quot;&quot;&quot;\n        "*** YOUR CODE HERE ***"\n\n\n\n\n', "python", "shapes_circle-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>class Shape:
+    &quot;&quot;&quot;All geometric shapes will inherit from this Shape class.&quot;&quot;&quot;
+    def __init__(self, name):
+        self.name = name
+
+    def area(self):
+        &quot;&quot;&quot;Returns the area of a shape&quot;&quot;&quot;
+        print(&quot;Override this method in &quot;, type(self))
+
+    def perimeter(self):
+        &quot;&quot;&quot;Returns the perimeter of a shape&quot;&quot;&quot;
+        print(&quot;Override this function in &quot;, type(self))
+
+class Circle(Shape):
+    &quot;&quot;&quot;A circle is characterized by its radii&quot;&quot;&quot;
+    def __init__(self, name, radius):
+        super().__init__(name)
+        self.radius = radius
+
+
+
+    def perimeter(self):
+        &quot;&quot;&quot;Returns the perimeter of a circle (2πr)&quot;&quot;&quot;
+        return 2*pi*self.radius
+
+
+
+    def area(self):
+        &quot;&quot;&quot;Returns the area of a circle (πr^2)&quot;&quot;&quot;
+        return pi*self.radius**2
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="shapes_regpolygon-input" style="height:756px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-shapes_regpolygon-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-shapes_regpolygon-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-shapes_regpolygon-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('class RegPolygon(Shape):\n    &quot;&quot;&quot;A regular polygon is defined as a shape whose angles and side lengths are all the same.\n    This means the perimeter is easy to calculate. The area can also be done, but it&#x27;s more inconvenient.&quot;&quot;&quot;\n    def __init__(self, name, num_sides, side_length):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n    def perimeter(self):\n        &quot;&quot;&quot;Returns the perimeter of a regular polygon (the number of sides multiplied by side length)&quot;&quot;&quot;\n        "*** YOUR CODE HERE ***"\n\n\n\nclass Square(RegPolygon):\n    def __init__(self, name, side_length):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n    def area(self):\n        &quot;&quot;&quot;Returns the area of a square (squared side length)&quot;&quot;&quot;\n        "*** YOUR CODE HERE ***"\n\n\n\n\nclass Triangle(RegPolygon):\n    &quot;&quot;&quot;An equilateral triangle&quot;&quot;&quot;\n    def __init__(self, name, side_length):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n    def area(self):\n        &quot;&quot;&quot;Returns the area of an equilateral triangle is (squared side length multiplied by the provided constant&quot;&quot;&quot;\n        constant = math.sqrt(3)/4\n        "*** YOUR CODE HERE ***"\n\n\n\n\n', "python", "shapes_regpolygon-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>class RegPolygon(Shape):
+    &quot;&quot;&quot;A regular polygon is defined as a shape whose angles and side lengths are all the same.
+    This means the perimeter is easy to calculate. The area can also be done, but it&#x27;s more inconvenient.&quot;&quot;&quot;
+    def __init__(self, name, num_sides, side_length):
+        super().__init__(name)
+        self.num_sides = num_sides
+        self.side_length = side_length
+
+
+
+
+    def perimeter(self):
+        &quot;&quot;&quot;Returns the perimeter of a regular polygon (the number of sides multiplied by side length)&quot;&quot;&quot;
+        return self.num_sides*self.side_length
+
+
+class Square(RegPolygon):
+    def __init__(self, name, side_length):
+        super().__init__(name, 4, side_length)
+
+
+
+    def area(self):
+        &quot;&quot;&quot;Returns the area of a square (squared side length)&quot;&quot;&quot;
+        return self.side_length**2
+
+
+
+class Triangle(RegPolygon):
+    &quot;&quot;&quot;An equilateral triangle&quot;&quot;&quot;
+    def __init__(self, name, side_length):
+        super().__init__(name, 3, side_length)
+
+
+
+    def area(self):
+        &quot;&quot;&quot;Returns the area of an equilateral triangle is (squared side length multiplied by the provided constant&quot;&quot;&quot;
+        constant = math.sqrt(3)/4
+        return constant*self.side_length**2
+
+
+</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-bear">第 3 题：熊</h3>
+
+
+<p>实现 <code>SleepyBear</code> 和 <code>WinkingBear</code> 类，使调用它们的 <code>print</code> 方法的结果与 doctest 一致。尽量少写代码，并尽量不要重复 <code>Eye</code> 或 <code>Bear</code> 中已有的逻辑。每个空只需填两行短代码。</p>
+
+<!-- **Discussion Time:** Before writing code, talk about what is different about a
+<code>SleepyBear</code> and a <code>Bear</code>. When using inheritance, you only need to implement
+the differences between the base class and subclass. Then, talk about what is
+different about a <code>WinkingBear</code> and a <code>Bear</code>. Can you think of a way to make
+the bear wink without a new implementation of <code>print</code>? -->
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="bear_print-input" style="height:612px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-bear_print-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-bear_print-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-bear_print-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('class Eye:\n    &quot;&quot;&quot;An eye.\n\n    &gt;&gt;&gt; Eye().draw()\n    &#x27;0&#x27;\n    &gt;&gt;&gt; print(Eye(False).draw(), Eye(True).draw())\n    0 &#x2d;\n    &quot;&quot;&quot;\n    def __init__(self, closed=False):\n        self.closed = closed\n\n    def draw(self):\n        if self.closed:\n            return &#x27;&#x2d;&#x27;\n        else:\n            return &#x27;0&#x27;\n\nclass Bear:\n    &quot;&quot;&quot;A bear.\n\n    &gt;&gt;&gt; Bear().print()\n    ? 0o0?\n    &quot;&quot;&quot;\n    def __init__(self):\n        self.nose_and_mouth = &#x27;o&#x27;\n\n    def next_eye(self):\n        return Eye()\n\n    def print(self):\n        left, right = self.next_eye(), self.next_eye()\n        print(&#x27;? &#x27; + left.draw() + self.nose_and_mouth + right.draw() + &#x27;?&#x27;)\n', "python", "bear_print-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>class Eye:
+    &quot;&quot;&quot;An eye.
+
+    &gt;&gt;&gt; Eye().draw()
+    &#x27;0&#x27;
+    &gt;&gt;&gt; print(Eye(False).draw(), Eye(True).draw())
+    0 &#x2d;
+    &quot;&quot;&quot;
+    def __init__(self, closed=False):
+        self.closed = closed
+
+    def draw(self):
+        if self.closed:
+            return &#x27;&#x2d;&#x27;
+        else:
+            return &#x27;0&#x27;
+
+class Bear:
+    &quot;&quot;&quot;A bear.
+
+    &gt;&gt;&gt; Bear().print()
+    ? 0o0?
+    &quot;&quot;&quot;
+    def __init__(self):
+        self.nose_and_mouth = &#x27;o&#x27;
+
+    def next_eye(self):
+        return Eye()
+
+    def print(self):
+        left, right = self.next_eye(), self.next_eye()
+        print(&#x27;? &#x27; + left.draw() + self.nose_and_mouth + right.draw() + &#x27;?&#x27;)</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="bear-input" style="height:558px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-bear-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-bear-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-bear-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('class SleepyBear(Bear):\n    &quot;&quot;&quot;A bear with closed eyes.\n\n    &gt;&gt;&gt; SleepyBear().print()\n    ? &#x2d;o&#x2d;?\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n\n\n\n\nclass WinkingBear(Bear):\n    &quot;&quot;&quot;A bear whose left eye is different from its right eye.\n\n    &gt;&gt;&gt; WinkingBear().print()\n    ? &#x2d;o0?\n    &quot;&quot;&quot;\n    def __init__(self):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n    def next_eye(self):\n        "*** YOUR CODE HERE ***"\n\n\n\n\n\n', "python", "bear-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>class SleepyBear(Bear):
+    &quot;&quot;&quot;A bear with closed eyes.
+
+    &gt;&gt;&gt; SleepyBear().print()
+    ? &#x2d;o&#x2d;?
+    &quot;&quot;&quot;
+    def next_eye(self):
+        return Eye(True)
+
+
+
+
+class WinkingBear(Bear):
+    &quot;&quot;&quot;A bear whose left eye is different from its right eye.
+
+    &gt;&gt;&gt; WinkingBear().print()
+    ? &#x2d;o0?
+    &quot;&quot;&quot;
+    def __init__(self):
+        super().__init__()
+        self.eye_calls = 0
+
+
+
+
+    def next_eye(self):
+        self.eye_calls += 1
+        return Eye(self.eye_calls % 2)
+
+
+
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-9' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: SleepyBear<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-9">
+Implement a <code>next_eye</code> method that returns an Eye instance that is closed.
+</div> -->
+
+<!-- 
+        <button id='toggle-10' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: WinkingBear<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-10">
+One way to make the bear wink is to track how may times the <code>next_eye</code> method is
+invoked using a new instance attribute and return a closed eye if <code>next_eye</code> has
+been called an even number of times.
+</div> -->
+
+<p><img class="img-responsive center-block" src="https://thumbs.dreamstime.com/b/happy-playful-penguin-waving-dancing-joy-silhouette-ai-generated-detailed-illustration-its-flippers-463465826.jpg" alt=" width="10%" height="></p>
+
+<div class="page-break"></div>
+
+
+<h1 id="string-representations">字符串表示</h1>
+
+
+
+        <button id='toggle-11' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        字符串表示<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-11">
+<!-- Written by Pooja Agarwal 7/14/2026 -->
+
+<p>我们已经学过如何用类把数据表示为对象，但有时我们需要对象的字符串表示。我们可以通过在类中定义特殊方法 <strong>str</strong> 和 <strong>repr</strong> 来自定义对象的显示方式。</p>
+
+<pre><code>class Penguin():
+    def __init__(self, age, name):
+        self.age = age
+        self.name = name
+
+peng = Penguin(3, &#x27;Peng&#x27;)</code></pre>
+
+<p>让我们用这个 Penguin 类作为例子！现在，如果我们尝试输出或打印 <strong>peng</strong>，会得到这样的结果：</p>
+
+<pre><code>&gt;&gt;&gt; peng
+&lt;__main__.Penguin object at 0x104cb9c40&gt;
+&gt;&gt;&gt; print(peng)
+&lt;__main__.Penguin object at 0x104cb9c40&gt;</code></pre>
+
+<p>这并不能告诉我多少关于 peng 的信息！我们用 <strong>str</strong> 和 <strong>repr</strong> 来输出更容易理解的表示。</p>
+
+<p><strong>str</strong> 是作为对象输出使用的「非正式」表示。当我们对对象调用 print() 或 str()（例如 str(peng) 或 print(peng)）时，输出的就是它。</p>
+
+<pre><code>def __str__(self):
+    return self.name + &#x27; is a &#x27; + str(self.age) + &#x27; year old penguin!&#x27;
+&gt;&gt;&gt; str(peng)
+&#x27;Peng is a 3 year old penguin!&#x27;
+&gt;&gt;&gt; print(peng)
+Peng is a 3 year old penguin!</code></pre>
+
+<p><strong>repr</strong> 返回对象的正式字符串表示，通常对调试很有用，在直接显示对象时出现，例如在解释器中输入 peng。</p>
+
+<pre><code>def __repr__(self):
+    return &quot;Penguin(Name=\&#x27;&quot; + self.name + &quot;\&#x27;, age=&quot; + str(self.age)+&quot;)&quot;
+&gt;&gt;&gt; peng
+&quot;Penguin(Name = Peng, Age = 3)&quot;</code></pre>
+
+</div>
+
+
+<h3 id="q4-wwpd-repr-and-str">第 4 题：「Python 会输出什么？」：repr 和 str</h3>
+
+
+<blockquote><p><strong>重要：</strong>对于所有「Python 会输出什么？」题目，如果你认为答案是 <code>&lt;function...&gt;</code>，请输入 <code>Function</code>；如果会报错，请输入 <code>Error</code>；如果什么也不显示，请输入 <code>Nothing</code>。</p></blockquote>
+
+
+Python 会输出什么？
+
+
+<pre><code>&gt;&gt;&gt; print(&quot;hi&quot;)</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-1-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hi </div>
+
+<pre><code>&gt;&gt;&gt; &quot;hi&quot;</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-2-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 'hi' </div>
+
+<pre><code>&gt;&gt;&gt; print(repr(&quot;hi&quot;))</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-3-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 'hi' </div>
+
+<pre><code>&gt;&gt;&gt; repr(&quot;hi&quot;)</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-4-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> "'hi'" </div>
+
+<pre><code>&gt;&gt;&gt; class A:
+...     def __init__(self, x):
+...         self.x = x
+...     def __repr__(self):
+...         return self.x
+&gt;&gt;&gt; class B(A):
+...     def __str__(self):
+...         return self.x + self.x
+&gt;&gt;&gt; A(&quot;hi&quot;)</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-5-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hi </div>
+
+<pre><code>&gt;&gt;&gt; print(A(&quot;hi&quot;))</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-6-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hi </div>
+
+<pre><code>&gt;&gt;&gt; B(&quot;hi&quot;)</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-7-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hi </div>
+
+<pre><code>&gt;&gt;&gt; print(B(&quot;hi&quot;))</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-8-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hihi </div>
+
+<pre><code>&gt;&gt;&gt; class C:
+...     def __str__(self):
+...         print(&#x27;hi&#x27;)
+...         return &#x27;hihi&#x27;
+...     def __repr__(self):
+...         print(&#x27;hihihi&#x27;)
+...         return &#x27;hihihihi&#x27;
+&gt;&gt;&gt; C()</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-9-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 
+hihihi
+hihihihi 
+</div> 
+
+<pre><code>&gt;&gt;&gt; print(C())</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-10-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 
+hi
+hihi 
+</div>
+
+<pre><code>&gt;&gt;&gt; q = str(C())</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-11-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hi </div>
+
+<pre><code>&gt;&gt;&gt; q</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-12-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 'hihi' </div>
+
+<pre><code>&gt;&gt;&gt; r = repr(C())</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-13-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> hihihi </div>
+
+<pre><code>&gt;&gt;&gt; r</code></pre>
+
+
+
+            你的答案：
+            <input class="form-control storable" id="repr-str-wwpd-14-input" type="text">
+            <div class="storable-status"></div>
+        
+<div class="sol-highlight"> 'hihihihi' </div>
+
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#object-oriented-programming">面向对象编程</a></li>
+  <ul>
+    <li><a href="#q1-keyboard">第 1 题：键盘</a></li>
+    <li><a href="#q2-shapes">第 2 题：图形</a></li>
+    <li><a href="#q3-bear">第 3 题：熊</a></li>
+  </ul>
+  <li><a href="#string-representations">字符串表示</a></li>
+  <ul>
+    <li><a href="#q4-wwpd-repr-and-str">第 4 题：「Python 会输出什么？」：repr 和 str</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

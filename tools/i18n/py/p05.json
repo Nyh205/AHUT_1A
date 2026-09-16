@@ -1,0 +1,74 @@
+[
+ {
+  "id": 0,
+  "en": "Integer division prevents \"1.0\" output"
+ },
+ {
+  "id": 1,
+  "en": "n is now 1"
+ },
+ {
+  "id": 2,
+  "en": "Alternative solution"
+ },
+ {
+  "id": 3,
+  "en": "Alternate solution 1"
+ },
+ {
+  "id": 4,
+  "en": "Alternate solution 2"
+ },
+ {
+  "id": 5,
+  "en": "ALTERNATE SOLUTION"
+ },
+ {
+  "id": 6,
+  "en": "POSSIBLY PRETTY NICHE ALTERNATE SOLUTION"
+ },
+ {
+  "id": 7,
+  "en": "Alternate solution"
+ },
+ {
+  "id": 8,
+  "en": "Alternatively, we could have: return self.vend() + f' Here is your ${n}.'"
+ },
+ {
+  "id": 9,
+  "en": "Alternate solution using only one loop"
+ },
+ {
+  "id": 10,
+  "en": "Iterative version (using reverse)"
+ },
+ {
+  "id": 11,
+  "en": "Alternate solution (no unnecessary base case)"
+ },
+ {
+  "id": 12,
+  "en": "Alternate solution:"
+ },
+ {
+  "id": 13,
+  "en": "Alternate solution (backward traversal):"
+ },
+ {
+  "id": 14,
+  "en": "There are many ways to implement this counter, such as using an instance attribute to track the next ID."
+ },
+ {
+  "id": 15,
+  "en": "Alternate Solution using any()"
+ },
+ {
+  "id": 16,
+  "en": "Assuming that lsts is a list of lists, return a new list consisting of all the lists in lsts, but with item added to the front of each."
+ },
+ {
+  "id": 17,
+  "en": "Iterative solution"
+ }
+]

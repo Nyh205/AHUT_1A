@@ -1,0 +1,602 @@
+[
+ {
+  "id": 300,
+  "en": "Q7: Repeated"
+ },
+ {
+  "id": 301,
+  "en": "Implement repeated, which takes in an iterator t and an integer k greater\nthan 1. It returns the first value in t that appears k times in a row.\nYou may assume that there is an element of t repeated at least k times in a row."
+ },
+ {
+  "id": 302,
+  "en": "Important: Call next on t only the minimum number of times required.\nIf you are receiving a StopIteration exception,\nyour repeated function is calling next too many times."
+ },
+ {
+  "id": 303,
+  "en": "Here's a refresher on Object-Oriented Programming. It's okay to skip directly to\nthe questions and refer back here if you get stuck."
+ },
+ {
+  "id": 304,
+  "en": "Q1: Bank Account"
+ },
+ {
+  "id": 305,
+  "en": "Extend the BankAccount class to include a transactions attribute. This attribute should be a list that keeps track of each transaction made on the account. Whenever the deposit or withdraw method is called, a new Transaction instance should be created and added to the list, even if the action is not successful."
+ },
+ {
+  "id": 306,
+  "en": "An instance of the Transaction class should have the following attributes:"
+ },
+ {
+  "id": 307,
+  "en": "before: The account balance before the transaction."
+ },
+ {
+  "id": 308,
+  "en": "after: The account balance after the transaction."
+ },
+ {
+  "id": 309,
+  "en": "id: The transaction ID, which is the number of previous transactions (deposits or withdrawals) made on that account. The transaction IDs for a specific BankAccount instance must be unique, but this id does not need to be unique across all accounts. In other words, you only need to ensure that no two Transaction objects made by the same BankAccount have the same id."
+ },
+ {
+  "id": 310,
+  "en": "In addition, the Transaction class should have the following methods:"
+ },
+ {
+  "id": 311,
+  "en": "changed(): Returns True if the balance changed (i.e., before is different from after), otherwise returns False."
+ },
+ {
+  "id": 312,
+  "en": "report(): Returns a string describing the transaction. The string should start with the transaction ID and describe the change in balance. Take a look at the doctests for the expected output."
+ },
+ {
+  "id": 313,
+  "en": "Q2: Email"
+ },
+ {
+  "id": 314,
+  "en": "An email system has three classes: Email, Server, and Client. A Client can\ncompose an email, which it will send to the Server. The Server then delivers it to the\ninbox of another Client. To achieve this, a Server has a dictionary called\nclients that maps the name of the Client to the Client instance."
+ },
+ {
+  "id": 315,
+  "en": "Assume that a Client never changes the Server that it uses, and it can only compose an Email using that Server."
+ },
+ {
+  "id": 316,
+  "en": "Fill in the definitions below to finish the implementation! The Email class\nhas been completed for you."
+ },
+ {
+  "id": 317,
+  "en": "Important: Before you start, make sure you read the entire code snippet to understand the relationships between the classes, and pay attention to the parameter type of the methods. Think about what variables you have access to in each method and how can you use them to access the other classes and their methods."
+ },
+ {
+  "id": 318,
+  "en": "Note:"
+ },
+ {
+  "id": 319,
+  "en": "The sender parameter from the __init__(self, msg, sender, recipient_name) method in the Email class is a Client instance."
+ },
+ {
+  "id": 320,
+  "en": "The client parameter from the register_client(self, client) method in the Server class is a Client instance."
+ },
+ {
+  "id": 321,
+  "en": "The email parameter from the send(self, email) method in the Server class is an Email instance."
+ },
+ {
+  "id": 322,
+  "en": "There are two ok tests for this problem. Both tests must pass in order to receive full credit.\nYou should run them in the order they are presented.\nThe python3 ok &#x2d;q Server test will test the Server class implementation, and it does not require a correct implementation of the Client class.\nThe python3 ok &#x2d;q Client test will test both the Server and Client class implementations.\nSo, make sure to test your Server class implementation first before testing the Client class."
+ },
+ {
+  "id": 323,
+  "en": "Two classes may have similar attributes, but one represents a special case of the other. For example, a Nickel is a special case of a Coin. We say that Nickel is a subclass of Coin, and Coin is the base class (or superclass) for Nickel. In Python, the line class Nickel(Coin): establishes this relationship."
+ },
+ {
+  "id": 324,
+  "en": "The methods of Coin (such as __init__) are also methods for Nickel. So, for example, each Nickel instance has a year attribute. But class attributes or methods defined in the Nickel class will be found first."
+ },
+ {
+  "id": 325,
+  "en": "Q3: Mint"
+ },
+ {
+  "id": 326,
+  "en": "A mint is a place where coins are made. In this question, you'll implement a Mint class that can output a Coin with the correct year and worth."
+ },
+ {
+  "id": 327,
+  "en": "Each Mint instance has a year stamp. The update method sets the\n  year stamp of the instance to the present_year class attribute of the Mint class."
+ },
+ {
+  "id": 328,
+  "en": "The create method takes a subclass of Coin (not an instance!), then\n  creates and returns an instance of that subclass stamped with the Mint's year (which may be different from\n  Mint.present_year if it has not been updated.)"
+ },
+ {
+  "id": 329,
+  "en": "A Coin's worth method returns the cents value of the coin plus one\n  extra cent for each year of age beyond 50. A coin's age can be determined\n  by subtracting the coin's year from the present_year class attribute of\n  the Mint class."
+ },
+ {
+  "id": 330,
+  "en": "Q4: Next Virahanka Fibonacci Object"
+ },
+ {
+  "id": 331,
+  "en": "Implement the next method of the VirFib class. For this class, the value\nattribute is a Fibonacci number. The next method returns a VirFib instance\nwhose value is the next Fibonacci number. The next method should take only\nconstant time."
+ },
+ {
+  "id": 332,
+  "en": "Note that in the doctests, nothing is being printed out. Rather, each call to\n.next() returns a VirFib instance. The way each VirFib instance is displayed is\ndetermined by the return value of its __repr__ method."
+ },
+ {
+  "id": 333,
+  "en": "Hint: Keep track of the previous number by setting a new instance attribute\ninside next. You can create new instance attributes for objects at any point,\neven outside the __init__ method."
+ },
+ {
+  "id": 334,
+  "en": "Consult this section if you need a refresher on Mutable Trees. It's\nokay to skip directly to the questions and refer back here should you get stuck."
+ },
+ {
+  "id": 335,
+  "en": "Q1: Maximum Path Sum"
+ },
+ {
+  "id": 336,
+  "en": "Write a function that takes in a tree and returns the maximum sum of the values along any path from the root to a leaf of the tree."
+ },
+ {
+  "id": 337,
+  "en": "Q2: Add Leaves"
+ },
+ {
+  "id": 338,
+  "en": "Implement add_d_leaves, a function that takes in a Tree instance t and a number v."
+ },
+ {
+  "id": 339,
+  "en": "We define the depth of a node in t to be the number of edges from the root to that node. The depth of root is therefore 0."
+ },
+ {
+  "id": 340,
+  "en": "For each node in the tree, you should add d leaves to it, where d is the depth of the node. Every added leaf should have a label of v. If the node at this depth has existing branches, you should add these leaves to the end of that list of branches."
+ },
+ {
+  "id": 341,
+  "en": "For example, you should be adding 1 leaf with label v to each node at depth 1, 2 leaves to each node at depth 2, and so on."
+ },
+ {
+  "id": 342,
+  "en": "Here is an example of a tree t (shown on the left) and the result after add_d_leaves is applied with v as 5."
+ },
+ {
+  "id": 343,
+  "en": "Hint: Use a helper function to keep track of the depth!"
+ },
+ {
+  "id": 344,
+  "en": "Hint: Be careful about when you add the new leaves to the tree.\nWe only want to add leaves to the original nodes in the tree, not to\nthe nodes we added."
+ },
+ {
+  "id": 345,
+  "en": "Take a look at the doctests below and try drawing out the second doctest to visualize how the function is mutating t3."
+ },
+ {
+  "id": 346,
+  "en": "Q3: Has Path"
+ },
+ {
+  "id": 347,
+  "en": "Write a function has_path that takes in a Tree t and a string target. It\nreturns True if there is a path that starts from the root where the entries\nalong the path spell out the target, and False otherwise. You may assume \nthat every node's label is exactly one character."
+ },
+ {
+  "id": 348,
+  "en": "This data structure is called a trie, and it has a lot of cool \napplications, such as autocomplete."
+ },
+ {
+  "id": 349,
+  "en": "Q4: Preorder"
+ },
+ {
+  "id": 350,
+  "en": "Define the function preorder, which takes a Tree instance and\nreturns a list of all the labels in the tree in the order that\nthey appear when the tree is printed."
+ },
+ {
+  "id": 351,
+  "en": "The following diagram shows the order that the nodes would get printed,\nwith the arrows representing function calls."
+ },
+ {
+  "id": 352,
+  "en": "This ordering of the nodes in a tree is called a preorder traversal."
+ },
+ {
+  "id": 353,
+  "en": "Q5: Level Mutation Link"
+ },
+ {
+  "id": 354,
+  "en": "As a reminder, the depth of a node is defined as the number of edges from the root to the node. Therefore, the root itself has a depth of 0 since there are no edges between the root and itself."
+ },
+ {
+  "id": 355,
+  "en": "Given a tree t and a linked list of one-argument functions funcs, write a function that mutates the labels of t using the functions from funcs at the corresponding depths. For example:"
+ },
+ {
+  "id": 356,
+  "en": "The label at the root node (depth 0) will be mutated using the function at depth 0 of funcs (funcs.first)."
+ },
+ {
+  "id": 357,
+  "en": "The label at the first level of the tree will be mutated using the function at depth 1 of funcs (funcs.rest.first), and so on."
+ },
+ {
+  "id": 358,
+  "en": "Each function in funcs takes in a label value and returns a valid label value."
+ },
+ {
+  "id": 359,
+  "en": "If a node is a leaf and there are remaining functions in funcs, all of these remaining functions should be applied in order to the label of the leaf node. If funcs is empty, the tree should remain unmodified."
+ },
+ {
+  "id": 360,
+  "en": "Please refer to the doctests for examples."
+ },
+ {
+  "id": 361,
+  "en": "Consult the drop-down if you need a refresher on Linked Lists. It's\nokay to skip directly to the questions and refer back\nhere should you get stuck."
+ },
+ {
+  "id": 362,
+  "en": "A linked list is a data structure for storing a sequence of values. It is more\nefficient than a regular built-in list for certain operations, such as inserting\na value in the middle of a long list. Linked lists are not built in, and so we\ndefine a class called Link to represent them. \nA linked list is either a Link instance or Link.empty \n(which represents an empty linked list)."
+ },
+ {
+  "id": 363,
+  "en": "A instance of Link has two instance attributes, first and rest."
+ },
+ {
+  "id": 364,
+  "en": "The rest attribute of a Link instance should always be a linked list: either\nanother Link instance or Link.empty. It SHOULD NEVER be None."
+ },
+ {
+  "id": 365,
+  "en": "To check if a linked list is empty, compare it to Link.empty. Since there is only\never one empty list, we can use is to compare, but == would work too."
+ },
+ {
+  "id": 366,
+  "en": "Link Class"
+ },
+ {
+  "id": 367,
+  "en": "Tip:\nYou can open the terminal in VS Code by pressing Control + ` (the key above Tab)."
+ },
+ {
+  "id": 368,
+  "en": "Visualizing Linked Lists"
+ },
+ {
+  "id": 369,
+  "en": "If you would like some support with visualizing linked lists, please navigate \nto {0}, select Start Python Interpreter, \nand call autodraw()."
+ },
+ {
+  "id": 370,
+  "en": "Q1: WWPD: Linked Lists"
+ },
+ {
+  "id": 371,
+  "en": "Read over the Link class. Make sure you understand the doctests."
+ },
+ {
+  "id": 372,
+  "en": "Enter Function if you believe the answer is &lt;function ...&gt;, Error if it\nerrors, and Nothing if nothing is displayed."
+ },
+ {
+  "id": 373,
+  "en": "If you get stuck, try drawing out the box-and-pointer diagram for the linked\nlist on a piece of paper or loading the Link class into the interpreter\nwith python3 &#x2d;i lab07.py."
+ },
+ {
+  "id": 374,
+  "en": "Q2: Without One"
+ },
+ {
+  "id": 375,
+  "en": "Implement without, which takes a linked list s and a non-negative integer\ni. It returns a linked list with all of the elements of s except for the one\nat index i. (Assume s.first is the element at index 0.)"
+ },
+ {
+  "id": 376,
+  "en": "The original linked list s should not be changed."
+ },
+ {
+  "id": 377,
+  "en": "Hint: Using recursive approach might be easier than the iterative approach."
+ },
+ {
+  "id": 378,
+  "en": "Q3: Duplicate Link"
+ },
+ {
+  "id": 379,
+  "en": "Write a function duplicate_link that takes in a linked list s and a value val. \nIt mutates s so that each element equal to val is followed by an additional val (a duplicate copy). \nIt returns None. Be careful not to get into an infinite loop where you keep duplicating the new copies!"
+ },
+ {
+  "id": 380,
+  "en": "Note: In order to insert a link into a linked list, reassign the rest attribute of the Link instances that have val as their first. Try drawing out a doctest to visualize!"
+ },
+ {
+  "id": 381,
+  "en": "Q4: Slice"
+ },
+ {
+  "id": 382,
+  "en": "Implement a function slice_link that slices a given linked list link. slice_link\nshould slice the link starting at start and ending one element before\nend, as with a normal Python list. Additionally, similar to slicing normal \nPython lists, this function should return a new list and not modify the original list."
+ },
+ {
+  "id": 383,
+  "en": "Q5: Cycles"
+ },
+ {
+  "id": 384,
+  "en": "The Link class can represent lists with cycles.  That is, a list may\ncontain itself as a sublist."
+ },
+ {
+  "id": 385,
+  "en": "Implement has_cycle,that returns whether its argument, a Link\ninstance, contains a cycle."
+ },
+ {
+  "id": 386,
+  "en": "Hint: Iterate through the linked list and try keeping track of which Link\nobjects you've already seen."
+ },
+ {
+  "id": 387,
+  "en": "Extra challenge (Optional): Implement has_cycle without keeping track of all Link objects you've already seen.\nThe solution is short (less than 20 lines of code), but requires a clever idea.\nTry to discover the solution yourself before asking around."
+ },
+ {
+  "id": 388,
+  "en": "Scheme is a famous functional programming language from the 1970s. It is a\ndialect of Lisp (which stands for LISt Processing). The syntax of Scheme is very unique: it involves prefix notation and many nested parentheses (see {0}). Scheme features first-class functions and optimized tail-recursion, which were fairly new when Scheme was introduced."
+ },
+ {
+  "id": 389,
+  "en": "The Scheme specification and built-in procedure references are a good reference for scheme syntax."
+ },
+ {
+  "id": 390,
+  "en": "If you choose to use VS Code as your text editor (instead of the web-based editor),\ninstall the {0}\nextension so that parentheses are highlighted."
+ },
+ {
+  "id": 391,
+  "en": "Consult the drop-downs below if you need a refresher on Scheme/Scheme Lists. It's\nokay to skip directly to {0} and refer back\nhere should you get stuck."
+ },
+ {
+  "id": 392,
+  "en": "Primitive Expressions"
+ },
+ {
+  "id": 393,
+  "en": "Atomic expressions (also called atoms) are expressions without\nsub-expressions, such as numbers, boolean values, and symbols."
+ },
+ {
+  "id": 394,
+  "en": "A Scheme symbol is equivalent to a Python name. A symbol evaluates to the value bound to that symbol in the current environment. (They are called symbols rather than names because they include + and other arithmetic symbols.)"
+ },
+ {
+  "id": 395,
+  "en": "In Scheme, all values except #f (equivalent to False in Python) are true\nvalues (unlike Python, which has other false values, such as 0)."
+ },
+ {
+  "id": 396,
+  "en": "Combinations"
+ },
+ {
+  "id": 397,
+  "en": "All non-primitive expressions in Scheme are known as combinations and\nhave the following syntax:"
+ },
+ {
+  "id": 398,
+  "en": "Combinations are expressions that combine multiple expressions. Here,\n&lt;operator&gt;, &lt;operand1&gt;, and &lt;operand2&gt;. are all expressions. The number\nof operands depends on the operator. There are two types of combinations:"
+ },
+ {
+  "id": 399,
+  "en": "A call expression, whose operator evaluates to a procedure"
+ },
+ {
+  "id": 400,
+  "en": "A special form expression, whose operator is a special form"
+ },
+ {
+  "id": 401,
+  "en": "Special Forms"
+ },
+ {
+  "id": 402,
+  "en": "Define:\nThe define form is used to assign values to symbols. It has the following syntax:"
+ },
+ {
+  "id": 403,
+  "en": "If Expressions:\nThe if special form evaluates one of two expressions based on a predicate."
+ },
+ {
+  "id": 404,
+  "en": "The rules for evaluating an if special form expression are as follows:"
+ },
+ {
+  "id": 405,
+  "en": "Evaluate the &lt;predicate&gt;."
+ },
+ {
+  "id": 406,
+  "en": "If the &lt;predicate&gt; evaluates to a true value (anything but #f), evaluate\n  and return the value of the &lt;if&#x2d;true&gt; expression. Otherwise, evaluate and\n  return the value of the &lt;if&#x2d;false&gt; expression."
+ },
+ {
+  "id": 407,
+  "en": "For example, this expression does not error and evaluates to 5, even though the\nsub-expression (/ 1 (&#x2d; x 3)) would error if evaluated."
+ },
+ {
+  "id": 408,
+  "en": "The &lt;if&#x2d;false&gt; expression is optional."
+ },
+ {
+  "id": 409,
+  "en": "Let's compare a Scheme if expression with a Python if statement:"
+ },
+ {
+  "id": 410,
+  "en": "In Scheme:"
+ },
+ {
+  "id": 411,
+  "en": "In Python:"
+ },
+ {
+  "id": 412,
+  "en": "The Scheme if expression evaluates to a number (either 1 or 2, depending on\nx). The Python statement does not evaluate to anything, and so the 1 and 2\ncannot be used or accessed."
+ },
+ {
+  "id": 413,
+  "en": "Another difference between the two is that it's possible to add more lines of\ncode into the suites of the Python if statement, while a Scheme if\nexpression expects just a single expression in each of the &lt;if&#x2d;true&gt; and\n&lt;if&#x2d;false&gt; positions."
+ },
+ {
+  "id": 414,
+  "en": "One final difference is that in Scheme, you cannot write elif clauses."
+ },
+ {
+  "id": 415,
+  "en": "Cond Expressions:\nThe cond special form can include multiple predicates (like if/elif in Python):"
+ },
+ {
+  "id": 416,
+  "en": "Lambdas:\nThe lambda special form creates a procedure."
+ },
+ {
+  "id": 417,
+  "en": "This expression will create and return a procedure with the given formal\nparameters and body, similar to a lambda expression in Python."
+ },
+ {
+  "id": 418,
+  "en": "Here are equivalent expressions in Python:"
+ },
+ {
+  "id": 419,
+  "en": "The &lt;body&gt; may contain multiple expressions. A scheme procedure returns the\nvalue of the last expression in its body."
+ },
+ {
+  "id": 420,
+  "en": "Defining Functions"
+ },
+ {
+  "id": 421,
+  "en": "The define form can create a procedure and give it a name:"
+ },
+ {
+  "id": 422,
+  "en": "For example, this is how we would define the double procedure:"
+ },
+ {
+  "id": 423,
+  "en": "Here's an example with three arguments:"
+ },
+ {
+  "id": 424,
+  "en": "When a define expression is evaluated, the following occurs:"
+ },
+ {
+  "id": 425,
+  "en": "Create a procedure with the given parameters and &lt;body&gt;."
+ },
+ {
+  "id": 426,
+  "en": "Bind the procedure to the &lt;symbol&gt; in the current frame."
+ },
+ {
+  "id": 427,
+  "en": "Return the &lt;symbol&gt;."
+ },
+ {
+  "id": 428,
+  "en": "The following two expressions are equivalent:"
+ },
+ {
+  "id": 429,
+  "en": "As you read through this section, it may be difficult to understand the\ndifferences between the various representations of Scheme containers. We\nrecommend that you use {0}\nto see the box-and-pointer diagrams of pairs and lists that you're having a\nhard time visualizing! (Use the command (autodraw) to toggle the automatic\ndrawing of diagrams.)"
+ },
+ {
+  "id": 430,
+  "en": "Scheme lists are very similar to the linked lists we've been working with in\nPython. Just like how a linked list is constructed of a series of Link\nobjects, a Scheme list is constructed with a series of pairs, which are created\nwith the constructor cons."
+ },
+ {
+  "id": 431,
+  "en": "Scheme lists require that the cdr is either another list or nil, an empty list.\nA list is displayed in the interpreter as a sequence of values (similar to the\n__str__ representation of a Link object). For example,"
+ },
+ {
+  "id": 432,
+  "en": "Here, we've ensured that the second argument of each cons expression is\nanother cons expression or nil."
+ },
+ {
+  "id": 433,
+  "en": "We can retrieve values from our list with the car and cdr procedures, which\nnow work similarly to the Python Link's first and rest attributes.\n(Curious about where these weird names come from?  {0})"
+ },
+ {
+  "id": 434,
+  "en": "If you do not pass in a pair or nil as the second argument to cons, it will\nerror:"
+ },
+ {
+  "id": 435,
+  "en": "list Procedure"
+ },
+ {
+  "id": 436,
+  "en": "There are a few other ways to create lists. The list procedure takes in an\narbitrary number of arguments and constructs a list with the values of these\narguments:"
+ },
+ {
+  "id": 437,
+  "en": "Note that all of the operands in this expression are evaluated before being put\ninto the resulting list."
+ },
+ {
+  "id": 438,
+  "en": "Quote Form"
+ },
+ {
+  "id": 439,
+  "en": "We can also use the quote form to create a list, which will construct the exact\nlist that is given. Unlike with the list procedure, the argument to &#x27; is\nnot evaluated."
+ },
+ {
+  "id": 440,
+  "en": "Built-In Procedures for Lists"
+ },
+ {
+  "id": 441,
+  "en": "There are a few other built-in procedures in Scheme that are used for lists.\nTry them out in the interpreter!"
+ },
+ {
+  "id": 442,
+  "en": "Higher-Order Procedures for Lists"
+ },
+ {
+  "id": 443,
+  "en": "map, filter, and reduce let you transform or process lists without writing explicit recursion."
+ },
+ {
+  "id": 444,
+  "en": "A useful way to think about the difference:"
+ },
+ {
+  "id": 445,
+  "en": "map — Transforms each element, keeping the same number of elements.\n  It's like you walk down the list and replace each item with (fn item)."
+ },
+ {
+  "id": 446,
+  "en": "filter — Keeps or drops each element, but never changes.\n  Tests a yes/no predicate, if yes it stays as it is and if no it is dropped."
+ },
+ {
+  "id": 447,
+  "en": "reduce — Collapses the whole list down to a single value (with a left to right combining procedure)"
+ },
+ {
+  "id": 448,
+  "en": "These three can often replace what would otherwise be a recursive function with a base case and recursive case.\nIt may be useful for you to see what one of these might actually look like manually written out:"
+ },
+ {
+  "id": 449,
+  "en": "Writing map manually:"
+ }
+]

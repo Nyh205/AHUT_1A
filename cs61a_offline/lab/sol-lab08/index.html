@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/lab.css">
+
+
+    <title>实验 8 解答 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+实验 8 解答
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab08.zip" class="label label-outline">lab08.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>参考答案</h2>
+<h2 id="lab-checkoff-questions">概念自测</h2>
+
+
+<p>对于所有题目，都设 <code>link</code> 为实例。学生应该知道这一区别。</p>
+
+<ul>
+  <li><strong>如何检查链表中下一个元素是否为空？</strong></li>
+  <li>Check <code>if link.rest is Link.empty</code></li>
+  <li><strong>如何从 <code>Link(2, Link(3))</code> 中取出元素 3？</strong></li>
+  <li>使用 <code>link.rest.first</code>。重要的是要意识到 <code>.rest</code> 返回的仍然是一个 <code>Link</code> 或者 <code>Link.empty</code>。</li>
+  <li><strong>为什么应该使用 Link.empty，而不是空元组 <code>()</code> 或 null/假值</strong></li>
+  <li>会破坏抽象屏障，而且出错的风险更大（<code>is</code> 可以帮助可靠地检查，因为 Link.empty 是一个类属性）！</li>
+</ul>
+
+    
+
+
+
+<h2 id="linked-lists">链表</h2>
+
+
+<p>如果你需要复习链表，请查阅下面的折叠内容。你可以直接跳到题目部分，遇到困难时再回来查阅。</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        链表<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<p>链表是一种用于存储值序列的数据结构。在某些操作上，它比内置的普通列表更高效，例如在一个长列表的中间插入一个值。链表不是内置的，因此我们定义了一个名为 <code>Link</code> 的类来表示它。
+链表要么是一个 <code>Link</code> 实例，要么是 <code>Link.empty</code>（表示空链表）。</p>
+
+<p><code>Link</code> 的实例有两个实例属性：<code>first</code> 和 <code>rest</code>。</p>
+
+<p><code>Link</code> 实例的 <code>rest</code> 属性应始终是一个链表：要么是另一个 <code>Link</code> 实例，要么是 <code>Link.empty</code>。它绝不应为 <code>None</code>。</p>
+
+<p>要判断链表是否为空，可将它与 <code>Link.empty</code> 比较。由于空链表始终只有一个，我们可以用 <code>is</code> 来比较，但用 <code>==</code> 也可以。</p>
+
+<pre><code>def is_empty(s):
+    &quot;&quot;&quot;Return whether linked list s is empty.&quot;&quot;&quot;
+    return s is Link.empty:</code></pre>
+
+<p>你可以用两种方式修改一个 <code>Link</code> 对象 <code>s</code>：</p>
+
+<ul>
+  <li>用 <code>s.first = ...</code> 改变第一个元素</li>
+  <li>用 <code>s.rest = ...</code> 改变其余的元素</li>
+</ul>
+
+<p>你可以通过调用 <code>Link</code> 来创建一个新的 <code>Link</code> 对象：</p>
+
+<ul>
+  <li><code>Link(4)</code> 创建一个长度为 1、包含 4 的链表。</li>
+  <li><code>Link(4, s)</code> 创建一个链表，它以 4 开头，后面跟着链表 s 的元素。</li>
+</ul>
+
+</div>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Link 类<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p>下面是 <code>Link</code> 类的实现：</p>
+
+<pre><code class="python">class Link:
+    &quot;&quot;&quot;A linked list is either a Link object or Link.empty
+
+    &gt;&gt;&gt; s = Link(3, Link(4, Link(5)))
+    &gt;&gt;&gt; s.rest
+    Link(4, Link(5))
+    &gt;&gt;&gt; s.rest.rest.rest is Link.empty
+    True
+    &gt;&gt;&gt; s.rest.first * 2
+    8
+    &gt;&gt;&gt; print(s)
+    (3 4 5)
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;(&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;)&#x27;</code></pre>
+
+
+
+</div>
+
+<blockquote><p><strong>提示：</strong>
+在 VS Code 中，按 <strong>Control + `</strong>（Tab 键上方的那个键）可以打开终端。</p></blockquote>
+
+
+<h1 id="required-questions">必做题</h1>
+
+
+
+
+
+<h3 id="visualizing-linked-lists">可视化链表</h3>
+
+
+<p>如果你在可视化链表方面需要一些帮助，请前往 <a href="https://code.cs61a.org/">code.cs61a.org</a>，选择 <em>Start Python Interpreter</em>，然后调用 <code>autodraw()</code>。</p>
+
+
+<h3 id="q1-wwpd-linked-lists">Q1：WWPD：链表</h3>
+
+
+<p>仔细阅读 <code>Link</code> 类，确保你理解其中的 doctest。</p>
+
+<blockquote><p>用 ok 回答下面的「Python 会输出什么？」（WWPD）题目：</p>
+
+<pre><code>python3 ok &#x2d;q link &#x2d;u</code></pre>
+
+<p>如果你认为答案是 <code>&lt;function ...&gt;</code>，请输入 <code>Function</code>；如果会报错，请输入 <code>Error</code>；如果什么都不显示，请输入 <code>Nothing</code>。</p>
+
+<p>如果卡住了，可以试着在纸上画出该链表的盒指针图，或者用 <code>python3 &#x2d;i lab07.py</code> 把 <code>Link</code> 类加载到解释器中。</p></blockquote>
+
+<prompt>
+
+<pre><code>&gt;&gt;&gt; link = Link(1000)
+&gt;&gt;&gt; link.first
+1000
+&gt;&gt;&gt; link.rest is Link.empty
+True
+&gt;&gt;&gt; link = Link(1000, 2000)
+AssertionError
+&gt;&gt;&gt; link = Link(1000, Link())
+TypeError</code></pre>
+
+</prompt>
+
+<prompt>
+
+<pre><code>&gt;&gt;&gt; link = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; link.first
+1
+&gt;&gt;&gt; link.rest.first
+2
+&gt;&gt;&gt; link.rest.rest.rest is Link.empty
+True
+&gt;&gt;&gt; link.first = 9001
+&gt;&gt;&gt; link.first
+9001
+&gt;&gt;&gt; link.rest = link.rest.rest
+&gt;&gt;&gt; link.rest.first
+3
+&gt;&gt;&gt; link = Link(1)
+&gt;&gt;&gt; link.rest = link
+&gt;&gt;&gt; link.rest.rest is Link.empty
+False
+&gt;&gt;&gt; link.rest.rest.rest.rest.first
+1
+&gt;&gt;&gt; link = Link(2, Link(3, Link(4)))
+&gt;&gt;&gt; link2 = Link(1, link)
+&gt;&gt;&gt; link2.first
+1
+&gt;&gt;&gt; link2.rest.first
+2</code></pre>
+
+</prompt>
+
+<prompt>
+
+<pre><code>&gt;&gt;&gt; link = Link(5, Link(6, Link(7)))
+&gt;&gt;&gt; link                 # Look at the __repr__ method of Link
+Link(5, Link(6, Link(7)))
+&gt;&gt;&gt; print(link)          # Look at the __str__ method of Link
+(5 6 7)</code></pre>
+
+</prompt>
+
+
+<h3 id="q2-without-one">Q2：去掉一个元素</h3>
+
+
+<p>实现 <code>without</code> 函数，它接收一个链表 <code>s</code> 和一个非负整数 <code>i</code>，返回一个链表，其中包含 <code>s</code> 中除索引 <code>i</code> 处元素之外的所有元素。（假设 <code>s.first</code> 是索引 0 处的元素。）</p>
+
+<p>原始链表 <code>s</code> 不应被修改。</p>
+
+<blockquote><p><strong>提示：</strong>使用递归方法可能比迭代方法更容易。</p></blockquote>
+
+<solution>
+
+<pre><code>def without(s: Link, i: int) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Return a new linked list like s but without the element at index i.
+
+    &gt;&gt;&gt; s = Link(3, Link(5, Link(7, Link(9))))
+    &gt;&gt;&gt; without(s, 0)
+    Link(5, Link(7, Link(9)))
+    &gt;&gt;&gt; without(s, 2)
+    Link(3, Link(5, Link(9)))
+    &gt;&gt;&gt; without(s, 4)  # There is no index 4, so all of s is retained.
+    Link(3, Link(5, Link(7, Link(9))))
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if s is Link.empty:
+        return s
+    if i == 0:
+        return s.rest
+    else:
+        return Link(s.first, without(s.rest, i&#x2d;1))</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q without<button id="copy-code-python3ok-qwithout" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qwithout").onclick = () => copyCode('python3 ok -q without', "copy-code-python3ok-qwithout");
+        </script>
+        <br/>
+
+
+<h3 id="q3-duplicate-link">Q3：复制链表元素</h3>
+
+
+<p>编写函数 <code>duplicate_link</code>，它接收一个链表 <code>s</code> 和一个值 <code>val</code>。
+它会<strong>修改</strong> <code>s</code>，使每个等于 <code>val</code> 的元素后面都紧跟一个额外的 <code>val</code>（即一份副本）。
+它返回 <code>None</code>。注意不要陷入不断复制新副本的死循环！</p>
+
+<blockquote><p><strong>注意</strong>：要在链表中插入一个链接，需要重新赋值那些 <code>first</code> 为 <code>val</code> 的 <code>Link</code> 实例的 <code>rest</code> 属性。试着画出一个 doctest 的过程来直观理解！</p></blockquote>
+
+<solution>
+
+<pre><code>def duplicate_link(s: Link, val: int) &#x2d;&gt; None:
+    &quot;&quot;&quot;Mutates s so that each element equal to val is followed by another val.
+
+    &gt;&gt;&gt; x = Link(5, Link(4, Link(5)))
+    &gt;&gt;&gt; duplicate_link(x, 5)
+    &gt;&gt;&gt; x
+    Link(5, Link(5, Link(4, Link(5, Link(5)))))
+    &gt;&gt;&gt; y = Link(2, Link(4, Link(6, Link(8))))
+    &gt;&gt;&gt; duplicate_link(y, 10)
+    &gt;&gt;&gt; y
+    Link(2, Link(4, Link(6, Link(8))))
+    &gt;&gt;&gt; z = Link(1, Link(2, Link(2, Link(3))))
+    &gt;&gt;&gt; duplicate_link(z, 2) # ensures that back to back links with val are both duplicated
+    &gt;&gt;&gt; z
+    Link(1, Link(2, Link(2, Link(2, Link(2, Link(3))))))
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if s is Link.empty:
+        return
+    elif s.first == val:
+        remaining = s.rest
+        s.rest = Link(val, remaining)
+        duplicate_link(remaining, val)
+    else:
+        duplicate_link(s.rest, val)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q duplicate_link<button id="copy-code-python3ok-qduplicate_link" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qduplicate_link").onclick = () => copyCode('python3 ok -q duplicate_link', "copy-code-python3ok-qduplicate_link");
+        </script>
+        <br/>
+
+
+<h3 id="q4-slice">Q4：切片</h3>
+
+
+<p>实现函数 <code>slice_link</code>，它对给定的链表 <code>link</code> 进行切片。<code>slice_link</code> 应像普通的 Python 列表那样，从 <code>start</code> 开始、到 <code>end</code> 的前一个元素结束进行切片。此外，与对普通 Python 列表切片类似，该函数应返回一个新链表，而不修改原链表。</p>
+
+<solution>
+
+<pre><code>def slice_link(link: Link, start: int, end: int) &#x2d;&gt; Link:
+    &quot;&quot;&quot;Slices a linked list from start to end (as with a normal Python list) and returns
+    a linked list. You do NOT have to support negative indices.
+
+    &gt;&gt;&gt; link = Link(3, Link(1, Link(4, Link(1, Link(5, Link(9))))))
+    &gt;&gt;&gt; new = slice_link(link, 1, 4)
+    &gt;&gt;&gt; print(new)
+    (1 4 1)
+    &gt;&gt;&gt; print(slice_link(link, 0, 2))
+    (3 1)
+    &gt;&gt;&gt; print(slice_link(link, 0, 6))
+    (3 1 4 1 5 9)
+    &gt;&gt;&gt; print(slice_link(link, 2, 2))
+    ()
+    &gt;&gt;&gt; print(slice_link(link, 2, 3))
+    (4)
+    &gt;&gt;&gt; print(slice_link(link, 3, 100))
+    (1 5 9)
+    &gt;&gt;&gt; print(slice_link(link, 10, 12))
+    ()
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if link is Link.empty or end == 0:
+        return Link.empty
+    elif start == 0:
+        return Link(link.first, slice_link(link.rest, 0, end&#x2d;1))
+    else:
+        return slice_link(link.rest, start&#x2d;1, end&#x2d;1)</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q slice_link<button id="copy-code-python3ok-qslice_link" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qslice_link").onclick = () => copyCode('python3 ok -q slice_link', "copy-code-python3ok-qslice_link");
+        </script>
+        <br/>
+
+
+<h3 id="q5-cycles">Q5：循环</h3>
+
+
+<p><code>Link</code> 类可以表示带环的链表。也就是说，一个链表可以把自身作为子链表包含在内。</p>
+
+<pre><code>&gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; s.rest.rest.rest = s
+&gt;&gt;&gt; s.rest.rest.rest.rest.rest.first
+3</code></pre>
+
+<p>实现 <code>has_cycle</code>，它返回其参数（一个 <code>Link</code> 实例）是否含有环。</p>
+
+<blockquote><p><em>提示</em>：遍历该链表，并尝试记录你已经见过哪些 <code>Link</code> 对象。</p></blockquote>
+
+<solution>
+
+<pre><code>def has_cycle(link: Link) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle(t)
+    False
+    &gt;&gt;&gt; u = Link(2, Link(2, Link(2)))
+    &gt;&gt;&gt; has_cycle(u)
+    False
+    &quot;&quot;&quot;
+<div class="sol-highlight">    links = []
+    while link is not Link.empty:
+        if link in links:
+            return True
+        links.append(link)
+        link = link.rest
+    return False</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q has_cycle<button id="copy-code-python3ok-qhas_cycle" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhas_cycle").onclick = () => copyCode('python3 ok -q has_cycle', "copy-code-python3ok-qhas_cycle");
+        </script>
+        <br/>
+
+<!-- As an extra challenge, implement <code>has_cycle_constant</code> with only <a href="https://www.composingprograms.com/pages/28-efficiency.html#growth-categories">constant space</a>. (If you followed
+the hint above, you will use linear space.) The solution is short (less than 20
+lines of code), but requires a clever idea. Try to discover the solution
+yourself before asking around: -->
+
+<p><strong>额外挑战（可选）</strong>：在不记录所有已见过的 <code>Link</code> 对象的情况下实现 <code>has_cycle</code>。解法很短（不到 20 行代码），但需要一个巧妙的思路。在向别人求助之前，先试着自己找出答案。</p>
+
+<solution>
+
+<pre><code>def has_cycle_constant(link: Link) &#x2d;&gt; bool:
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle_constant(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle_constant(t)
+    False
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if link is Link.empty:
+        return False
+    slow, fast = link, link.rest
+    while fast is not Link.empty:
+        if fast.rest == Link.empty:
+            return False
+        elif fast is slow or fast.rest is slow:
+            return True
+        else:
+            slow, fast = slow.rest, fast.rest.rest
+    return False</div></code></pre>
+
+</solution>
+
+<p>用 ok 测试你的代码：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q has_cycle_constant<button id="copy-code-python3ok-qhas_cycle_constant" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhas_cycle_constant").onclick = () => copyCode('python3 ok -q has_cycle_constant', "copy-code-python3ok-qhas_cycle_constant");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">本地查看得分</h2>
+
+<p>你可以在本地查看本次作业每道题的得分，运行：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+</div>
+<div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#lab-checkoff-questions">概念自测</a></li>
+  <ul>
+    <li><a href="#linked-lists">链表</a></li>
+  </ul>
+  <li><a href="#required-questions">必做题</a></li>
+  <ul>
+    <li><a href="#visualizing-linked-lists">可视化链表</a></li>
+    <li><a href="#q1-wwpd-linked-lists">Q1：WWPD：链表</a></li>
+    <li><a href="#q2-without-one">Q2：去掉一个元素</a></li>
+    <li><a href="#q3-duplicate-link">Q3：复制链表元素</a></li>
+    <li><a href="#q4-slice">Q4：切片</a></li>
+    <li><a href="#q5-cycles">Q5：循环</a></li>
+  </ul>
+  <ul>
+    <li><a href="#check-your-score-locally">本地查看得分</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

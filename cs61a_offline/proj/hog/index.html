@@ -1,0 +1,1366 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link href="../../assets/css/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>Hog 游戏 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Hog 游戏
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hog.zip" class="label label-outline">hog.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <blockquote><p><img class="img-responsive center-block" src="assets/icon.gif" alt="5-sided die" width=" height="></p>
+
+<cite> 我知道了！我要用我的<br/> 高阶函数来<br/> 掷出更高
+的点数。  </cite></blockquote>
+</div>
+
+    
+
+<h2 id="introduction">引言</h2>
+
+
+<blockquote><p><strong>重要的提交说明：</strong>要获得满分：</p>
+
+<ul>
+  <li>在 <strong>07/01（周三）</strong>之前提交完成阶段 1 的项目，价值 1 分。</li>
+  <li>在 <strong>07/07（周二）</strong>之前提交完整的项目。</li>
+</ul>
+
+<p>请尽量按顺序完成这些题目，并在做题过程中为每道题运行 <code>ok</code> 测试，因为后面某些题目在实现时会依赖前面的题目。</p>
+
+<p>你可以和搭档一起完成这个项目。</p>
+
+<p>在 <strong>07/06（周一）</strong>之前提交整个项目可以获得 1 分加分。
+项目截止日期和检查点截止日期可以申请延期，但提前提交的截止日期不能延期，除非你是因作业延期而获得便利的 DSP 学生。</p></blockquote>
+
+<p>在这个项目中，你将为一个骰子游戏 Hog 开发一个模拟器和多种策略。你需要把<em>控制语句</em>和<em>高阶函数</em>结合起来使用，具体内容见第 1-3 讲以及在线教材 <a href="https://www.composingprograms.com">Composing
+Programs</a> 的第 1.2 节到第 1.6 节。</p>
+
+<blockquote><p>过去有些同学在没有仔细阅读题目描述的情况下就尝试实现这些函数，结果经常遇到问题。
+😱
+<strong>在开始写代码之前，请仔细阅读每一段描述。</strong></p></blockquote>
+
+
+<h3 id="rules">规则</h3>
+
+
+<p>在 Hog 中，两名玩家轮流行动，目标是第一个在某回合结束时总分至少达到 <code>GOAL</code> 分的人，其中 <code>GOAL</code> 默认为 100。在每个回合中，当前玩家选择若干个（最多 10 个）骰子一起掷出。该玩家本回合的得分就是这些骰子点数之和。然而，掷太多骰子的玩家会有风险：</p>
+
+<ul>
+  <li><strong>Sow Sad</strong>。如果掷出的骰子中有任何一个结果是 <code>1</code>，那么当前玩家本轮的得分就是 1，不管其他骰子的点数是多少。</li>
+</ul>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<ul>
+  <li><em>示例 <code>1</code>：</em>当前玩家掷 7 个骰子，其中有 5 个是 1。本轮得 1 分。</li>
+  <li><em>示例 2：</em>当前玩家掷 4 个骰子，全都是 3。由于没有发生 Sow Sad，本轮得 <code>12</code> 分。</li>
+</ul>
+
+</div>
+
+<p>在普通的 Hog 游戏中，以上就是全部规则。为了让游戏更有趣，我们会加入一些特殊规则：</p>
+
+<ul>
+  <li><strong>Boar Brawl</strong>。选择掷零个骰子的玩家，得分是「对手得分的十位数字」与「当前玩家得分的个位数字」之差的绝对值的 3 倍，或者 1，取两者中较大的那个。个位数字指的是最右边的那位数字，十位数字指的是右起第二位数字。如果某位玩家的得分是一位数（小于 10），那么该玩家得分的十位数字为 0。</li>
+</ul>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<ul>
+  <li><p><em>示例 1：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>21</code> 分，对手有 <code>46</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>4</code>，当前玩家得分的个位数字是 <code>1</code>。</li>
+    <li>因此，该玩家获得 <code>3 * abs(4 &#x2d; 1) = 9</code> 分。</li>
+  </ul></li>
+  <li><p><em>示例 2：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>45</code> 分，对手有 <code>52</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>5</code>，当前玩家得分的个位数字是 <code>5</code>。</li>
+    <li>由于 <code>3 * abs(5 &#x2d; 5) = 0</code>，该玩家获得 <code>1</code> 分。</li>
+  </ul></li>
+  <li><p><em>示例 3：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>2</code> 分，对手有 <code>5</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>0</code>，当前玩家得分的个位数字是 <code>2</code>。</li>
+    <li>因此，该玩家获得 <code>3 * abs(0 &#x2d; 2) = 6</code> 分。</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<ul>
+  <li><strong>Sus Fuss</strong>。如果一个数恰好有 3 个或 4 个因子（包括 1 和它本身），我们就称这个数为 <a href="https://en.wikipedia.org/wiki/Sus_%28genus%29"><em>sus</em></a>。如果掷完骰子之后，当前玩家的得分是一个 sus 数，那么他的得分会立即增加到大于当前得分的最近一个质数。</li>
+</ul>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<ul>
+  <li><p><em>示例 1：</em></p>
+
+  <ul>
+    <li>某玩家有 14 分，掷 2 个骰子得到 7 分。他的新得分会是 21，而 21 有 4 个因子：1、3、7 和 21。因此 21 是 sus 的，该玩家的得分立即增加到下一个质数 23。</li>
+  </ul></li>
+  <li><p><em>示例 2：</em></p>
+
+  <ul>
+    <li>某玩家有 63 分，掷 5 个骰子，本轮只得到 1 分。他的新得分会是 64（Sow Sad 😢），而 64 有 7 个因子：1、2、4、8、16、32 和 64。由于 64 不是 sus，该玩家的得分保持不变。</li>
+  </ul></li>
+  <li><p><em>示例 3：</em></p>
+
+  <ul>
+    <li>某玩家有 49 分，掷 5 个骰子共得 18 分。他的新得分会是 67，而 67 是质数，有 2 个因子：1 和 67。由于 67 不是 sus，该玩家的得分保持不变。</li>
+  </ul></li>
+</ul>
+
+</div>
+
+
+<h2 id="download-starter-files">下载起始文件</h2>
+
+
+<p>要开始的话，请把项目代码全部下载为一个 <a href="hog.zip">zip 压缩包</a>。
+下面是解压后你会在压缩包中看到的所有文件列表。
+在这个项目中，你只需要修改 <code>hog.py</code>。</p>
+
+<ul>
+  <li><code>hog.py</code>：Hog 的初始实现</li>
+  <li><code>dice.py</code>：用于制作和掷骰子的函数</li>
+  <li><code>hog_gui.py</code>：Hog 的图形用户界面（GUI）（已更新）</li>
+  <li><code>ucb.py</code>：AHUT_1A 的实用函数</li>
+  <li><code>hog_ui.py</code>：Hog 的基于文本的用户界面（UI）</li>
+  <li><code>ok</code>：AHUT_1A 自动评分器</li>
+  <li><code>tests</code>：<code>ok</code> 使用的测试目录</li>
+  <li><code>gui_files</code>：存放 Web GUI 所用各种文件的目录</li>
+</ul>
+
+<p>你可能还会看到上面未列出的一些文件——它们是让自动评分器和部分 GUI 正常工作所必需的。除了 <code>hog.py</code> 之外，请不要修改任何文件。</p>
+
+
+
+
+<h2 id="logistics">事务安排</h2>
+
+
+
+
+
+
+
+
+
+
+<p>你需要提交以下文件：</p>
+
+<ul>
+  <li><code>hog.py</code></li>
+</ul>
+
+
+
+
+
+<p>对于我们要求你完成的函数，我们可能会提供一些初始代码。如果你不想使用这些代码，可以删掉它们，从零开始写。你也可以按自己的需要添加新的函数定义。</p>
+
+<p><b>但是，请不要修改任何其他函数，也不要编辑上面未列出的文件</b>，否则你的代码可能无法通过自动评分程序的测试。另外，请不要改动任何函数签名（名称、参数顺序或参数个数）。</p>
+
+
+
+<p>在整个项目中，你都应该测试代码的正确性。经常测试是个好习惯，这样容易定位问题。但也不要测试得<i>过于</i>频繁，要留出时间把问题想清楚。</p>
+
+<p>我们提供了一个名为 <code>ok</code> 的<b>自动评分程序</b>，帮助你测试代码并跟踪进度。第一次运行时，它会要求你<b>通过网页浏览器登录 Ok 账号</b>，请照做。每次运行 <code>ok</code>，它都会把你的工作和进度备份到我们的服务器上。</p>
+
+<p><code>ok</code> 的主要用途是测试你的实现。</p>
+
+<!-- <p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code>python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>
+=====================================================================
+Assignment: The Game of Hog
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>  -->
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<!-- <p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue. <b>If you forget to submit, your last backup will be automatically converted to a submission. </b></p>
+-->
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<!--- <p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="hog.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p> -->
+
+<!---
+<p>If you do not want us to record a backup of your work or information about
+your progress, you can run
+
+<pre>python3 ok --local</pre>
+
+
+With this option, no information will be sent to our course
+servers.
+
+-->
+
+<p>如果你想交互式地测试代码，可以运行
+
+<pre> python3 ok -q [question number] -i </pre>
+
+并填入对应的题目编号（例如 <code>01</code>）。它会运行该题目的测试，直到你第一个失败的测试为止，然后让你有机会交互式地测试自己写的函数。</p>
+
+<p>你也可以使用 OK 的调试打印功能，只要在 print 语句前加上 "DEBUG:"。例如，如果你想查看变量 <code>x</code> 的值，可以这样写：
+
+<pre> print(f"DEBUG: x is {x}") </pre>
+
+这样终端就会输出内容，而不会因为多出来的输出导致 OK 测试失败。
+
+<h2 id="graphical-user-interface">图形用户界面</h2>
+
+<p>我们为你提供了一个<strong>图形用户界面</strong>（简称 GUI）。目前它还无法运行，因为你还没有实现游戏逻辑。等你完成 play 函数之后，就可以玩到完整可交互的 Hog 了！</p>
+
+<p>完成之后，你就可以在终端运行 GUI，并在浏览器中玩 Hog 了：</p>
+
+<pre><code>python3 hog_gui.py</code></pre>
+
+
+
+
+
+
+<h2 id="phase-1-rules-of-the-game">第 1 阶段：游戏规则</h2>
+
+
+<p>在第 1 阶段，你将为一个 Hog 游戏开发模拟器。</p>
+
+<!-- ### Problem 0 (0 pt) -->
+
+<h3 id="problem-0">问题 0</h3>
+
+
+<p><code>dice.py</code> 文件用非纯（non-pure）的零参数函数来表示骰子。
+这些函数之所以是非纯的，是因为它们每次被调用时都可能返回不同的值，因此调用它们的一个副作用就是改变下次调用时返回的结果。</p>
+
+<p>下面是从 <code>dice.py</code> 中摘录的文档，你需要阅读它才能在本项目中模拟骰子。</p>
+
+<pre><code># A dice function takes no arguments and returns a number from 1 to n
+# (inclusive), where n is the number of sides on the dice.
+
+# Fair dice produce each possible outcome with equal probability.
+# Two fair dice are already defined, four_sided and six_sided,
+# and are generated by the make_fair_dice function.
+
+def make_fair_dice(sides):
+    &quot;&quot;&quot;Return a die that generates values ranging from 1 to SIDES, each with an equal chance.&quot;&quot;&quot;
+    ...
+
+four_sided = make_fair_dice(4)
+six_sided = make_fair_dice(6)
+
+# Test dice are deterministic: they always cycles through a fixed
+# sequence of values that are passed as arguments.
+# Test dice are generated by the make_test_dice function.
+
+def make_test_dice(...):
+    &quot;&quot;&quot;Return a die that cycles deterministically through OUTCOMES.
+
+    &gt;&gt;&gt; dice = make_test_dice(1, 2, 3)
+    &gt;&gt;&gt; dice()
+    1
+    &gt;&gt;&gt; dice()
+    2
+    &gt;&gt;&gt; dice()
+    3
+    &gt;&gt;&gt; dice()
+    1
+    &gt;&gt;&gt; dice()
+    2</code></pre>
+
+
+
+<p>通过解锁以下测试来检验你的理解。</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 00 -u<button id="copy-code-python3ok-q00-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q00-u").onclick = () => copyCode('python3 ok -q 00 -u', "copy-code-python3ok-q00-u");
+        </script>
+        <br/>
+
+<p>输入 <code>exit()</code> 即可退出解锁程序。</p>
+
+<p><strong>在 Windows 上键入 Ctrl-C 退出解锁程序已知会导致问题，请避免这样做。</strong></p>
+
+<!-- ### Problem 1 (2 pt) -->
+
+<h3 id="problem-1">题目 1</h3>
+
+
+<p>在 <code>hog.py</code> 中实现 <code>roll_dice</code> 函数。它接受两个参数：一个名为 <code>num_rolls</code> 的正整数，表示掷骰子的次数；以及一个 <code>dice</code> 函数。它返回在一回合中掷 <code>num_rolls</code> 次骰子所得的分数：要么是各次结果之和，要么是 1<em>（Sow Sad）</em>。</p>
+
+<ul>
+  <li><strong>Sow Sad</strong>。如果掷出的骰子中有任何一个结果是 <code>1</code>，那么当前玩家本轮的得分就是 1，不管其他骰子的点数是多少。</li>
+</ul>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<ul>
+  <li><em>示例 <code>1</code>：</em>当前玩家掷 7 个骰子，其中有 5 个是 1。本轮得 1 分。</li>
+  <li><em>示例 2：</em>当前玩家掷 4 个骰子，全都是 3。由于没有发生 Sow Sad，本轮得 <code>12</code> 分。</li>
+</ul>
+
+</div>
+
+<p>要得到一次掷骰的结果，调用 <code>dice()</code>。在 <code>roll_dice</code> 的函数体中，你应当<strong>恰好调用 <code>dice()</code> <code>num_rolls</code> 次</strong>。</p>
+
+<p>请记住，<strong>即使 Sow Sad 在掷骰过程中出现</strong>，也要恰好调用 <code>dice()</code> <code>num_rolls</code> 次。这样做你才能正确地模拟一次性掷出所有骰子（用户界面也才能正常工作）。</p>
+
+<blockquote><p><strong>注意：</strong><code>roll_dice</code> 函数以及本项目中的许多其他函数都使用了<em>默认参数值</em>——你可以在函数定义头部看到这一点：</p>
+
+<pre><code>def roll_dice(num_rolls, dice=six_sided): ...</code></pre>
+
+<p>参数 <code>dice=six_sided</code> 表示 <code>roll_dice</code> 函数中的 <code>dice</code> 参数是<strong>可选的</strong>。如果没有为 <code>dice</code> 提供值，那么默认使用 <code>six_sided</code>。</p>
+
+<p>例如，调用 <code>roll_dice(3, four_sided)</code> 模拟掷 3 个四面骰子，而调用 <code>roll_dice(3)</code> 则由于默认参数而模拟掷 3 个六面骰子。</p></blockquote>
+
+<p><strong>理解问题</strong>：</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01 -u<button id="copy-code-python3ok-q01-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01-u").onclick = () => copyCode('python3 ok -q 01 -u', "copy-code-python3ok-q01-u");
+        </script>
+        <br/>
+
+<blockquote><p><strong>注意：</strong>在你解锁对应题目的测试用例之前，你无法使用 <code>ok</code> 测试你的代码。</p></blockquote>
+
+<p><strong>编写代码并检查你的工作</strong>：</p>
+
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01<button id="copy-code-python3ok-q01" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01").onclick = () => copyCode('python3 ok -q 01', "copy-code-python3ok-q01");
+        </script>
+        <br/>
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        调试建议<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<p>请查看 <a href="../../articles/debugging/index.html">调试指南</a>！</p>
+
+
+<h4 id="debugging-tips" class="no-toc">调试建议</h4>
+
+
+<p>如果测试没有通过，就该调试了。你可以直接用 Python 观察函数的行为。首先，启动 Python 解释器并加载 <code>hog.py</code> 文件。</p>
+
+<pre><code>python3 &#x2d;i hog.py</code></pre>
+
+<p>然后，你就可以对任意数量的骰子调用你的 <code>roll_dice</code> 函数。</p>
+
+<pre><code>&gt;&gt;&gt; roll_dice(4)</code></pre>
+
+<p>你会发现，由于它在模拟随机掷骰，上面的表达式每次求值的结果可能都不同。你也可以使用提前固定骰子结果的测试骰子。例如，当你知道骰子会掷出 3 和 4 时，掷两次的结果总和应为 7。</p>
+
+<pre><code>&gt;&gt;&gt; fixed_dice = make_test_dice(3, 4)
+&gt;&gt;&gt; roll_dice(2, fixed_dice)
+7</code></pre>
+
+<blockquote><p>在大多数系统上，你可以按上箭头键，然后按 enter 或 return 键，来重新求值同一个表达式。要重新执行更早的命令，可以反复按上箭头键。</p>
+
+<p>如果发现了问题，你首先需要修改 <code>hog.py</code> 文件来解决问题，并保存文件。然后，为了检查修改是否有效，你必须用 <code>exit()</code> 或 <code>Ctrl^D</code> 退出 Python 解释器，再重新运行解释器来测试你所做的修改。无论在终端还是 Python 解释器中，按上箭头键都能访问你之前输入的表达式，即使重启了 Python 也是如此。</p>
+
+<p>继续调试你的代码并运行 <code>ok</code> 测试，直到它们全部通过。</p>
+
+<p>再给一个调试技巧：若想在 <code>ok</code> 测试失败时自动启动交互式解释器，可以使用 <code>&#x2d;i</code>。例如，<code>python3 ok &#x2d;q 01 &#x2d;i</code> 会运行第 1 题的测试，如果测试失败，就会启动一个已加载 <code>hog.py</code> 的交互式解释器。</p></blockquote>
+
+</div>
+
+<!-- ### Problem 2 (2 pt) -->
+
+<h3 id="problem-2">题目 2</h3>
+
+
+<p>实现 <code>boar_brawl</code>，它接受玩家当前的分数 <code>player_score</code> 和对手当前的分数 <code>opponent_score</code>，并返回玩家掷 0 个骰子、触发 Boar Brawl 时所得的分数。</p>
+
+<ul>
+  <li><strong>Boar Brawl</strong>。选择掷零个骰子的玩家，得分是「对手得分的十位数字」与「当前玩家得分的个位数字」之差的绝对值的 3 倍，或者 1，取两者中较大的那个。个位数字指的是最右边的那位数字，十位数字指的是右起第二位数字。如果某位玩家的得分是一位数（小于 10），那么该玩家得分的十位数字为 0。</li>
+</ul>
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-6">
+
+<ul>
+  <li><p><em>示例 1：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>21</code> 分，对手有 <code>46</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>4</code>，当前玩家得分的个位数字是 <code>1</code>。</li>
+    <li>因此，该玩家获得 <code>3 * abs(4 &#x2d; 1) = 9</code> 分。</li>
+  </ul></li>
+  <li><p><em>示例 2：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>45</code> 分，对手有 <code>52</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>5</code>，当前玩家得分的个位数字是 <code>5</code>。</li>
+    <li>由于 <code>3 * abs(5 &#x2d; 5) = 0</code>，该玩家获得 <code>1</code> 分。</li>
+  </ul></li>
+  <li><p><em>示例 3：</em></p>
+
+  <ul>
+    <li>当前玩家有 <code>2</code> 分，对手有 <code>5</code> 分，当前玩家选择掷零个骰子。</li>
+    <li>对手得分的十位数字是 <code>0</code>，当前玩家得分的个位数字是 <code>2</code>。</li>
+    <li>因此，该玩家获得 <code>3 * abs(0 &#x2d; 2) = 6</code> 分。</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<blockquote><p>不要假设分数低于 100。请编写你的 <code>boar_brawl</code> 函数，使其对任意非负分数都能正确工作。</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>重要：</strong>你的实现<strong>不应</strong>使用 <code>str</code>、列表，也不应包含方括号 <code>[</code> <code>]</code>。测试用例会检查你是否使用了这些内容。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02 -u<button id="copy-code-python3ok-q02-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02-u").onclick = () => copyCode('python3 ok -q 02 -u', "copy-code-python3ok-q02-u");
+        </script>
+        <br/> <p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02<button id="copy-code-python3ok-q02" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02").onclick = () => copyCode('python3 ok -q 02', "copy-code-python3ok-q02");
+        </script>
+        <br/>
+
+<p>你也可以通过在终端运行 <code>python3 &#x2d;i hog.py</code> 并对各种输入调用 <code>boar_brawl</code>，来交互式地测试它。</p>
+
+<!-- ### Problem 3 (2 pt) -->
+
+<h3 id="problem-3">题目 3</h3>
+
+
+<p>实现 <code>take_turn</code> 函数，它返回当前玩家掷给定的骰子 <code>num_rolls</code> 次后该回合所得的分数。</p>
+
+<p>你的 <code>take_turn</code> 实现应当调用 <code>roll_dice</code> 和 <code>boar_brawl</code> 这两个函数，而不是重复它们的实现。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03 -u<button id="copy-code-python3ok-q03-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03-u").onclick = () => copyCode('python3 ok -q 03 -u', "copy-code-python3ok-q03-u");
+        </script>
+        <br/> <p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03<button id="copy-code-python3ok-q03" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03").onclick = () => copyCode('python3 ok -q 03', "copy-code-python3ok-q03");
+        </script>
+        <br/>
+
+<br>
+
+<!-- ### Problem 4 (2 pt) -->
+
+<h3 id="problem-4">题目 4</h3>
+
+
+<p>首先实现 <code>num_factors</code>，它接受一个正整数 <code>n</code>，并确定 <code>n</code> 有多少个因子。</p>
+
+<blockquote><p>1 和 <code>n</code> 都是 <code>n</code> 的因子！</p></blockquote>
+
+<p>然后，实现 <code>sus_points</code> 和 <code>sus_update</code>。</p>
+
+<ul>
+  <li><code>sus_points</code> 接受玩家的分数，并返回应用 Sus Fuss 规则后玩家的新分数，即使分数保持不变。例如，<code>sus_points(5)</code> 应返回 <code>5</code>，<code>sus_points(21)</code> 应返回 <code>23</code>。你的实现中应使用 <code>num_factors</code> 和提供的 <code>is_prime</code> 函数。</li>
+  <li><code>sus_update</code> 返回玩家掷 <code>num_rolls</code> 个骰子后的<em>总分</em>，其中同时考虑了 Boar Brawl 和 Sus Fuss 规则。你应当在这个函数中使用 <code>sus_points</code>。</li>
+</ul>
+
+<blockquote><p><strong>提示</strong>：</p>
+
+<ul>
+  <li>你可以查看 <code>hog.py</code> 中提供的 <code>simple_update</code> 实现，并将其作为 <code>sus_update</code> 函数的起点。</li>
+  <li>回想一下，<code>take_turn</code> 已经考虑了 Boar Brawl 规则！</li>
+</ul></blockquote>
+
+<ul>
+  <li><strong>Sus Fuss</strong>。如果一个数恰好有 3 个或 4 个因子（包括 1 和它本身），我们就称这个数为 <a href="https://en.wikipedia.org/wiki/Sus_%28genus%29"><em>sus</em></a>。如果掷完骰子之后，当前玩家的得分是一个 sus 数，那么他的得分会立即增加到大于当前得分的最近一个质数。</li>
+</ul>
+
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-7">
+
+<ul>
+  <li><p><em>示例 1：</em></p>
+
+  <ul>
+    <li>某玩家有 14 分，掷 2 个骰子得到 7 分。他的新得分会是 21，而 21 有 4 个因子：1、3、7 和 21。因此 21 是 sus 的，该玩家的得分立即增加到下一个质数 23。</li>
+  </ul></li>
+  <li><p><em>示例 2：</em></p>
+
+  <ul>
+    <li>某玩家有 63 分，掷 5 个骰子，本轮只得到 1 分。他的新得分会是 64（Sow Sad 😢），而 64 有 7 个因子：1、2、4、8、16、32 和 64。由于 64 不是 sus，该玩家的得分保持不变。</li>
+  </ul></li>
+  <li><p><em>示例 3：</em></p>
+
+  <ul>
+    <li>某玩家有 49 分，掷 5 个骰子共得 18 分。他的新得分会是 67，而 67 是质数，有 2 个因子：1 和 67。由于 67 不是 sus，该玩家的得分保持不变。</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04 -u<button id="copy-code-python3ok-q04-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04-u").onclick = () => copyCode('python3 ok -q 04 -u', "copy-code-python3ok-q04-u");
+        </script>
+        <br/> <p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04<button id="copy-code-python3ok-q04" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04").onclick = () => copyCode('python3 ok -q 04', "copy-code-python3ok-q04");
+        </script>
+        <br/>
+
+<!-- ### Problem 5 (4 pt) -->
+
+<h3 id="problem-5">题目 5</h3>
+
+
+<p>实现 <code>play</code> 函数，它模拟一整局 Hog 游戏。玩家轮流掷骰子，直到其中一名玩家达到目标分数。该函数随后返回两名玩家的最终分数。</p>
+
+<p>要确定每回合掷多少个骰子，调用当前玩家的策略函数（玩家 0 使用 <code>strategy0</code>，玩家 1 使用 <code>strategy1</code>）。<em>策略</em>是一个函数，给定玩家的分数和对手的分数，返回当前玩家在该回合要掷的骰子数。一个简单的策略示例是出现在 <code>play</code> 上方的 <code>always_roll_5</code>。</p>
+
+<p>要确定玩家在某一回合后的更新分数，调用 <code>update</code> 函数。<code>update</code> 函数接受要掷的骰子数、当前玩家的分数、对手的分数，以及用于模拟掷骰的 dice 函数。它返回当前玩家在该回合结束后的更新分数。<code>simple_update</code> 和 <code>sus_update</code> 就是两个 <code>update</code> 函数的例子。请记住，update 函数返回的是玩家在该回合之后的<em>总分数</em>，而不只是分数的变化量。</p>
+
+<p>当某名玩家在其回合结束时（应用所有适用的规则之后）达到或超过目标分数时，游戏结束。<code>play</code> 随后会返回两名玩家的最终总分，玩家 0 的分数在前，玩家 1 的分数在后。</p>
+
+<p>下面是几个调用 <code>play</code> 的示例：</p>
+
+<ul>
+  <li><code>play(always_roll_5, always_roll_5, simple_update)</code> 模拟两名每回合都掷 5 个骰子的玩家，只使用 Sow Sad 和 Boar Brawl 规则进行游戏。</li>
+  <li><code>play(always_roll_5, always_roll_5, sus_update)</code> 模拟两名每回合都掷 5 个骰子的玩家，在 Sow Sad 和 Boar Brawl 规则之外还使用 Sus Fuss 规则（即使用全部规则）进行游戏。</li>
+</ul>
+
+<blockquote><p><strong>重要：</strong>为了让用户界面正常工作，策略函数每回合只应被调用一次。只有当轮到玩家 0 时才调用 <code>strategy0</code>，只有当轮到玩家 1 时才调用 <code>strategy1</code>。</p>
+
+<p><strong>提示</strong>：</p>
+
+<ul>
+  <li>如果 <code>who</code> 是当前玩家，那么下一位玩家就是 <code>1 &#x2d; who</code>。</li>
+  <li>要调用 <code>play(always_roll_5, always_roll_5, sus_update)</code> 并打印出每回合发生的情况，请在终端运行 <code>python3 hog_ui.py</code>。</li>
+</ul></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05 -u<button id="copy-code-python3ok-q05-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05-u").onclick = () => copyCode('python3 ok -q 05 -u', "copy-code-python3ok-q05-u");
+        </script>
+        <br/> <p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05<button id="copy-code-python3ok-q05" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05").onclick = () => copyCode('python3 ok -q 05', "copy-code-python3ok-q05");
+        </script>
+        <br/>
+
+
+<h2 id="checkpoint-submission">检查点自测</h2>
+
+
+<p>检查确认你完成了阶段 1 中的所有题目：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p>运行 <code>ok</code> 命令时，你仍然会看到一些测试处于锁定状态，因为你还没有完成整个项目。只要你正确完成到当前为止的所有题目，就能拿到 checkpoint 的满分。</p>
+
+
+
+
+
+<p><strong>恭喜！你已经完成了本项目的第 1 阶段！</strong></p>
+
+<br>
+
+
+<h2 id="interlude-user-interfaces">插曲：用户界面</h2>
+
+
+<blockquote><p>本项目这一部分没有必做的题目，只有一些供你阅读和理解的示例。其余的项目题目请参见第 2 阶段。</p></blockquote>
+
+<p><img class="img-responsive center-block" src="assets/hog_animation.gif" alt="Animated die" width=" height="></p>
+
+<p><em>动画由 Tristan &amp; Tyler Roath 制作</em></p>
+
+
+<h3 id="printing-game-events">打印游戏事件</h3>
+
+
+<p>我们已经为这个游戏搭建了一个模拟器，但还没有添加任何代码来描述游戏事件应该如何展示给人看。因此，我们做出了一个没人能玩的电脑游戏。（真逊！）</p>
+
+<p>不过，这个模拟器是由许多小函数构成的，我们可以把每个函数替换成一个在调用时打印发生了什么的版本。借助高阶函数，我们无需改动太多原有代码就能做到这一点。<code>hog_ui.py</code> 中有一个例子，鼓励你读一读。</p>
+
+<p><code>play_and_print</code> 函数调用的正是刚刚实现的 <code>play</code> 函数，但使用了：</p>
+
+<ul>
+  <li>新的策略函数（例如 <code>printing_strategy(0, always_roll_5)</code>），它会打印分数和掷骰数。</li>
+  <li>新的 update 函数（<code>sus_update_and_print</code>），它会打印每回合的结果。</li>
+  <li>新的 dice 函数（<code>printing_dice(six_sided)</code>），它会打印掷骰的结果。</li>
+</ul>
+
+<p>注意原有模拟器代码有多少可以被复用。</p>
+
+<p>在终端运行 <code>python3 hog_ui.py</code> 会调用 <code>play_and_print(always_roll_5, always_roll_5)</code>。</p>
+
+
+<h3 id="accepting-user-input">接受用户输入</h3>
+
+
+<p>内置的 <code>input</code> 函数会等待用户输入一行文本，然后以字符串的形式返回该文本。内置的 <code>int</code> 函数可以接受一个包含某个整数各位数字的字符串，并返回那个整数。</p>
+
+<p><code>interactive_strategy</code> 函数返回一个策略，它通过调用 <code>input</code> 让玩家自己选择每回合掷多少个骰子。</p>
+
+<p>有了这个策略，我们终于可以用 <code>play</code> 函数来玩一局游戏了：</p>
+
+<p>在终端运行 <code>python3 hog_ui.py &#x2d;n 1</code> 会调用 <code>play_and_print(interactive_strategy(0), always_roll_5)</code>，即让一名人类（玩家 0）与一个总是掷 5 个骰子的电脑策略对战。</p>
+
+<p>在终端运行 <code>python3 hog_ui.py &#x2d;n 2</code> 会调用 <code>play_and_print(interactive_strategy(0), interactive_strategy(1))</code>，即让两名人类玩家对战。</p>
+
+<p>欢迎你以任何方式修改 <code>hog_ui.py</code>，例如使用 <code>always_roll_5</code> 之外的其他策略。</p>
+
+
+<h3 id="graphical-user-interface-gui">图形用户界面（GUI）</h3>
+
+
+<p>我们还使用与 <code>hog_ui.py</code> 类似的方法，为这个游戏提供了一个基于网页的图形用户界面，名为 <code>hog_gui.py</code>。你可以在终端运行它：</p>
+
+<pre><code>python3 hog_gui.py</code></pre>
+
+<p>与 <code>hog_ui.py</code> 一样，GUI 依赖你实现的模拟器，因此如果你的代码中有任何 bug，它们都会反映在 GUI 中。这意味着你也可以把 GUI 当作调试工具；不过，最好还是先运行测试。</p>
+
+<p>如果你愿意，可以查看 <code>hog_gui.py</code> 文件以及项目附带的 <code>gui_files</code> 目录中的内容，了解 GUI 是如何工作的。不过，GUI 的实现用到了其他几种编程语言：Javascript、HTML 和 CSS。</p>
+
+<br>
+
+
+<h2 id="phase-2-strategies">第 2 阶段：策略</h2>
+
+
+<p>在这一阶段，你将尝试各种方法来改进总是掷五个骰子的简单策略 <code>always_roll_five</code>。<em>策略</em>是一个接受两个参数的函数：当前玩家的分数和对手的分数。它返回该玩家将要掷的骰子数，取值范围是 0 到 10（含两端）。</p>
+
+<!-- ### Problem 6 (2 pt) -->
+
+<h3 id="problem-6">题目 6</h3>
+
+
+<p>实现 <code>always_roll</code>，它是一个高阶函数，接受骰子数 <code>n</code>，并返回一个总是掷 <code>n</code> 个骰子的策略函数。因此，<code>always_roll(5)</code> 等价于 <code>always_roll_5</code>。</p>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06 -u<button id="copy-code-python3ok-q06-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06-u").onclick = () => copyCode('python3 ok -q 06 -u', "copy-code-python3ok-q06-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06<button id="copy-code-python3ok-q06" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06").onclick = () => copyCode('python3 ok -q 06', "copy-code-python3ok-q06");
+        </script>
+        <br/>
+
+<!-- ### Problem 7 (2 pt) -->
+
+<h3 id="problem-7">题目 7</h3>
+
+
+<p>一个策略可能的参数取值是有限的。例如，在目标分数为 100 的游戏中，只有 100 个可能的 <code>score</code> 值（0-99）和 100 个可能的 <code>opponent_score</code> 值（0-99），因此一个策略函数共有 10,000 种可能的参数组合。</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>玩家分数</th>
+    <th>对手分数组合</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>(0,0), (0,1), (0,2), ..., (0,99)</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>(1,0), (1,1), (1,2), ..., (1,99)</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>(2,0), (2,1), (2,2), ..., (2,99)</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>98</td>
+    <td>(98,0), (98,1), (98,2), ..., (98,99)</td>
+  </tr>
+  <tr>
+    <td>99</td>
+    <td>(99,0), (99,1), (99,2), ..., (99,99)</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<p>实现 <code>is_always_roll</code>，它接受一个策略，并返回该策略是否对每一种可能的参数组合都掷相同数量的骰子，其中每个分数最大为 <code>goal</code> 分。</p>
+
+<blockquote><p><strong>提醒：</strong>游戏会一直进行到某位玩家达到 <code>goal</code> 分（在上面的例子中 <code>goal</code> 设为 <code>100</code>，但它可以是任意数字）。请确保你的解法考虑了指定 <code>goal</code> 下 <code>score</code> 与 <code>opponent_score</code> 的每一种可能组合。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07 -u<button id="copy-code-python3ok-q07-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07-u").onclick = () => copyCode('python3 ok -q 07 -u', "copy-code-python3ok-q07-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07<button id="copy-code-python3ok-q07" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07").onclick = () => copyCode('python3 ok -q 07', "copy-code-python3ok-q07");
+        </script>
+        <br/>
+
+<!-- ### Problem 8 (2 pt) -->
+
+<h3 id="problem-8">题目 8</h3>
+
+
+<!-- old explanation:
+
+Implement make_averaged, which is a higher-order function that takes a function original_function as an argument.
+
+The return value of make_averaged is a function that takes in the same number of arguments as original_function. When we call this returned function on the arguments, it will return the average value of repeatedly calling original_function on the arguments passed in.
+
+Specifically, this function should call original_function a total of times_called times and return the average of the results of these calls. -->
+
+<p>实现 <code>make_averaged</code>，它是一个高阶函数，接受一个函数 <code>original_function</code> 作为参数。</p>
+
+<p><code>make_averaged</code> 的返回值是一个接受与 <code>original_function</code> 相同参数的函数。当用特定参数调用时，该函数应当在相同的参数上重复调用 <code>original_function</code> <code>times_called</code> 次，并返回这些结果的平均值。看一看 <code>make_averaged</code> 的 doctest。请务必留意传入的是哪些值！</p>
+
+<blockquote><p><strong>Doctest 讲解</strong>：
+仔细看看 <code>make_averaged</code> 的 doctest。在这里，<code>original_function</code> 是 <code>roll_dice</code>。注意这一行 <code>averaged_dice(1, dice)</code>。这意味着 <code>roll_dice</code> 的参数是 <code>(1, dice)</code>（想想为什么！）。注意 <code>averaged_dice</code> 接受与 <code>roll_dice</code> 相同的参数。这些参数并不是直接传给 <code>roll_dice</code>，而是传给了 <code>averaged_dice</code>。（想想这该如何实现！）请记住，<code>make_averaged</code> 应当适用于任何与 <code>make_averaged</code> 所返回函数具有相同参数结构的 <code>original_function</code>。
+在这个例子中，掷单个骰子被视为一个样本（<code>roll_dice(1, dice)</code>）。由于 <code>times_called</code> 设为 40，这个采样过程重复了 40 次。<code>make_averaged</code> 函数随后计算出这 40 次调用 <code>roll_dice</code> 的结果的平均值。</p>
+
+<p><strong>重要：</strong>
+要实现这个函数，你需要用到一条新的 Python 语法。我们希望编写一个能接受任意数量参数的函数，然后用完全相同的这些参数去调用另一个函数。具体做法如下。</p>
+
+<p>不必为函数逐一列出形参，你可以写 <code>*args</code>，它代表传入该函数的<strong>所有</strong>参数。然后我们可以把这些 <code>*args</code> 传给另一个函数，从而用相同的参数调用它。例如：</p>
+
+<pre><code>&gt;&gt;&gt; def printed(f):
+...     def print_and_return(*args):
+...         result = f(*args)
+...         print(&#x27;Result:&#x27;, result)
+...         return result
+...     return print_and_return
+&gt;&gt;&gt; printed_pow = printed(pow)
+&gt;&gt;&gt; printed_pow(2, 8)  # *args represents the arguments (2, 8)
+Result: 256
+256
+&gt;&gt;&gt; printed_abs = printed(abs)
+&gt;&gt;&gt; printed_abs(&#x2d;10)  # *args represents one argument (&#x2d;10)
+Result: 10
+10</code></pre>
+
+<p>这里，我们可以通过 <code>*args</code> 语法向 <code>print_and_return</code> 传入任意数量的参数。我们也可以在 <code>print_and_return</code> 函数内部使用 <code>*args</code>，用相同的参数再进行一次函数调用。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08 -u<button id="copy-code-python3ok-q08-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08-u").onclick = () => copyCode('python3 ok -q 08 -u', "copy-code-python3ok-q08-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08<button id="copy-code-python3ok-q08" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08").onclick = () => copyCode('python3 ok -q 08', "copy-code-python3ok-q08");
+        </script>
+        <br/>
+
+<!-- ### Problem 9 (2 pt) -->
+
+<h3 id="problem-9">题目 9</h3>
+
+
+<p>实现 <code>max_scoring_num_rolls</code>，它用一个具有固定面数的骰子做实验，以确定掷多少次（1 到 10）能在一回合中获得最大的平均分数。你的实现应当使用 <code>make_averaged</code> 和 <code>roll_dice</code>。</p>
+
+<p>如果两个掷骰次数并列取得最大平均分数，返回较小的那个。例如，如果 3 和 6 取得相同的最大平均分数，就返回 3。</p>
+
+<p>在做解锁测试之前，你可能会觉得先读一读本题以及 <code>make_averaged</code>（第 8 题）的 doctest 很有帮助。</p>
+
+<blockquote><p><strong>重要：</strong>为了通过我们所有的测试，请确保你是从 1 递增到 10 来测试掷骰次数，而不是从 10 递减到 1。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09 -u<button id="copy-code-python3ok-q09-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09-u").onclick = () => copyCode('python3 ok -q 09 -u', "copy-code-python3ok-q09-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09<button id="copy-code-python3ok-q09" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09").onclick = () => copyCode('python3 ok -q 09', "copy-code-python3ok-q09");
+        </script>
+        <br/>
+
+
+<h3 id="running-experiments">运行实验</h3>
+
+
+<p>提供的 <code>run_experiments</code> 函数会调用 <code>max_scoring_num_rolls(six_sided)</code> 并打印结果。你很可能会发现，使用六面骰子时掷 6 个骰子能使 <code>roll_dice</code> 的结果最大。</p>
+
+<p>要调用这个函数并查看结果，请带上 <code>&#x2d;r</code> 标志运行 <code>hog.py</code>：</p>
+
+<pre><code>python3 hog.py &#x2d;r</code></pre>
+
+<p>此外，<code>run_experiments</code> 会把各种策略与 <code>always_roll(6)</code> 进行比较。欢迎你按自己的意愿修改 <code>run_experiments</code> 的实现。请注意，在你于接下来两道题中实现 <code>boar_strategy</code> 和 <code>sus_strategy</code> 之前，用它们运行实验不会得到准确的结果。</p>
+
+<p>有些实验可能需要运行长达一分钟。你随时可以减少调用 <code>make_averaged</code> 时的试验次数，以加快实验速度。</p>
+
+<p>运行实验不会影响你在本项目中的得分。</p>
+
+<br>
+
+<!-- ### Problem 10 (2 pt) -->
+
+<h3 id="problem-10">题目 10</h3>
+
+
+<p>策略可以尝试利用 <em>Boar Brawl</em> 规则，在最有利的时候掷 0 个骰子。实现 <code>boar_strategy</code>，当掷 0 个骰子能获得<strong>至少</strong> <code>threshold</code> 分时返回 0，否则返回 <code>num_rolls</code>。该策略<strong>不应</strong>同时考虑 Sus Fuss 规则。</p>
+
+<blockquote><p><strong>提示</strong>：你可以使用你在第 2 题中定义的 <code>boar_brawl</code> 函数。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10 -u<button id="copy-code-python3ok-q10-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10-u").onclick = () => copyCode('python3 ok -q 10 -u', "copy-code-python3ok-q10-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10<button id="copy-code-python3ok-q10" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10").onclick = () => copyCode('python3 ok -q 10', "copy-code-python3ok-q10");
+        </script>
+        <br/>
+
+<p>你应该会发现，现在运行 <code>python3 hog.py &#x2d;r</code> 显示 <code>boar_strategy</code> 的胜率接近 66-67%。</p>
+
+<!-- ### Problem 11 (2 pt) -->
+
+<h3 id="problem-11">题目 11</h3>
+
+
+<p>更好的策略会同时利用 <em>Boar Brawl</em> 和 <em>Sus Fuss</em>。
+例如，如果一名玩家有 53 分而对手有 60 分，掷 0 个骰子会把他带到 62，而 62 是一个 sus 数，因此他将以 67 分结束这一回合：净赚 67 - 53 = 14 分！</p>
+
+<p><code>sus_strategy</code> 在掷 0 个骰子所得到的分数比该玩家在回合开始时的分数<strong>至少</strong>高出 <code>threshold</code> 分时返回 0。</p>
+
+<blockquote><p><strong>提示</strong>：你可以使用你在第 4 题中定义的 <code>sus_update</code> 函数。</p></blockquote>
+
+<p>写代码之前，先解锁测试，检验你对题目的理解：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11 -u<button id="copy-code-python3ok-q11-u" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11-u").onclick = () => copyCode('python3 ok -q 11 -u', "copy-code-python3ok-q11-u");
+        </script>
+        <br/>
+<p>解锁完成后，开始实现你的解法。你可以用下面的命令检查正确性：</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11<button id="copy-code-python3ok-q11" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11").onclick = () => copyCode('python3 ok -q 11', "copy-code-python3ok-q11");
+        </script>
+        <br/>
+
+<p>你应该会发现，现在运行 <code>python3 hog.py &#x2d;r</code> 显示 <code>sus_strategy</code> 的胜率接近 67-69%。</p>
+
+<!-- ### Optional: Problem 12 (0 pt) -->
+
+<h3 id="optional-problem-12">选做：第 12 题</h3>
+
+
+<p>实现 <code>final_strategy</code>，它把这些思路以及你自己的任何其他想法结合起来，以取得对基准策略的高胜率。一些建议：</p>
+
+<ul>
+  <li>如果你知道目标分数（默认为 100），得分超过目标是没有好处的。检查掷 0、1 或 2 个骰子能否让你获胜。如果你处于领先，也许可以决定少冒一些风险。</li>
+  <li>不要使用阈值，而是在掷 0 个骰子平均能比掷 6 个骰子给你带来更多分数时返回 0。</li>
+</ul>
+
+<p>你可以通过运行 <code>ok</code> 来检查你的最终策略是否有效。</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12<button id="copy-code-python3ok-q12" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12").onclick = () => copyCode('python3 ok -q 12', "copy-code-python3ok-q12");
+        </script>
+        <br/>
+
+
+<h2 id="project-submission">项目提交</h2>
+
+
+<p>对所有题目运行 <code>ok</code>，确认测试都已解锁并通过：</p>
+
+<pre><code>python3 ok</code></pre>
+
+<p>你也可以查看项目每一部分的得分：</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+
+
+
+
+<p><strong>恭喜你，你已经完成了第一个 AHUT_1A 项目！</strong>如果还没有的话，放松一下，和朋友玩几局 Hog 吧。</p>
+
+<div>
+    <script>
+        const scriptTag = document.currentScript;
+        window.addEventListener("load", async () => {
+            const parentNode = scriptTag.parentNode;
+            let pos = parentNode.nextElementSibling;
+
+            const path = pos.innerText;
+
+            pos = pos.nextElementSibling;
+            pos.previousElementSibling.remove();
+
+            const probe = await fetch(path);
+
+            if (!probe.ok) {
+                // section should not be displayed yet
+
+                // iterate until a section is found
+                while (pos && !pos.tagName.startsWith("H")) {
+                    pos = pos.nextElementSibling;
+                }
+
+                if (!pos) {
+                    // no section to delete
+                    return;
+                }
+
+                // the tag to look for indicating a new section
+                const level = pos.tagName;
+                const name = pos.id;
+
+                // remove links
+                for (const link of document.querySelectorAll(`a[href="#${name}"]`)) {
+                    if (link.parentElement.nextElementSibling && link.parentElement.nextElementSibling.tagName
+                        === "UL") {
+                        link.parentElement.nextElementSibling.remove(); // remove child links
+                    }
+                    link.parentElement.remove();
+                }
+
+                // remove header
+                pos = pos.nextElementSibling;
+                pos.previousElementSibling.remove();
+
+                // keep destroying siblings until another section at the same level is hit
+                while (pos && (pos.tagName.startsWith("h") || pos.tagName === "P") && pos.tagName !==
+                level) {
+                    pos = pos.nextElementSibling;
+                    pos.previousElementSibling.remove();
+                }
+            }
+
+            // self-destruct
+            scriptTag.parentNode.remove();
+        });
+    </script>
+</div>
+
+
+
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+<script>
+$("#cats_typing").hover(
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing.gif");
+  },
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing_still.gif");
+  }
+);
+</script>
+
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#introduction">引言</a></li>
+  <ul>
+    <li><a href="#rules">规则</a></li>
+  </ul>
+  <li><a href="#download-starter-files">下载起始文件</a></li>
+  <li><a href="#graphical-user-interface">图形用户界面</a></li>
+  <li><a href="#phase-1-rules-of-the-game">第 1 阶段：游戏规则</a></li>
+  <ul>
+    <li><a href="#problem-0">问题 0</a></li>
+    <li><a href="#problem-1">题目 1</a></li>
+    <ul>
+      <li><a href="#debugging-tips">调试建议</a></li>
+    </ul>
+    <li><a href="#problem-2">题目 2</a></li>
+    <li><a href="#problem-3">题目 3</a></li>
+    <li><a href="#problem-4">题目 4</a></li>
+    <li><a href="#problem-5">题目 5</a></li>
+  </ul>
+  <li><a href="#checkpoint-submission">检查点提交</a></li>
+  <li><a href="#interlude-user-interfaces">插曲：用户界面</a></li>
+  <ul>
+    <li><a href="#printing-game-events">打印游戏事件</a></li>
+    <li><a href="#accepting-user-input">接受用户输入</a></li>
+    <li><a href="#graphical-user-interface-gui">图形用户界面（GUI）</a></li>
+  </ul>
+  <li><a href="#phase-2-strategies">第 2 阶段：策略</a></li>
+  <ul>
+    <li><a href="#problem-6">题目 6</a></li>
+    <li><a href="#problem-7">题目 7</a></li>
+    <li><a href="#problem-8">题目 8</a></li>
+    <li><a href="#problem-9">题目 9</a></li>
+    <li><a href="#running-experiments">运行实验</a></li>
+    <li><a href="#problem-10">题目 10</a></li>
+    <li><a href="#problem-11">题目 11</a></li>
+    <li><a href="#optional-problem-12">选做：第 12 题</a></li>
+  </ul>
+  <li><a href="#project-submission">项目提交</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

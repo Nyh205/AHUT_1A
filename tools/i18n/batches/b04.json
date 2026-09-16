@@ -1,0 +1,602 @@
+[
+ {
+  "id": 600,
+  "en": "Create a long_movies table that contains the number of movies in each decade that are\nover 3 hours long.  long_movies has two columns:"
+ },
+ {
+  "id": 601,
+  "en": "decade (strings): The decade, e.g., 1920s"
+ },
+ {
+  "id": 602,
+  "en": "count (numbers): The number of movies in that decade that are over 3 hours (180 minutes) long"
+ },
+ {
+  "id": 603,
+  "en": "For the IMDB 1000 dataset, the result will be:"
+ },
+ {
+  "id": 604,
+  "en": "Hint: Creating the Decade"
+ },
+ {
+  "id": 605,
+  "en": "When adding numbers and including the result in a string, put parentheses around the arithmetic, e.g.,\nBe careful with the string concatenation!"
+ },
+ {
+  "id": 606,
+  "en": "Use FROM and WHERE to choose only the movies with runtime greater than 180 minutes."
+ },
+ {
+  "id": 607,
+  "en": "Use GROUP BY to group together all of the movies for one decade."
+ },
+ {
+  "id": 608,
+  "en": "Use SELECT to create a string like 1920s for each decade, and to select the count of movies for each decade."
+ },
+ {
+  "id": 609,
+  "en": "This lab will be a collection of practice problems from some select topics covered in this course.\nSome topics that haven't been covered will be on the discussion worksheet."
+ },
+ {
+  "id": 610,
+  "en": "Q1: Delete"
+ },
+ {
+  "id": 611,
+  "en": "Implement delete, which takes a Tree t and removes all non-root nodes labeled x.\nThe parent of each remaining node is its nearest ancestor that was not removed.\nThe root node is never removed, even if its label is x."
+ },
+ {
+  "id": 612,
+  "en": "Recursion and Tree Recursion"
+ },
+ {
+  "id": 613,
+  "en": "Q2: Subsequences"
+ },
+ {
+  "id": 614,
+  "en": "A subsequence of a sequence s is a subset of elements from s, in the same\norder they appear in s. Consider the list [1, 2, 3]. A few of its\nsubsequences are [], [1, 3], [2], and [1, 2, 3]."
+ },
+ {
+  "id": 615,
+  "en": "Write a function that takes in a list and returns all possible subsequences of that list.\nThe subsequences should be returned as a list of lists, where each nested list is a\nsubsequence of the original input."
+ },
+ {
+  "id": 616,
+  "en": "In order to accomplish this, you might first want to write a function insert_into_all\nthat takes an item and a list of lists, adds the item to the beginning of each nested list,\nand returns the resulting list."
+ },
+ {
+  "id": 617,
+  "en": "Q3: Non-Decreasing Subsequences"
+ },
+ {
+  "id": 618,
+  "en": "We want to write a function that takes a list and\nreturns a list of lists, where each individual list is a subsequence of the\noriginal input."
+ },
+ {
+  "id": 619,
+  "en": "However, we have a condition: we only want the subsequences for which\nconsecutive elements are nondecreasing.  For example, [1, 3, 2] is a\nsubsequence of [1, 3, 2, 4], but since 2 &lt; 3, this subsequence would not\nbe included in our result."
+ },
+ {
+  "id": 620,
+  "en": "You may assume that the list passed in as s contains only nonnegative elements."
+ },
+ {
+  "id": 621,
+  "en": "You may use the insert_into_all helper function."
+ },
+ {
+  "id": 622,
+  "en": "Q4: Common Players"
+ },
+ {
+  "id": 623,
+  "en": "Implement the function common_players. The common_players function takes in a roster dictionary that\nmaps players to their teams, and returns a new dictionary that maps teams to a list of players on that team.\nThe order of player names in the list does not matter."
+ },
+ {
+  "id": 624,
+  "en": "Q5: Stair Ways"
+ },
+ {
+  "id": 625,
+  "en": "Imagine that you want to go up a staircase that has n steps,\nwhere n is a positive integer. You can take either one or two steps each time you move."
+ },
+ {
+  "id": 626,
+  "en": "Write a generator function stair_ways that yields all the different ways you can climb the staircase."
+ },
+ {
+  "id": 627,
+  "en": "Each \"way\" of climbing a staircase can be represented by a list of 1s and 2s, where each number indicates whether you take one step or two steps at a time."
+ },
+ {
+  "id": 628,
+  "en": "For example, for a staircase with 3 steps, there are three ways to climb it:"
+ },
+ {
+  "id": 629,
+  "en": "You can take one step each time: [1, 1, 1]."
+ },
+ {
+  "id": 630,
+  "en": "You can take two steps then one step: [2, 1]."
+ },
+ {
+  "id": 631,
+  "en": "You can take one step then two steps: [1, 2].."
+ },
+ {
+  "id": 632,
+  "en": "Therefore, stair_ways(3) should yield [1, 1, 1], [2, 1], and [1, 2]. These can be yielded in any order."
+ },
+ {
+  "id": 633,
+  "en": "Hint: Think about the problem recursively. If you're on some step n, which steps could you have just been on?"
+ },
+ {
+  "id": 634,
+  "en": "Election"
+ },
+ {
+  "id": 635,
+  "en": "Let's implement a game called Election. In this game, two players compete to try\nand earn the most votes. Both players start with 0 votes and 100 popularity."
+ },
+ {
+  "id": 636,
+  "en": "The two players alternate turns, and the first player starts. Each turn, the\ncurrent player chooses an action. There are two types of actions:"
+ },
+ {
+  "id": 637,
+  "en": "The player can debate, and either gain or lose 50 popularity. If the player\n  has popularity p1 and the other player has popularity p2, then the\n  probability that the player gains 50 popularity is max(0.1, p1 / (p1 + p2)).\n  Note that the max here ensures that the probability is never lower than 0.1."
+ },
+ {
+  "id": 638,
+  "en": "The player can give a speech. If the player has popularity p1 and the other\n  player has popularity p2, then the player gains p1 // 10 votes and\n  popularity and the other player loses p2 // 10 popularity."
+ },
+ {
+  "id": 639,
+  "en": "The game ends when a player reaches 50 votes, or after a total of 10 turns have\nbeen played (each player has taken 5 turns). Whoever has more votes at the end\nof the game is the winner!"
+ },
+ {
+  "id": 640,
+  "en": "Q6: Player"
+ },
+ {
+  "id": 641,
+  "en": "First, let's implement the Player class. Fill in the debate and speech\nmethods, that take in another Player other, and implement the correct\nbehavior as detailed above. Here are a few additional things to keep in mind:"
+ },
+ {
+  "id": 642,
+  "en": "Each player carries a random number generator (the random_func instance attribute),\n  which is a function taking in no arguments that returns a random float between 0 and 1 when called."
+ },
+ {
+  "id": 643,
+  "en": "In the debate method, you should call the random_func function to get a random number.\n  The player should gain 50 popularity if\n  the random number is smaller than the probability described above, or lose 50\n  popularity otherwise."
+ },
+ {
+  "id": 644,
+  "en": "Neither players' popularity should ever become negative. If this\n  happens, set it equal to 0 instead."
+ },
+ {
+  "id": 645,
+  "en": "Q7: Game"
+ },
+ {
+  "id": 646,
+  "en": "Now, implement the Game class. Fill in the play method, which should\nalternate between the two players, starting with p1, and have each player take\none turn at a time. The choose method in the Player class returns the\nmethod, either debate or speech, that should be called to perform the\naction."
+ },
+ {
+  "id": 647,
+  "en": "In addition, fill in the winner method, which should return the\nplayer with more votes, or None if the players are tied."
+ },
+ {
+  "id": 648,
+  "en": "Q8: New Players (Optional)"
+ },
+ {
+  "id": 649,
+  "en": "The choose method in the Player class is boring because it always returns\nthe speech method. Let's implement two new classes that inherit from Player,\nbut have more interesting choose methods."
+ },
+ {
+  "id": 650,
+  "en": "Implement the choose method in the AggressivePlayer class, which returns the\ndebate method if the player's popularity is less than or equal to other's\npopularity, and speech otherwise. Also implement the choose method in the\nCautiousPlayer class, which returns the debate method if the player's\npopularity is 0, and speech otherwise."
+ },
+ {
+  "id": 651,
+  "en": "Q9: Two List"
+ },
+ {
+  "id": 652,
+  "en": "Implement a function two_list that takes in two lists and returns a linked list. The first list contains the\nvalues that we want to put in the linked list, and the second list contains the number of each corresponding value.\nAssume both lists are the same size and have a length of 1 or greater. Assume all elements in the second list\nare greater than 0."
+ },
+ {
+  "id": 653,
+  "en": "Scheme/Tail Recursion"
+ },
+ {
+  "id": 654,
+  "en": "Q10: Accumulate"
+ },
+ {
+  "id": 655,
+  "en": "Fill in the definition for the procedure accumulate, which joins the first\nn natural numbers (ie. 1 to n, inclusive) according to the following parameters:"
+ },
+ {
+  "id": 656,
+  "en": "merger: a function of two arguments"
+ },
+ {
+  "id": 657,
+  "en": "start: a number with which we start joining"
+ },
+ {
+  "id": 658,
+  "en": "n: the number of natural numbers to join"
+ },
+ {
+  "id": 659,
+  "en": "term: a function of one argument that computes the nth term of\n  a sequence"
+ },
+ {
+  "id": 660,
+  "en": "For example, we can find the product of all the numbers from 1 to 5 by\nusing the multiplication operator as the merger, and starting our\nproduct at 1:"
+ },
+ {
+  "id": 661,
+  "en": "We can also find the sum of the squares of the same numbers by using the\naddition operator as the merger and square as the term:"
+ },
+ {
+  "id": 662,
+  "en": "You may assume that the merger will always be commutative: i.e. the order\nof arguments do not matter."
+ },
+ {
+  "id": 663,
+  "en": "Q11: Tail Recursive Accumulate (Optional)"
+ },
+ {
+  "id": 664,
+  "en": "In a previous part of the homework, you implemented accumulate in scheme. As a reminder, accumulate merges\nthe first n natural numbers according to the parameters merger, start, n, and term."
+ },
+ {
+  "id": 665,
+  "en": "You can refer to your implementation of accumulate as a reminder of what the\nfunction does and a refresher of its implementation."
+ },
+ {
+  "id": 666,
+  "en": "Update your implementation of accumulate to be tail recursive.  It\nshould still pass all the tests for \"regular\" accumulate!"
+ },
+ {
+  "id": 667,
+  "en": "You may assume that the input merger and term procedures are\nproperly tail recursive."
+ },
+ {
+  "id": 668,
+  "en": "If your implementation for accumulate in the previous question is already\ntail recursive, you may simply copy over that solution (replacing accumulate\nwith accumulate&#x2d;tail as appropriate)."
+ },
+ {
+  "id": 669,
+  "en": "If you're running into an recursion depth exceeded error and you're\nusing the staff interpreter, it's very likely your solution is not\nproperly tail recursive."
+ },
+ {
+  "id": 670,
+  "en": "We test that your solution is tail recursive by calling accumulate&#x2d;tail with\na very large input. If your solution is not tail recursive and does not use\na constant number of frames, it will not be able to successfully run."
+ },
+ {
+  "id": 671,
+  "en": "The entire project can be completed with a partner."
+ },
+ {
+  "id": 672,
+  "en": "tests: A directory of tests used by ok"
+ },
+ {
+  "id": 673,
+  "en": "Problem 0"
+ },
+ {
+  "id": 674,
+  "en": "👩🏽‍💻👨🏿‍💻 {0}\nThis would be a good time to switch roles.\nSwitching roles makes sure\nthat you both benefit from the learning experience of being in each role."
+ },
+ {
+  "id": 675,
+  "en": "Check to make sure that you completed all the problems in Phase 1 and Phase 2:"
+ },
+ {
+  "id": 676,
+  "en": "When you run ok commands, you'll still see that some tests are locked\nbecause you haven't completed the whole project yet. You'll get full credit for\nthe checkpoint if you complete all the problems up to this point."
+ },
+ {
+  "id": 677,
+  "en": "Problem 12"
+ },
+ {
+  "id": 678,
+  "en": "Make sure to test your code!  Your code should be able to apply\nmultiple statuses on a target; each new status applies to the current\n(possibly previously affected) action method of the bee."
+ },
+ {
+  "id": 679,
+  "en": "Important submission note: For full credit:"
+ },
+ {
+  "id": 680,
+  "en": "When you run ok commands, you'll still see that some tests are locked\nbecause you haven't completed the whole project yet. You'll get full credit for\nthe checkpoint if you correctly complete all the problems up to this point."
+ },
+ {
+  "id": 681,
+  "en": "Provenance: Prepare your submission bundle"
+ },
+ {
+  "id": 682,
+  "en": "When you've finished the assignment:"
+ },
+ {
+  "id": 683,
+  "en": "Open the command palette: Command(⌘) + Shift(⇧) + P (macOS) / Ctrl + Shift + P (Windows/Linux)."
+ },
+ {
+  "id": 684,
+  "en": "Type Prepare Submission Bundle and select Provenance: Prepare Submission Bundle."
+ },
+ {
+  "id": 685,
+  "en": "A sealed .zip file is saved next to your assignment folder. VS Code shows you where. This bundle contains both your assignment files and the process log."
+ },
+ {
+  "id": 686,
+  "en": "Sow Sad. If any of the dice outcomes is a 1, the current player's score\n  for the turn is 1, regardless of the other values rolled."
+ },
+ {
+  "id": 687,
+  "en": "Example 1: The current player rolls 7 dice, 5 of which are 1's. They\n  score 1 point for the turn."
+ },
+ {
+  "id": 688,
+  "en": "Example 2: The current player rolls 4 dice, all of which are 3's. Since\n  Sow Sad did not occur, they score 12 points for the turn."
+ },
+ {
+  "id": 689,
+  "en": "Boar Brawl. A player who chooses to roll zero dice scores three times\n  the absolute difference between the tens digit of the opponent’s score and\n  the ones digit of the current player’s score, or 1, whichever is greater.\n  The ones digit refers to the rightmost digit and the tens digit refers to\n  the second-rightmost digit. If a player's score is a single digit (less than\n  10), the tens digit of that player's score is 0."
+ },
+ {
+  "id": 690,
+  "en": "The current player has 21 points and the opponent has 46 points, and the current player\n    chooses to roll zero dice."
+ },
+ {
+  "id": 691,
+  "en": "The tens digit of the opponent's score is 4 and the ones digit of the current player's score is 1."
+ },
+ {
+  "id": 692,
+  "en": "Therefore, the player gains 3 * abs(4 &#x2d; 1) = 9 points."
+ },
+ {
+  "id": 693,
+  "en": "The current player has 45 points and the opponent has 52 points, and the current player\n    chooses to roll zero dice."
+ },
+ {
+  "id": 694,
+  "en": "The tens digit of the opponent's score is 5 and the ones digit of the current player's score is 5."
+ },
+ {
+  "id": 695,
+  "en": "Since 3 * abs(5 &#x2d; 5) = 0, the player gains 1 point."
+ },
+ {
+  "id": 696,
+  "en": "The current player has 2 points and the opponent has 5 points, and the current player\n    chooses to roll zero dice."
+ },
+ {
+  "id": 697,
+  "en": "The tens digit of the opponent's score is 0 and the ones digit of the current player's score is 2."
+ },
+ {
+  "id": 698,
+  "en": "Therefore, the player gains 3 * abs(0 &#x2d; 2) = 6 points."
+ },
+ {
+  "id": 699,
+  "en": "Sus Fuss.\n  We call a number {0} if it has exactly\n  3 or 4 factors, including 1 and the number itself.\n  If, after rolling, the current player's score is a sus number, their score instantly increases to the closest prime number greater than their current score."
+ },
+ {
+  "id": 700,
+  "en": "A player has 14 points and rolls 2 dice that earns them 7 points.\n    Their new score would be 21, which has 4 factors: 1, 3, 7, and 21.\n    Therefore, 21 is sus, and the player's score is immediately increased to 23, the\n    next prime number."
+ },
+ {
+  "id": 701,
+  "en": "A player with 63 points rolls 5 dice and earns 1 point from their turn.\n    Their new score would be 64 (Sow Sad 😢), which has 7 factors: 1, 2, 4, 8, 16,\n    32, and 64.\n    Since 64 is not sus, the score of the player is unchanged."
+ },
+ {
+  "id": 702,
+  "en": "A player has 49 points and rolls 5 dice that total 18 points.\n    Their new score would be 67, which is prime and has 2 factors: 1 and 67.\n    Since 67 is not sus, the score of the player is unchanged."
+ },
+ {
+  "id": 703,
+  "en": "Debugging Tips"
+ },
+ {
+  "id": 704,
+  "en": "Check to make sure that you completed all the problems in Phase 1:"
+ },
+ {
+  "id": 705,
+  "en": "Hint: The define method of a Frame instance creates a binding in that\nframe."
+ },
+ {
+  "id": 706,
+  "en": "Discussion 0: Getting Started"
+ },
+ {
+  "id": 707,
+  "en": "Lost on the Moon"
+ },
+ {
+  "id": 708,
+  "en": "Your spaceship has just crashed on the light side of the moon. You were\nscheduled to rendezvous with a mother ship 200 miles away on the lighted\nsurface of the moon, but the rough landing has ruined your ship and destroyed\nall the equipment on board except for the 15 items listed below (note: you\nare able to consume food/water/medicine inside your space suit)."
+ },
+ {
+  "id": 709,
+  "en": "Your crew's survival depends on reaching the mother ship, so you must choose\nthe most critical items available for the 200-mile trip. Your task is to rank\nthe 15 items in terms of their importance for survival.  Place a number 1 by\nthe most important item, number 2 by the second most important, and so on,\nthrough number 15, the least important."
+ },
+ {
+  "id": 710,
+  "en": "Item"
+ },
+ {
+  "id": 711,
+  "en": "Your Rank (1)"
+ },
+ {
+  "id": 712,
+  "en": "Group's Rank (2)"
+ },
+ {
+  "id": 713,
+  "en": "NASA's Rank (3)"
+ },
+ {
+  "id": 714,
+  "en": "Box of matches"
+ },
+ {
+  "id": 715,
+  "en": "Food concentrate"
+ },
+ {
+  "id": 716,
+  "en": "50 feet of nylon rope"
+ },
+ {
+  "id": 717,
+  "en": "Parachute silk"
+ },
+ {
+  "id": 718,
+  "en": "Solar-powered portable heating unit"
+ },
+ {
+  "id": 719,
+  "en": "Two .45 caliber pistols"
+ },
+ {
+  "id": 720,
+  "en": "One case of dehydrated milk"
+ },
+ {
+  "id": 721,
+  "en": "Two 100-pound tanks of oxygen"
+ },
+ {
+  "id": 722,
+  "en": "Stellar map (of the moon's constellations)"
+ },
+ {
+  "id": 723,
+  "en": "Self-inflating life raft"
+ },
+ {
+  "id": 724,
+  "en": "Magnetic compass"
+ },
+ {
+  "id": 725,
+  "en": "5 gallons of water"
+ },
+ {
+  "id": 726,
+  "en": "Signal flares"
+ },
+ {
+  "id": 727,
+  "en": "First-aid kit containing injection needles"
+ },
+ {
+  "id": 728,
+  "en": "Solar-powered FM receiver-transmitter"
+ },
+ {
+  "id": 729,
+  "en": "Secrets to Success in CS 61A"
+ },
+ {
+  "id": 730,
+  "en": "CS 61A is definitely a challenge, but we all want you to learn and\nsucceed, so here is a collection of various tips that might help in your\njourney:"
+ },
+ {
+  "id": 731,
+  "en": "Find what works for you."
+ },
+ {
+  "id": 732,
+  "en": "Explore different study and work strategies and find out what is most effective. If you ever want to talk with a TA about your approach, feel free to reach out to them."
+ },
+ {
+  "id": 733,
+  "en": "Ask questions."
+ },
+ {
+  "id": 734,
+  "en": "If you encounter something you don't know or aren't sure\n    about a concept or problem, please ask! The process of asking questions itself can\n    be helpful in pinpointing concepts that you believe you can learn more about."
+ },
+ {
+  "id": 735,
+  "en": "If you're still feeling stuck, feel free to make use of the class\n  {0}\n  (our course forum for asking and answering questions)."
+ },
+ {
+  "id": 736,
+  "en": "Office hours gives you time with the instructor or staff by themselves, and\n  you will be able to get some (nearly) one-on-one instruction. You are not\n  intruding; the instructors and staff are here to help as you learn."
+ },
+ {
+  "id": 737,
+  "en": "Do (or at least attempt seriously) all the homework and lab problems.\n  Learn to enjoy the challenge! That's how you'll\n  develop your skills in this class and elsewhere. Please don't use AI to do\n  the homework—not only is this against our course policy on academic misconduct,\n  but you will also learn less. Optional problems are extra material, but they are still in scope."
+ },
+ {
+  "id": 738,
+  "en": "Feel free to ask the staff members in your lab section or come to office hours\n    if you would like more guidance."
+ },
+ {
+  "id": 739,
+  "en": "Watch the videos or do the readings before lecture. They can be helpful in offering an overview of the material covered in lecture and other aspects of the class, as well as\n  being a reference that you can refer to as you\n  go through the course."
+ },
+ {
+  "id": 740,
+  "en": "When preparing for the exams, do past exam questions!"
+ },
+ {
+  "id": 741,
+  "en": "Lecture, lab, and discussion provide a great introduction to the material,\n    but the main way to learn how to solve exam-level problems is to do exam-level\n    problems. You can find past exams (and other resources) under the\n    {0} tab of the website. Many\n    past exams also have solutions or walkthrough videos where past\n    staff members may walk you through the solution to the exam."
+ },
+ {
+  "id": 742,
+  "en": "We split off each digit in turn from the right, comparing it to the\nprevious digit we split off, which was the one immediately to its\nright. We stop when we run out of digits or we find an out-of-order\ndigit."
+ },
+ {
+  "id": 743,
+  "en": "We have provided two solutions:"
+ },
+ {
+  "id": 744,
+  "en": "In one solution, we look at the current digit, and check if the rest of the\n  number contains that digit or not. We only say it's unique if the digit\n  doesn't exist in the rest. We do this for every digit."
+ },
+ {
+  "id": 745,
+  "en": "In the other, we loop through the numbers 0-9 and just call has_digit on\n  each one. If it returns true then we know the entire number contains that\n  digit and we can one to our unique count."
+ },
+ {
+  "id": 746,
+  "en": "We first define the two functions double and triple, each bound to their\ncorresponding name. In the next line, we assign the name hat to the function\nobject that double refers to. Finally, we assign the name double to the\nfunction object that triple refers to."
+ },
+ {
+  "id": 747,
+  "en": "If n is even, then the base case will be 2. If n is odd, then the base case will be 1. Try to write a condition that handles both possibilities."
+ },
+ {
+  "id": 748,
+  "en": "First print the first line of the output, then make a recursive call, then print the last line of the output."
+ },
+ {
+  "id": 749,
+  "en": "Define an inner function that checks whether some integer between i and n evenly divides n. Then you can call it starting with i=2:"
+ }
+]

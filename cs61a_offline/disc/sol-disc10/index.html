@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="description" content ="AHUT_1A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="Computer Science, Programming" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../assets/js/hl.js"></script>
+    <script src="../../assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/fonts.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/disc.css">
+
+
+    <title>讨论课 10 | AHUT_1A 2026 暑期</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            AHUT_1A
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="../../index.html">课程</a></li>
+            
+            
+            
+            
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                链接
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                
+                
+                
+                
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://code.cs61a.org/">代码编辑器</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                资源
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="../../resources/index.html">历年真题与网站</a></li>
+                
+                <li><a href="https://www.composingprograms.com">教材</a></li>
+                
+                
+                
+                <li><a href="../../articles/scheme-spec/index.html">Scheme 规范</a></li>
+                
+                <li><a href="../../articles/scheme-builtins/index.html">Scheme 内置过程</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                指南
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">调试指南</a></li>
+                
+                <li><a href="../../articles/studying/index.html">学习指南</a></li>
+                
+                <li><a href="../../articles/type-hints/index.html">类型标注</a></li>
+                
+                <li><a href="../../articles/composition/index.html">组合指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt1-study-guide.pdf">MT1 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-mt2-study-guide.pdf">MT2 复习指南</a></li>
+                
+                <li><a href="../../assets/pdfs/61a-final-study-guide.pdf">期末复习指南</a></li>
+                
+              </ul>
+            </li>
+            
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+讨论课 10：解释器、宏、尾调用
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc10.pdf" class="label label-outline">disc10.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+
+
+
+<webonly>
+
+
+
+
+<h1 id="interpreters">解释器</h1>
+
+
+<p>解释器是一个程序，它让你能用某种语言与计算机交互。它理解你用该语言输入的表达式，并以某种方式执行相应的操作，通常借助一种底层语言。</p>
+
+<p>谈到解释器时，涉及两种语言：</p>
+
+<ol>
+  <li><strong>被解释/被实现的语言。</strong></li>
+  <li><strong>底层实现语言。</strong></li>
+</ol>
+
+<p>许多解释器使用「读取-求值-打印循环」（REPL）。这个循环等待用户输入，然后分三步处理它：</p>
+
+<ul>
+  <li><strong>Read</strong>（读取）：解释器接收用户输入（一个字符串），把用户输入的字符串切分成小块（token），然后把这些 token 组织成数据结构。</li>
+  <li><strong>Eval</strong>（求值）：eval 与 apply 相互递归，对表达式求值得到一个值。</li>
+</ul>
+
+
+<h1 id="representing-lists">表示列表</h1>
+
+
+<p>Scheme 调用表达式是一个 Scheme 列表，在 Python 中用一个 <code>Link</code> 实例表示。</p>
+
+<p>例如，调用表达式 <code>(+ (* 3 4) 5)</code> 表示为：</p>
+
+<pre><code>Link(&#x27;+&#x27;, Link(Link(&#x27;*&#x27;, Link(3, Link(4, nil))), Link(5, nil)))</code></pre>
+
+
+
+<p>那些 <code>nil</code> 是可选的，因为 <code>nil</code> 就是 <code>Link.empty</code>，它是 <code>Link</code> 类 <code>__init__</code> 方法的默认第二个参数。</p>
+
+<pre><code>Link(&#x27;+&#x27;, Link(Link(&#x27;*&#x27;, Link(3, Link(4))), Link(5)))</code></pre>
+
+
+
+<p><img class="img-responsive center-block" src="https://i.imgur.com/I3972ut.png" alt="(+ (* 3 4) 5)" width=" height="></p>
+
+<p><code>Link</code> 类和 <code>nil</code> 对象定义在 <a href="../../proj/scheme/index.html">Scheme 项目</a> 的 <a href="../../proj/scheme/link.py">link.py</a> 中。</p>
+
+
+
+<pre><code>class Link:
+    &quot;A Scheme list is a Link in which rest is a Link or nil.&quot;
+    empty = ()
+    def __init__(self, first, rest=empty):
+        self.first = first
+        self.rest = rest
+
+    ... # There are also __str__, __repr__, and map methods, omitted here.
+
+nil = Link.empty</code></pre>
+
+
+
+
+
+<!-- **Discussion Time:** What does <code>(and (&lt; 1 0) (/ 1 0))</code> evaluate to? Discuss among
+your group until you all agree.
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Answer<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+<code>#f</code> because the subexpression <code>(/ 1 0)</code> is never evaluated.
+</div> -->
+
+<div class="page-break"></div>
+
+
+<h1 id="evaluation">求值</h1>
+
+
+
+<h3 id="q1-evaluation">第 1 题：求值</h3>
+
+<p>在 <code>x</code> 绑定为 -2 的环境中，对 <code>(if (&lt; x 0) (&#x2d; x) (if (= x &#x2d;2) 100 y))</code> 调用 <code>scheme_eval</code> 时，下列哪些内容会被求值？选出所有符合的。（假设 <code>&lt;</code>、<code>&#x2d;</code> 和 <code>=</code> 都使用默认值。）</p>
+
+<ul>
+  <li><code>if</code></li>
+  <li><code>&lt;</code></li>
+  <li><code>=</code></li>
+  <li><code>x</code></li>
+  <li><code>y</code></li>
+  <li><code>0</code></li>
+  <li><code>&#x2d;2</code></li>
+  <li><code>100</code></li>
+  <li><code>&#x2d;</code></li>
+  <li><code>(</code></li>
+  <li><code>)</code></li>
+</ul>
+
+
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        答案<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-2">
+会被求值的是：<code>&lt;</code>、<code>x</code>、<code>0</code> 和 <code>&#x2d;</code>。表达式 <code>(if (= x &#x2d;2) 100 y)</code> 中没有任何内容会被求值，因为最初的判断条件求值为 <code>#t</code>，所以它求值的是推论中的表达式，即 <code>(&#x2d; x)</code>。此外，<code>if</code> 不会被求值，因为它是特殊形式，而不是调用表达式的运算符。
+
+</div>
+
+
+
+<p>要用 Project 4 解释器对表达式 <code>(+ (* 3 4) 5)</code> 求值，会按以下顺序对下列表达式调用 <code>scheme_eval</code>：</p>
+
+<ol>
+  <li><code>(+ (* 3 4) 5)</code></li>
+  <li><code>+</code></li>
+  <li><code>(* 3 4)</code></li>
+  <li><code>*</code></li>
+  <li><code>3</code></li>
+  <li><code>4</code></li>
+  <li><code>5</code></li>
+</ol>
+
+<!-- **Discussion time:** Describe to each other why <code>*</code> is evaluated and what it
+evaluates to. -->
+
+
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        答案<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<p><code>*</code> 会被求值，因为它是 <code>(* 3 4)</code> 的运算符子表达式，而 <code>(* 3 4)</code> 又是 <code>(+ (* 3 4) 5)</code> 的操作数子表达式。</p>
+
+<!-- By default, <code>*</code> evaluates to a procedure that multiplies its arguments together.
+But <code>*</code> could be redefined at any time, and so the symbol <code>*</code> must be evaluated
+each time it is used in order to look up its current value.
+
+<pre><code>scm&gt; (* 2 3)  ; Now it multiplies
+6
+scm&gt; (define * +)
+*
+scm&gt; (* 2 3)  ; Now it adds
+5</code></pre>
+
+ -->
+
+</div>
+
+
+
+<p><code>if</code> 表达式也是一个 Scheme 列表，用一个 <code>Link</code> 实例表示。</p>
+
+<p>例如，<code>(if (&lt; x 0) (&#x2d; x) x)</code> 表示为：</p>
+
+<p><code>Link(&#x27;if&#x27;, Link(Link(&#x27;&lt;&#x27;, Link(&#x27;x&#x27;, Link(0, nil))), Link(Link(&#x27;&#x2d;&#x27;, Link(&#x27;x&#x27;, nil)), Link(&#x27;x&#x27;, nil))))</code></p>
+
+<p><img class="img-responsive center-block" src="https://i.imgur.com/JySFkth.png" alt=" width=" height="></p>
+
+<p>要在 <code>x</code> 绑定为 2 的环境中（且 <code>&lt;</code> 和 <code>&#x2d;</code> 都使用默认值）对这个表达式求值，会按以下顺序对下列表达式调用 <code>scheme_eval</code>：</p>
+
+<ol>
+  <li><code>(if (&lt; x 0) (&#x2d; x) x)</code></li>
+  <li><code>(&lt; x 0)</code></li>
+  <li><code>&lt;</code></li>
+  <li><code>x</code></li>
+  <li><code>0</code></li>
+  <li><code>x</code></li>
+</ol>
+
+<!-- **Discussion time:** Come up with a short explanation of why neither <code>if</code> nor
+<code>&#x2d;</code> are evaluated even though they both appear in <code>(if (&lt; x 0) (&#x2d; x) x)</code>. -->
+
+<div class="sol-highlight">
+
+<p>符号 <code>if</code> 不会被求值，因为它是特殊形式的开头，而不是
+调用表达式的一部分。引入特殊形式的符号（<code>and</code>、
+<code>if</code>、<code>lambda</code> 等）永远不会被求值。</p>
+
+<p>符号 <code>&#x2d;</code> 不会被求值，它所在的整个子表达式 <code>(&#x2d; x)</code> 也
+不会被求值，因为 <code>(&lt; x 0)</code> 求值为 <code>#f</code>。<strong>如果你仍然不确定
+为什么有些部分会被求值、有些不会被求值，请问课程助教。</strong></p>
+
+</div>
+
+<!--
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<p>With <code>x</code> bound to -2, <code>(&lt; x 0)</code> evaluates to <code>#t</code>, and so <code>(&#x2d; x)</code> will be
+evaluated, but <code>(if (= x &#x2d;2) 100 y)</code> will not. The operator and operands of a
+call expression are evaluated for every call expression that is evaluated.
+<code>(&lt; x 0)</code> and <code>(&#x2d; x)</code> are both call expressions.</p>
+
+</div> -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-print-evaluated-expressions">Q2：打印被求值的表达式</h3>
+
+
+<p>定义 <code>print_evals</code>，它接收一个只包含数字、<code>+</code>、<code>*</code> 和括号的 Scheme 表达式 <code>expr</code>。它会打印在对 <code>expr</code> 求值的过程中被求值的所有表达式，打印顺序与它们被传给 <code>scheme_eval</code> 的顺序相同。</p>
+
+<p><strong>注意：</strong>对 <code>Link</code> 实例调用 <code>print</code> 会打印它所表示的 Scheme 表达式。</p>
+
+<pre><code>&gt;&gt;&gt; print(Link(&#x27;+&#x27;, Link(Link(&#x27;*&#x27;, Link(3, Link(4, nil))), Link(5, nil))))
+(+ (* 3 4) 5)</code></pre>
+
+
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="print_evals-input" style="height:630px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-print_evals-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-print_evals-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-print_evals-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def print_evals(expr):\n    &quot;&quot;&quot;Print the expressions that are evaluated while evaluating expr.\n    expr: a Scheme expression containing only (, ), +, *, and numbers.\n    &gt;&gt;&gt; nested_expr = Link(&#x27;+&#x27;, Link(Link(&#x27;*&#x27;, Link(3, Link(4, nil))), Link(5, nil)))\n    &gt;&gt;&gt; print_evals(nested_expr)\n    (+ (* 3 4) 5)\n    +\n    (* 3 4)\n    *\n    3\n    4\n    5\n    &gt;&gt;&gt; print_evals(Link(&#x27;*&#x27;, Link(6, Link(7, Link(nested_expr, Link(8, nil))))))\n    (* 6 7 (+ (* 3 4) 5) 8)\n    *\n    6\n    7\n    (+ (* 3 4) 5)\n    +\n    (* 3 4)\n    *\n    3\n    4\n    5\n    8\n    &quot;&quot;&quot;\n    if not isinstance(expr, Link):\n        "*** YOUR CODE HERE ***"\n\n\n    else:\n        "*** YOUR CODE HERE ***"\n\n\n\n', "python", "print_evals-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>def print_evals(expr):
+    &quot;&quot;&quot;Print the expressions that are evaluated while evaluating expr.
+    expr: a Scheme expression containing only (, ), +, *, and numbers.
+    &gt;&gt;&gt; nested_expr = Link(&#x27;+&#x27;, Link(Link(&#x27;*&#x27;, Link(3, Link(4, nil))), Link(5, nil)))
+    &gt;&gt;&gt; print_evals(nested_expr)
+    (+ (* 3 4) 5)
+    +
+    (* 3 4)
+    *
+    3
+    4
+    5
+    &gt;&gt;&gt; print_evals(Link(&#x27;*&#x27;, Link(6, Link(7, Link(nested_expr, Link(8, nil))))))
+    (* 6 7 (+ (* 3 4) 5) 8)
+    *
+    6
+    7
+    (+ (* 3 4) 5)
+    +
+    (* 3 4)
+    *
+    3
+    4
+    5
+    8
+    &quot;&quot;&quot;
+    if not isinstance(expr, Link):
+        print(expr)
+
+    else:
+        print(expr)
+        while expr is not nil:
+            print_evals(expr.first)
+            expr = expr.rest
+
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Base Case<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<p>If <code>expr</code> is not a link, then it is a number or <code>&#x27;+&#x27;</code> or <code>&#x27;*&#x27;</code>. In all of these
+cases, the <code>expr</code> should be printed to indicate that it would be evaluated.</p>
+
+</div>
+
+
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Recursive Case<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+
+<p>If <code>expr</code> is a link, then it is a call expression. Print it. Then, the operator
+and operands are evaluated. These are the elements in the list <code>expr</code>. So,
+iterate through <code>expr</code> (using either a <code>while</code> statement or <code>expr.map(...)</code>) and
+call <code>print_evals</code> on each element.</p>
+
+</div> -->
+
+<div class="page-break"></div>
+
+
+<h1 id="macros">宏！</h1>
+
+<p>宏是一种代码变换，用 <code>define&#x2d;macro</code> 创建，并通过调用表达式来应用。宏调用的求值过程是：</p>
+
+<ol>
+  <li>把宏的形式参数绑定到宏调用中<strong>尚未求值</strong>的操作数表达式上。</li>
+  <li>对宏的主体求值，它返回一个表达式。</li>
+  <li>在原始宏调用的环境中，对宏返回的表达式求值。</li>
+</ol>
+
+<pre><code>scm&gt; (define&#x2d;macro (twice expr) (list &#x27;begin expr expr))
+twice
+scm&gt; (twice (+ 2 2))  ; evaluates (begin (+ 2 2) (+ 2 2))
+4
+scm&gt; (twice (print (+ 2 2)))  ; evaluates (begin (print (+ 2 2)) (print (+ 2 2)))
+4
+4</code></pre>
+
+
+
+
+<h3 id="q3-mystery-macro">Q3：神秘宏</h3>
+
+
+<p>弄清楚这个 <code>mystery&#x2d;macro</code> 是做什么的。试着阅读代码，并和小组一起讨论示例，来描述它的作用。</p>
+
+<pre><code>(define&#x2d;macro (mystery&#x2d;macro expr old new)
+    (mystery&#x2d;helper expr old new))
+
+(define (mystery&#x2d;helper e o n)
+  (if (and (list? e) (not (null? e)))
+      (cons (mystery&#x2d;helper (car e) o n) (mystery&#x2d;helper (cdr e) o n))
+      (if (eq? e o) n e)))</code></pre>
+
+
+
+<!-- **Pro Tip:** Please don't just look at the hints right away. Hints are for when you get stuck. -->
+
+
+        <button id='toggle-7' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        提示：示例<noscript> （请启用 JavaScript）</noscript>
+        </button>
+        <div class="solution toggle-7">
+下面是一些 <code>mystery&#x2d;macro</code> 的用法示例，可以帮助你理解它的作用以及它可能怎么用。
+
+<pre><code>scm&gt; (define five 5)
+five
+scm&gt; (mystery&#x2d;macro (* x x) x five)
+25
+scm&gt; (mystery&#x2d;macro (* x x) x (+ five 1))
+36
+scm&gt; (mystery&#x2d;macro &#x27;(* x x) x y)
+(* y y)
+scm&gt; (mystery&#x2d;macro (&gt; (x) (&gt; (y) (+ x y))) &gt; lambda)
+(lambda (x) (lambda (y) (+ x y)))
+scm&gt; (mystery&#x2d;macro (begin e e e) e (print five))
+5
+5
+5</code></pre>
+
+
+</div>
+
+<div class="sol-highlight">
+<code>mystery&#x2d;macro</code> 会在对表达式 <code>expr</code> 求值之前，把某个旧符号的所有出现位置替换成新的表达式。
+</div>
+
+
+<h3 id="q4-arg-repeater">Q4：参数重复器</h3>
+
+
+<p>首先，编写过程 <code>repeater</code>，它接收表达式 <code>expr</code> 和一个非负整数 <code>k</code>，输出一个把 <code>expr</code> 重复 <code>k</code> 次的新列表。</p>
+
+<p>然后编写宏 <code>arg&#x2d;repeater</code>，它接收一个函数 <code>fn</code>、一个表达式 <code>expr</code> 和一个非负整数 <code>k</code>，其中 <code>k</code> 对应 <code>fn</code> 接收的参数个数。<code>arg&#x2d;repeater</code> 会把 <code>expr</code> 的 k 个副本传给对 <code>fn</code> 的调用。</p>
+
+<p><strong>注意：</strong>框架代码只是一个建议；如果你愿意，可以随意使用自己的结构。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="arg-repeater-input" style="height:432px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-arg-repeater-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-arg-repeater-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-arg-repeater-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('(define (repeater expr k)\n  ; Returns a list with k copies of expr\n  (if ____________________________________________\n      _________________________________________________________\n      __________________________________________________________))\n\n(expect (repeater 2 0) ())\n(expect (repeater 2 5) (2 2 2 2 2))\n\n(define&#x2d;macro (arg&#x2d;repeater fn expr k)\n  ; Fills in fn with k copies of expr\n  ___________________________________________________________)\n\n(define (add&#x2d;four a b c d) (+ a b c d))\n(define (mult&#x2d;one x) x)\n(define (mult&#x2d;seven a1 a2 a3 a4 a5 a6 a7)\n  (* a1 a2 a3 a4 a5 a6 a7))\n\n(expect (arg&#x2d;repeater add&#x2d;four 10 4) 40)\n(expect (arg&#x2d;repeater mult&#x2d;one &#x2d;2 1) &#x2d;2)\n; 2 multiplied to itself 7 times = 2^7 = 128\n(expect (arg&#x2d;repeater mult&#x2d;seven 2 7) 128)\n', "scheme", "arg-repeater-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>(define (repeater expr k)
+  ; Returns a list with k copies of expr
+  (if (= 0 k)
+      nil
+      (cons expr (repeater expr (&#x2d; k 1)))))
+
+(expect (repeater 2 0) ())
+(expect (repeater 2 5) (2 2 2 2 2))
+
+(define&#x2d;macro (arg&#x2d;repeater fn expr k)
+  ; Fills in fn with k copies of expr
+  (cons fn (repeater expr k)))
+
+(define (add&#x2d;four a b c d) (+ a b c d))
+(define (mult&#x2d;one x) x)
+(define (mult&#x2d;seven a1 a2 a3 a4 a5 a6 a7)
+  (* a1 a2 a3 a4 a5 a6 a7))
+
+(expect (arg&#x2d;repeater add&#x2d;four 10 4) 40)
+(expect (arg&#x2d;repeater mult&#x2d;one &#x2d;2 1) &#x2d;2)
+; 2 multiplied to itself 7 times = 2^7 = 128
+(expect (arg&#x2d;repeater mult&#x2d;seven 2 7) 128)</code></pre>
+
+            </div>
+        
+
+<div class="sol-highlight"></div>
+
+<div class="page-break"></div>
+
+
+<h1 id="tail-calls">尾调用</h1>
+
+
+
+<h3 id="q5-reverse">Q5：反转</h3>
+
+
+<p>编写一个尾递归函数 <code>reverse</code>，它接收一个 Scheme 列表 a，返回反转后的副本。 
+<!-- *Hint*: use a helper function! --></p>
+
+<pre><code class="scheme">scm&gt; (reverse &#x27;(1 2 3))
+(3 2 1)
+scm&gt; (reverse &#x27;(0 9 1 2))
+(2 1 9 0)</code></pre>
+
+
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="reverse-input" style="height:234px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-reverse-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-reverse-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-reverse-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor("(define (reverse lst)\n  'YOUR-CODE-HERE\n\n\n\n\n\n\n\n\n)\n\n(expect (reverse &#x27;(1 2 3)) (3 2 1))\n(expect (reverse &#x27;(0 9 1 2)) (2 1 9 0))\n", "scheme", "reverse-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>(define (reverse lst)
+  (define (reverse&#x2d;tail sofar rest)
+    (if (null? rest)
+          sofar
+          (reverse&#x2d;tail (cons (car rest) sofar) (cdr rest))))
+  (reverse&#x2d;tail nil lst)
+)
+
+(expect (reverse &#x27;(1 2 3)) (3 2 1))
+(expect (reverse &#x27;(0 9 1 2)) (2 1 9 0))</code></pre>
+
+            </div>
+        
+
+<div class="page-break"></div>
+
+
+<h1 id="more-scheme">更多 Scheme 内容</h1>
+
+
+
+<h3 id="q6-slice-it">Q6：切片！</h3>
+
+
+<!-- __Difficulty: ⭐⭐__ -->
+
+<p>实现过程 <code>get&#x2d;slicer</code>，它接收整数 <code>a</code> 和 <code>b</code>，返回一个 <em><code>a</code>-<code>b</code> 切片函数</em>。<code>a&#x2d;b</code> 切片函数接收一个列表作为输入，输出一个新列表，其中包含原列表从索引 a（含）到索引 b（不含）的值。</p>
+
+<p>你的实现应该表现得像 Python 切片，但要假设步长为 1，并且不使用负的切片索引。索引从 0 开始。</p>
+
+<p><strong>注意：</strong>框架代码只是一个建议。如果你愿意，可以随意使用自己的结构。</p>
+
+
+            
+            <b>你的答案</b>
+            
+            <div class="monaco-storable" id="get-slicer-input" style="height:234px;"></div>
+            <!-- <a href="javascript:void" id="modal-link-get-slicer-input">Run in 61A Code</a> -->
+            <div class="modal fade" id="modal-get-slicer-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-get-slicer-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('(define (get&#x2d;slicer a b)\n  (define (slicer lst)\n    (define (slicer&#x2d;helper c i j)\n      (cond \n        ((or ___________________ ______________________) nil)\n        ((= i 0) ______________________________________)\n        (else ____________________________________________)))\n    (slicer&#x2d;helper lst a b))\n  slicer)\n\n\n', "scheme", "get-slicer-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>参考答案</b>
+                
+<pre><code>(define (get&#x2d;slicer a b)
+  (define (slicer lst)
+    (define (slicer&#x2d;helper c i j)
+      (cond 
+        ((or (null? c) (&lt;= j i)) nil)
+        ((= i 0) (cons (car c) (slicer&#x2d;helper (cdr c) i (&#x2d; j 1))))
+        (else (slicer&#x2d;helper (cdr c) (&#x2d; i 1) (&#x2d; j 1)))))
+    (slicer&#x2d;helper lst a b))
+  slicer)
+
+; DOCTESTS (No need to modify)
+(define a &#x27;(0 1 2 3 4 5 6))
+(define one&#x2d;two&#x2d;three (get&#x2d;slicer 1 4))
+(define one&#x2d;end (get&#x2d;slicer 1 10))
+(define zero (get&#x2d;slicer 0 1))
+(define empty (get&#x2d;slicer 4 4))
+
+(expect (one&#x2d;two&#x2d;three a) (1 2 3))
+(expect (one&#x2d;end a) (1 2 3 4 5 6))
+(expect (zero a) (0))
+(expect (empty a) ())
+</code></pre>
+
+            </div>
+        
+
+<div class="sol-highlight"></div>
+
+<p><img class="img-responsive center-block" src="https://i.postimg.cc/hvnPdP1P/nerd-glasses.png" alt=" width="10%" height="></p>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#interpreters">解释器</a></li>
+  <li><a href="#representing-lists">表示列表</a></li>
+  <li><a href="#evaluation">求值</a></li>
+  <ul>
+    <li><a href="#q1-evaluation">第 1 题：求值</a></li>
+    <li><a href="#q2-print-evaluated-expressions">Q2：打印被求值的表达式</a></li>
+  </ul>
+  <li><a href="#macros">宏！</a></li>
+  <ul>
+    <li><a href="#q3-mystery-macro">Q3：神秘宏</a></li>
+    <li><a href="#q4-arg-repeater">Q4：参数重复器</a></li>
+  </ul>
+  <li><a href="#tail-calls">尾调用</a></li>
+  <ul>
+    <li><a href="#q5-reverse">Q5：反转</a></li>
+  </ul>
+  <li><a href="#more-scheme">更多 Scheme 内容</a></li>
+  <ul>
+    <li><a href="#q6-slice-it">Q6：切片！</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    
+
+    
+
+    <script src="../../js/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="../../css/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': '/js/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: '/js/vs'
+      };
+      importScripts('/js/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="../../js/jsplumb.min.js"></script>
+    <script src="../../assets/js/network_storage.js"></script>
+    <script src="../../assets/js/code_tabindex.js"></script>
+    <script src="../../assets/js/storable.js"></script>
+    <script src="../../assets/js/editor.js"></script>
+    <script src="../../assets/js/copy-button.js"></script>
+    <script src="../../assets/js/env-diagram.js"></script>
+    
+<!-- <script src="../../assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>
