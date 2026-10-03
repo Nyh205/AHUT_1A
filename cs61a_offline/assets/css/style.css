@@ -1411,3 +1411,54 @@ body {
   background: transparent;
   padding: 0;
 }
+
+
+/* === 日历表格布局优化 === */
+
+table#calendar {
+  width: 100%;
+  line-height: 1.45;
+}
+
+/* 列宽：周次窄，其余按内容分配 */
+table#calendar th:nth-child(1) { width: 2.2em; }
+table#calendar th:nth-child(2) { width: 24%; }
+table#calendar th:nth-child(3) { width: 16%; }
+table#calendar th:nth-child(4) { width: 19%; }
+table#calendar th:nth-child(5) { width: 21%; }
+table#calendar th:nth-child(6) { width: 13%; }
+
+table#calendar th {
+  padding: 10px 8px;
+  white-space: nowrap;
+}
+
+table#calendar td {
+  padding: 10px 8px;
+  vertical-align: top;
+}
+
+table#calendar td.weeknum {
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+/* 标签排版：与标题之间留点间距，标签可换行不挤 */
+table#calendar .list-inline {
+  margin: 4px 0 0;
+}
+
+table#calendar .list-inline li {
+  margin-bottom: 3px;
+}
+
+/* 窄屏：表格保持可读宽度，容器内横向滚动 */
+@media (max-width: 991px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table#calendar {
+    min-width: 820px;
+  }
+}
